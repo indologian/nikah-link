@@ -831,6 +831,7 @@ export default function NewInvitationPage() {
                       className={`relative overflow-hidden rounded-2xl cursor-pointer border-2 transition-all group ${
                         isSelected ? "border-[#9E1B54] shadow-md scale-[1.02]" : "border-slate-100 dark:border-[#33272B] hover:border-rose-200 dark:hover:border-rose-900/50"
                       }`}
+                    >
                       <div className="aspect-[3/4] relative">
                         {theme.thumbnail_url ? (
                           <img src={theme.thumbnail_url} alt={theme.name} className="w-full h-full object-cover" />
