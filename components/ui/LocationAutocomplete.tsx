@@ -19,10 +19,14 @@ export default function LocationAutocomplete({
   const [loading, setLoading] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const skipSearch = useRef(true);
 
-  // Sync value from parent
+  // Sync value from parent if changed externally
   useEffect(() => {
-    setQuery(value);
+    if (value !== query) {
+      skipSearch.current = true;
+      setQuery(value);
+    }
   }, [value]);
 
   useEffect(() => {
@@ -37,9 +41,12 @@ export default function LocationAutocomplete({
 
   useEffect(() => {
     const searchPlaces = async () => {
-      // Don't search if less than 3 chars or matches exactly the bound value
-      if (!query || query.length < 3 || query === value) {
+      if (!query || query.length < 3) {
         setResults([]);
+        return;
+      }
+      if (skipSearch.current) {
+        skipSearch.current = false;
         return;
       }
       setLoading(true);
@@ -60,7 +67,7 @@ export default function LocationAutocomplete({
     }, 500); // 500ms debounce
 
     return () => clearTimeout(timeoutId);
-  }, [query, value]);
+  }, [query]);
 
   return (
     <div className="relative" ref={dropdownRef}>
@@ -69,6 +76,7 @@ export default function LocationAutocomplete({
           type="text"
           value={query}
           onChange={(e) => {
+            skipSearch.current = false;
             setQuery(e.target.value);
             onChange(e.target.value);
           }}
@@ -90,6 +98,7 @@ export default function LocationAutocomplete({
                 key={place.place_id}
                 type="button"
                 onClick={() => {
+                  skipSearch.current = true;
                   setQuery(placeName);
                   setShowDropdown(false);
                   onSelect(place);
