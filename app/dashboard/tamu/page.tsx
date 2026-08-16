@@ -127,6 +127,9 @@ export default function GuestManagementPage() {
       setNewGuestName("");
       setNewGuestPhone("");
       setShowAddModal(false);
+    } else {
+      console.error(error);
+      alert("Gagal menambahkan tamu: " + (error?.message || "Kesalahan tidak diketahui"));
     }
     setSubmitting(false);
   };
