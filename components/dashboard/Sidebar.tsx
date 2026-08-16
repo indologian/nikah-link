@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard, FileText, Users, BarChart3, Gift,
   Settings, Heart, LogOut, ChevronLeft, ChevronRight,
-  Plus, CreditCard, Menu, X, Home
+  Plus, CreditCard, Menu, X, Home, ShieldAlert
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
@@ -33,6 +33,7 @@ export default function Sidebar() {
 
   // Paywall states
   const [userPlan, setUserPlan] = useState<"free" | "premium" | "pro">("free");
+  const [userRole, setUserRole] = useState<string>("user");
   const [invCount, setInvCount] = useState(0);
   const [showUpsell, setShowUpsell] = useState(false);
 
@@ -41,10 +42,11 @@ export default function Sidebar() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
       const [{ data: profile }, { count }] = await Promise.all([
-        supabase.from("profiles").select("plan").eq("user_id", user.id).single(),
+        supabase.from("profiles").select("plan, role").eq("user_id", user.id).single(),
         supabase.from("invitations").select("*", { count: "exact", head: true }).eq("user_id", user.id)
       ]);
       if (profile && profile.plan) setUserPlan(profile.plan);
+      if (profile && profile.role) setUserRole(profile.role);
       if (count !== null) setInvCount(count);
     }
     fetchPlanAndCount();
@@ -214,6 +216,20 @@ export default function Sidebar() {
             <Home className="w-5 h-5 flex-shrink-0" />
             {(!collapsed || mobileOpen) && <span>Beranda Utama</span>}
           </Link>
+
+          {userRole === "super_admin" && (
+            <Link
+              href="/admin"
+              className={cn(
+                "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-bold text-rose-600 bg-rose-50 dark:bg-rose-950/20 hover:bg-rose-100 dark:hover:bg-rose-950/40 transition-all border border-rose-100 dark:border-rose-900/30",
+                (collapsed && !mobileOpen) && "justify-center px-0"
+              )}
+              title={(collapsed && !mobileOpen) ? "Super Admin" : undefined}
+            >
+              <ShieldAlert className="w-5 h-5 flex-shrink-0" />
+              {(!collapsed || mobileOpen) && <span>Super Admin</span>}
+            </Link>
+          )}
 
           <Link
             href="/harga"
