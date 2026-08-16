@@ -195,7 +195,7 @@ export default function PublicInvitationClient({
       
       {/* Free Plan Floating Banner */}
       {isFreePlan && (
-        <div className="fixed top-0 left-0 right-0 z-[100] bg-rose-gold-500/90 backdrop-blur-md border-b border-rose-gold-400/30 px-4 py-2 flex items-center justify-center gap-2 text-xs sm:text-sm text-white font-medium shadow-lg">
+        <div className="fixed top-0 left-0 right-0 z-[9999] bg-rose-gold-500/90 backdrop-blur-md border-b border-rose-gold-400/30 px-4 py-2 pt-[max(8px,env(safe-area-inset-top))] flex items-center justify-center gap-2 text-xs sm:text-sm text-white font-medium shadow-lg">
           <Clock className="w-4 h-4 animate-pulse" />
           <span>Undangan Gratis berakhir dalam: <strong className="font-bold tracking-wider">{freeTimeLeftStr}</strong></span>
         </div>

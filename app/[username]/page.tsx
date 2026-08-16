@@ -110,7 +110,7 @@ export default async function PublicInvitationPage({ params, searchParams }: Pro
       .single()
   ]);
 
-  const isFreePlan = profile?.plan === "free";
+  const isFreePlan = profile?.plan !== "premium" && profile?.plan !== "pro";
 
   return (
     <PublicInvitationClient
