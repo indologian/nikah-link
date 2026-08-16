@@ -92,7 +92,11 @@ export default function UsersClient({ initialUsers }: { initialUsers: Profile[] 
                 <tr key={user.id} className="hover:bg-slate-800/50 transition-colors">
                   <td className="px-6 py-4 font-bold text-slate-200 flex items-center gap-2">
                     {user.name}
-                    {user.role === 'super_admin' && <ShieldAlert className="w-4 h-4 text-rose-500" title="Super Admin" />}
+                    {user.role === 'super_admin' && (
+                      <span title="Super Admin">
+                        <ShieldAlert className="w-4 h-4 text-rose-500" />
+                      </span>
+                    )}
                   </td>
                   <td className="px-6 py-4">{user.phone || "-"}</td>
                   <td className="px-6 py-4">{new Date(user.created_at).toLocaleDateString("id-ID")}</td>
