@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import type { Guest, Invitation } from "@/types";
 import UpsellModal from "@/components/dashboard/UpsellModal";
+import * as XLSX from "xlsx";
 
 export default function GuestManagementPage() {
   const supabase = createClient();
@@ -178,6 +179,57 @@ Salam hangat,
     window.open(waUrl, "_blank");
   };
 
+  const handleExportXLSX = () => {
+    if (userPlan !== "pro") {
+      setUpsellConfig({
+        isOpen: true,
+        title: "Ekspor Data Eksklusif",
+        description: "Fitur Ekspor Data Tamu (XLSX) ditujukan khusus untuk paket Pro VIP. Upgrade paketmu untuk manajemen data tamu tingkat lanjut!",
+        planNeeded: "pro"
+      });
+      return;
+    }
+    
+    if (guests.length === 0) {
+      alert("Tidak ada data tamu yang bisa diekspor.");
+      return;
+    }
+
+    const dataToExport = guests.map((g, index) => ({
+      "No": index + 1,
+      "Nama Tamu": g.name,
+      "Nomor Telepon/WA": g.phone || "-",
+      "Sesi Kehadiran": g.session === "all" ? "Semua Sesi" : g.session,
+      "Status RSVP": g.rsvp_status === "hadir" ? "Hadir" : g.rsvp_status === "tidak_hadir" ? "Tidak Hadir" : "Pending",
+      "Jumlah Orang": g.guest_count,
+      "Catatan Tambahan": g.notes || "-",
+      "Link Undangan Pribadi": getPersonalizedUrl(g.name)
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+
+    const colWidths = [
+      { wch: 5 }, // No
+      { wch: 25 }, // Nama Tamu
+      { wch: 20 }, // Nomor Telepon
+      { wch: 15 }, // Sesi
+      { wch: 15 }, // Status RSVP
+      { wch: 15 }, // Jumlah
+      { wch: 30 }, // Catatan
+      { wch: 50 }, // Link
+    ];
+    worksheet['!cols'] = colWidths;
+
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Daftar Tamu");
+
+    const bride = selectedInv?.bride_name || "Mempelai";
+    const groom = selectedInv?.groom_name || "Mempelai";
+    const fileName = `Daftar_Tamu_${bride}_${groom}.xlsx`;
+
+    XLSX.writeFile(workbook, fileName);
+  };
+
   // Filtered Guests
   const filteredGuests = guests.filter((g) => {
     const matchesSearch = g.name.toLowerCase().includes(search.toLowerCase()) || (g.phone && g.phone.includes(search));
@@ -209,22 +261,10 @@ Salam hangat,
 
         <div className="flex items-center gap-3">
           <button
-            onClick={() => {
-              if (userPlan !== "pro") {
-                setUpsellConfig({
-                  isOpen: true,
-                  title: "Ekspor Data Eksklusif",
-                  description: "Fitur Ekspor Data Tamu (CSV) ditujukan khusus untuk paket Pro VIP. Upgrade paketmu untuk manajemen data tamu tingkat lanjut!",
-                  planNeeded: "pro"
-                });
-                return;
-              }
-              // Simulasi Export CSV
-              alert("Fitur ekspor CSV berjalan. (Simulasi)");
-            }}
+            onClick={handleExportXLSX}
             className="hidden sm:flex bg-white dark:bg-[#1A1517] text-slate-700 dark:text-[#D1C4C4] hover:bg-slate-50 dark:hover:bg-[#251E21] px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold items-center gap-2 border border-slate-200 dark:border-[#423338] transition-colors shadow-sm"
           >
-            <Download className="w-4 h-4" /> Ekspor CSV
+            <Download className="w-4 h-4" /> Ekspor XLSX
           </button>
           
           <button
