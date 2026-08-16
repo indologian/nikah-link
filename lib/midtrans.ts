@@ -1,17 +1,18 @@
 // Midtrans integration helper for NikahLink
 
-const MIDTRANS_SERVER_KEY = process.env.MIDTRANS_SERVER_KEY || "SB-Mid-server-DUMMY_KEY_FOR_DEV";
-const MIDTRANS_CLIENT_KEY = process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY || "SB-Mid-client-DUMMY_KEY_FOR_DEV";
+const MIDTRANS_SERVER_KEY = process.env.MIDTRANS_SERVER_KEY || "";
+const MIDTRANS_CLIENT_KEY = process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY || "";
 
-export const IS_MIDTRANS_SANDBOX = process.env.MIDTRANS_IS_SANDBOX !== "false";
+export const IS_PRODUCTION = process.env.MIDTRANS_IS_PRODUCTION === "true";
 
-export const SNAP_URL = IS_MIDTRANS_SANDBOX
-  ? "https://app.sandbox.midtrans.com/snap/snap.js"
-  : "https://app.midtrans.com/snap/snap.js";
+export const SNAP_URL = IS_PRODUCTION
+  ? "https://app.midtrans.com/snap/snap.js"
+  : "https://app.sandbox.midtrans.com/snap/snap.js";
 
-const MIDTRANS_API_URL = IS_MIDTRANS_SANDBOX
-  ? "https://app.sandbox.midtrans.com/snap/v1/transactions"
-  : "https://app.midtrans.com/snap/v1/transactions";
+const MIDTRANS_API_URL = IS_PRODUCTION
+  ? "https://app.midtrans.com/snap/v1/transactions"
+  : "https://app.sandbox.midtrans.com/snap/v1/transactions";
+
 
 export async function createMidtransTransaction({
   orderId,
