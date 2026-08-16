@@ -24,14 +24,7 @@ const STEPS = [
   { id: "settings", label: "Pengaturan", icon: Settings },
 ];
 
-const THEMES_LIST = [
-  { id: "sakura-bloom", name: "Sakura Bloom", category: "floral", premium: false, color: "from-pink-50 via-rose-100 to-pink-200" },
-  { id: "midnight-luxe", name: "Midnight Luxe", category: "dark", premium: true, color: "from-purple-900 to-slate-900" },
-  { id: "javanese-heritage", name: "Javanese Heritage", category: "budaya", premium: true, color: "from-amber-100 to-yellow-200" },
-  { id: "minimalist-clean", name: "Minimalist Clean", category: "minimalis", premium: false, color: "from-slate-100 to-slate-200" },
-  { id: "tropical-garden", name: "Tropical Garden", category: "floral", premium: false, color: "from-emerald-100 to-teal-200" },
-  { id: "golden-arch", name: "Golden Arch", category: "elegan", premium: true, color: "from-amber-200 to-yellow-300" },
-];
+
 
 const DEFAULT_FORM_DATA = {
   username: "",
@@ -94,6 +87,15 @@ export default function NewInvitationPage() {
   const [isCheckingLimit, setIsCheckingLimit] = useState(true);
   const [isLimitReached, setIsLimitReached] = useState(false);
   const [slugStatus, setSlugStatus] = useState<"idle" | "checking" | "available" | "taken">("idle");
+  const [themesList, setThemesList] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchThemes = async () => {
+      const { data } = await supabase.from("themes").select("*").eq("is_active", true).order("created_at", { ascending: false });
+      if (data) setThemesList(data);
+    };
+    fetchThemes();
+  }, [supabase]);
 
   // Form State
   const [formData, setFormData] = useState<typeof DEFAULT_FORM_DATA>(() => {
@@ -809,7 +811,7 @@ export default function NewInvitationPage() {
               </h2>
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {THEMES_LIST.map((theme) => {
+                {themesList.map((theme) => {
                   const isSelected = formData.theme_slug === theme.id;
                   return (
                     <div
@@ -824,21 +826,26 @@ export default function NewInvitationPage() {
                           });
                           return;
                         }
-                        handleChange("theme_slug", theme.id);
+                        handleChange("theme_slug", theme.slug);
                       }}
-                      className={`relative rounded-2xl p-4 border cursor-pointer transition-all overflow-hidden ${
-                        isSelected
-                          ? "bg-[#FCEBF2] dark:bg-[#9E1B54]/20 border-[#9E1B54] ring-2 ring-[#9E1B54]/20"
-                          : "bg-white dark:bg-[#1A1517] border-slate-200 dark:border-[#423338] hover:border-slate-300"
+                      className={`relative overflow-hidden rounded-2xl cursor-pointer border-2 transition-all group ${
+                        isSelected ? "border-[#9E1B54] shadow-md scale-[1.02]" : "border-slate-100 dark:border-[#33272B] hover:border-rose-200 dark:hover:border-rose-900/50"
                       }`}
-                    >
-                      <div className={`h-24 rounded-xl bg-gradient-to-br ${theme.color} mb-3 flex items-center justify-center`}>
-                        <span className="text-[#221C28] dark:text-[#FDFBF7] font-playfair font-bold text-sm">{theme.name}</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs text-slate-500 dark:text-[#B39E9E] capitalize font-medium">{theme.category}</span>
-                        {theme.premium && (
-                          <span className="text-[10px] bg-[#FCEBF2] dark:bg-[#9E1B54]/20 text-[#9E1B54] border border-[#F8D5E3] dark:border-[#9E1B54]/30 px-2 py-0.5 rounded-full font-bold">
+                      <div className="aspect-[3/4] relative">
+                        {theme.thumbnail_url ? (
+                          <img src={theme.thumbnail_url} alt={theme.name} className="w-full h-full object-cover" />
+                        ) : (
+                          <div className={`w-full h-full ${theme.colors?.primary ? `bg-[${theme.colors.primary}]` : 'bg-slate-200 dark:bg-slate-800'}`} />
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                        
+                        <div className="absolute bottom-3 left-3 right-3">
+                          <h3 className="text-white font-bold text-sm truncate">{theme.name}</h3>
+                          <p className="text-white/80 text-[10px] uppercase tracking-wider">{theme.category}</p>
+                        </div>
+                        
+                        {theme.is_premium && (
+                          <span className="absolute top-2 right-2 text-[10px] bg-[#FCEBF2] dark:bg-[#9E1B54]/20 text-[#9E1B54] border border-[#F8D5E3] dark:border-[#9E1B54]/30 px-2 py-0.5 rounded-full font-bold">
                             PREMIUM
                           </span>
                         )}

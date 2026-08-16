@@ -32,6 +32,7 @@ export interface Profile {
   phone?: string;
   avatar_url?: string;
   plan: Plan;
+  role?: "user" | "super_admin";
   created_at: string;
 }
 
@@ -149,6 +150,16 @@ export interface GiftTransaction {
   amount: number;
   note?: string;
   method: string;
+  created_at: string;
+}
+
+export interface Transaction {
+  id: string;
+  user_id: string;
+  amount: number;
+  plan_name: string;
+  status: string;
+  payment_method?: string;
   created_at: string;
 }
 
