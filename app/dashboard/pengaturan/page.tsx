@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { Settings, Mail, ShieldCheck } from "lucide-react";
+import DeleteAccountSection from "@/components/dashboard/DeleteAccountSection";
 
 export default async function SettingsPage() {
   const supabase = await createClient();
@@ -58,6 +59,9 @@ export default async function SettingsPage() {
           </div>
         </div>
       </div>
+
+      {/* Danger Zone */}
+      <DeleteAccountSection />
     </div>
   );
 }
