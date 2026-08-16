@@ -17,7 +17,32 @@ interface Props {
     totalInvitations: number;
     publishedInvitations: number;
   };
+  plan: string;
 }
+
+const PlanBadge = ({ plan }: { plan: string }) => {
+  if (plan === "pro") {
+    return (
+      <span className="flex items-center gap-1 bg-gradient-to-r from-amber-200 to-amber-400 dark:from-amber-700 dark:to-amber-900 text-amber-900 dark:text-amber-100 text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-sm border border-amber-300 dark:border-amber-600">
+        <span className="text-[10px]">👑</span> PRO VIP
+      </span>
+    );
+  }
+  
+  if (plan === "premium") {
+    return (
+      <span className="flex items-center gap-1 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-sm border border-emerald-200 dark:border-emerald-800">
+        PREMIUM
+      </span>
+    );
+  }
+
+  return (
+    <span className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-sm border border-slate-200 dark:border-slate-700">
+      FREE
+    </span>
+  );
+};
 
 const QUICK_ACTIONS = [
   { icon: Plus, label: "Buat Undangan Baru", href: "/dashboard/undangan/baru", color: "bg-[#FCEBF2] dark:bg-[#9E1B54]/20 text-[#9E1B54]" },
@@ -54,7 +79,7 @@ function StatCard({ icon: Icon, label, value, change, color }: {
   );
 }
 
-export default function DashboardClient({ user, invitations, stats }: Props) {
+export default function DashboardClient({ user, invitations, stats, plan }: Props) {
   const displayName = (user.user_metadata?.name as string) || user.email?.split("@")[0] || "Pengguna";
   const hasInvitations = invitations.length > 0;
 
@@ -73,7 +98,10 @@ export default function DashboardClient({ user, invitations, stats }: Props) {
             </div>
             <div>
               <p className="text-slate-500 dark:text-[#B39E9E] text-xs sm:text-sm">Selamat datang kembali,</p>
-              <h1 className="text-xl font-bold text-[#221C28] dark:text-[#FDFBF7]">{displayName} 👋</h1>
+              <div className="flex items-center gap-2">
+                <h1 className="text-xl font-bold text-[#221C28] dark:text-[#FDFBF7]">{displayName} 👋</h1>
+                <PlanBadge plan={plan} />
+              </div>
             </div>
           </div>
         </div>

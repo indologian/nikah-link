@@ -15,6 +15,15 @@ export default async function DashboardPage() {
     .eq("user_id", user.id)
     .order("created_at", { ascending: false });
 
+  // Fetch user's plan
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("plan")
+    .eq("user_id", user.id)
+    .single();
+
+  const plan = profile?.plan || "free";
+
   // Get basic stats for each invitation
   const stats = {
     totalInvitations: invitations?.length ?? 0,
@@ -26,6 +35,7 @@ export default async function DashboardPage() {
       user={user}
       invitations={invitations ?? []}
       stats={stats}
+      plan={plan}
     />
   );
 }
