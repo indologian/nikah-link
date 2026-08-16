@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import type { Guest, Invitation } from "@/types";
 import UpsellModal from "@/components/dashboard/UpsellModal";
+import AlertModal from "@/components/dashboard/AlertModal";
 import * as XLSX from "xlsx";
 
 export default function GuestManagementPage() {
@@ -44,6 +45,17 @@ export default function GuestManagementPage() {
     title: "",
     description: "",
     planNeeded: "premium"
+  });
+
+  // Alert state
+  const [alertConfig, setAlertConfig] = useState<{
+    isOpen: boolean;
+    title: string;
+    description: string;
+  }>({
+    isOpen: false,
+    title: "",
+    description: ""
   });
 
   // Fetch user's invitations
@@ -191,7 +203,11 @@ Salam hangat,
     }
     
     if (guests.length === 0) {
-      alert("Tidak ada data tamu yang bisa diekspor.");
+      setAlertConfig({
+        isOpen: true,
+        title: "Daftar Tamu Kosong",
+        description: "Tidak ada data tamu yang bisa diekspor. Silakan tambahkan tamu terlebih dahulu."
+      });
       return;
     }
 
@@ -246,6 +262,13 @@ Salam hangat,
         description={upsellConfig.description}
         planNeeded={upsellConfig.planNeeded}
       />
+      
+      <AlertModal
+        isOpen={alertConfig.isOpen}
+        onClose={() => setAlertConfig(prev => ({ ...prev, isOpen: false }))}
+        title={alertConfig.title}
+        description={alertConfig.description}
+      />
 
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-[#1A1517] p-6 rounded-2xl border border-[#F0E2DA] dark:border-[#33272B] shadow-xs">
@@ -264,7 +287,7 @@ Salam hangat,
             onClick={handleExportXLSX}
             className="hidden sm:flex bg-white dark:bg-[#1A1517] text-slate-700 dark:text-[#D1C4C4] hover:bg-slate-50 dark:hover:bg-[#251E21] px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold items-center gap-2 border border-slate-200 dark:border-[#423338] transition-colors shadow-sm"
           >
-            <Download className="w-4 h-4" /> Ekspor XLSX
+            <Download className="w-4 h-4" /> Ekspor Data Tamu
           </button>
           
           <button
