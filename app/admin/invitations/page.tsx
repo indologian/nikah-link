@@ -18,10 +18,28 @@ export default async function AdminInvitationsPage() {
     }
   );
 
-  const { data: invitations } = await supabase
+  const { data: invitations, error } = await supabase
     .from("invitations")
-    .select("id, username, bride_name, groom_name, status, is_published, created_at, profiles(name, plan)")
+    .select("id, user_id, username, bride_name, groom_name, status, is_published, created_at")
     .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Supabase Error fetching invitations:", error);
+  }
+
+  const { data: profiles } = await supabase
+    .from("profiles")
+    .select("user_id, name, plan");
+
+  const profilesMap = (profiles || []).reduce((acc: any, p: any) => {
+    acc[p.user_id] = p;
+    return acc;
+  }, {});
+
+  const mappedInvitations = (invitations || []).map((inv: any) => ({
+    ...inv,
+    profiles: profilesMap[inv.user_id] || null
+  }));
 
   return (
     <div className="space-y-6">
@@ -29,7 +47,7 @@ export default async function AdminInvitationsPage() {
         <h1 className="text-2xl font-black text-white">Manajemen Undangan</h1>
         <p className="text-slate-400 mt-1">Pantau dan kelola seluruh link undangan yang aktif.</p>
       </div>
-      <InvitationsClient initialInvitations={invitations || []} />
+      <InvitationsClient initialInvitations={mappedInvitations} />
     </div>
   );
 }
