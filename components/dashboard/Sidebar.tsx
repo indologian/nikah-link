@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard, FileText, Users, BarChart3, Gift,
   Settings, Heart, LogOut, ChevronLeft, ChevronRight,
-  Plus, CreditCard, Menu, X
+  Plus, CreditCard, Menu, X, Home
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
@@ -203,6 +203,18 @@ export default function Sidebar() {
 
         {/* Bottom actions */}
         <div className="p-3 border-t border-[#F0E2DA] dark:border-[#33272B] space-y-1">
+          <Link
+            href="/"
+            className={cn(
+              "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-500 dark:text-[#B39E9E] hover:text-[#9E1B54] hover:bg-[#FAF4F0] dark:hover:bg-[#251E21] transition-all",
+              (collapsed && !mobileOpen) && "justify-center px-0"
+            )}
+            title={(collapsed && !mobileOpen) ? "Beranda Utama" : undefined}
+          >
+            <Home className="w-5 h-5 flex-shrink-0" />
+            {(!collapsed || mobileOpen) && <span>Beranda Utama</span>}
+          </Link>
+
           <Link
             href="/harga"
             className={cn(
