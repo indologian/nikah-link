@@ -31,6 +31,47 @@ const THEMES_LIST = [
   { id: "golden-arch", name: "Golden Arch", category: "elegan", premium: true, color: "from-amber-200 to-yellow-300" },
 ];
 
+const DEFAULT_FORM_DATA = {
+  username: "",
+  bride_name: "",
+  groom_name: "",
+  bride_photo_url: "",
+  groom_photo_url: "",
+  love_story: "",
+  
+  // Akad
+  akad_date: "",
+  akad_time: "",
+  akad_venue: "",
+  akad_address: "",
+  akad_maps_url: "",
+
+  // Resepsi
+  reception_date: "",
+  reception_time: "",
+  reception_venue: "",
+  reception_address: "",
+  reception_maps_url: "",
+
+  // Theme & Media
+  theme_slug: "sakura-bloom",
+  music_url: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-wedding-115207.mp3",
+  cover_image_url: "",
+  custom_message: "Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada pernikahan kami.",
+
+  // Gift Accounts
+  bank_name: "",
+  account_number: "",
+  account_name: "",
+
+  // Options
+  show_rsvp: true,
+  show_gift: true,
+  show_gallery: true,
+  show_wishes: true,
+  is_published: true,
+};
+
 export default function NewInvitationPage() {
   const router = useRouter();
   const supabase = createClient();
@@ -53,7 +94,7 @@ export default function NewInvitationPage() {
   const [slugStatus, setSlugStatus] = useState<"idle" | "checking" | "available" | "taken">("idle");
 
   // Form State
-  const [formData, setFormData] = useState(() => {
+  const [formData, setFormData] = useState<typeof DEFAULT_FORM_DATA>(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("nikahlink_new_invitation");
       if (saved) {
@@ -64,46 +105,7 @@ export default function NewInvitationPage() {
         }
       }
     }
-    return {
-      username: "",
-      bride_name: "",
-      groom_name: "",
-      bride_photo_url: "",
-      groom_photo_url: "",
-      love_story: "",
-      
-      // Akad
-      akad_date: "",
-      akad_time: "",
-      akad_venue: "",
-      akad_address: "",
-      akad_maps_url: "",
-
-      // Resepsi
-      reception_date: "",
-      reception_time: "",
-      reception_venue: "",
-      reception_address: "",
-      reception_maps_url: "",
-
-      // Theme & Media
-      theme_slug: "sakura-bloom",
-      music_url: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-wedding-115207.mp3",
-      cover_image_url: "",
-      custom_message: "Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada pernikahan kami.",
-
-      // Gift Accounts
-      bank_name: "",
-      account_number: "",
-      account_name: "",
-
-      // Options
-      show_rsvp: true,
-      show_gift: true,
-      show_gallery: true,
-      show_wishes: true,
-      is_published: true,
-    };
+    return DEFAULT_FORM_DATA;
   });
 
   useEffect(() => {
