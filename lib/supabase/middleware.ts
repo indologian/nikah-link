@@ -44,6 +44,25 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  // Protect admin routes
+  const isAdminRoute = request.nextUrl.pathname.startsWith("/admin");
+  
+  if (isAdminRoute) {
+    if (!user) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/masuk";
+      url.searchParams.set("redirectTo", request.nextUrl.pathname);
+      return NextResponse.redirect(url);
+    }
+    
+    const { data: profile } = await supabase.from("profiles").select("role").eq("user_id", user.id).single();
+    if (profile?.role !== "super_admin") {
+      const url = request.nextUrl.clone();
+      url.pathname = "/dashboard";
+      return NextResponse.redirect(url);
+    }
+  }
+
   // Redirect logged-in users away from auth pages
   const isAuthRoute = request.nextUrl.pathname.startsWith("/masuk") ||
     request.nextUrl.pathname.startsWith("/daftar");

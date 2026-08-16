@@ -1,9 +1,57 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Search, ExternalLink, Trash2 } from "lucide-react";
 import Link from "next/link";
+
+function CountdownStatus({ createdAt, isPublished, plan }: { createdAt: string, isPublished: boolean, plan: string }) {
+  const [timeLeft, setTimeLeft] = useState("");
+  const [isExpired, setIsExpired] = useState(false);
+
+  useEffect(() => {
+    if (plan !== "free" || !isPublished) return;
+
+    const expiresAt = new Date(createdAt).getTime() + 24 * 60 * 60 * 1000;
+    
+    const update = () => {
+      const now = Date.now();
+      const diff = expiresAt - now;
+      if (diff <= 0) {
+        setIsExpired(true);
+        setTimeLeft("00:00:00");
+      } else {
+        const h = Math.floor(diff / (1000 * 60 * 60)).toString().padStart(2, "0");
+        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, "0");
+        const s = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, "0");
+        setTimeLeft(`${h}:${m}:${s}`);
+      }
+    };
+
+    update();
+    const interval = setInterval(update, 1000);
+    return () => clearInterval(interval);
+  }, [createdAt, plan, isPublished]);
+
+  if (!isPublished) {
+    return <span className="px-2 py-1 text-xs font-bold rounded-full bg-slate-800 text-slate-400">Draft</span>;
+  }
+
+  if (plan !== "free") {
+    return <span className="px-2 py-1 text-xs font-bold rounded-full bg-emerald-500/10 text-emerald-500">Published (Selamanya)</span>;
+  }
+
+  if (isExpired) {
+    return <span className="px-2 py-1 text-xs font-bold rounded-full bg-rose-500/10 text-rose-500">Kedaluwarsa</span>;
+  }
+
+  return (
+    <div className="flex flex-col gap-1">
+      <span className="w-max px-2 py-1 text-xs font-bold rounded-full bg-emerald-500/10 text-emerald-500">Published</span>
+      <span className="w-max text-[10px] text-amber-500 font-mono tracking-wider">Sisa: {timeLeft}</span>
+    </div>
+  );
+}
 
 export default function InvitationsClient({ initialInvitations }: { initialInvitations: any[] }) {
   const [invitations, setInvitations] = useState(initialInvitations);
@@ -81,11 +129,11 @@ export default function InvitationsClient({ initialInvitations }: { initialInvit
                     {inv.profiles?.name || "Unknown"} <span className="text-xs text-slate-500 bg-slate-800 px-2 py-0.5 rounded-full ml-1 uppercase">{inv.profiles?.plan || "free"}</span>
                   </td>
                   <td className="px-6 py-4">
-                    <span className={`px-2 py-1 text-xs font-bold rounded-full ${
-                      inv.is_published ? "bg-emerald-500/10 text-emerald-500" : "bg-slate-800 text-slate-400"
-                    }`}>
-                      {inv.is_published ? "Published" : "Draft"}
-                    </span>
+                    <CountdownStatus 
+                      createdAt={inv.created_at} 
+                      isPublished={inv.is_published} 
+                      plan={inv.profiles?.plan || "free"} 
+                    />
                   </td>
                   <td className="px-6 py-4">{new Date(inv.created_at).toLocaleDateString("id-ID")}</td>
                   <td className="px-6 py-4">
