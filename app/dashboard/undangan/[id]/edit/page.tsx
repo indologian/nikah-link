@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useRouter, useParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import ConfirmModal from "@/components/ui/ConfirmModal";
+import LocationAutocomplete from "@/components/ui/LocationAutocomplete";
 import {
   Heart, Calendar, MapPin, Music, Image as ImageIcon,
   Gift, Settings, Sparkles, ArrowRight, ArrowLeft, Check, Loader2, CheckCircle2, XCircle
@@ -590,8 +591,37 @@ export default function EditInvitationPage() {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div><label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Tanggal Akad</label><input type="date" value={formData.akad_date} onChange={(e) => handleChange("akad_date", e.target.value)} className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-[#423338] text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]" /></div>
                   <div><label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Waktu (Jam)</label><input type="text" value={formData.akad_time} onChange={(e) => handleChange("akad_time", e.target.value)} className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-[#423338] text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]" /></div>
-                  <div><label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Nama Tempat / Gedung</label><input type="text" value={formData.akad_venue} onChange={(e) => handleChange("akad_venue", e.target.value)} className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-[#423338] text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]" /></div>
-                  <div><label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Link Google Maps</label><input type="url" value={formData.akad_maps_url} onChange={(e) => handleChange("akad_maps_url", e.target.value)} className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-[#423338] text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]" /></div>
+                  <div className="md:col-span-2">
+                    <label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Nama Tempat / Gedung</label>
+                    <LocationAutocomplete
+                      value={formData.akad_venue}
+                      onChange={(val) => handleChange("akad_venue", val)}
+                      onSelect={(place) => {
+                        const placeName = place.name || place.display_name.split(",")[0];
+                        setFormData((prev) => ({
+                          ...prev,
+                          akad_venue: placeName,
+                          akad_address: place.display_name,
+                          akad_maps_url: `https://maps.google.com/?q=${place.lat},${place.lon}`
+                        }));
+                      }}
+                      placeholder="Ketik nama Masjid / Hotel / Gedung (Pilih saran agar Alamat otomatis terisi)"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Alamat Lengkap</label>
+                    <textarea
+                      rows={2}
+                      value={formData.akad_address}
+                      onChange={(e) => handleChange("akad_address", e.target.value)}
+                      placeholder="Jl. Merdeka No. 1, Jakarta"
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-[#423338] text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Link Google Maps</label>
+                    <input type="url" value={formData.akad_maps_url} onChange={(e) => handleChange("akad_maps_url", e.target.value)} className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-[#423338] text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]" />
+                  </div>
                 </div>
               </div>
               <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 dark:border-[#423338] space-y-4">
@@ -599,8 +629,37 @@ export default function EditInvitationPage() {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div><label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Tanggal Resepsi</label><input type="date" value={formData.reception_date} onChange={(e) => handleChange("reception_date", e.target.value)} className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-[#423338] text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]" /></div>
                   <div><label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Waktu (Jam)</label><input type="text" value={formData.reception_time} onChange={(e) => handleChange("reception_time", e.target.value)} className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-[#423338] text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]" /></div>
-                  <div><label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Nama Tempat / Gedung</label><input type="text" value={formData.reception_venue} onChange={(e) => handleChange("reception_venue", e.target.value)} className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-[#423338] text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]" /></div>
-                  <div><label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Link Google Maps</label><input type="url" value={formData.reception_maps_url} onChange={(e) => handleChange("reception_maps_url", e.target.value)} className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-[#423338] text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]" /></div>
+                  <div className="md:col-span-2">
+                    <label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Nama Tempat / Gedung</label>
+                    <LocationAutocomplete
+                      value={formData.reception_venue}
+                      onChange={(val) => handleChange("reception_venue", val)}
+                      onSelect={(place) => {
+                        const placeName = place.name || place.display_name.split(",")[0];
+                        setFormData((prev) => ({
+                          ...prev,
+                          reception_venue: placeName,
+                          reception_address: place.display_name,
+                          reception_maps_url: `https://maps.google.com/?q=${place.lat},${place.lon}`
+                        }));
+                      }}
+                      placeholder="Ketik nama Masjid / Hotel / Gedung (Pilih saran agar Alamat otomatis terisi)"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Alamat Lengkap</label>
+                    <textarea
+                      rows={2}
+                      value={formData.reception_address}
+                      onChange={(e) => handleChange("reception_address", e.target.value)}
+                      placeholder="Jl. Sudirman No. 1, Jakarta"
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-[#423338] text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Link Google Maps</label>
+                    <input type="url" value={formData.reception_maps_url} onChange={(e) => handleChange("reception_maps_url", e.target.value)} className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-[#423338] text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]" />
+                  </div>
                 </div>
               </div>
             </motion.div>

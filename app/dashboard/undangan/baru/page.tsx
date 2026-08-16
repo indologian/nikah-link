@@ -12,6 +12,7 @@ import {
 import Link from "next/link";
 
 import UpsellModal from "@/components/dashboard/UpsellModal";
+import LocationAutocomplete from "@/components/ui/LocationAutocomplete";
 
 const STEPS = [
   { id: "basic", label: "Mempelai", icon: Heart },
@@ -692,14 +693,31 @@ export default function NewInvitationPage() {
                       className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-[#1A1517] border border-slate-200 dark:border-[#423338] text-slate-800 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]"
                     />
                   </div>
-                  <div>
+                  <div className="md:col-span-2">
                     <label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Nama Tempat / Gedung</label>
-                    <input
-                      type="text"
+                    <LocationAutocomplete
                       value={formData.akad_venue}
-                      onChange={(e) => handleChange("akad_venue", e.target.value)}
-                      placeholder="Masjid Agung / Hotel Grand Ballroom"
-                      className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-[#1A1517] border border-slate-200 dark:border-[#423338] text-slate-800 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]"
+                      onChange={(val) => handleChange("akad_venue", val)}
+                      onSelect={(place) => {
+                        const placeName = place.name || place.display_name.split(",")[0];
+                        setFormData((prev) => ({
+                          ...prev,
+                          akad_venue: placeName,
+                          akad_address: place.display_name,
+                          akad_maps_url: `https://maps.google.com/?q=${place.lat},${place.lon}`
+                        }));
+                      }}
+                      placeholder="Ketik nama Masjid / Hotel / Gedung (Pilih saran agar Alamat otomatis terisi)"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Alamat Lengkap</label>
+                    <textarea
+                      rows={2}
+                      value={formData.akad_address}
+                      onChange={(e) => handleChange("akad_address", e.target.value)}
+                      placeholder="Jl. Merdeka No. 1, Jakarta"
+                      className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-[#1A1517] border border-slate-200 dark:border-[#423338] text-slate-800 dark:text-slate-100 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]"
                     />
                   </div>
                   <div>
@@ -709,7 +727,7 @@ export default function NewInvitationPage() {
                       value={formData.akad_maps_url}
                       onChange={(e) => handleChange("akad_maps_url", e.target.value)}
                       placeholder="https://maps.google.com/..."
-                      className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-[#1A1517] border border-slate-200 dark:border-[#423338] text-slate-800 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]"
+                      className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-[#1A1517] border border-slate-200 dark:border-[#423338] text-slate-800 dark:text-slate-100 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]"
                     />
                   </div>
                 </div>
@@ -740,14 +758,31 @@ export default function NewInvitationPage() {
                       className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-[#1A1517] border border-slate-200 dark:border-[#423338] text-slate-800 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]"
                     />
                   </div>
-                  <div>
+                  <div className="md:col-span-2">
                     <label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Nama Tempat / Gedung</label>
-                    <input
-                      type="text"
+                    <LocationAutocomplete
                       value={formData.reception_venue}
-                      onChange={(e) => handleChange("reception_venue", e.target.value)}
-                      placeholder="Grand Ballroom Hotel Ritz"
-                      className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-[#1A1517] border border-slate-200 dark:border-[#423338] text-slate-800 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]"
+                      onChange={(val) => handleChange("reception_venue", val)}
+                      onSelect={(place) => {
+                        const placeName = place.name || place.display_name.split(",")[0];
+                        setFormData((prev) => ({
+                          ...prev,
+                          reception_venue: placeName,
+                          reception_address: place.display_name,
+                          reception_maps_url: `https://maps.google.com/?q=${place.lat},${place.lon}`
+                        }));
+                      }}
+                      placeholder="Ketik nama Masjid / Hotel / Gedung (Pilih saran agar Alamat otomatis terisi)"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Alamat Lengkap</label>
+                    <textarea
+                      rows={2}
+                      value={formData.reception_address}
+                      onChange={(e) => handleChange("reception_address", e.target.value)}
+                      placeholder="Jl. Sudirman No. 1, Jakarta"
+                      className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-[#1A1517] border border-slate-200 dark:border-[#423338] text-slate-800 dark:text-slate-100 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]"
                     />
                   </div>
                   <div>
@@ -757,7 +792,7 @@ export default function NewInvitationPage() {
                       value={formData.reception_maps_url}
                       onChange={(e) => handleChange("reception_maps_url", e.target.value)}
                       placeholder="https://maps.google.com/..."
-                      className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-[#1A1517] border border-slate-200 dark:border-[#423338] text-slate-800 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]"
+                      className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-[#1A1517] border border-slate-200 dark:border-[#423338] text-slate-800 dark:text-slate-100 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]"
                     />
                   </div>
                 </div>
