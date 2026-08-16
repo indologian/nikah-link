@@ -6,6 +6,7 @@ import { useRouter, useParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import ConfirmModal from "@/components/ui/ConfirmModal";
 import LocationAutocomplete from "@/components/ui/LocationAutocomplete";
+import TimeRangePicker from "@/components/ui/TimeRangePicker";
 import {
   Heart, Calendar, MapPin, Music, Image as ImageIcon,
   Gift, Settings, Sparkles, ArrowRight, ArrowLeft, Check, Loader2, CheckCircle2, XCircle
@@ -590,7 +591,7 @@ export default function EditInvitationPage() {
                 <h3 className="text-xs font-bold text-amber-700 uppercase tracking-wider flex items-center gap-2"><MapPin className="w-4 h-4" /> Akad Nikah / Pemberkatan</h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div><label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Tanggal Akad</label><input type="date" value={formData.akad_date} onChange={(e) => handleChange("akad_date", e.target.value)} className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-[#423338] text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]" /></div>
-                  <div><label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Waktu (Jam)</label><input type="text" value={formData.akad_time} onChange={(e) => handleChange("akad_time", e.target.value)} className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-[#423338] text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]" /></div>
+                  <div><label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Waktu (Jam)</label><TimeRangePicker value={formData.akad_time} onChange={(val) => handleChange("akad_time", val)} /></div>
                   <div className="md:col-span-2">
                     <label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Nama Tempat / Gedung</label>
                     <LocationAutocomplete
@@ -628,7 +629,7 @@ export default function EditInvitationPage() {
                 <h3 className="text-xs font-bold text-[#9E1B54] uppercase tracking-wider flex items-center gap-2"><MapPin className="w-4 h-4" /> Resepsi Pernikahan</h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div><label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Tanggal Resepsi</label><input type="date" value={formData.reception_date} onChange={(e) => handleChange("reception_date", e.target.value)} className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-[#423338] text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]" /></div>
-                  <div><label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Waktu (Jam)</label><input type="text" value={formData.reception_time} onChange={(e) => handleChange("reception_time", e.target.value)} className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-[#423338] text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]" /></div>
+                  <div><label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Waktu (Jam)</label><TimeRangePicker value={formData.reception_time} onChange={(val) => handleChange("reception_time", val)} /></div>
                   <div className="md:col-span-2">
                     <label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Nama Tempat / Gedung</label>
                     <LocationAutocomplete

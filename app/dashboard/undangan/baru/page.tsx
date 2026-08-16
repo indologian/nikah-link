@@ -13,6 +13,7 @@ import Link from "next/link";
 
 import UpsellModal from "@/components/dashboard/UpsellModal";
 import LocationAutocomplete from "@/components/ui/LocationAutocomplete";
+import TimeRangePicker from "@/components/ui/TimeRangePicker";
 
 const STEPS = [
   { id: "basic", label: "Mempelai", icon: Heart },
@@ -685,12 +686,9 @@ export default function NewInvitationPage() {
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Waktu (Jam)</label>
-                    <input
-                      type="text"
+                    <TimeRangePicker
                       value={formData.akad_time}
-                      onChange={(e) => handleChange("akad_time", e.target.value)}
-                      placeholder="08:00 WIB - Selesai"
-                      className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-[#1A1517] border border-slate-200 dark:border-[#423338] text-slate-800 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]"
+                      onChange={(val) => handleChange("akad_time", val)}
                     />
                   </div>
                   <div className="md:col-span-2">
@@ -750,12 +748,9 @@ export default function NewInvitationPage() {
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Waktu (Jam)</label>
-                    <input
-                      type="text"
+                    <TimeRangePicker
                       value={formData.reception_time}
-                      onChange={(e) => handleChange("reception_time", e.target.value)}
-                      placeholder="11:00 - 14:00 WIB"
-                      className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-[#1A1517] border border-slate-200 dark:border-[#423338] text-slate-800 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]"
+                      onChange={(val) => handleChange("reception_time", val)}
                     />
                   </div>
                   <div className="md:col-span-2">
