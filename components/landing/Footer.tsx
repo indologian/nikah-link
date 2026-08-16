@@ -42,25 +42,44 @@ export default function Footer() {
 
       {/* Main Footer Links */}
       <div className="w-full max-w-4xl lg:max-w-5xl py-12 flex flex-col items-center justify-center">
-        <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-6">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <div
-              className="rounded-full bg-[#C58F78] flex items-center justify-center"
-              style={{ width: "32px", height: "32px", minWidth: "32px", minHeight: "32px" }}
-            >
-              <Heart size={16} className="text-white fill-white" strokeWidth={0} />
-            </div>
-            <span className="font-playfair text-xl font-bold text-[#2D2424] dark:text-[#FDFBF7]">NikahLink</span>
-          </Link>
+        <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 text-center md:text-left">
+          {/* Logo & Description */}
+          <div className="flex flex-col items-center md:items-start gap-4">
+            <Link href="/" className="flex items-center gap-2">
+              <div
+                className="rounded-full bg-[#C58F78] flex items-center justify-center"
+                style={{ width: "32px", height: "32px", minWidth: "32px", minHeight: "32px" }}
+              >
+                <Heart size={16} className="text-white fill-white" strokeWidth={0} />
+              </div>
+              <span className="font-playfair text-xl font-bold text-[#2D2424] dark:text-[#FDFBF7]">NikahLink</span>
+            </Link>
+            <p className="text-sm text-[#756767] dark:text-[#B39E9E] max-w-xs">
+              Buat undangan pernikahan digital elegan dan interaktif dengan mudah dalam hitungan menit.
+            </p>
+          </div>
 
-          {/* Links */}
-          <div className="flex flex-wrap justify-center gap-6 text-xs sm:text-sm font-semibold text-[#756767] dark:text-[#B39E9E]">
-            <Link href="/" className="hover:text-[#C58F78] transition-colors">Beranda</Link>
-            <Link href="/tema" className="hover:text-[#C58F78] transition-colors">Tema Desain</Link>
-            <Link href="/harga" className="hover:text-[#C58F78] transition-colors">Pilihan Harga</Link>
-            <Link href="/vendor" className="hover:text-[#C58F78] transition-colors">Vendor</Link>
-            <Link href="/masuk" className="hover:text-[#C58F78] transition-colors">Masuk</Link>
+          {/* Navigation Links */}
+          <div className="flex flex-col items-center md:items-start gap-3">
+            <h3 className="font-bold text-[#2D2424] dark:text-[#FDFBF7] mb-2">Tautan Cepat</h3>
+            <div className="flex flex-col gap-2 text-sm font-semibold text-[#756767] dark:text-[#B39E9E]">
+              <Link href="/" className="hover:text-[#C58F78] transition-colors">Beranda</Link>
+              <Link href="/tema" className="hover:text-[#C58F78] transition-colors">Tema Desain</Link>
+              <Link href="/harga" className="hover:text-[#C58F78] transition-colors">Pilihan Harga</Link>
+              <Link href="/vendor" className="hover:text-[#C58F78] transition-colors">Vendor</Link>
+              <Link href="/masuk" className="hover:text-[#C58F78] transition-colors">Masuk</Link>
+            </div>
+          </div>
+
+          {/* Contact Information */}
+          <div className="flex flex-col items-center md:items-start gap-2 text-sm text-[#756767] dark:text-[#B39E9E]">
+            <h3 className="font-bold text-[#2D2424] dark:text-[#FDFBF7] mb-2">Hubungi Kami</h3>
+            <p>WhatsApp: <a href="https://wa.me/6285179714541" target="_blank" rel="noreferrer" className="hover:text-[#C58F78] transition-colors">085179714541</a></p>
+            <p>Email: <a href="mailto:beni.mustiko.a@gmail.com" className="hover:text-[#C58F78] transition-colors">beni.mustiko.a@gmail.com</a></p>
+            <p className="max-w-xs md:max-w-sm mt-1 leading-relaxed">
+              Klawisan X, Barepan, Margoagung, Seyegan,<br />
+              Sleman, Yogyakarta
+            </p>
           </div>
         </div>
 
