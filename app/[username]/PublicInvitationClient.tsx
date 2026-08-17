@@ -17,7 +17,7 @@ interface Props {
   initialWishes: any[];
   giftAccounts: any[];
   isFreePlan?: boolean;
-  createdAt?: string;
+  expiresAt?: string | null;
 }
 
 export default function PublicInvitationClient({
@@ -26,7 +26,7 @@ export default function PublicInvitationClient({
   initialWishes,
   giftAccounts,
   isFreePlan,
-  createdAt,
+  expiresAt,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -78,13 +78,13 @@ export default function PublicInvitationClient({
   const [freeTimeLeftStr, setFreeTimeLeftStr] = useState("");
 
   useEffect(() => {
-    if (!isFreePlan || !createdAt) return;
+    if (!isFreePlan || !expiresAt) return;
 
-    const expiresAt = new Date(createdAt).getTime() + 24 * 60 * 60 * 1000;
+    const expiresAtMs = new Date(expiresAt).getTime();
 
     const updateFreeCountdown = () => {
       const now = Date.now();
-      const diff = expiresAt - now;
+      const diff = expiresAtMs - now;
 
       if (diff <= 0) {
         setIsExpired(true);
@@ -100,7 +100,7 @@ export default function PublicInvitationClient({
     updateFreeCountdown();
     const timer = setInterval(updateFreeCountdown, 1000);
     return () => clearInterval(timer);
-  }, [isFreePlan, createdAt]);
+  }, [isFreePlan, expiresAt]);
 
   // Audio toggle
   const handleOpenInvitation = () => {

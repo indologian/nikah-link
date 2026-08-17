@@ -10,21 +10,42 @@ import PricingSection from "@/components/landing/PricingSection";
 import TestimonialSection from "@/components/landing/TestimonialSection";
 import FaqSection from "@/components/landing/FaqSection";
 import Footer from "@/components/landing/Footer";
+import { createClient } from "@/lib/supabase/server";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const supabase = await createClient();
+  const { data: settings } = await supabase
+    .from("site_settings")
+    .select("config")
+    .eq("id", 1)
+    .single();
+
+  const config = settings?.config || {
+    showHero: true,
+    showWhy: true,
+    showThemes: true,
+    showFeatures: true,
+    showHowItWorks: true,
+    showEcoImpact: true,
+    showVendor: true,
+    showPricing: true,
+    showTestimonial: true,
+    showFaq: true,
+  };
+
   return (
     <main className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50 flex flex-col w-full">
       <Navbar />
-      <HeroSection />
-      <WhySection />
-      <ThemeCarousel />
-      <FeaturesSection />
-      <HowItWorks />
-      <EcoImpact />
-      <VendorPreview />
-      <PricingSection />
-      <TestimonialSection />
-      <FaqSection />
+      {config.showHero && <HeroSection />}
+      {config.showWhy && <WhySection />}
+      {config.showThemes && <ThemeCarousel />}
+      {config.showFeatures && <FeaturesSection />}
+      {config.showHowItWorks && <HowItWorks />}
+      {config.showEcoImpact && <EcoImpact />}
+      {config.showVendor && <VendorPreview />}
+      {config.showPricing && <PricingSection />}
+      {config.showTestimonial && <TestimonialSection />}
+      {config.showFaq && <FaqSection />}
       <Footer />
     </main>
   );

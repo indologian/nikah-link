@@ -83,7 +83,7 @@ export default async function PublicInvitationPage({ params, searchParams }: Pro
           { id: "2", type: "bank", bank_name: "Mandiri", account_number: "9876543210", account_name: "Juliet Capulet" },
         ]}
         isFreePlan={false}
-        createdAt={new Date().toISOString()}
+        expiresAt={null}
       />
     );
   }
@@ -119,7 +119,7 @@ export default async function PublicInvitationPage({ params, searchParams }: Pro
       initialWishes={wishes || []}
       giftAccounts={gifts || []}
       isFreePlan={isFreePlan}
-      createdAt={invitation.created_at}
+      expiresAt={invitation.expires_at}
     />
   );
 }

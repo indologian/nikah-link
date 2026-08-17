@@ -151,6 +151,12 @@ export default function NewInvitationPage() {
         const planExpiresAt = profile?.plan_expires_at ? new Date(profile.plan_expires_at) : null;
         setUserPlan(plan);
 
+        // Jika Free tier, buatkan random slug
+        if (plan === "free") {
+          const randomSlug = `trial-${Math.random().toString(36).substring(2, 10)}`;
+          setFormData(prev => ({ ...prev, username: randomSlug }));
+        }
+
         // Check if limit is exceeded or free trial is already used
         const limits = { free: 1, premium: 1, pro: 2 };
         const planLimit = limits[plan as "free" | "premium" | "pro"] || 1;
@@ -567,13 +573,19 @@ export default function NewInvitationPage() {
                     onChange={(e) => setFormData(prev => ({...prev, username: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "")}))}
                     placeholder="romeo-juliet"
                     required
-                    className="flex-1 bg-transparent px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none text-xs sm:text-sm font-mono font-semibold"
+                    disabled={userPlan === "free"}
+                    className="flex-1 bg-transparent px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none text-xs sm:text-sm font-mono font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                   {slugStatus === "checking" && <Loader2 className="w-4 h-4 mr-4 text-slate-400 animate-spin" />}
                   {slugStatus === "available" && <CheckCircle2 className="w-4 h-4 mr-4 text-emerald-500" />}
                   {slugStatus === "taken" && <XCircle className="w-4 h-4 mr-4 text-rose-500" />}
                 </div>
-                {slugStatus === "taken" && (
+                {userPlan === "free" && (
+                  <p className="text-slate-500 text-xs mt-1.5 font-medium flex items-center gap-1">
+                    Format URL tidak bisa diubah pada paket Gratis.
+                  </p>
+                )}
+                {slugStatus === "taken" && userPlan !== "free" && (
                   <p className="text-rose-500 text-xs mt-1.5 font-medium flex items-center gap-1">
                     URL ini sudah digunakan orang lain.
                   </p>
