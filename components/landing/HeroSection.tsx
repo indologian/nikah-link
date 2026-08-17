@@ -37,27 +37,27 @@ function FloatingThemeCards() {
                 key={theme.name}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className={`absolute inset-0 ${theme.bg} border-x border-t border-black/10 dark:border-white/10 flex flex-col justify-between p-8 text-center overflow-hidden`}
+                className={`absolute inset-0 ${theme.bg} border-x border-t border-black/10 dark:border-white/10 flex flex-col justify-between p-6 sm:p-8 text-center overflow-hidden`}
               >
-                <div className="mt-8 space-y-6">
-                  <div className="w-14 h-14 mx-auto bg-slate-900 dark:bg-white flex items-center justify-center">
-                    <Heart size={24} className="text-white dark:text-slate-900 fill-current" strokeWidth={0} />
+                <div className="mt-4 sm:mt-8 space-y-4 sm:space-y-6">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto bg-slate-900 dark:bg-white flex items-center justify-center">
+                    <Heart size={20} className="text-white dark:text-slate-900 fill-current sm:w-6 sm:h-6" strokeWidth={0} />
                   </div>
 
-                  <div className="space-y-2">
-                    <span className={`text-xs uppercase tracking-[0.2em] font-medium block ${theme.textColor === "text-white" ? "text-white/60" : "text-slate-500"}`}>
+                  <div className="space-y-1 sm:space-y-2">
+                    <span className={`text-[10px] sm:text-xs uppercase tracking-[0.2em] font-medium block ${theme.textColor === "text-white" ? "text-white/60" : "text-slate-500"}`}>
                       The Wedding of
                     </span>
                     <h3 className={`font-playfair text-4xl font-bold leading-tight ${theme.textColor}`}>
                       Romeo <br/>& Juliet
                     </h3>
+                    </h3>
                   </div>
                 </div>
 
-                <div className="mb-4">
-                  <div className={`w-12 h-px mx-auto mb-6 ${theme.textColor === "text-white" ? "bg-white/20" : "bg-black/10"}`} />
+                <div className="mb-2 sm:mb-4">
+                  <div className={`w-8 sm:w-12 h-px mx-auto mb-4 sm:mb-6 ${theme.textColor === "text-white" ? "bg-white/20" : "bg-black/10"}`} />
                   <p className={`text-sm ${theme.textColor === "text-white" ? "text-white/70" : "text-slate-500"}`}>
                     24 Oktober 2026
                   </p>
