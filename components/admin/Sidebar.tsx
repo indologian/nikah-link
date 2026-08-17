@@ -43,13 +43,17 @@ export default function AdminSidebar() {
     >
       {/* Logo Area */}
       <div className="h-16 flex items-center justify-between px-4 border-b border-slate-200 dark:border-slate-800">
-        {!isCollapsed && (
-          <Link href="/admin" className="flex items-center gap-2 font-black text-xl text-slate-900 dark:text-white">
-            <ShieldAlert className="w-6 h-6 text-slate-900 dark:text-white" />
-            <span>SuperAdmin</span>
-          </Link>
-        )}
-        {isCollapsed && (
+        {!isCollapsed ? (
+          <>
+            <Link href="/admin" className="flex items-center gap-2 font-black text-slate-900 dark:text-white">
+              <ShieldAlert className="w-5 h-5 text-slate-900 dark:text-white flex-shrink-0" />
+              <span className="text-lg tracking-tight">SuperAdmin</span>
+            </Link>
+            <div className="scale-75 origin-right flex-shrink-0">
+              <ThemeToggle />
+            </div>
+          </>
+        ) : (
           <ShieldAlert className="w-6 h-6 text-slate-900 dark:text-white mx-auto" />
         )}
         <button
@@ -88,12 +92,6 @@ export default function AdminSidebar() {
 
       {/* Footer */}
       <div className="p-4 border-t border-slate-200 dark:border-slate-800 space-y-2">
-        <div className={`flex items-center ${isCollapsed ? 'justify-center' : 'justify-between px-3'} mb-4`}>
-          {!isCollapsed && <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Tampilan</span>}
-          <div className="scale-90 origin-left">
-            <ThemeToggle />
-          </div>
-        </div>
         
         <Link
           href="/dashboard"
