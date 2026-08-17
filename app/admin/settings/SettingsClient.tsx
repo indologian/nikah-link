@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Loader2, CheckCircle2, LayoutTemplate } from "lucide-react";
-import { Switch } from "@/components/ui/switch"; // Assuming they have a switch, I should check or just use HTML checkbox. Let's use custom tailwind toggle.
 // I will just use standard custom tailwind toggle to avoid missing dependencies.
 
 interface SettingsClientProps {
