@@ -17,6 +17,7 @@ export default function UsersClient({ initialUsers }: { initialUsers: Profile[] 
   );
 
   const handleUpdatePlan = async (userId: string, newPlan: string) => {
+    if (!confirm(`Yakin ingin mengubah paket berlangganan menjadi ${newPlan.toUpperCase()}?`)) return;
     setLoadingId(userId);
     try {
       // 1. Cek jumlah undangan saat ini
