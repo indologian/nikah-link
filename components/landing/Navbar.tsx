@@ -19,19 +19,46 @@ export default function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [user, setUser] = useState<{ name: string; email: string } | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const supabase = createClient();
+
     const fetchUser = async () => {
-      const supabase = createClient();
-      const { data: { session } } = await supabase.auth.getSession();
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) {
+          setUser({
+            name: session.user.user_metadata?.name || session.user.email?.split("@")[0] || "User",
+            email: session.user.email || ""
+          });
+        } else {
+          setUser(null);
+        }
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
         setUser({
           name: session.user.user_metadata?.name || session.user.email?.split("@")[0] || "User",
           email: session.user.email || ""
         });
+      } else {
+        setUser(null);
       }
+      setLoading(false);
+    });
+
+    return () => {
+      subscription.unsubscribe();
     };
-    fetchUser();
   }, []);
 
   const isActive = (href: string) => {
@@ -79,7 +106,9 @@ export default function Navbar() {
           {/* Right Actions */}
           <div className="hidden md:flex items-center gap-4 shrink-0">
             <ThemeToggle />
-            {user ? (
+            {loading ? (
+              <div className="w-20 h-8 animate-pulse bg-slate-100 dark:bg-slate-800" />
+            ) : user ? (
               <Link
                 href="/dashboard"
                 className="flex items-center gap-2 text-slate-900 dark:text-white text-[13px] font-medium hover:underline underline-offset-4 decoration-slate-300 transition-all"
@@ -142,7 +171,9 @@ export default function Navbar() {
             </div>
 
             <div className="mt-auto p-6 border-t border-slate-200 dark:border-slate-800 flex flex-col gap-4">
-              {user ? (
+              {loading ? (
+                <div className="w-full h-12 animate-pulse bg-slate-100 dark:bg-slate-800" />
+              ) : user ? (
                 <Link
                   href="/dashboard"
                   onClick={() => setMobileOpen(false)}
