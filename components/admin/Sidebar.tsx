@@ -36,24 +36,24 @@ export default function AdminSidebar() {
 
   return (
     <aside
-      className={`fixed left-0 top-0 h-screen bg-slate-900 border-r border-slate-800 transition-all duration-300 z-40 flex flex-col ${
+      className={`fixed left-0 top-0 h-screen bg-slate-50 dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transition-all duration-300 z-40 flex flex-col ${
         isCollapsed ? "w-20" : "w-64"
       }`}
     >
       {/* Logo Area */}
-      <div className="h-16 flex items-center justify-between px-4 border-b border-slate-800">
+      <div className="h-16 flex items-center justify-between px-4 border-b border-slate-200 dark:border-slate-800">
         {!isCollapsed && (
-          <Link href="/admin" className="flex items-center gap-2 font-black text-xl text-white">
-            <ShieldAlert className="w-6 h-6 text-rose-500" />
+          <Link href="/admin" className="flex items-center gap-2 font-black text-xl text-slate-900 dark:text-white">
+            <ShieldAlert className="w-6 h-6 text-slate-900 dark:text-slate-900 dark:text-white" />
             <span>SuperAdmin</span>
           </Link>
         )}
         {isCollapsed && (
-          <ShieldAlert className="w-6 h-6 text-rose-500 mx-auto" />
+          <ShieldAlert className="w-6 h-6 text-slate-900 dark:text-slate-900 dark:text-white mx-auto" />
         )}
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-400 absolute -right-3 top-5 bg-slate-900 border border-slate-800"
+          className="p-1.5 rounded-none hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-400 absolute -right-3 top-5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800"
         >
           {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
         </button>
@@ -67,16 +67,16 @@ export default function AdminSidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all group ${
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-none transition-all group ${
                 isActive
-                  ? "bg-rose-500/10 text-rose-500 font-bold"
-                  : "text-slate-400 hover:text-slate-200 hover:bg-slate-800"
+                  ? "bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-slate-900 dark:text-white font-bold"
+                  : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800"
               }`}
               title={isCollapsed ? item.label : undefined}
             >
               <item.icon
                 className={`w-5 h-5 shrink-0 ${
-                  isActive ? "text-rose-500" : "text-slate-400 group-hover:text-slate-200"
+                  isActive ? "text-slate-900 dark:text-slate-900 dark:text-white" : "text-slate-400 group-hover:text-slate-200"
                 }`}
               />
               {!isCollapsed && <span className="text-sm">{item.label}</span>}
@@ -86,10 +86,10 @@ export default function AdminSidebar() {
       </div>
 
       {/* Footer */}
-      <div className="p-4 border-t border-slate-800 space-y-2">
+      <div className="p-4 border-t border-slate-200 dark:border-slate-800 space-y-2">
         <Link
           href="/dashboard"
-          className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800 ${
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-none transition-all text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800 ${
             isCollapsed ? "justify-center" : ""
           }`}
           title={isCollapsed ? "Kembali ke Dashboard User" : undefined}
@@ -99,7 +99,7 @@ export default function AdminSidebar() {
         </Link>
         <button
           onClick={handleLogout}
-          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 ${
+          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-none transition-all text-slate-400 hover:text-slate-900 dark:hover:text-slate-900 dark:text-white hover:bg-slate-200 dark:bg-slate-800 ${
             isCollapsed ? "justify-center" : ""
           }`}
           title={isCollapsed ? "Keluar" : undefined}
