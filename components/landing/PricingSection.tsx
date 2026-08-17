@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils";
 interface PricingSectionProps {
   onCheckout?: (plan: "premium" | "pro") => void;
   isLoading?: string | null;
+}
+
 interface PlanFeature {
   text: string;
   included: boolean;
