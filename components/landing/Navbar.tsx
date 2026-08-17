@@ -26,11 +26,19 @@ export default function Navbar() {
 
     const fetchUser = async () => {
       try {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session?.user) {
+        const { data: { user }, error } = await supabase.auth.getUser();
+        
+        if (error) {
+          // If the user was deleted in the database but session still exists locally
+          await supabase.auth.signOut();
+          setUser(null);
+          return;
+        }
+
+        if (user) {
           setUser({
-            name: session.user.user_metadata?.name || session.user.email?.split("@")[0] || "User",
-            email: session.user.email || ""
+            name: user.user_metadata?.name || user.email?.split("@")[0] || "User",
+            email: user.email || ""
           });
         } else {
           setUser(null);
