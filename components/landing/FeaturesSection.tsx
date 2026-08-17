@@ -25,7 +25,7 @@ export default function FeaturesSection() {
   return (
     <section
       id="fitur"
-      className="w-full flex flex-col items-center justify-center py-20 lg:py-24 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 transition-colors"
+      className="w-full flex flex-col items-center justify-center py-16 lg:py-20 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 transition-colors"
     >
       <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center">
         {/* Section Heading */}
@@ -34,7 +34,7 @@ export default function FeaturesSection() {
             Fitur Terlengkap
           </span>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-medium tracking-tight text-slate-900 dark:text-white leading-[1.05]">
-            18+ Fitur Unggulan<br />Untuk Hari Sempurna
+            12+ Fitur Unggulan<br />Untuk Hari Sempurna
           </h2>
           <p className="text-slate-500 text-lg max-w-md mx-auto leading-relaxed">
             Semua yang kalian butuhkan untuk pernikahan impian telah siap digunakan tanpa perlu biaya tambahan.

@@ -83,7 +83,7 @@ export default function ThemeCarousel() {
     : THEMES.filter((t) => t.category === activeCategory);
 
   return (
-    <section className="w-full pt-20 pb-24 bg-white dark:bg-slate-950 transition-colors border-b border-slate-200 dark:border-slate-800">
+    <section className="w-full pt-16 pb-20 bg-white dark:bg-slate-950 transition-colors border-b border-slate-200 dark:border-slate-800">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Editorial Heading */}

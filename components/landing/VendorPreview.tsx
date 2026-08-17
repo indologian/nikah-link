@@ -51,7 +51,7 @@ export default function VendorPreview() {
 
   return (
     <section
-      className="w-full flex flex-col items-center justify-center py-20 lg:py-24 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 transition-colors"
+      className="w-full flex flex-col items-center justify-center py-16 lg:py-20 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 transition-colors"
     >
       <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center">
         {/* Section Heading */}

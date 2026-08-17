@@ -79,7 +79,7 @@ const PLANS: Plan[] = [
     subtitle: "Untuk yang Terbaik",
     price: "Rp149K",
     originalPrice: "Rp300K",
-    priceNote: "Promo Terbatas",
+    priceNote: "Sekali bayar, aktif selamanya",
     features: [
       { text: "Semua fitur paket Premium", included: true },
       { text: "Unlimited foto & video galeri", included: true },
@@ -97,7 +97,7 @@ const PLANS: Plan[] = [
 
 export default function PricingSection({ onCheckout, isLoading }: PricingSectionProps = {}) {
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full relative border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 transition-colors">
+    <section className="py-16 lg:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full relative border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 transition-colors">
       <div className="flex flex-col items-start lg:flex-row lg:justify-between mb-16 gap-8">
         <div className="max-w-2xl space-y-4">
           <span className="text-slate-900 dark:text-white font-mono tracking-widest text-xs uppercase">

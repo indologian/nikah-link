@@ -149,7 +149,7 @@ export default function HeroSection() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className="mt-16 flex items-center gap-8 pt-6 border-t border-slate-200 dark:border-slate-800"
+              className="mt-8 sm:mt-12 flex items-center gap-8 pt-6 border-t border-slate-200 dark:border-slate-800"
             >
               <div>
                 <div className="font-medium text-3xl tracking-tight text-slate-900 dark:text-white">125K+</div>
