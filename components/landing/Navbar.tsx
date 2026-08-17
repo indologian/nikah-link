@@ -9,10 +9,10 @@ import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { createClient } from "@/lib/supabase/client";
 
-const NAV_ITEMS = [
-  { label: "Tema Desain", href: "/tema" },
-  { label: "Pilihan Harga", href: "/harga" },
-  { label: "Vendor", href: "/vendor" },
+const DEFAULT_NAV_ITEMS = [
+  { label: "Tema Desain", href: "/tema", key: "showThemes" },
+  { label: "Pilihan Harga", href: "/harga", key: "showPricing" },
+  { label: "Vendor", href: "/vendor", key: "showVendor" },
 ];
 
 export default function Navbar() {
@@ -20,6 +20,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [user, setUser] = useState<{ name: string; email: string } | null>(null);
   const [loading, setLoading] = useState(true);
+  const [navItems, setNavItems] = useState<{label: string; href: string}[]>([]);
 
   useEffect(() => {
     const supabase = createClient();
@@ -50,7 +51,28 @@ export default function Navbar() {
       }
     };
 
+    const fetchSettings = async () => {
+      try {
+        const { data: settings } = await supabase
+          .from("site_settings")
+          .select("config")
+          .eq("id", 1)
+          .single();
+          
+        if (settings?.config) {
+          const config = settings.config;
+          const filtered = DEFAULT_NAV_ITEMS.filter(item => config[item.key] !== false);
+          setNavItems(filtered);
+        } else {
+          setNavItems(DEFAULT_NAV_ITEMS);
+        }
+      } catch (err) {
+        setNavItems(DEFAULT_NAV_ITEMS);
+      }
+    };
+
     fetchUser();
+    fetchSettings();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
@@ -95,7 +117,7 @@ export default function Navbar() {
 
           {/* Desktop Nav Links */}
           <nav className="hidden md:flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
-            {NAV_ITEMS.map((item) => (
+            {navItems.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
@@ -161,21 +183,23 @@ export default function Navbar() {
             className="fixed inset-0 top-16 z-40 bg-white dark:bg-slate-950 flex flex-col md:hidden overflow-y-auto"
           >
             <div className="flex flex-col p-6 gap-6">
-              {NAV_ITEMS.map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className={cn(
-                    "text-xl font-medium tracking-tight",
-                    isActive(item.href)
-                      ? "text-slate-900 dark:text-white"
-                      : "text-slate-500 dark:text-slate-400"
-                  )}
-                >
-                  {item.label}
-                </Link>
-              ))}
+              <nav className="flex flex-col">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => setMobileOpen(false)}
+                    className={cn(
+                      "text-xl font-medium tracking-tight py-3",
+                      isActive(item.href)
+                        ? "text-slate-900 dark:text-white"
+                        : "text-slate-500 dark:text-slate-400"
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
             </div>
 
             <div className="mt-auto p-6 border-t border-slate-200 dark:border-slate-800 flex flex-col gap-4">
