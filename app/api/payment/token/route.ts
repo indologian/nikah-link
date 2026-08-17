@@ -22,6 +22,41 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Plan tidak valid" }, { status: 400 });
     }
 
+    // Check current user plan
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("plan")
+      .eq("user_id", user.id)
+      .single();
+
+    const PLAN_RANK: Record<string, number> = { free: 0, premium: 1, pro: 2 };
+    const currentRank = PLAN_RANK[profile?.plan || "free"] ?? 0;
+    const targetRank = PLAN_RANK[plan] ?? 0;
+
+    if (targetRank <= currentRank) {
+      return NextResponse.json(
+        { error: `Kamu sudah menggunakan paket ${(profile?.plan || "free").toUpperCase()}. Tidak bisa membeli paket yang sama atau lebih rendah.` },
+        { status: 400 }
+      );
+    }
+
+    // Check if there's already a pending subscription for this user
+    const { data: pendingSub } = await supabase
+      .from("subscriptions")
+      .select("id")
+      .eq("user_id", user.id)
+      .eq("status", "pending")
+      .limit(1)
+      .single();
+
+    if (pendingSub) {
+      // Cancel the old pending subscription before creating a new one
+      await supabase
+        .from("subscriptions")
+        .update({ status: "cancelled" })
+        .eq("id", pendingSub.id);
+    }
+
     const planInfo = PLAN_PRICES[plan];
     const orderId = `NL-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
