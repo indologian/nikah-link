@@ -57,10 +57,10 @@ const PLANS: Plan[] = [
     subtitle: "Paling Favorit",
     price: "Rp79K",
     originalPrice: "Rp150K",
-    priceNote: "Sekali bayar, aktif selamanya",
+    priceNote: "Sekali bayar, masa aktif 3 bulan",
     features: [
       { text: "1 Undangan Premium", included: true },
-      { text: "Aktif Selamanya", included: true },
+      { text: "Aktif 3 Bulan", included: true },
       { text: "Unlimited tamu terundang", included: true },
       { text: "30 foto + 3 video galeri", included: true },
       { text: "Musik latar custom MP3", included: true },
