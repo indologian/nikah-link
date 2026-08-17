@@ -68,7 +68,6 @@ export default function GiftClient({ initialAccounts, invitations, plan }: GiftC
       });
       setIsModalOpen(true);
     } else {
-      // Create new
       if (invitations.length === 0) {
         setError("Kamu belum memiliki undangan. Buat undangan terlebih dahulu.");
         return;
@@ -118,7 +117,6 @@ export default function GiftClient({ initialAccounts, invitations, plan }: GiftC
 
         setAccounts(accounts.map(acc => acc.id === editingId ? { ...acc, ...formData } as GiftAccount : acc));
       } else {
-        // Enforce limit again on server side ideally, but doing it here
         const currentCount = accounts.filter(a => a.invitation_id === formData.invitation_id).length;
         if (currentCount >= planLimit) {
           throw new Error(`Batas maksimal rekening tercapai untuk paket ${plan.toUpperCase()}.`);
@@ -165,84 +163,92 @@ export default function GiftClient({ initialAccounts, invitations, plan }: GiftC
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-[#1A1517] p-6 rounded-2xl border border-[#F0E2DA] dark:border-[#33272B] shadow-xs">
+    <div className="space-y-8 pb-20">
+      
+      {/* Editorial Header */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-6 border-b border-slate-200 dark:border-slate-800">
         <div>
-          <h1 className="text-2xl font-bold text-[#221C28] dark:text-[#FDFBF7] font-playfair flex items-center gap-3">
-            <Gift className="w-7 h-7 text-[#9E1B54]" /> Rekening Kado & Amplop Cashless
+          <h1 className="text-2xl font-playfair font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-3 mb-1">
+            Rekening Kado
           </h1>
-          <p className="text-slate-500 dark:text-[#B39E9E] text-xs sm:text-sm mt-1">
-            Kelola nomor rekening bank, QRIS, dan e-wallet tempat tamu mengirimkan tanda kasih.
+          <p className="text-slate-500 dark:text-slate-400 text-sm">
+            Kelola nomor rekening bank, QRIS, dan e-wallet.
           </p>
         </div>
         
         <button
           onClick={() => handleOpenModal()}
-          className="btn-wevitation px-5 py-2.5 rounded-xl font-bold text-white text-xs sm:text-sm flex items-center gap-2 shadow-sm"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[var(--text-primary)] dark:bg-white text-white dark:text-slate-900 px-6 py-3 rounded-full font-semibold text-sm hover:opacity-90 transition-opacity"
         >
           <Plus className="w-4 h-4" /> Tambah Rekening
         </button>
       </div>
 
       {error && !isModalOpen && (
-        <div className="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900 text-rose-600 dark:text-rose-400 text-sm font-semibold flex items-start gap-2">
+        <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 text-sm font-semibold flex items-start gap-2">
           <AlertCircle className="w-5 h-5 flex-shrink-0" />
           <div className="flex-1">
             {error}
             {error.includes("Upgrade") && (
-              <Link href="/harga" className="ml-2 underline hover:text-rose-800 dark:hover:text-rose-300">Lihat Harga</Link>
+              <Link href="/harga" className="ml-2 underline hover:text-rose-800">Lihat Harga</Link>
             )}
           </div>
         </div>
       )}
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div>
         {accounts.length === 0 ? (
-          <div className="col-span-1 md:col-span-2 bg-white dark:bg-[#1A1517] rounded-2xl p-8 border border-dashed border-[#E0D4CC] text-center py-16">
-            <CreditCard className="w-12 h-12 text-[#9E1B54] mx-auto mb-4" />
-            <h3 className="text-[#221C28] dark:text-[#FDFBF7] font-bold text-lg mb-2">Belum ada rekening kado terdaftar</h3>
-            <p className="text-slate-500 dark:text-[#B39E9E] text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
+          <div className="flex flex-col items-center justify-center py-20 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 bg-transparent text-center px-4">
+            <CreditCard className="w-8 h-8 text-slate-300 dark:text-slate-600 mb-4" />
+            <h3 className="text-[var(--text-primary)] dark:text-white font-playfair font-bold text-xl mb-2">Belum ada rekening kado terdaftar</h3>
+            <p className="text-slate-500 dark:text-slate-400 text-sm max-w-md mx-auto leading-relaxed">
               Klik "Tambah Rekening" di atas untuk mulai menerima amplop digital dari tamu Anda.
             </p>
           </div>
         ) : (
-          accounts.map((acc) => (
-            <div key={acc.id} className="card-wevitation bg-white dark:bg-[#1A1517] rounded-2xl p-6 border border-[#F0E2DA] dark:border-[#33272B] shadow-xs space-y-4 hover:border-[#9E1B54] transition-all group">
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex items-center gap-3">
-                  <span className="px-3 py-1 rounded-full bg-[#FCEBF2] dark:bg-[#9E1B54]/20 border border-[#F8D5E3] dark:border-[#9E1B54]/30 text-[#9E1B54] text-xs font-bold uppercase">
-                    {acc.bank_name}
-                  </span>
-                  <span className="text-xs text-slate-500 dark:text-[#B39E9E] font-medium bg-slate-50 dark:bg-[#251E21] px-2 py-1 rounded-md border border-slate-100 dark:border-[#33272B] truncate max-w-[150px]">
-                    {acc.invitations?.bride_name} & {acc.invitations?.groom_name}
-                  </span>
+          <div className="flex flex-col border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden bg-white dark:bg-slate-900">
+            {accounts.map((acc, index) => (
+              <div 
+                key={acc.id} 
+                className={`flex flex-col sm:flex-row sm:items-center justify-between gap-6 p-6 ${
+                  index !== accounts.length - 1 ? 'border-b border-slate-100 dark:border-slate-800' : ''
+                }`}
+              >
+                {/* Info block */}
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] font-bold uppercase tracking-widest border border-slate-200 dark:border-slate-700">
+                      {acc.bank_name}
+                    </span>
+                    <span className="text-xs text-slate-500 dark:text-slate-400 font-medium truncate max-w-[200px]">
+                      {acc.invitations?.bride_name} & {acc.invitations?.groom_name}
+                    </span>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-slate-400 text-[10px] uppercase tracking-widest font-bold">Nomor Rekening / E-Wallet</p>
+                    <p className="font-mono text-2xl font-extrabold text-[var(--text-primary)] dark:text-white tracking-wider">{acc.account_number}</p>
+                    <p className="text-sm text-[var(--text-primary)] dark:text-slate-300 font-bold uppercase">A.N. {acc.account_name}</p>
+                  </div>
                 </div>
                 
-                <div className="flex items-center gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                {/* Actions block (Visible on mobile properly, not hover dependent) */}
+                <div className="flex sm:flex-col gap-2 shrink-0">
                   <button
                     onClick={() => handleOpenModal(acc)}
-                    className="p-1.5 text-slate-400 hover:text-[#9E1B54] hover:bg-[#FCEBF2] dark:hover:bg-[#9E1B54]/20 rounded-lg transition-colors"
-                    title="Edit"
+                    className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:border-[var(--accent-rosegold)] hover:text-[var(--accent-rosegold)] transition-colors"
                   >
-                    <Edit3 className="w-4 h-4" />
+                    <Edit3 className="w-3.5 h-3.5" /> Edit
                   </button>
                   <button
                     onClick={() => handleDelete(acc.id)}
-                    className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 rounded-lg transition-colors"
-                    title="Hapus"
+                    className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-semibold text-rose-600 dark:text-rose-400 hover:border-rose-300 dark:hover:border-rose-800 transition-colors"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 className="w-3.5 h-3.5" /> Hapus
                   </button>
                 </div>
               </div>
-
-              <div>
-                <p className="text-slate-400 text-[10px] sm:text-xs uppercase tracking-wider font-bold mb-1">Nomor Rekening / E-Wallet</p>
-                <p className="font-mono text-xl sm:text-2xl font-extrabold text-[#221C28] dark:text-[#FDFBF7] tracking-wider">{acc.account_number}</p>
-                <p className="text-xs text-slate-600 dark:text-[#D1C4C4] font-bold mt-1.5">A.N. {acc.account_name}</p>
-              </div>
-            </div>
-          ))
+            ))}
+          </div>
         )}
       </div>
 
@@ -255,96 +261,96 @@ export default function GiftClient({ initialAccounts, invitations, plan }: GiftC
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsModalOpen(false)}
-              className="absolute inset-0 bg-[#221C28]/40 dark:bg-black/60 backdrop-blur-sm"
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
             />
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-md bg-white dark:bg-[#1A1517] rounded-3xl shadow-2xl border border-[#F0E2DA] dark:border-[#33272B] overflow-hidden"
+              className="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-2xl"
             >
-              <div className="flex items-center justify-between p-6 border-b border-[#F0E2DA] dark:border-[#33272B]">
-                <h3 className="text-lg font-bold text-[#221C28] dark:text-[#FDFBF7] font-playfair">
+              <div className="flex items-center justify-between p-6 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
+                <h3 className="text-lg font-bold text-[var(--text-primary)] dark:text-white font-playfair">
                   {editingId ? "Edit Rekening" : "Tambah Rekening Baru"}
                 </h3>
                 <button
                   onClick={() => setIsModalOpen(false)}
-                  className="text-slate-400 hover:text-rose-500 transition-colors p-1"
+                  className="text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors p-1"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
-              <form onSubmit={handleSave} className="p-6 space-y-4">
+              <form onSubmit={handleSave} className="p-6 space-y-5">
                 {error && (
-                  <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900 text-rose-600 dark:text-rose-400 text-xs font-semibold">
+                  <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 text-xs font-semibold">
                     {error}
                   </div>
                 )}
 
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1.5">Pilih Undangan</label>
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Pilih Undangan</label>
                   <select
                     value={formData.invitation_id}
                     onChange={(e) => setFormData({ ...formData, invitation_id: e.target.value })}
                     disabled={!!editingId || invitations.length === 1}
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-[#251E21] border border-slate-200 dark:border-[#423338] text-slate-800 dark:text-[#E8E1E1] text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54] disabled:opacity-60"
+                    className="w-full px-4 py-3 rounded-xl bg-transparent border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white text-sm focus:outline-none focus:border-[var(--accent-rosegold)] transition-colors disabled:opacity-50"
                   >
                     {invitations.map((inv) => (
-                      <option key={inv.id} value={inv.id}>
+                      <option key={inv.id} value={inv.id} className="text-slate-900">
                         {inv.bride_name} & {inv.groom_name}
                       </option>
                     ))}
                   </select>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1.5">Nama Bank / E-Wallet</label>
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Nama Bank / E-Wallet</label>
                   <input
                     type="text"
                     value={formData.bank_name}
                     onChange={(e) => setFormData({ ...formData, bank_name: e.target.value })}
                     placeholder="Contoh: BCA / GoPay"
-                    className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-[#1A1517] border border-[#F0E2DA] dark:border-[#33272B] text-slate-800 dark:text-[#E8E1E1] text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]"
+                    className="w-full px-4 py-3 rounded-xl bg-transparent border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white text-sm focus:outline-none focus:border-[var(--accent-rosegold)] transition-colors"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1.5">Nomor Rekening</label>
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Nomor Rekening</label>
                   <input
                     type="text"
                     value={formData.account_number}
                     onChange={(e) => setFormData({ ...formData, account_number: e.target.value })}
                     placeholder="Contoh: 1234567890"
-                    className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-[#1A1517] border border-[#F0E2DA] dark:border-[#33272B] text-slate-800 dark:text-[#E8E1E1] text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]"
+                    className="w-full px-4 py-3 rounded-xl bg-transparent border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white text-sm focus:outline-none focus:border-[var(--accent-rosegold)] transition-colors"
                   />
                 </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1.5">Atas Nama (Pemilik)</label>
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Atas Nama (Pemilik)</label>
                   <input
                     type="text"
                     value={formData.account_name}
                     onChange={(e) => setFormData({ ...formData, account_name: e.target.value })}
-                    placeholder="Contoh: A.N. Romeo"
-                    className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-[#1A1517] border border-[#F0E2DA] dark:border-[#33272B] text-slate-800 dark:text-[#E8E1E1] text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]"
+                    placeholder="Contoh: ROMEO MONTAGUE"
+                    className="w-full px-4 py-3 rounded-xl bg-transparent border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white text-sm focus:outline-none focus:border-[var(--accent-rosegold)] transition-colors"
                   />
                 </div>
 
-                <div className="pt-4 flex items-center justify-end gap-3">
+                <div className="pt-4 flex items-center gap-3">
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(false)}
-                    className="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-500 hover:bg-slate-100 dark:hover:bg-[#251E21] transition-colors"
+                    className="flex-1 py-3 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
                   >
                     Batal
                   </button>
                   <button
                     type="submit"
                     disabled={loading}
-                    className="btn-wevitation px-6 py-2.5 rounded-xl font-bold text-white text-xs flex items-center gap-2 disabled:opacity-50 shadow-sm"
+                    className="flex-1 py-3 rounded-xl text-xs font-bold text-white bg-[var(--text-primary)] dark:bg-white dark:text-slate-900 hover:opacity-90 disabled:opacity-50 transition-opacity flex items-center justify-center"
                   >
-                    {loading ? "Menyimpan..." : "Simpan Rekening"}
+                    {loading ? "Menyimpan..." : "Simpan"}
                   </button>
                 </div>
               </form>

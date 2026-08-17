@@ -4,9 +4,8 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { createClient } from "@/lib/supabase/client";
 import {
-  Users, UserPlus, Search, Copy, Check, Share2,
-  MessageSquare, Trash2, CheckCircle2, XCircle,
-  HelpCircle, Sparkles, Download
+  Search, Copy, Check, Share2,
+  MessageSquare, Trash2, UserPlus, Sparkles, Download
 } from "lucide-react";
 import type { Guest, Invitation } from "@/types";
 import UpsellModal from "@/components/dashboard/UpsellModal";
@@ -106,7 +105,14 @@ export default function GuestManagementPage() {
   // Add Guest Handler
   const handleAddGuest = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedInvId || !newGuestName.trim()) return;
+    if (!selectedInvId) {
+      alert("Silakan pilih atau buat undangan terlebih dahulu.");
+      return;
+    }
+    if (!newGuestName.trim()) {
+      alert("Nama tamu tidak boleh kosong.");
+      return;
+    }
 
     setSubmitting(true);
     const { data, error } = await supabase
@@ -257,7 +263,7 @@ Salam hangat,
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 max-w-6xl mx-auto px-4 py-8 md:py-12">
       <UpsellModal 
         isOpen={upsellConfig.isOpen}
         onClose={() => setUpsellConfig(prev => ({ ...prev, isOpen: false }))}
@@ -273,24 +279,24 @@ Salam hangat,
         description={alertConfig.description}
       />
 
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-[#1A1517] p-6 rounded-2xl border border-[#F0E2DA] dark:border-[#33272B] shadow-xs">
-        <div>
-          <h1 className="text-2xl font-bold text-[#221C28] dark:text-[#FDFBF7] font-playfair flex items-center gap-3">
-            <Users className="w-7 h-7 text-[#9E1B54]" />
-            Manajemen Tamu & Share Link Manual
+      {/* Header - Stripped of unnecessary containment */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="max-w-2xl">
+          <h1 className="text-3xl tracking-tight font-medium text-slate-900 dark:text-white mb-2">
+            Manajemen Tamu
           </h1>
-          <p className="text-slate-500 dark:text-[#B39E9E] text-xs sm:text-sm mt-1">
-            Personalisasi nama tamu pada link undangan & bagikan teks sapaan manis secara manual via WhatsApp.
+          <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+            Kelola daftar tamu, buat tautan undangan personal, dan kirim pesan manual via WhatsApp.
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 shrink-0">
           <button
             onClick={handleExportXLSX}
-            className="hidden sm:flex bg-white dark:bg-[#1A1517] text-slate-700 dark:text-[#D1C4C4] hover:bg-slate-50 dark:hover:bg-[#251E21] px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold items-center gap-2 border border-slate-200 dark:border-[#423338] transition-colors shadow-sm"
+            className="flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg shadow-sm hover:bg-slate-50 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-600 dark:hover:bg-slate-700 transition-colors"
           >
-            <Download className="w-4 h-4" /> Ekspor Data Tamu
+            <Download className="w-4 h-4" />
+            <span className="hidden sm:inline">Ekspor Data</span>
           </button>
           
           <button
@@ -303,156 +309,167 @@ Salam hangat,
                   planNeeded: "premium"
                 });
                 return;
-              }
-              setShowAddModal(true);
+            }
+            setShowAddModal(true);
             }}
-            className="btn-wevitation px-5 py-2.5 rounded-xl font-bold text-white text-xs sm:text-sm flex items-center gap-2 shadow-sm"
+            className="flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-slate-900 border border-transparent rounded-lg shadow-sm hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 transition-colors"
           >
             <UserPlus className="w-4 h-4" />
-            Tambah Tamu Baru
+            Tambah Tamu
           </button>
         </div>
       </div>
 
-      {/* Select Invitation Selector */}
-      {invitations.length > 0 && (
-        <div className="flex items-center gap-3 p-4 rounded-2xl bg-white dark:bg-[#1A1517] border border-[#F0E2DA] dark:border-[#33272B] shadow-xs">
-          <Sparkles className="w-5 h-5 text-[#9E1B54]" />
-          <span className="text-sm text-slate-700 dark:text-[#D1C4C4] font-semibold">Pilih Undangan:</span>
-          <select
-            value={selectedInvId}
-            onChange={(e) => setSelectedInvId(e.target.value)}
-            className="bg-slate-50 dark:bg-[#251E21] text-slate-800 dark:text-[#E8E1E1] rounded-xl px-4 py-2 border border-slate-200 dark:border-[#423338] text-xs sm:text-sm font-semibold focus:outline-none focus:border-[#9E1B54]"
-          >
-            {invitations.map((inv) => (
-              <option key={inv.id} value={inv.id} className="bg-white dark:bg-[#1A1517] text-slate-800 dark:text-[#E8E1E1]">
-                {inv.bride_name} & {inv.groom_name} (nikahlink.com/{inv.username})
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
+      {/* Main Unified Workspace */}
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-sm overflow-hidden flex flex-col">
+        
+        {/* Toolbar */}
+        <div className="p-4 border-b border-slate-200 dark:border-slate-800 space-y-4">
+          
+          {invitations.length > 0 && (
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+              <label htmlFor="inv-selector" className="text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-slate-400" />
+                Undangan Aktif
+              </label>
+              <div className="relative flex-1 max-w-sm">
+                <select
+                  id="inv-selector"
+                  value={selectedInvId}
+                  onChange={(e) => setSelectedInvId(e.target.value)}
+                  className="w-full appearance-none bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white rounded-md px-3 py-2 pr-8 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-white transition-shadow"
+                >
+                  {invitations.map((inv) => (
+                    <option key={inv.id} value={inv.id}>
+                      {inv.bride_name} & {inv.groom_name}
+                    </option>
+                  ))}
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+              </div>
+            </div>
+          )}
 
-      {/* Filters & Search */}
-      <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Cari nama atau nomor telepon..."
-            className="w-full pl-11 pr-4 py-2.5 rounded-xl bg-white dark:bg-[#1A1517] border border-[#F0E2DA] dark:border-[#33272B] text-slate-800 dark:text-[#E8E1E1] placeholder:text-slate-400 dark:placeholder:text-[#8D7575] text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54] shadow-xs"
-          />
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pt-4 border-t border-slate-100 dark:border-slate-800">
+            {/* Status Tabs */}
+            <div className="flex flex-wrap gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-md shrink-0">
+              {["all", "hadir", "tidak_hadir", "pending"].map((st) => {
+                const isActive = statusFilter === st;
+                return (
+                  <button
+                    key={st}
+                    onClick={() => setStatusFilter(st)}
+                    className={`px-3 py-1.5 rounded text-sm font-medium capitalize transition-colors ${
+                      isActive
+                        ? "bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm"
+                        : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
+                    }`}
+                  >
+                    {st === "all" ? "Semua" : st.replace("_", " ")}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Search */}
+            <div className="relative w-full md:w-64">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Cari nama..."
+                className="w-full pl-9 pr-3 py-2 rounded-md bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-white transition-shadow"
+              />
+            </div>
+          </div>
         </div>
 
-        <div className="flex gap-2">
-          {["all", "hadir", "tidak_hadir", "pending"].map((st) => (
-            <button
-              key={st}
-              onClick={() => setStatusFilter(st)}
-              className={`px-4 py-2.5 rounded-xl text-xs font-bold capitalize transition-all ${
-                statusFilter === st
-                  ? "btn-wevitation text-white shadow-sm"
-                  : "bg-white dark:bg-[#1A1517] text-slate-600 dark:text-[#D1C4C4] hover:bg-slate-50 dark:hover:bg-[#251E21] border border-[#F0E2DA] dark:border-[#33272B]"
-              }`}
-            >
-              {st === "all" ? "Semua" : st.replace("_", " ")}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Guest Table / List */}
-      <div className="card-wevitation bg-white dark:bg-[#1A1517] rounded-2xl border border-[#F0E2DA] dark:border-[#33272B] overflow-hidden shadow-xs">
+        {/* Data Table */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+          <table className="w-full text-left border-collapse min-w-[800px]">
             <thead>
-              <tr className="border-b border-slate-100 dark:border-[#33272B] bg-slate-50 dark:bg-[#251E21] text-slate-500 dark:text-[#B39E9E] text-xs font-bold uppercase tracking-wider">
-                <th className="py-4 px-6">Nama Tamu</th>
-                <th className="py-4 px-4">Kontak</th>
-                <th className="py-4 px-4">RSVP Status</th>
-                <th className="py-4 px-4">Jumlah</th>
-                <th className="py-4 px-6 text-right">Aksi Share Link Manual</th>
+              <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 text-xs font-medium uppercase tracking-wider">
+                <th className="py-3 px-4 w-1/4">Tamu</th>
+                <th className="py-3 px-4 w-1/6">Kontak</th>
+                <th className="py-3 px-4 w-1/6">Status RSVP</th>
+                <th className="py-3 px-4 w-1/6">Jumlah</th>
+                <th className="py-3 px-4 text-right">Aksi</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-[#33272B] text-xs sm:text-sm">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 text-sm">
               {filteredGuests.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="text-center py-12 text-slate-400 font-medium">
-                    Belum ada tamu terdaftar. Klik <strong>Tambah Tamu Baru</strong> untuk memulai.
+                  <td colSpan={5} className="text-center py-16 text-slate-500 dark:text-slate-400">
+                    Belum ada tamu terdaftar.
                   </td>
                 </tr>
               ) : (
                 filteredGuests.map((guest) => (
-                  <tr key={guest.id} className="hover:bg-slate-50/80 transition-colors group">
-                    <td className="py-4 px-6 font-bold text-[#221C28] dark:text-[#FDFBF7]">
-                      <div>{guest.name}</div>
-                      <div className="text-[11px] font-mono text-[#9E1B54] truncate max-w-xs font-normal">
-                        {getPersonalizedUrl(guest.name)}
+                  <tr key={guest.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                    <td className="py-4 px-4 align-top">
+                      <div className="font-medium text-slate-900 dark:text-white">{guest.name}</div>
+                      <div className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 truncate max-w-[200px]" title={getPersonalizedUrl(guest.name)}>
+                        nikahlink.com/...
                       </div>
                     </td>
-                    <td className="py-4 px-4 text-slate-600 dark:text-[#D1C4C4] text-xs">
+                    <td className="py-4 px-4 align-top text-slate-600 dark:text-slate-300">
                       {guest.phone || "—"}
                     </td>
-                    <td className="py-4 px-4">
-                      <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold border ${
+                    <td className="py-4 px-4 align-top">
+                      <span className={`inline-flex items-center gap-1.5 text-xs font-medium ${
                         guest.rsvp_status === "hadir"
-                          ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                          ? "text-emerald-700 dark:text-emerald-400"
                           : guest.rsvp_status === "tidak_hadir"
-                          ? "bg-rose-50 dark:bg-rose-950/30 text-rose-700 border-rose-200"
-                          : "bg-amber-50 dark:bg-amber-950/30 text-amber-700 border-amber-200"
+                          ? "text-slate-500 dark:text-slate-400"
+                          : "text-amber-700 dark:text-amber-400"
                       }`}>
-                        {guest.rsvp_status === "hadir" && <CheckCircle2 className="w-3.5 h-3.5" />}
-                        {guest.rsvp_status === "tidak_hadir" && <XCircle className="w-3.5 h-3.5" />}
-                        {guest.rsvp_status === "pending" && <HelpCircle className="w-3.5 h-3.5" />}
+                        {/* Subtle dot instead of heavy background */}
+                        <span className={`w-1.5 h-1.5 rounded-full ${
+                          guest.rsvp_status === "hadir" ? "bg-emerald-500" :
+                          guest.rsvp_status === "tidak_hadir" ? "bg-slate-400" :
+                          "bg-amber-500"
+                        }`} />
                         {guest.rsvp_status.replace("_", " ")}
                       </span>
                     </td>
-                    <td className="py-4 px-4 text-slate-700 dark:text-[#D1C4C4] font-medium">
+                    <td className="py-4 px-4 align-top text-slate-600 dark:text-slate-300">
                       {guest.guest_count} Orang
                     </td>
-                    <td className="py-4 px-6 text-right">
-                      <div className="flex items-center justify-end gap-2">
-                        {/* Copy Link Button */}
+                    <td className="py-4 px-4 align-top text-right">
+                      <div className="flex items-center justify-end gap-1">
                         <button
                           onClick={() => handleCopyLink(guest)}
-                          title="Salin Link Khusus"
-                          className="px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 dark:border-[#423338] text-slate-700 dark:text-[#D1C4C4] text-xs font-semibold flex items-center gap-1.5 transition-colors"
+                          title="Copy Link"
+                          className="p-1.5 rounded-md text-slate-500 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 dark:hover:text-white transition-colors"
                         >
-                          {copiedId === `link-${guest.id}` ? (
-                            <span className="text-emerald-600 flex items-center gap-1"><Check className="w-3.5 h-3.5" /> Tersalin</span>
-                          ) : (
-                            <><Copy className="w-3.5 h-3.5 text-[#9E1B54]" /> Link</>
-                          )}
+                          {copiedId === `link-${guest.id}` ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
                         </button>
 
-                        {/* Copy WA Teks Button */}
                         <button
                           onClick={() => handleCopyWaText(guest)}
-                          title="Salin Teks Undangan WA"
-                          className="px-3 py-1.5 rounded-xl bg-[#FCEBF2] dark:bg-[#9E1B54]/20 hover:bg-[#F8D5E3] border border-[#F8D5E3] dark:border-[#9E1B54]/30 text-[#9E1B54] text-xs font-bold flex items-center gap-1.5 transition-colors"
+                          title="Copy WA Text"
+                          className="p-1.5 rounded-md text-slate-500 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 dark:hover:text-white transition-colors"
                         >
-                          {copiedId === `wa-${guest.id}` ? (
-                            <span className="text-emerald-600 flex items-center gap-1"><Check className="w-3.5 h-3.5" /> Teks Tersalin</span>
-                          ) : (
-                            <><MessageSquare className="w-3.5 h-3.5" /> Teks WA</>
-                          )}
+                          {copiedId === `wa-${guest.id}` ? <Check className="w-4 h-4 text-emerald-500" /> : <MessageSquare className="w-4 h-4" />}
                         </button>
 
-                        {/* Open WA Direct */}
                         <button
                           onClick={() => handleOpenWa(guest)}
-                          title="Kirim Manual via WhatsApp"
-                          className="px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-700 text-xs font-bold flex items-center gap-1.5 transition-colors"
+                          title="Send via WhatsApp"
+                          className="p-1.5 rounded-md text-slate-500 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 dark:hover:text-white transition-colors"
                         >
-                          <Share2 className="w-3.5 h-3.5" /> Share WA
+                          <Share2 className="w-4 h-4" />
                         </button>
+                        
+                        <div className="w-px h-4 bg-slate-200 dark:bg-slate-700 mx-1"></div>
 
-                        {/* Delete */}
                         <button
                           onClick={() => handleDeleteGuest(guest.id)}
-                          className="p-1.5 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 dark:bg-rose-950/30 transition-colors"
+                          title="Delete"
+                          className="p-1.5 rounded-md text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -468,79 +485,88 @@ Salam hangat,
 
       {/* Modal Add Guest */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
           <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
+            initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="w-full max-w-md bg-white dark:bg-[#1A1517] rounded-2xl p-6 border border-[#F0E2DA] dark:border-[#33272B] shadow-2xl space-y-4"
+            className="w-full max-w-md bg-white dark:bg-slate-900 rounded-lg p-6 border border-slate-200 dark:border-slate-800 shadow-xl"
           >
-            <h3 className="text-lg font-bold text-[#221C28] dark:text-[#FDFBF7] flex items-center gap-2">
-              <UserPlus className="w-5 h-5 text-[#9E1B54]" /> Tambah Tamu Undangan
-            </h3>
+            <div className="flex items-center justify-between mb-5">
+              <h3 className="text-lg font-medium text-slate-900 dark:text-white">
+                Tambah Tamu
+              </h3>
+              <button 
+                onClick={() => setShowAddModal(false)}
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
+              >
+                <Trash2 className="w-5 h-5 hidden" />
+                <span className="text-xl leading-none">&times;</span>
+              </button>
+            </div>
 
             <form onSubmit={handleAddGuest} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Nama Tamu / Pasangan *</label>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Nama Lengkap</label>
                 <input
                   type="text"
                   value={newGuestName}
                   onChange={(e) => setNewGuestName(e.target.value)}
-                  placeholder="Contoh: Bapak Ahmad & Keluarga"
+                  placeholder="Contoh: Bapak Ahmad"
                   required
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 dark:border-[#423338] text-slate-800 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]"
+                  className="w-full px-3 py-2 rounded-md bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-white transition-shadow"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Nomor WhatsApp (Opsional)</label>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Nomor WhatsApp (Opsional)</label>
                 <input
                   type="tel"
                   value={newGuestPhone}
                   onChange={(e) => setNewGuestPhone(e.target.value)}
                   placeholder="08123456789"
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 dark:border-[#423338] text-slate-800 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]"
+                  className="w-full px-3 py-2 rounded-md bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-white transition-shadow"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Sesi Kehadiran</label>
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Sesi Kehadiran</label>
                   <select
                     value={newGuestSession}
                     onChange={(e) => setNewGuestSession(e.target.value as any)}
-                    className="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 dark:border-[#423338] text-slate-800 text-xs focus:outline-none"
+                    className="w-full px-3 py-2 appearance-none rounded-md bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-white transition-shadow"
                   >
-                    <option value="all">Bebas / All</option>
+                    <option value="all">Bebas (All)</option>
                     <option value="pagi">Pagi (Sesi 1)</option>
                     <option value="siang">Siang (Sesi 2)</option>
                     <option value="malam">Malam (Sesi 3)</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-[#D1C4C4] mb-1">Perkiraan Kuota Tamu</label>
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Kuota Tamu</label>
                   <input
                     type="number"
                     min={1}
                     max={10}
                     value={newGuestCount}
                     onChange={(e) => setNewGuestCount(parseInt(e.target.value) || 1)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 dark:border-[#423338] text-slate-800 text-xs focus:outline-none"
+                    className="w-full px-3 py-2 rounded-md bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-white transition-shadow"
                   />
                 </div>
               </div>
 
-              <div className="flex gap-3 pt-4 border-t border-slate-100 dark:border-[#33272B]">
+              <div className="flex gap-3 pt-5 mt-2">
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="flex-1 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-[#D1C4C4] hover:bg-slate-100 transition-colors"
+                  className="flex-1 py-2 rounded-md text-sm font-medium text-slate-700 bg-white border border-slate-300 shadow-sm hover:bg-slate-50 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-600 dark:hover:bg-slate-700 transition-colors"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="flex-1 btn-wevitation py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white shadow-sm disabled:opacity-50"
+                  className="flex-1 py-2 rounded-md text-sm font-medium text-white bg-slate-900 border border-transparent shadow-sm hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 transition-colors disabled:opacity-50"
                 >
                   {submitting ? "Menyimpan..." : "Simpan Tamu"}
                 </button>

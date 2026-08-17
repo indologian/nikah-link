@@ -38,26 +38,24 @@ export default function DeleteAccountSection() {
 
   return (
     <>
-      <div className="bg-white dark:bg-[#1A1517] rounded-2xl p-6 sm:p-8 border border-red-200 dark:border-red-900/40 shadow-xs space-y-4">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-red-50 dark:bg-red-950/30 flex items-center justify-center">
-            <Trash2 className="w-5 h-5 text-red-500" />
+      <div className="bg-transparent rounded-2xl p-6 border border-rose-200 dark:border-rose-900 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+        <div className="flex items-start gap-4 flex-1">
+          <div className="w-10 h-10 shrink-0 rounded-full bg-rose-50 dark:bg-rose-950/50 flex items-center justify-center border border-rose-100 dark:border-rose-900/50">
+            <Trash2 className="w-4 h-4 text-rose-500" />
           </div>
           <div>
-            <h3 className="font-bold text-[#221C28] dark:text-[#FDFBF7]">Zona Bahaya</h3>
-            <p className="text-xs text-slate-500 dark:text-[#B39E9E]">Tindakan ini tidak dapat dibatalkan</p>
+            <h3 className="font-bold text-[var(--text-primary)] dark:text-white uppercase tracking-wider text-sm mb-1">Zona Bahaya</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed max-w-lg">
+              Menghapus akun akan memusnahkan secara permanen seluruh data Anda, termasuk undangan, tamu, ucapan, kado digital, dan galeri yang terhubung.
+            </p>
           </div>
         </div>
 
-        <p className="text-sm text-slate-600 dark:text-[#B39E9E] leading-relaxed">
-          Menghapus akun akan menghapus <strong>semua data</strong> Anda secara permanen, termasuk undangan, daftar tamu, ucapan, galeri, dan riwayat pembayaran. Data yang sudah dihapus tidak dapat dipulihkan.
-        </p>
-
         <button
           onClick={() => setShowModal(true)}
-          className="px-5 py-2.5 rounded-xl bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/40 text-red-600 dark:text-red-400 text-sm font-bold hover:bg-red-100 dark:hover:bg-red-950/50 transition-colors"
+          className="shrink-0 px-6 py-2.5 rounded-full bg-transparent border border-rose-200 dark:border-rose-900 text-rose-600 dark:text-rose-400 text-xs uppercase tracking-widest font-bold hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
         >
-          Hapus Akun Permanen
+          Hapus Akun
         </button>
       </div>
 

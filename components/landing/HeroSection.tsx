@@ -2,176 +2,181 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Heart, Sparkles } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Heart, Sparkles, ArrowRight } from "lucide-react";
 
 const THEME_PREVIEWS = [
-  { name: "Sakura Bloom", emoji: "🌸", bg: "from-pink-50 via-rose-100 to-pink-200", textColor: "text-slate-800" },
-  { name: "Midnight Luxe", emoji: "✨", bg: "from-slate-900 via-purple-950 to-slate-900", textColor: "text-white" },
-  { name: "Tropical Garden", emoji: "🌿", bg: "from-emerald-50 via-teal-100 to-green-100", textColor: "text-slate-800" },
-  { name: "Golden Arch", emoji: "👑", bg: "from-amber-50 via-yellow-100 to-amber-200", textColor: "text-slate-800" },
+  { name: "Sakura Bloom", emoji: "🌸", bg: "bg-pink-50/80", textColor: "text-slate-800" },
+  { name: "Midnight Luxe", emoji: "✨", bg: "bg-slate-900", textColor: "text-white" },
+  { name: "Tropical Garden", emoji: "🌿", bg: "bg-emerald-50/80", textColor: "text-slate-800" },
+  { name: "Golden Arch", emoji: "👑", bg: "bg-amber-50/80", textColor: "text-slate-800" },
 ];
 
-function PhoneMockup() {
+function FloatingThemeCards() {
   const [active, setActive] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setActive((prev) => (prev + 1) % THEME_PREVIEWS.length);
-    }, 3500);
+    }, 4000);
     return () => clearTimeout(timer);
   }, []);
 
-  const theme = THEME_PREVIEWS[active];
-
   return (
-    <div className="relative w-full max-w-[280px] sm:max-w-[320px] mx-auto mt-10 sm:mt-12">
-      {/* Phone Mockup Frame */}
-      <div className="relative z-10 rounded-[2.8rem] p-3.5 bg-slate-900 shadow-2xl border-4 border-slate-800">
-        <div className="rounded-[2.2rem] overflow-hidden aspect-[9/18] bg-white dark:bg-[#1A1517] relative flex flex-col justify-between p-7 text-center border border-slate-100 dark:border-[#33272B] shadow-inner">
-          {/* Mockup Background */}
-          <motion.div
-            key={active}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            className={`absolute inset-0 bg-gradient-to-b ${theme.bg} -z-10`}
-          />
+    <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] md:aspect-auto md:h-[600px] flex items-center justify-center">
+      {/* 
+        Hallmark Pattern: No redrawn chrome.
+        Instead of a fake phone with dynamic islands, we show the invitation
+        as a pure, floating editorial card.
+      */}
+      <div className="relative w-full max-w-[320px] mx-auto h-[500px]">
+        <AnimatePresence mode="popLayout">
+          {THEME_PREVIEWS.map((theme, i) => (
+            i === active && (
+              <motion.div
+                key={theme.name}
+                initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -40, scale: 0.95 }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                className={`absolute inset-0 rounded-2xl ${theme.bg} shadow-2xl border border-black/5 dark:border-white/5 flex flex-col justify-between p-8 text-center backdrop-blur-sm overflow-hidden`}
+              >
+                <div className="mt-8 space-y-6">
+                  <div className="w-14 h-14 mx-auto rounded-full bg-[var(--accent-rosegold)] flex items-center justify-center shadow-lg">
+                    <Heart size={24} className="text-white fill-white" strokeWidth={0} />
+                  </div>
 
-          {/* Dynamic Island Notch */}
-          <div className="w-24 h-4 bg-slate-900 rounded-full mx-auto mb-5" />
+                  <div className="space-y-2">
+                    <span className={`text-xs uppercase tracking-[0.2em] font-medium block ${theme.textColor === "text-white" ? "text-white/60" : "text-slate-500"}`}>
+                      The Wedding of
+                    </span>
+                    <h3 className={`font-playfair text-4xl font-bold leading-tight ${theme.textColor}`}>
+                      Romeo <br/>& Juliet
+                    </h3>
+                  </div>
+                </div>
 
-          {/* Invitation Content Pratinjau */}
-          <div className="my-auto space-y-4">
-            <div
-              className="rounded-full bg-[#C58F78] flex items-center justify-center mx-auto shadow-md"
-              style={{ width: "52px", height: "52px", minWidth: "52px", minHeight: "52px" }}
-            >
-              <Heart size={26} className="text-white fill-white" strokeWidth={0} />
-            </div>
+                <div className="mb-4">
+                  <div className={`w-12 h-px mx-auto mb-6 ${theme.textColor === "text-white" ? "bg-white/20" : "bg-black/10"}`} />
+                  <p className={`text-sm ${theme.textColor === "text-white" ? "text-white/70" : "text-slate-500"}`}>
+                    24 Oktober 2026
+                  </p>
+                </div>
+              </motion.div>
+            )
+          ))}
+        </AnimatePresence>
 
-            <div className="space-y-1">
-              <span className={`text-[11px] uppercase tracking-widest font-semibold block ${theme.textColor === "text-white" ? "text-white/60" : "text-[#756767] dark:text-[#B39E9E]"}`}>
-                The Wedding of
-              </span>
-              <h3 className={`font-playfair text-2xl sm:text-3xl font-bold ${theme.textColor}`}>
-                Romeo & Juliet
-              </h3>
-              <p className={`text-xs mt-1 ${theme.textColor === "text-white" ? "text-white/70" : "text-[#756767] dark:text-[#B39E9E]"}`}>
-                24 Oktober 2026
-              </p>
-            </div>
-
-            <div className="pt-3">
-              <span className="btn-wevitation inline-block px-6 py-2.5 rounded-full text-xs font-bold shadow-md">
-                Buka Undangan
-              </span>
-            </div>
-          </div>
-
-          <div className={`text-[11px] pt-3 border-t ${theme.textColor === "text-white" ? "border-white/10 text-white/40" : "border-slate-200 dark:border-[#423338] text-slate-400"}`}>
-            NikahLink.com
-          </div>
+        {/* Floating Indicator Pill */}
+        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md px-4 py-2 rounded-full border border-slate-200/50 dark:border-slate-800/50 shadow-sm z-10">
+          {THEME_PREVIEWS.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setActive(i)}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                i === active ? "w-6 bg-[var(--accent-rosegold)]" : "w-1.5 bg-slate-300 dark:bg-slate-700"
+              }`}
+              aria-label={`Show theme ${i + 1}`}
+            />
+          ))}
         </div>
       </div>
-
-      {/* Dots Indicator */}
-      <div className="flex items-center justify-center gap-2 mt-5">
-        {THEME_PREVIEWS.map((t, i) => (
-          <button
-            key={t.name}
-            onClick={() => setActive(i)}
-            className={`h-2 rounded-full transition-all duration-300 ${
-              i === active ? "w-8 bg-[#C58F78]" : "w-2 bg-slate-300"
-            }`}
-          />
-        ))}
-      </div>
-      <p className="text-center text-xs text-[#756767] dark:text-[#B39E9E] font-medium mt-2">{theme.name}</p>
     </div>
   );
 }
 
 export default function HeroSection() {
   return (
-    <section
-      className="w-full flex flex-col items-center justify-center py-14 sm:py-20 lg:py-24 bg-[#FDFBF7] dark:bg-[#120E10] border-b border-[#EBE4DD] dark:border-[#33272B] box-border"
-      style={{
-        width: "100%",
-        boxSizing: "border-box",
-        paddingLeft: "clamp(20px, 5vw, 40px)",
-        paddingRight: "clamp(20px, 5vw, 40px)",
-      }}
-    >
-      {/* Centered Container */}
-      <div className="w-full max-w-4xl flex flex-col items-center justify-center text-center">
-        
-        {/* Main Headline */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="font-playfair text-3xl sm:text-5xl lg:text-6xl font-bold text-[#2D2424] dark:text-[#FDFBF7] leading-[1.25] tracking-tight max-w-3xl mx-auto"
-        >
-          Undangan Digital Modern & Elegan, Siap Dibagikan Dalam Hitungan Menit
-        </motion.h1>
+    <section className="relative w-full pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden bg-[var(--bg-primary)] text-[var(--text-primary)]">
+      {/* Minimal grid background for subtle texture (not an aurora blob) */}
+      <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] dark:opacity-10 opacity-40 pointer-events-none" />
 
-        {/* Sub-description */}
-        <motion.p
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-[#756767] dark:text-[#B39E9E] text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed mt-6 sm:mt-7 font-normal"
-        >
-          Buat undangan digital yang cantik, cepat dan mudah diedit – lengkap dengan RSVP Online, Galeri Foto, Musik, Kado Cashless dan Sistem Manajemen Tamu paling lengkap.
-        </motion.p>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-center">
+          
+          {/* Left Column: Typography (H2 Split Diptych) */}
+          <div className="flex flex-col items-start text-left max-w-2xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--accent-rosegold)]/10 text-[var(--accent-rosegold)] text-xs font-semibold uppercase tracking-wider mb-6"
+            >
+              <Sparkles size={14} />
+              Platform Undangan Digital
+            </motion.div>
 
-        {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5 mt-8 sm:mt-10 w-full max-w-md"
-        >
-          <Link
-            href="/daftar"
-            className="btn-wevitation w-full sm:w-auto px-8 py-3.5 rounded-xl font-bold text-sm sm:text-base shadow-md flex items-center justify-center gap-2"
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="font-playfair text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-6"
+            >
+              Undangan elegan, <br/>
+              siap dalam <span className="text-[var(--accent-rosegold)] italic">hitungan menit.</span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed mb-10 max-w-lg"
+            >
+              Buat undangan pernikahan digital yang cantik dan modern. Lengkap dengan RSVP Online, manajemen tamu, hingga penerimaan kado cashless.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="flex flex-wrap items-center gap-4"
+            >
+              {/* C3 Typographic Link CTA pattern instead of generic button block */}
+              <Link
+                href="/daftar"
+                className="group flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-6 py-3.5 rounded-full font-medium text-sm transition-all hover:bg-slate-800 dark:hover:bg-slate-100 shadow-sm"
+              >
+                Buat Undangan Gratis
+                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+              </Link>
+              
+              <Link
+                href="/tema"
+                className="group flex items-center gap-2 px-6 py-3.5 rounded-full font-medium text-sm text-slate-600 dark:text-slate-300 transition-all hover:bg-slate-100 dark:hover:bg-slate-800"
+              >
+                Lihat Galeri Tema
+              </Link>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              className="mt-16 flex items-center gap-6 pt-6 border-t border-slate-200 dark:border-slate-800"
+            >
+              <div>
+                <div className="font-bold text-2xl text-slate-900 dark:text-white">125K+</div>
+                <div className="text-xs text-slate-500 uppercase tracking-wider mt-1">Pasangan</div>
+              </div>
+              <div className="w-px h-10 bg-slate-200 dark:bg-slate-800" />
+              <div>
+                <div className="font-bold text-2xl text-slate-900 dark:text-white">8.5M+</div>
+                <div className="text-xs text-slate-500 uppercase tracking-wider mt-1">Tamu Undangan</div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Right Column: Visual Showcase */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="w-full flex justify-center md:justify-end"
           >
-            <Sparkles size={16} />
-            <span>Buat Undangan Gratis</span>
-          </Link>
-          <Link
-            href="/tema"
-            className="btn-demo-outline w-full sm:w-auto px-8 py-3.5 rounded-xl font-semibold text-sm sm:text-base flex items-center justify-center"
-          >
-            Lihat Demo
-          </Link>
-        </motion.div>
+            <FloatingThemeCards />
+          </motion.div>
 
-        {/* Stats Row Divider Line */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-[#756767] dark:text-[#B39E9E] text-xs sm:text-sm font-semibold mt-10 sm:mt-12 pt-6 border-t border-[#EBE4DD] dark:border-[#33272B] max-w-2xl mx-auto"
-        >
-          <span><strong className="text-[#2D2424] dark:text-[#FDFBF7] text-sm sm:text-base">125K+</strong> Pasangan</span>
-          <span className="text-slate-300">|</span>
-          <span><strong className="text-[#2D2424] dark:text-[#FDFBF7] text-sm sm:text-base">8.5M+</strong> Tamu Undangan</span>
-          <span className="text-slate-300">|</span>
-          <span><strong className="text-[#2D2424] dark:text-[#FDFBF7] text-sm sm:text-base">2.3M+</strong> Ucapan & Doa</span>
-        </motion.div>
-
-        {/* Centered Phone Mockup */}
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="w-full flex justify-center mt-4 sm:mt-6"
-        >
-          <PhoneMockup />
-        </motion.div>
-
+        </div>
       </div>
     </section>
   );

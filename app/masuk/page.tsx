@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import Link from "next/link";
-import { Eye, EyeOff, Heart, ArrowRight } from "lucide-react";
+import { Eye, EyeOff, Heart, Loader2 } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -45,89 +45,54 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] dark:bg-[#120E10] flex items-center justify-center p-4 sm:p-6 relative overflow-hidden transition-colors">
-      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-50">
+    <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center p-4 sm:p-6 lg:p-8 relative">
+      <div className="absolute top-6 right-6 z-50">
         <ThemeToggle />
       </div>
-      
-      {/* Floating particles */}
-      {[...Array(8)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-3 h-3 rounded-full bg-[#C58F78]/10"
-          style={{ left: `${10 + i * 12}%`, top: `${20 + (i % 3) * 25}%` }}
-          animate={{ y: [0, -20, 0], opacity: [0.2, 0.6, 0.2] }}
-          transition={{ duration: 3 + i * 0.5, repeat: Infinity, delay: i * 0.3 }}
-        />
-      ))}
 
-      <motion.div
-        initial={{ opacity: 0, y: 30, scale: 0.95 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-md relative z-10"
-      >
-        {/* Card */}
-        <div className="card-wevitation p-8 sm:p-10">
-          {/* Logo */}
-          <div className="text-center mb-8">
+      <div className="w-full max-w-md relative z-10">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 sm:p-10 shadow-sm flex flex-col">
+          
+          {/* Logo & Header */}
+          <div className="text-center mb-10">
             <Link href="/" className="inline-flex items-center gap-2 mb-6 group">
-              <div className="w-10 h-10 rounded-full bg-[#C58F78] flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+              <div className="w-10 h-10 rounded-full bg-[var(--accent-rosegold)] flex items-center justify-center transition-colors hover:bg-[var(--accent-rosegold-hover)]">
                 <Heart className="w-5 h-5 text-white fill-white" strokeWidth={0} />
               </div>
-              <span className="font-playfair text-2xl font-bold text-[#2D2424] dark:text-[#FDFBF7] tracking-tight">NikahLink</span>
+              <span className="font-playfair text-2xl font-bold text-[var(--text-primary)] dark:text-white tracking-tight">NikahLink</span>
             </Link>
-            <h1 className="font-playfair text-2xl sm:text-3xl font-bold text-[#2D2424] dark:text-[#FDFBF7]">Selamat Datang</h1>
-            <p className="text-[#756767] dark:text-[#B39E9E] text-sm mt-2">Masuk untuk mengelola undanganmu</p>
+            <h1 className="font-playfair text-3xl font-bold text-[var(--text-primary)] dark:text-white mb-2">Selamat Datang</h1>
+            <p className="text-slate-500 dark:text-slate-400 text-sm">Masuk untuk mengelola undanganmu</p>
           </div>
 
-          {/* Google button */}
-          <button
-            onClick={handleGoogleLogin}
-            disabled={googleLoading}
-            className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl bg-white dark:bg-[#251E21] border border-[#EBE4DD] dark:border-[#423338] text-[#2D2424] dark:text-[#FDFBF7] font-semibold text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-all mb-6 shadow-sm group disabled:opacity-70 disabled:cursor-not-allowed"
-          >
-            {googleLoading ? (
-              <>
-                <div className="w-5 h-5 border-2 border-[#C58F78]/30 border-t-[#C58F78] rounded-full animate-spin" />
-                <span>Menghubungkan ke Google...</span>
-              </>
-            ) : (
-              <>
-                <svg viewBox="0 0 24 24" className="w-5 h-5 transition-transform group-hover:scale-110">
-                  <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
-                  <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
-                  <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
-                  <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
-                </svg>
-                <span>Masuk dengan Google</span>
-              </>
-            )}
-          </button>
-
-          {/* Divider */}
-          <div className="flex items-center gap-4 mb-6">
-            <div className="flex-1 h-px bg-[#EBE4DD] dark:bg-[#251E21]" />
-            <span className="text-[#B4A8A8] dark:text-slate-500 text-xs font-medium uppercase tracking-wider">atau dengan email</span>
-            <div className="flex-1 h-px bg-[#EBE4DD] dark:bg-[#251E21]" />
-          </div>
+          {/* Error Alert */}
+          {error && (
+            <div className="mb-6 p-4 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900/50 text-rose-600 dark:text-rose-400 text-sm font-medium">
+              {error}
+            </div>
+          )}
 
           {/* Form */}
           <form onSubmit={handleLogin} className="space-y-5">
-            <div>
-              <label className="block text-sm font-semibold text-[#4A3D3D] dark:text-[#D1C4C4] mb-1.5">Email</label>
+            <div className="space-y-2 text-left">
+              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">Email</label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="email@kamu.com"
                 required
-                className="w-full px-4 py-3 rounded-xl bg-white dark:bg-[#1A1517] border border-[#EBE4DD] dark:border-[#33272B] text-[#2D2424] dark:text-[#FDFBF7] placeholder:text-[#B4A8A8] focus:outline-none focus:border-[#C58F78] focus:ring-1 focus:ring-[#C58F78] transition-all text-sm"
+                className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--accent-rosegold)]/50 focus:border-transparent transition-all text-sm"
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-semibold text-[#4A3D3D] dark:text-[#D1C4C4] mb-1.5">Password</label>
+            <div className="space-y-2 text-left">
+              <div className="flex items-center justify-between">
+                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">Password</label>
+                <Link href="/lupa-password" className="text-xs font-semibold text-[var(--accent-rosegold)] hover:underline">
+                  Lupa password?
+                </Link>
+              </div>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -135,58 +100,67 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   required
-                  className="w-full px-4 py-3 pr-12 rounded-xl bg-white dark:bg-[#1A1517] border border-[#EBE4DD] dark:border-[#33272B] text-[#2D2424] dark:text-[#FDFBF7] placeholder:text-[#B4A8A8] focus:outline-none focus:border-[#C58F78] focus:ring-1 focus:ring-[#C58F78] transition-all text-sm"
+                  className="w-full px-4 py-3 pr-12 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--accent-rosegold)]/50 focus:border-transparent transition-all text-sm"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#B4A8A8] dark:text-slate-500 hover:text-[#C58F78] dark:hover:text-[#E8BAA6] transition-colors p-1"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors p-2"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
             </div>
 
-            <div className="flex justify-end pt-1">
-              <Link href="/lupa-password" className="text-xs font-medium text-[#C58F78] hover:text-[#A3735F] hover:underline transition-colors">
-                Lupa password?
-              </Link>
-            </div>
-
-            {error && (
-              <motion.div
-                initial={{ opacity: 0, y: -5 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl px-4 py-3"
-              >
-                {error}
-              </motion.div>
-            )}
-
             <button
               type="submit"
-              disabled={loading}
-              className="w-full btn-wevitation py-3.5 rounded-xl font-bold text-white flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed shadow-md mt-2 transition-all group"
+              disabled={loading || googleLoading}
+              className="w-full py-3.5 mt-2 rounded-xl bg-[var(--accent-rosegold)] text-white font-semibold text-sm transition-colors hover:bg-[var(--accent-rosegold-hover)] flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {loading ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              ) : (
                 <>
-                  Masuk
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <Loader2 className="w-4 h-4 animate-spin" /> Memproses...
                 </>
+              ) : (
+                "Masuk ke Dashboard"
               )}
             </button>
           </form>
 
-          <p className="text-center text-[#4A3D3D] dark:text-[#B39E9E] text-sm mt-8 font-medium">
+          {/* Divider */}
+          <div className="flex items-center gap-4 my-8">
+            <div className="flex-1 h-px bg-slate-200 dark:bg-slate-800" />
+            <span className="text-slate-400 dark:text-slate-500 text-[10px] font-bold uppercase tracking-widest">atau</span>
+            <div className="flex-1 h-px bg-slate-200 dark:bg-slate-800" />
+          </div>
+
+          {/* Google Button */}
+          <button
+            onClick={handleGoogleLogin}
+            disabled={googleLoading || loading}
+            className="w-full flex items-center justify-center gap-3 py-3.5 px-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 font-semibold text-sm transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-70 disabled:cursor-not-allowed"
+          >
+            {googleLoading ? (
+              <Loader2 className="w-5 h-5 animate-spin text-slate-400" />
+            ) : (
+              <svg viewBox="0 0 24 24" className="w-5 h-5">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
+              </svg>
+            )}
+            <span>Masuk dengan Google</span>
+          </button>
+
+          <p className="text-center text-sm text-slate-500 mt-8">
             Belum punya akun?{" "}
-            <Link href="/daftar" className="text-[#C58F78] dark:text-[#E8BAA6] hover:text-[#A3735F] dark:hover:text-white hover:underline transition-colors">
+            <Link href="/daftar" className="font-semibold text-[var(--accent-rosegold)] hover:underline">
               Daftar Gratis
             </Link>
           </p>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

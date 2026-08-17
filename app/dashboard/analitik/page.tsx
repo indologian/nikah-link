@@ -8,7 +8,6 @@ export default async function AnalyticsPage() {
 
   if (!user) redirect("/masuk");
 
-  // 1. Dapatkan daftar invitation ID milik user ini
   const { data: invitations } = await supabase
     .from("invitations")
     .select("id")
@@ -18,16 +17,15 @@ export default async function AnalyticsPage() {
 
   let totalGuests = 0;
   let totalWishes = 0;
-  let totalViews = 0; // Karena kolom views belum ada di skema, kita buat default 0
+  let totalViews = 0;
 
-  // 2. Fetch counts (hanya row count, head: true menghemat bandwidth/cost) berdasarkan invitationIds
   if (invitationIds.length > 0) {
     const [guestsRes, wishesRes] = await Promise.all([
       supabase
         .from("guests")
         .select("*", { count: "exact", head: true })
         .in("invitation_id", invitationIds)
-        .eq("rsvp_status", "hadir"), // Menghitung hanya yang hadir
+        .eq("rsvp_status", "hadir"),
       supabase
         .from("wishes")
         .select("*", { count: "exact", head: true })
@@ -39,45 +37,64 @@ export default async function AnalyticsPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="bg-white dark:bg-[#1A1517] p-6 rounded-2xl border border-[#F0E2DA] dark:border-[#33272B] shadow-xs">
-        <h1 className="text-2xl font-bold text-[#221C28] dark:text-[#FDFBF7] font-playfair flex items-center gap-3">
-          <BarChart3 className="w-7 h-7 text-[#9E1B54]" /> Analitik & Statistik Visitors
-        </h1>
-        <p className="text-slate-500 dark:text-[#B39E9E] text-xs sm:text-sm mt-1">Pantau interaksi tamu, total kunjungan, dan respon RSVP secara real-time.</p>
+    <div className="space-y-10 pb-20">
+      
+      {/* Editorial Header */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-6 border-b border-slate-200 dark:border-slate-800">
+        <div>
+          <h1 className="text-2xl font-playfair font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-3 mb-1">
+            Analisis Kinerja
+          </h1>
+          <p className="text-slate-500 dark:text-slate-400 text-sm">
+            Pantau interaksi tamu, total kunjungan, dan respons RSVP secara langsung.
+          </p>
+        </div>
       </div>
 
+      {/* Monochromatic Tabular Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div className="card-wevitation bg-white dark:bg-[#1A1517] rounded-2xl p-6 border border-[#F0E2DA] dark:border-[#33272B] shadow-xs space-y-2">
-          <div className="w-10 h-10 rounded-xl bg-[#FCEBF2] dark:bg-[#9E1B54]/20 border border-[#F8D5E3] dark:border-[#9E1B54]/30 text-[#9E1B54] flex items-center justify-center">
-            <Eye className="w-5 h-5" />
+        <div className="p-6 bg-transparent border border-slate-200 dark:border-slate-800 rounded-2xl flex flex-col justify-between hover:border-[var(--accent-rosegold)] transition-colors group">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center group-hover:bg-[var(--accent-rosegold)] transition-colors">
+              <Eye className="w-4 h-4 text-slate-600 dark:text-slate-300 group-hover:text-white transition-colors" />
+            </div>
+            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Total Kunjungan</div>
           </div>
-          <div className="text-3xl font-extrabold text-[#221C28] dark:text-[#FDFBF7]">{totalViews}</div>
-          <p className="text-slate-500 dark:text-[#B39E9E] text-xs font-semibold">Total Pengunjung Undangan</p>
+          <div>
+            <div className="text-4xl font-playfair font-bold text-[var(--text-primary)] dark:text-white leading-none">{totalViews}</div>
+          </div>
         </div>
 
-        <div className="card-wevitation bg-white dark:bg-[#1A1517] rounded-2xl p-6 border border-[#F0E2DA] dark:border-[#33272B] shadow-xs space-y-2">
-          <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center">
-            <Users className="w-5 h-5" />
+        <div className="p-6 bg-transparent border border-slate-200 dark:border-slate-800 rounded-2xl flex flex-col justify-between hover:border-[var(--accent-rosegold)] transition-colors group">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center group-hover:bg-[var(--accent-rosegold)] transition-colors">
+              <Users className="w-4 h-4 text-slate-600 dark:text-slate-300 group-hover:text-white transition-colors" />
+            </div>
+            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Tamu Mengonfirmasi</div>
           </div>
-          <div className="text-3xl font-extrabold text-[#221C28] dark:text-[#FDFBF7]">{totalGuests || 0}</div>
-          <p className="text-slate-500 dark:text-[#B39E9E] text-xs font-semibold">Tamu Mengonfirmasi RSVP</p>
+          <div>
+            <div className="text-4xl font-playfair font-bold text-[var(--text-primary)] dark:text-white leading-none">{totalGuests || 0}</div>
+          </div>
         </div>
 
-        <div className="card-wevitation bg-white dark:bg-[#1A1517] rounded-2xl p-6 border border-[#F0E2DA] dark:border-[#33272B] shadow-xs space-y-2">
-          <div className="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 text-amber-700 flex items-center justify-center">
-            <MessageSquare className="w-5 h-5" />
+        <div className="p-6 bg-transparent border border-slate-200 dark:border-slate-800 rounded-2xl flex flex-col justify-between hover:border-[var(--accent-rosegold)] transition-colors group">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center group-hover:bg-[var(--accent-rosegold)] transition-colors">
+              <MessageSquare className="w-4 h-4 text-slate-600 dark:text-slate-300 group-hover:text-white transition-colors" />
+            </div>
+            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Ucapan Masuk</div>
           </div>
-          <div className="text-3xl font-extrabold text-[#221C28] dark:text-[#FDFBF7]">{totalWishes || 0}</div>
-          <p className="text-slate-500 dark:text-[#B39E9E] text-xs font-semibold">Ucapan & Doa Masuk</p>
+          <div>
+            <div className="text-4xl font-playfair font-bold text-[var(--text-primary)] dark:text-white leading-none">{totalWishes || 0}</div>
+          </div>
         </div>
       </div>
 
-      <div className="bg-white dark:bg-[#1A1517] rounded-2xl p-8 border border-dashed border-[#E0D4CC] text-center py-16">
-        <TrendingUp className="w-12 h-12 text-[#9E1B54] mx-auto mb-4 animate-bounce" />
-        <h3 className="text-[#221C28] dark:text-[#FDFBF7] font-bold text-lg mb-2">Grafik Traffic Kunjungan Realtime</h3>
-        <p className="text-slate-500 dark:text-[#B39E9E] text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
-          Grafik interaktif akan diperbarui secara otomatis setiap kali tamu baru membuka link undangan digital kamu!
+      <div className="flex flex-col items-center justify-center py-20 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 bg-transparent text-center px-4">
+        <TrendingUp className="w-8 h-8 text-slate-300 dark:text-slate-600 mb-4" />
+        <h3 className="text-[var(--text-primary)] dark:text-white font-playfair font-bold text-xl mb-2">Grafik Lalu Lintas Situs</h3>
+        <p className="text-slate-500 dark:text-slate-400 text-sm max-w-md mx-auto">
+          Grafik garis interaktif yang melacak lonjakan penayangan akan ditampilkan di sini setelah Anda menerima kunjungan yang cukup.
         </p>
       </div>
     </div>

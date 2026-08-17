@@ -10,9 +10,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { createClient } from "@/lib/supabase/client";
 
 const NAV_ITEMS = [
-  { label: "Beranda", href: "/" },
   { label: "Tema Desain", href: "/tema" },
-  { label: "Fitur Unggulan", href: "/#fitur" },
   { label: "Pilihan Harga", href: "/harga" },
   { label: "Vendor", href: "/vendor" },
 ];
@@ -35,213 +33,125 @@ export default function Navbar() {
     };
     fetchUser();
   }, []);
-  const [scrolled, setScrolled] = useState(false);
-  const [currentHash, setCurrentHash] = useState("");
-
-  useEffect(() => {
-    // Inisialisasi hash saat komponen dimuat
-    setCurrentHash(window.location.hash);
-    
-    const handleScroll = () => setScrolled(window.scrollY > 15);
-    const handleHashChange = () => setCurrentHash(window.location.hash);
-    
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("hashchange", handleHashChange);
-    
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("hashchange", handleHashChange);
-    };
-  }, []);
-
-  // Sinkronisasi ulang hash jika pathname berubah
-  useEffect(() => {
-    setCurrentHash(window.location.hash);
-  }, [pathname]);
 
   const isActive = (href: string) => {
-    // Jika link memiliki hash (seperti "/#fitur")
-    if (href.includes("#")) {
-      const hashPart = href.substring(href.indexOf("#"));
-      const pathPart = href.substring(0, href.indexOf("#")) || "/";
-      return pathname === pathPart && currentHash === hashPart;
-    }
-    
-    // Jika link adalah beranda utama
-    if (href === "/") {
-      return pathname === "/" && currentHash === "";
-    }
-    
-    // Untuk rute lain (seperti "/tema", "/harga")
+    if (href === "/") return pathname === "/";
     return pathname.startsWith(href);
-  };
-
-  const handleNavClick = (href: string) => {
-    setMobileOpen(false);
-    if (href.includes("#")) {
-      const hashPart = href.substring(href.indexOf("#"));
-      setCurrentHash(hashPart);
-    } else if (href === "/") {
-      setCurrentHash("");
-    } else {
-      setCurrentHash("");
-    }
   };
 
   return (
     <>
-      <header
-        className={cn(
-          "fixed top-0 left-0 right-0 z-50 w-full flex items-center justify-center transition-all duration-300 border-b box-border",
-          scrolled
-            ? "bg-[#FDFBF7]/95 dark:bg-[#1A1517]/80 backdrop-blur-xl dark:backdrop-blur-xl border-[#EBE4DD] dark:border-[#33272B] shadow-md py-3"
-            : "bg-[#FDFBF7] dark:bg-[#120E10] border-[#EBE4DD] dark:border-[#33272B] py-4"
-        )}
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 50,
-          width: "100%",
-          boxSizing: "border-box",
-          paddingLeft: "clamp(20px, 5vw, 40px)",
-          paddingRight: "clamp(20px, 5vw, 40px)",
-        }}
-      >
-        <div className="w-full max-w-4xl lg:max-w-5xl flex items-center justify-between">
-          {/* Brand Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
-            <div
-              className="rounded-full bg-[#C58F78] flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform"
-              style={{ width: "36px", height: "36px", minWidth: "36px", minHeight: "36px" }}
-            >
-              <Heart size={18} className="text-white fill-white" strokeWidth={0} />
+      {/* 
+        Hallmark Pattern: N5 Floating Pill
+        Detached from edges, blurred background, max-width bounded.
+      */}
+      <header className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+        <div className="w-full max-w-[800px] pointer-events-auto bg-white/70 dark:bg-slate-900/70 backdrop-blur-md saturate-150 border border-slate-200/50 dark:border-slate-800/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.1)] rounded-full px-4 sm:px-6 py-3 flex items-center justify-between">
+          
+          {/* Brand */}
+          <Link href="/" className="flex items-center gap-2 group shrink-0">
+            <div className="w-8 h-8 rounded-full bg-[var(--accent-rosegold)] flex items-center justify-center transition-transform group-hover:scale-105">
+              <Heart size={14} className="text-white fill-white" strokeWidth={0} />
             </div>
-            <span className="font-playfair text-2xl font-bold text-[#2D2424] dark:text-[#FDFBF7] tracking-tight">
+            <span className="font-playfair text-lg font-bold text-slate-900 dark:text-white tracking-tight">
               NikahLink
             </span>
           </Link>
 
-          {/* Desktop Nav Links with Active State Highlight */}
-          <nav className="hidden md:flex items-center justify-center gap-2 lg:gap-4">
-            {NAV_ITEMS.map((item) => {
-              const active = isActive(item.href);
-              return (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  onClick={() => handleNavClick(item.href)}
-                  className={cn(
-                    "px-4 py-1.5 rounded-full text-xs lg:text-sm font-semibold transition-all flex items-center justify-center",
-                    active
-                      ? "bg-[#F7EDE8] dark:bg-[#251E21] border border-[#F0DDD5] dark:border-[#423338] text-[#C58F78] dark:text-[#E8E1E1] font-bold shadow-xs"
-                      : "text-[#756767] dark:text-[#B39E9E] hover:text-[#C58F78] hover:bg-white/60 dark:hover:bg-[#251E21]"
-                  )}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
+          {/* Desktop Nav Links */}
+          <nav className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
+            {NAV_ITEMS.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={cn(
+                  "px-4 py-1.5 rounded-full text-[13px] font-medium transition-colors",
+                  isActive(item.href)
+                    ? "text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-800"
+                    : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50"
+                )}
+              >
+                {item.label}
+              </Link>
+            ))}
           </nav>
 
-          {/* Desktop Right CTA */}
-          <div className="hidden md:flex items-center gap-3 flex-shrink-0">
+          {/* Right Actions */}
+          <div className="hidden md:flex items-center gap-2 shrink-0">
             <ThemeToggle />
             {user ? (
               <Link
                 href="/dashboard"
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white dark:bg-[#1A1517] border border-[#EBE4DD] dark:border-[#33272B] text-[#2D2424] dark:text-[#FDFBF7] font-semibold text-sm hover:bg-[#F8F3EC] dark:hover:bg-[#251E21] transition-colors shadow-sm"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-transparent hover:border-slate-200 dark:hover:border-slate-700 text-slate-900 dark:text-white text-[13px] font-medium transition-colors"
               >
-                <div className="w-6 h-6 rounded-full bg-[#F7EDE8] dark:bg-[#251E21] flex items-center justify-center">
-                  <User size={14} className="text-[#C58F78]" />
+                <div className="w-5 h-5 rounded-full bg-[var(--accent-rosegold)]/10 flex items-center justify-center">
+                  <User size={12} className="text-[var(--accent-rosegold)]" />
                 </div>
                 <span>{user.name}</span>
               </Link>
             ) : (
               <Link
                 href="/masuk"
-                className="btn-wevitation px-5 py-2 text-xs font-bold shadow-sm"
+                className="px-4 py-1.5 rounded-full bg-[var(--accent-rosegold)] text-white text-[13px] font-semibold hover:bg-[var(--accent-rosegold-hover)] transition-colors"
               >
                 Masuk
               </Link>
             )}
           </div>
 
-          {/* Mobile Right Menu Button */}
+          {/* Mobile Toggle */}
           <div className="flex md:hidden items-center gap-2">
             <ThemeToggle />
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="p-2 rounded-xl bg-white dark:bg-[#1A1517] border border-[#EBE4DD] dark:border-[#33272B] text-[#2D2424] dark:text-[#FDFBF7] dark:text-[#E8E1E1] hover:bg-[#F8F3EC] dark:bg-[#251E21]/50 dark:bg-[#1A1517] dark:hover:bg-[#251E21] flex items-center justify-center transition-colors"
+              className="p-2 rounded-full text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
               aria-label="Toggle Navigation"
             >
-              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+              {mobileOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
         </div>
       </header>
 
-      {/* Spacer to preserve vertical layout height under fixed header */}
-      <div className="h-16 sm:h-20 w-full flex-shrink-0" />
+      {/* Spacer for content underneath the floating nav */}
+      <div className="h-24 w-full shrink-0" />
 
       {/* Mobile Drawer */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed inset-y-0 right-0 z-50 w-72 sm:w-80 bg-white dark:bg-[#1A1517] border-l border-[#EBE4DD] dark:border-[#33272B] shadow-2xl p-6 flex flex-col justify-between"
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            transition={{ type: "spring", bounce: 0, duration: 0.3 }}
+            className="fixed inset-x-4 top-20 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200/50 dark:border-slate-800/50 shadow-2xl rounded-2xl p-4 flex flex-col md:hidden origin-top"
           >
-            <div>
-              <div className="flex items-center justify-between border-b border-slate-100 dark:border-[#33272B] pb-4 mb-6">
-                <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center gap-2">
-                  <div
-                    className="rounded-full bg-[#C58F78] flex items-center justify-center"
-                    style={{ width: "32px", height: "32px", minWidth: "32px", minHeight: "32px" }}
-                  >
-                    <Heart size={16} className="text-white fill-white" strokeWidth={0} />
-                  </div>
-                  <span className="font-playfair text-xl font-bold text-[#2D2424] dark:text-[#FDFBF7]">NikahLink</span>
+            <div className="flex flex-col gap-1 mb-6">
+              {NAV_ITEMS.map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={cn(
+                    "px-4 py-3 rounded-xl text-sm font-medium transition-colors",
+                    isActive(item.href)
+                      ? "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white"
+                      : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white"
+                  )}
+                >
+                  {item.label}
                 </Link>
-                <button onClick={() => setMobileOpen(false)} className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-300">
-                  <X size={20} />
-                </button>
-              </div>
-
-              <div className="flex flex-col gap-2.5">
-                {NAV_ITEMS.map((item) => {
-                  const active = isActive(item.href);
-                  return (
-                    <Link
-                      key={item.label}
-                      href={item.href}
-                      onClick={() => handleNavClick(item.href)}
-                      className={cn(
-                        "px-4 py-2.5 rounded-xl font-semibold text-sm sm:text-base transition-all flex items-center justify-between border",
-                        active
-                          ? "bg-[#F7EDE8] dark:bg-[#251E21] border-[#F0DDD5] dark:border-[#423338] text-[#C58F78] font-bold shadow-xs"
-                          : "bg-transparent border-transparent text-[#2D2424] dark:text-[#FDFBF7] dark:text-[#D1C4C4] hover:bg-[#F8F3EC] dark:bg-[#251E21]/50 dark:bg-[#1A1517] dark:hover:bg-[#251E21]"
-                      )}
-                    >
-                      <span>{item.label}</span>
-                      {active && <span className="w-2 h-2 rounded-full bg-[#C58F78]" />}
-                    </Link>
-                  );
-                })}
-              </div>
+              ))}
             </div>
 
-            <div className="space-y-3 pt-6 border-t border-slate-100 dark:border-[#33272B]">
+            <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-2">
               {user ? (
                 <Link
                   href="/dashboard"
                   onClick={() => setMobileOpen(false)}
-                  className="w-full py-2.5 flex items-center justify-center gap-2 rounded-xl bg-[#F7EDE8] dark:bg-[#251E21] border border-[#F0DDD5] dark:border-[#423338] text-[#C58F78] dark:text-[#E8BAA6] font-bold text-sm shadow-sm"
+                  className="w-full py-3 flex items-center justify-center gap-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-medium text-sm transition-colors"
                 >
-                  <User size={16} />
+                  <User size={16} className="text-[var(--accent-rosegold)]" />
                   <span>Dashboard ({user.name})</span>
                 </Link>
               ) : (
@@ -249,16 +159,16 @@ export default function Navbar() {
                   <Link
                     href="/masuk"
                     onClick={() => setMobileOpen(false)}
-                    className="w-full block py-2.5 text-center btn-wevitation font-bold text-sm shadow-sm"
+                    className="w-full py-3 text-center rounded-xl bg-[var(--accent-rosegold)] text-white font-semibold text-sm transition-colors hover:bg-[var(--accent-rosegold-hover)]"
                   >
                     Masuk
                   </Link>
                   <Link
                     href="/daftar"
                     onClick={() => setMobileOpen(false)}
-                    className="w-full block py-2.5 text-center btn-demo-outline font-semibold text-sm"
+                    className="w-full py-3 text-center rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-medium text-sm transition-colors hover:bg-slate-200 dark:hover:bg-slate-700"
                   >
-                    Buat Undangan Gratis
+                    Daftar Gratis
                   </Link>
                 </>
               )}
@@ -266,14 +176,6 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Overlay */}
-      {mobileOpen && (
-        <div
-          onClick={() => setMobileOpen(false)}
-          className="fixed inset-0 z-40 bg-black/30 backdrop-blur-xs"
-        />
-      )}
     </>
   );
 }
