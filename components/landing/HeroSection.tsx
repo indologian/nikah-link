@@ -89,7 +89,7 @@ export default function HeroSection() {
   return (
     <section className="relative w-full pt-4 md:pt-8 lg:pt-12 pb-16 overflow-hidden bg-white dark:bg-slate-950 text-slate-900 dark:text-white transition-colors">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-20 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
           
           {/* Left Column: Typography */}
           <div className="flex flex-col items-start text-left max-w-2xl">
@@ -97,7 +97,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 border border-slate-900 dark:border-white text-slate-900 dark:text-white text-xs font-bold uppercase tracking-widest mb-4 sm:mb-6"
+              className="inline-flex items-center gap-2 px-3 py-1.5 border border-slate-900 dark:border-white text-slate-900 dark:text-white text-xs font-bold uppercase tracking-widest mb-4"
             >
               <Sparkles size={14} />
               Platform Undangan Digital
@@ -107,17 +107,16 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="font-playfair text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-medium leading-[1.05] tracking-tight mb-4 sm:mb-6"
+              className="font-playfair text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-medium leading-[1.05] tracking-tight mb-4"
             >
-              Undangan elegan, <br/>
-              siap dalam <span className="italic text-slate-500">hitungan menit.</span>
+              Undangan elegan, siap dalam <span className="italic text-slate-500">hitungan menit.</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-slate-500 text-base sm:text-lg leading-relaxed mb-6 sm:mb-8 max-w-lg"
+              className="text-slate-500 text-base sm:text-lg leading-relaxed mb-6 max-w-lg"
             >
               Buat undangan pernikahan digital yang modern. Lengkap dengan RSVP Online, manajemen tamu, hingga penerimaan kado cashless.
             </motion.p>
