@@ -29,7 +29,7 @@ function FloatingThemeCards() {
         Instead of a fake phone with dynamic islands, we show the invitation
         as a pure, floating editorial card.
       */}
-      <div className="relative w-full max-w-[320px] mx-auto h-[400px] lg:h-[500px] rounded-sm shadow-xl shadow-black/5 dark:shadow-white/5 bg-white dark:bg-slate-950 overflow-hidden border border-slate-200 dark:border-slate-800">
+      <div className="relative w-full max-w-[320px] mx-auto h-[380px] lg:h-[440px] rounded-sm shadow-xl shadow-black/5 dark:shadow-white/5 bg-white dark:bg-slate-950 overflow-hidden border border-slate-200 dark:border-slate-800">
         <AnimatePresence>
           {THEME_PREVIEWS.map((theme, i) => (
             i === active && (
@@ -88,9 +88,9 @@ function FloatingThemeCards() {
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full pt-4 md:pt-8 lg:pt-12 pb-16 bg-white dark:bg-slate-950 text-slate-900 dark:text-white transition-colors">
+    <section className="relative w-full pt-0 md:pt-4 pb-16 bg-white dark:bg-slate-950 text-slate-900 dark:text-white transition-colors">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-start mt-4 sm:mt-8">
           
           {/* Left Column: Typography */}
           <div className="flex flex-col items-start text-left max-w-2xl">
