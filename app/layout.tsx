@@ -54,7 +54,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id" suppressHydrationWarning>
-      <body className="font-jakarta antialiased bg-[#FDFBF7] dark:bg-[#120E10] text-[#2D2424] dark:text-[#FDFBF7] transition-colors">
+      <body className="font-jakarta antialiased bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50 transition-colors">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

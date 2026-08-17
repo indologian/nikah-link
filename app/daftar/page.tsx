@@ -214,7 +214,7 @@ export default function RegisterPage() {
 
                 <p className="text-center text-[#4A3D3D] dark:text-[#B39E9E] text-sm mt-6 font-medium">
                   Sudah punya akun?{" "}
-                  <Link href="/masuk" className="text-[#C58F78] dark:text-[#E8BAA6] hover:text-[#A3735F] dark:hover:text-white hover:underline">
+                  <Link href="/masuk" className="text-slate-900 dark:text-slate-50 hover:underline font-semibold">
                     Masuk di sini
                   </Link>
                 </p>

@@ -423,7 +423,7 @@ export default function EditInvitationPage() {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-10 h-10 border-4 border-slate-200 dark:border-slate-800 border-t-[#9E1B54] rounded-full animate-spin" />
+          <div className="w-10 h-10 border-4 border-slate-200 dark:border-slate-800 border-t-slate-900 dark:border-t-slate-50 rounded-full animate-spin" />
           <p className="text-slate-500 dark:text-slate-400 font-semibold text-sm animate-pulse">Memuat data undangan...</p>
         </div>
       </div>
@@ -827,7 +827,7 @@ export default function EditInvitationPage() {
                       <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)] dark:text-white">{item.label}</h4>
                       <p className="text-slate-400 text-xs">{item.desc}</p>
                     </div>
-                    <input type="checkbox" checked={(formData as any)[item.key]} onChange={(e) => handleChange(item.key, e.target.checked)} className="w-5 h-5 accent-[#9E1B54] rounded cursor-pointer" />
+                    <input type="checkbox" checked={(formData as any)[item.key]} onChange={(e) => handleChange(item.key, e.target.checked)} className="w-5 h-5 accent-slate-900 dark:accent-slate-50 rounded-none cursor-pointer" />
                   </div>
                 ))}
               </div>

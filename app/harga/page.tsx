@@ -70,7 +70,7 @@ export default function PricingPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#FDFBF7] dark:bg-[#120E10] text-[#2D2424] dark:text-[#FDFBF7] flex flex-col w-full">
+    <main className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50 flex flex-col w-full">
       {/* Midtrans Snap JS Script */}
       <Script
         src={SNAP_URL}
@@ -85,7 +85,7 @@ export default function PricingPage() {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="p-4 rounded-2xl bg-[#F7EDE8] dark:bg-[#251E21] border border-[#F0DDD5] dark:border-[#423338] text-[#C58F78] text-sm font-semibold flex items-center justify-center gap-2"
+            className="p-4 rounded-none bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-50 text-sm font-semibold flex items-center justify-center gap-2"
           >
             <Sparkles className="w-5 h-5" /> {message}
           </motion.div>

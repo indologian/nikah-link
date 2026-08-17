@@ -17,7 +17,7 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
     name: "",
     category: "minimalis",
     is_premium: false,
-    colors_primary: "#9E1B54",
+    colors_primary: "#0F172A",
   });
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
 
@@ -64,7 +64,7 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
 
       setThemes([newTheme as Theme, ...themes]);
       setIsAdding(false);
-      setFormData({ id: "", name: "", category: "minimalis", is_premium: false, colors_primary: "#9E1B54" });
+      setFormData({ id: "", name: "", category: "minimalis", is_premium: false, colors_primary: "#0F172A" });
       setThumbnailFile(null);
     } catch (err: any) {
       alert("Error: " + err.message);

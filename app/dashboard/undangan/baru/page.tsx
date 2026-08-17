@@ -1048,7 +1048,7 @@ export default function NewInvitationPage() {
                       type="checkbox"
                       checked={(formData as any)[item.key]}
                       onChange={(e) => handleChange(item.key, e.target.checked)}
-                      className="w-5 h-5 accent-[#9E1B54] rounded cursor-pointer"
+                      className="w-5 h-5 accent-slate-900 dark:accent-slate-50 rounded-none cursor-pointer"
                     />
                   </div>
                 ))}

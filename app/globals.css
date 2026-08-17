@@ -2,18 +2,6 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
-  :root {
-    --bg-primary: #FDFBF7;
-    --bg-secondary: #F8F3EC;
-    --text-primary: #2D2424;
-    --text-secondary: #756767;
-    --accent-rosegold: #C58F78;
-    --accent-rosegold-hover: #A8725B;
-    --border-subtle: #EBE4DD;
-    --badge-bg: #F7EDE8;
-    --badge-border: #F0DDD5;
-  }
-
   * {
     box-sizing: border-box !important;
   }
@@ -24,54 +12,4 @@
     margin: 0;
     padding: 0;
   }
-}
-
-/* Custom Rose Gold & Cream Luxe Utilities */
-.card-wevitation {
-  background-color: #ffffff;
-  border: 1px solid #EBE4DD;
-  border-radius: 1rem;
-  box-shadow: 0 1px 4px 0 rgba(45, 36, 36, 0.04);
-  transition: background-color 0.15s ease, border-color 0.15s ease;
-}
-
-:is(.dark .card-wevitation) {
-  background-color: #1A1517; /* Dark Aubergine */
-  border-color: #33272B; /* Rose Charcoal */
-}
-
-.btn-wevitation {
-  background-color: #C58F78;
-  color: #ffffff;
-  border-radius: 0.75rem;
-  transition: all 0.2s ease-in-out;
-}
-
-.btn-wevitation:hover {
-  background-color: #A8725B;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(197, 143, 120, 0.3);
-}
-
-.btn-demo-outline {
-  background-color: transparent;
-  color: #2D2424;
-  border: 1.5px solid #2D2424;
-  border-radius: 0.75rem;
-  transition: all 0.2s ease-in-out;
-}
-
-.btn-demo-outline:hover {
-  background-color: #2D2424;
-  color: #ffffff;
-}
-
-:is(.dark .btn-demo-outline) {
-  color: #FDFBF7; /* off-white */
-  border-color: #FDFBF7;
-}
-
-:is(.dark .btn-demo-outline):hover {
-  background-color: #FDFBF7;
-  color: #120E10; /* ebony */
 }
