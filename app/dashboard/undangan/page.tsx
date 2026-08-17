@@ -33,7 +33,7 @@ export default async function MyInvitationsPage() {
       {/* Editorial Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-6 border-b border-slate-200 dark:border-slate-800">
         <div>
-          <h1 className="text-2xl font-playfair font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-3 mb-1">
+          <h1 className="text-2xl font-playfair font-bold text-slate-900 dark:text-white flex items-center gap-3 mb-1">
              Undangan Saya
           </h1>
           <p className="text-slate-500 dark:text-slate-400 text-sm">
@@ -44,9 +44,9 @@ export default async function MyInvitationsPage() {
       </div>
 
       {!invitations || invitations.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 text-center px-4">
+        <div className="flex flex-col items-center justify-center py-20 rounded-none border border-dashed border-slate-300 dark:border-slate-700 text-center px-4">
           <Heart className="w-8 h-8 text-slate-300 dark:text-slate-600 mb-4" />
-          <h3 className="text-[var(--text-primary)] dark:text-white font-playfair font-bold text-xl mb-2">Belum Ada Undangan</h3>
+          <h3 className="text-slate-900 dark:text-white font-playfair font-bold text-xl mb-2">Belum Ada Undangan</h3>
           <p className="text-slate-500 dark:text-slate-400 text-sm mb-6 max-w-sm">
             Mulai langkah manismu sekarang dengan membuat undangan digital impian kalian!
           </p>
@@ -57,10 +57,10 @@ export default async function MyInvitationsPage() {
           {invitations.map((inv) => (
             <div
               key={inv.id}
-              className="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 sm:p-6 transition-colors hover:border-[var(--accent-rosegold)] flex flex-col lg:flex-row lg:items-center gap-6"
+              className="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-none p-4 sm:p-6 transition-colors hover:border-slate-900 dark:border-white flex flex-col lg:flex-row lg:items-center gap-6"
             >
               {/* Thumbnail Area */}
-              <div className="w-full lg:w-48 h-32 lg:h-28 shrink-0 bg-slate-100 dark:bg-slate-800 rounded-2xl relative overflow-hidden flex items-center justify-center border border-slate-200 dark:border-slate-700">
+              <div className="w-full lg:w-48 h-32 lg:h-28 shrink-0 bg-slate-100 dark:bg-slate-800 rounded-none relative overflow-hidden flex items-center justify-center border border-slate-200 dark:border-slate-700">
                 {inv.cover_image_url ? (
                   <img src={inv.cover_image_url} alt="Cover" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 ) : (
@@ -68,7 +68,7 @@ export default async function MyInvitationsPage() {
                 )}
                 
                 {/* Status Badge floating on image for mobile, absolute for desktop */}
-                <span className={`absolute top-2 left-2 px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest backdrop-blur-md ${
+                <span className={`absolute top-2 left-2 px-2.5 py-1 rounded-none text-[9px] font-bold uppercase tracking-widest backdrop-blur-md ${
                   inv.is_published
                     ? "bg-emerald-500/90 text-white"
                     : "bg-slate-900/80 text-white"
@@ -80,10 +80,10 @@ export default async function MyInvitationsPage() {
               {/* Info Area */}
               <div className="flex-1 min-w-0">
                 <div className="mb-2">
-                  <h3 className="font-playfair text-2xl font-bold text-[var(--text-primary)] dark:text-white truncate">
+                  <h3 className="font-playfair text-2xl font-bold text-slate-900 dark:text-white truncate">
                     {inv.bride_name} & {inv.groom_name}
                   </h3>
-                  <div className="flex items-center gap-1 mt-1 text-[var(--accent-rosegold)] text-xs font-semibold">
+                  <div className="flex items-center gap-1 mt-1 text-slate-900 dark:text-white text-xs font-semibold">
                     <Link2 className="w-3.5 h-3.5" />
                     <span>nikahlink.com/{inv.username}</span>
                   </div>
@@ -103,14 +103,14 @@ export default async function MyInvitationsPage() {
                 <Link
                   href={`/${inv.username}`}
                   target="_blank"
-                  className="flex-1 lg:flex-none inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[var(--text-primary)] dark:text-white text-xs font-semibold rounded-xl hover:border-[var(--accent-rosegold)] transition-colors"
+                  className="flex-1 lg:flex-none inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-xs font-semibold rounded-none hover:border-slate-900 dark:border-white transition-colors"
                 >
                   <ExternalLink className="w-3.5 h-3.5" /> Lihat Undangan
                 </Link>
                 <div className="flex-1 lg:flex-none flex gap-2">
                   <Link
                     href={`/dashboard/undangan/${inv.id}/edit`}
-                    className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[var(--text-primary)] dark:text-white text-xs font-semibold rounded-xl hover:border-[var(--accent-rosegold)] transition-colors"
+                    className="flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-xs font-semibold rounded-none hover:border-slate-900 dark:border-white transition-colors"
                   >
                     <Edit3 className="w-3.5 h-3.5" /> Edit
                   </Link>

@@ -293,7 +293,7 @@ Salam hangat,
         <div className="flex items-center gap-3 shrink-0">
           <button
             onClick={handleExportXLSX}
-            className="flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg shadow-sm hover:bg-slate-50 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-600 dark:hover:bg-slate-700 transition-colors"
+            className="flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-none shadow-sm hover:bg-slate-50 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-600 dark:hover:bg-slate-700 transition-colors"
           >
             <Download className="w-4 h-4" />
             <span className="hidden sm:inline">Ekspor Data</span>
@@ -312,7 +312,7 @@ Salam hangat,
             }
             setShowAddModal(true);
             }}
-            className="flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-slate-900 border border-transparent rounded-lg shadow-sm hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 transition-colors"
+            className="flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-slate-900 border border-transparent rounded-none shadow-sm hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 transition-colors"
           >
             <UserPlus className="w-4 h-4" />
             Tambah Tamu
@@ -321,7 +321,7 @@ Salam hangat,
       </div>
 
       {/* Main Unified Workspace */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-sm overflow-hidden flex flex-col">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-none shadow-sm overflow-hidden flex flex-col">
         
         {/* Toolbar */}
         <div className="p-4 border-b border-slate-200 dark:border-slate-800 space-y-4">
@@ -489,7 +489,7 @@ Salam hangat,
           <motion.div
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="w-full max-w-md bg-white dark:bg-slate-900 rounded-lg p-6 border border-slate-200 dark:border-slate-800 shadow-xl"
+            className="w-full max-w-md bg-white dark:bg-slate-900 rounded-none p-6 border border-slate-200 dark:border-slate-800 shadow-xl"
           >
             <div className="flex items-center justify-between mb-5">
               <h3 className="text-lg font-medium text-slate-900 dark:text-white">

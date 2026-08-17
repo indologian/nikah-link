@@ -168,7 +168,7 @@ export default function GiftClient({ initialAccounts, invitations, plan }: GiftC
       {/* Editorial Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-6 border-b border-slate-200 dark:border-slate-800">
         <div>
-          <h1 className="text-2xl font-playfair font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-3 mb-1">
+          <h1 className="text-2xl font-playfair font-bold text-slate-900 dark:text-white flex items-center gap-3 mb-1">
             Rekening Kado
           </h1>
           <p className="text-slate-500 dark:text-slate-400 text-sm">
@@ -178,14 +178,14 @@ export default function GiftClient({ initialAccounts, invitations, plan }: GiftC
         
         <button
           onClick={() => handleOpenModal()}
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[var(--text-primary)] dark:bg-white text-white dark:text-slate-900 px-6 py-3 rounded-full font-semibold text-sm hover:opacity-90 transition-opacity"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-6 py-3 rounded-none font-semibold text-sm hover:opacity-90 transition-opacity"
         >
           <Plus className="w-4 h-4" /> Tambah Rekening
         </button>
       </div>
 
       {error && !isModalOpen && (
-        <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 text-sm font-semibold flex items-start gap-2">
+        <div className="p-4 rounded-none bg-rose-50 border border-rose-200 text-rose-600 text-sm font-semibold flex items-start gap-2">
           <AlertCircle className="w-5 h-5 flex-shrink-0" />
           <div className="flex-1">
             {error}
@@ -198,15 +198,15 @@ export default function GiftClient({ initialAccounts, invitations, plan }: GiftC
 
       <div>
         {accounts.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-20 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 bg-transparent text-center px-4">
+          <div className="flex flex-col items-center justify-center py-20 rounded-none border border-dashed border-slate-300 dark:border-slate-700 bg-transparent text-center px-4">
             <CreditCard className="w-8 h-8 text-slate-300 dark:text-slate-600 mb-4" />
-            <h3 className="text-[var(--text-primary)] dark:text-white font-playfair font-bold text-xl mb-2">Belum ada rekening kado terdaftar</h3>
+            <h3 className="text-slate-900 dark:text-white font-playfair font-bold text-xl mb-2">Belum ada rekening kado terdaftar</h3>
             <p className="text-slate-500 dark:text-slate-400 text-sm max-w-md mx-auto leading-relaxed">
               Klik "Tambah Rekening" di atas untuk mulai menerima amplop digital dari tamu Anda.
             </p>
           </div>
         ) : (
-          <div className="flex flex-col border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden bg-white dark:bg-slate-900">
+          <div className="flex flex-col border border-slate-200 dark:border-slate-800 rounded-none overflow-hidden bg-white dark:bg-slate-900">
             {accounts.map((acc, index) => (
               <div 
                 key={acc.id} 
@@ -217,7 +217,7 @@ export default function GiftClient({ initialAccounts, invitations, plan }: GiftC
                 {/* Info block */}
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] font-bold uppercase tracking-widest border border-slate-200 dark:border-slate-700">
+                    <span className="px-3 py-1 rounded-none bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] font-bold uppercase tracking-widest border border-slate-200 dark:border-slate-700">
                       {acc.bank_name}
                     </span>
                     <span className="text-xs text-slate-500 dark:text-slate-400 font-medium truncate max-w-[200px]">
@@ -226,8 +226,8 @@ export default function GiftClient({ initialAccounts, invitations, plan }: GiftC
                   </div>
                   <div className="space-y-1">
                     <p className="text-slate-400 text-[10px] uppercase tracking-widest font-bold">Nomor Rekening / E-Wallet</p>
-                    <p className="font-mono text-2xl font-extrabold text-[var(--text-primary)] dark:text-white tracking-wider">{acc.account_number}</p>
-                    <p className="text-sm text-[var(--text-primary)] dark:text-slate-300 font-bold uppercase">A.N. {acc.account_name}</p>
+                    <p className="font-mono text-2xl font-extrabold text-slate-900 dark:text-white tracking-wider">{acc.account_number}</p>
+                    <p className="text-sm text-slate-900 dark:text-slate-300 font-bold uppercase">A.N. {acc.account_name}</p>
                   </div>
                 </div>
                 
@@ -235,13 +235,13 @@ export default function GiftClient({ initialAccounts, invitations, plan }: GiftC
                 <div className="flex sm:flex-col gap-2 shrink-0">
                   <button
                     onClick={() => handleOpenModal(acc)}
-                    className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:border-[var(--accent-rosegold)] hover:text-[var(--accent-rosegold)] transition-colors"
+                    className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-semibold text-slate-600 dark:text-slate-300 hover:border-slate-900 dark:border-white hover:text-slate-900 dark:text-white transition-colors"
                   >
                     <Edit3 className="w-3.5 h-3.5" /> Edit
                   </button>
                   <button
                     onClick={() => handleDelete(acc.id)}
-                    className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-semibold text-rose-600 dark:text-rose-400 hover:border-rose-300 dark:hover:border-rose-800 transition-colors"
+                    className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-none text-xs font-semibold text-rose-600 dark:text-rose-400 hover:border-rose-300 dark:hover:border-rose-800 transition-colors"
                   >
                     <Trash2 className="w-3.5 h-3.5" /> Hapus
                   </button>
@@ -267,10 +267,10 @@ export default function GiftClient({ initialAccounts, invitations, plan }: GiftC
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-2xl"
+              className="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-none border border-slate-200 dark:border-slate-800 overflow-hidden shadow-2xl"
             >
               <div className="flex items-center justify-between p-6 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
-                <h3 className="text-lg font-bold text-[var(--text-primary)] dark:text-white font-playfair">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white font-playfair">
                   {editingId ? "Edit Rekening" : "Tambah Rekening Baru"}
                 </h3>
                 <button
@@ -283,7 +283,7 @@ export default function GiftClient({ initialAccounts, invitations, plan }: GiftC
 
               <form onSubmit={handleSave} className="p-6 space-y-5">
                 {error && (
-                  <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 text-xs font-semibold">
+                  <div className="p-3 rounded-none bg-rose-50 border border-rose-200 text-rose-600 text-xs font-semibold">
                     {error}
                   </div>
                 )}
@@ -294,7 +294,7 @@ export default function GiftClient({ initialAccounts, invitations, plan }: GiftC
                     value={formData.invitation_id}
                     onChange={(e) => setFormData({ ...formData, invitation_id: e.target.value })}
                     disabled={!!editingId || invitations.length === 1}
-                    className="w-full px-4 py-3 rounded-xl bg-transparent border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white text-sm focus:outline-none focus:border-[var(--accent-rosegold)] transition-colors disabled:opacity-50"
+                    className="w-full px-4 py-3 rounded-none bg-transparent border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white text-sm focus:outline-none focus:border-slate-900 dark:border-white transition-colors disabled:opacity-50"
                   >
                     {invitations.map((inv) => (
                       <option key={inv.id} value={inv.id} className="text-slate-900">
@@ -311,7 +311,7 @@ export default function GiftClient({ initialAccounts, invitations, plan }: GiftC
                     value={formData.bank_name}
                     onChange={(e) => setFormData({ ...formData, bank_name: e.target.value })}
                     placeholder="Contoh: BCA / GoPay"
-                    className="w-full px-4 py-3 rounded-xl bg-transparent border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white text-sm focus:outline-none focus:border-[var(--accent-rosegold)] transition-colors"
+                    className="w-full px-4 py-3 rounded-none bg-transparent border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white text-sm focus:outline-none focus:border-slate-900 dark:border-white transition-colors"
                   />
                 </div>
 
@@ -322,7 +322,7 @@ export default function GiftClient({ initialAccounts, invitations, plan }: GiftC
                     value={formData.account_number}
                     onChange={(e) => setFormData({ ...formData, account_number: e.target.value })}
                     placeholder="Contoh: 1234567890"
-                    className="w-full px-4 py-3 rounded-xl bg-transparent border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white text-sm focus:outline-none focus:border-[var(--accent-rosegold)] transition-colors"
+                    className="w-full px-4 py-3 rounded-none bg-transparent border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white text-sm focus:outline-none focus:border-slate-900 dark:border-white transition-colors"
                   />
                 </div>
 
@@ -333,7 +333,7 @@ export default function GiftClient({ initialAccounts, invitations, plan }: GiftC
                     value={formData.account_name}
                     onChange={(e) => setFormData({ ...formData, account_name: e.target.value })}
                     placeholder="Contoh: ROMEO MONTAGUE"
-                    className="w-full px-4 py-3 rounded-xl bg-transparent border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white text-sm focus:outline-none focus:border-[var(--accent-rosegold)] transition-colors"
+                    className="w-full px-4 py-3 rounded-none bg-transparent border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white text-sm focus:outline-none focus:border-slate-900 dark:border-white transition-colors"
                   />
                 </div>
 
@@ -341,14 +341,14 @@ export default function GiftClient({ initialAccounts, invitations, plan }: GiftC
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(false)}
-                    className="flex-1 py-3 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                    className="flex-1 py-3 rounded-none text-xs font-bold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
                   >
                     Batal
                   </button>
                   <button
                     type="submit"
                     disabled={loading}
-                    className="flex-1 py-3 rounded-xl text-xs font-bold text-white bg-[var(--text-primary)] dark:bg-white dark:text-slate-900 hover:opacity-90 disabled:opacity-50 transition-opacity flex items-center justify-center"
+                    className="flex-1 py-3 rounded-none text-xs font-bold text-white bg-slate-900 dark:bg-white dark:text-slate-900 hover:opacity-90 disabled:opacity-50 transition-opacity flex items-center justify-center"
                   >
                     {loading ? "Menyimpan..." : "Simpan"}
                   </button>

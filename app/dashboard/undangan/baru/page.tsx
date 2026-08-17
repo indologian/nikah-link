@@ -429,7 +429,7 @@ export default function NewInvitationPage() {
   if (isCheckingLimit) {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
-        <Loader2 className="w-8 h-8 text-[var(--accent-rosegold)] animate-spin" />
+        <Loader2 className="w-8 h-8 text-slate-900 dark:text-white animate-spin" />
       </div>
     );
   }
@@ -464,12 +464,12 @@ export default function NewInvitationPage() {
       />
 
       {/* Top Header */}
-      <div className="flex items-center justify-between bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 ">
+      <div className="flex items-center justify-between bg-white dark:bg-slate-900 p-6 rounded-none border border-slate-200 dark:border-slate-800 ">
         <div>
-          <Link href="/dashboard" className="text-slate-500 dark:text-slate-400 hover:text-[var(--accent-rosegold)] text-xs font-semibold flex items-center gap-1 mb-2">
+          <Link href="/dashboard" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white text-xs font-semibold flex items-center gap-1 mb-2">
             <ArrowLeft className="w-3 h-3" /> Kembali ke Dashboard
           </Link>
-          <h1 className="text-2xl font-bold text-[var(--text-primary)] dark:text-white font-playfair">Buat Undangan Pernikahan Baru</h1>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white font-playfair">Buat Undangan Pernikahan Baru</h1>
           <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-1">Lengkapi data berikut untuk menghasilkan undangan digital yang indah.</p>
         </div>
       </div>
@@ -486,11 +486,11 @@ export default function NewInvitationPage() {
               <div key={step.id} className="flex items-center gap-2">
                 <button
                   onClick={() => idx <= currentStep && setCurrentStep(idx)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                  className={`flex items-center gap-2 px-4 py-2 rounded-none text-xs font-bold transition-all ${
                     isActive
                       ? " text-white "
                       : isDone
-                      ? "bg-slate-100 dark:bg-slate-800 dark:bg-[var(--accent-rosegold)]/20 text-[var(--accent-rosegold)] border border-slate-200 dark:border-[var(--accent-rosegold)]/30"
+                      ? "bg-slate-100 dark:bg-slate-800 dark:bg-slate-900 dark:bg-slate-50/20 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-900 dark:border-white/30"
                       : "bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-slate-50 border border-slate-200 dark:border-slate-800"
                   }`}
                 >
@@ -499,7 +499,7 @@ export default function NewInvitationPage() {
                 </button>
 
                 {idx < STEPS.length - 1 && (
-                  <div className={`w-6 h-0.5 ${idx < currentStep ? "bg-[var(--accent-rosegold)]" : "bg-slate-200"}`} />
+                  <div className={`w-6 h-0.5 ${idx < currentStep ? "bg-slate-900 dark:bg-slate-50" : "bg-slate-200"}`} />
                 )}
               </div>
             );
@@ -508,9 +508,9 @@ export default function NewInvitationPage() {
       </div>
 
       {/* Form Card */}
-      <div className=" bg-white dark:bg-slate-900 rounded-2xl p-6 lg:p-8 border border-slate-200 dark:border-slate-800  relative">
+      <div className=" bg-white dark:bg-slate-900 rounded-none p-6 lg:p-8 border border-slate-200 dark:border-slate-800  relative">
         {error && (
-          <div className="mb-6 p-4 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 text-rose-700 text-xs sm:text-sm font-semibold">
+          <div className="mb-6 p-4 rounded-none bg-rose-50 dark:bg-rose-950/30 border border-rose-200 text-rose-700 text-xs sm:text-sm font-semibold">
             {error}
           </div>
         )}
@@ -525,20 +525,20 @@ export default function NewInvitationPage() {
               exit={{ opacity: 0, x: -20 }}
               className="space-y-6"
             >
-              <h2 className="text-base sm:text-lg font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
-                <Heart className="w-5 h-5 text-[var(--accent-rosegold)]" /> Profil Mempelai & Custom URL
+              <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
+                <Heart className="w-5 h-5 text-slate-900 dark:text-white" /> Profil Mempelai & Custom URL
               </h2>
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 dark:text-slate-400 mb-2">
-                  URL Undangan Impian Kamu <span className="text-[var(--accent-rosegold)]">*</span>
+                  URL Undangan Impian Kamu <span className="text-slate-900 dark:text-white">*</span>
                 </label>
-                <div className={`flex items-center rounded-xl bg-slate-50 border overflow-hidden transition-colors ${
+                <div className={`flex items-center rounded-none bg-slate-50 border overflow-hidden transition-colors ${
                   slugStatus === "taken" 
                     ? "border-rose-400 focus-within:border-rose-500" 
                     : slugStatus === "available"
                     ? "border-emerald-400 focus-within:border-emerald-500"
-                    : "border-slate-200 dark:border-slate-700 focus-within:border-[var(--accent-rosegold)]"
+                    : "border-slate-200 dark:border-slate-700 focus-within:border-slate-900 dark:border-white"
                 }`}>
                   <span className="px-4 py-3 bg-slate-100 text-slate-500 dark:text-slate-400 text-xs sm:text-sm font-mono border-r border-slate-200 dark:border-slate-700">
                     nikahlink.com/
@@ -549,7 +549,7 @@ export default function NewInvitationPage() {
                     onChange={(e) => setFormData(prev => ({...prev, username: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "")}))}
                     placeholder="romeo-juliet"
                     required
-                    className="flex-1 bg-transparent px-4 py-3 text-[var(--text-primary)] dark:text-white placeholder:text-slate-400 focus:outline-none text-xs sm:text-sm font-mono font-semibold"
+                    className="flex-1 bg-transparent px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none text-xs sm:text-sm font-mono font-semibold"
                   />
                   {slugStatus === "checking" && <Loader2 className="w-4 h-4 mr-4 text-slate-400 animate-spin" />}
                   {slugStatus === "available" && <CheckCircle2 className="w-4 h-4 mr-4 text-emerald-500" />}
@@ -570,8 +570,8 @@ export default function NewInvitationPage() {
 
               <div className="grid md:grid-cols-2 gap-6">
                 {/* Mempelai Pria */}
-                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 dark:border-slate-700 space-y-4">
-                  <h3 className="text-xs font-bold text-[var(--accent-rosegold)] uppercase tracking-wider">Mempelai Pria</h3>
+                <div className="p-5 rounded-none bg-slate-50 border border-slate-200 dark:border-slate-700 space-y-4">
+                  <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Mempelai Pria</h3>
                   <div>
                     <label className="block text-xs font-bold text-slate-700 dark:text-slate-400 mb-1">Nama Panggilan / Lengkap *</label>
                     <input
@@ -579,14 +579,14 @@ export default function NewInvitationPage() {
                       value={formData.groom_name}
                       onChange={(e) => handleChange("groom_name", e.target.value)}
                       placeholder="Contoh: Romeo Montague, S.T."
-                      className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-[var(--accent-rosegold)]"
+                      className="w-full px-4 py-2.5 rounded-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:border-white"
                     />
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-slate-700 dark:text-slate-400 mb-1">Foto Mempelai Pria</label>
                     <div className="flex items-center gap-3">
                       {formData.groom_photo_url && (
-                        <div className="w-12 h-12 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden shrink-0 bg-slate-100">
+                        <div className="w-12 h-12 rounded-none border border-slate-200 dark:border-slate-700 overflow-hidden shrink-0 bg-slate-100">
                           <img src={formData.groom_photo_url} alt="Pria" className="w-full h-full object-cover" />
                         </div>
                       )}
@@ -596,10 +596,10 @@ export default function NewInvitationPage() {
                           accept="image/jpeg,image/png,image/gif,image/webp,image/svg+xml,image/bmp,image/tiff,image/x-icon,image/avif"
                           onChange={(e) => uploadImage(e, 'groom_photo_url')}
                           disabled={uploading['groom_photo_url']}
-                          className="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-100 dark:bg-slate-800 dark:bg-[var(--accent-rosegold)]/20 file:text-[var(--accent-rosegold)] hover:file:bg-[#F8D5E3] transition-all cursor-pointer disabled:opacity-50"
+                          className="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-none file:border-0 file:text-xs file:font-semibold file:bg-slate-100 dark:bg-slate-800 dark:bg-slate-900 dark:bg-slate-50/20 file:text-slate-900 dark:text-white hover:file:bg-[#F8D5E3] transition-all cursor-pointer disabled:opacity-50"
                         />
                         {uploading['groom_photo_url'] ? (
-                          <p className="text-[10px] text-[var(--accent-rosegold)] mt-1 animate-pulse">Mengunggah...</p>
+                          <p className="text-[10px] text-slate-900 dark:text-white mt-1 animate-pulse">Mengunggah...</p>
                         ) : (
                           <p className="text-[10px] text-slate-400 mt-1">Maks. 1 MB (JPG, PNG, GIF, WEBP, dll)</p>
                         )}
@@ -609,8 +609,8 @@ export default function NewInvitationPage() {
                 </div>
 
                 {/* Mempelai Wanita */}
-                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 dark:border-slate-700 space-y-4">
-                  <h3 className="text-xs font-bold text-[var(--accent-rosegold)] uppercase tracking-wider">Mempelai Wanita</h3>
+                <div className="p-5 rounded-none bg-slate-50 border border-slate-200 dark:border-slate-700 space-y-4">
+                  <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">Mempelai Wanita</h3>
                   <div>
                     <label className="block text-xs font-bold text-slate-700 dark:text-slate-400 mb-1">Nama Panggilan / Lengkap *</label>
                     <input
@@ -618,14 +618,14 @@ export default function NewInvitationPage() {
                       value={formData.bride_name}
                       onChange={(e) => handleChange("bride_name", e.target.value)}
                       placeholder="Contoh: Juliet Capulet, S.Ked"
-                      className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-[var(--accent-rosegold)]"
+                      className="w-full px-4 py-2.5 rounded-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:border-white"
                     />
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-slate-700 dark:text-slate-400 mb-1">Foto Mempelai Wanita</label>
                     <div className="flex items-center gap-3">
                       {formData.bride_photo_url && (
-                        <div className="w-12 h-12 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden shrink-0 bg-slate-100">
+                        <div className="w-12 h-12 rounded-none border border-slate-200 dark:border-slate-700 overflow-hidden shrink-0 bg-slate-100">
                           <img src={formData.bride_photo_url} alt="Wanita" className="w-full h-full object-cover" />
                         </div>
                       )}
@@ -635,10 +635,10 @@ export default function NewInvitationPage() {
                           accept="image/jpeg,image/png,image/gif,image/webp,image/svg+xml,image/bmp,image/tiff,image/x-icon,image/avif"
                           onChange={(e) => uploadImage(e, 'bride_photo_url')}
                           disabled={uploading['bride_photo_url']}
-                          className="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-100 dark:bg-slate-800 dark:bg-[var(--accent-rosegold)]/20 file:text-[var(--accent-rosegold)] hover:file:bg-[#F8D5E3] transition-all cursor-pointer disabled:opacity-50"
+                          className="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-none file:border-0 file:text-xs file:font-semibold file:bg-slate-100 dark:bg-slate-800 dark:bg-slate-900 dark:bg-slate-50/20 file:text-slate-900 dark:text-white hover:file:bg-[#F8D5E3] transition-all cursor-pointer disabled:opacity-50"
                         />
                         {uploading['bride_photo_url'] ? (
-                          <p className="text-[10px] text-[var(--accent-rosegold)] mt-1 animate-pulse">Mengunggah...</p>
+                          <p className="text-[10px] text-slate-900 dark:text-white mt-1 animate-pulse">Mengunggah...</p>
                         ) : (
                           <p className="text-[10px] text-slate-400 mt-1">Maks. 1 MB (JPG, PNG, GIF, WEBP, dll)</p>
                         )}
@@ -655,7 +655,7 @@ export default function NewInvitationPage() {
                   value={formData.love_story}
                   onChange={(e) => handleChange("love_story", e.target.value)}
                   placeholder="Ceritakan awal mula bertemu hingga memutuskan untuk melangkah ke jenjang pernikahan..."
-                  className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 dark:border-slate-700 text-slate-800 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-[var(--accent-rosegold)]"
+                  className="w-full px-4 py-3 rounded-none bg-slate-50 border border-slate-200 dark:border-slate-700 text-slate-800 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:border-white"
                 />
               </div>
             </motion.div>
@@ -670,12 +670,12 @@ export default function NewInvitationPage() {
               exit={{ opacity: 0, x: -20 }}
               className="space-y-6"
             >
-              <h2 className="text-base sm:text-lg font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
-                <Calendar className="w-5 h-5 text-[var(--accent-rosegold)]" /> Detail Acara Pernikahan
+              <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
+                <Calendar className="w-5 h-5 text-slate-900 dark:text-white" /> Detail Acara Pernikahan
               </h2>
 
               {/* Akad Nikah */}
-              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 dark:border-slate-700 space-y-4">
+              <div className="p-5 rounded-none bg-slate-50 border border-slate-200 dark:border-slate-700 space-y-4">
                 <h3 className="text-xs font-bold text-amber-700 uppercase tracking-wider flex items-center gap-2">
                   <MapPin className="w-4 h-4" /> Akad Nikah / Pemberkatan
                 </h3>
@@ -686,7 +686,7 @@ export default function NewInvitationPage() {
                       type="date"
                       value={formData.akad_date}
                       onChange={(e) => handleChange("akad_date", e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 text-xs sm:text-sm focus:outline-none focus:border-[var(--accent-rosegold)]"
+                      className="w-full px-4 py-2.5 rounded-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:border-white"
                     />
                   </div>
                   <div>
@@ -720,7 +720,7 @@ export default function NewInvitationPage() {
                       value={formData.akad_address}
                       onChange={(e) => handleChange("akad_address", e.target.value)}
                       placeholder="Jl. Merdeka No. 1, Jakarta"
-                      className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-[var(--accent-rosegold)]"
+                      className="w-full px-4 py-2.5 rounded-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:border-white"
                     />
                   </div>
                   <div>
@@ -730,15 +730,15 @@ export default function NewInvitationPage() {
                       value={formData.akad_maps_url}
                       onChange={(e) => handleChange("akad_maps_url", e.target.value)}
                       placeholder="https://maps.google.com/..."
-                      className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-[var(--accent-rosegold)]"
+                      className="w-full px-4 py-2.5 rounded-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:border-white"
                     />
                   </div>
                 </div>
               </div>
 
               {/* Resepsi Pernikahan */}
-              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 dark:border-slate-700 space-y-4">
-                <h3 className="text-xs font-bold text-[var(--accent-rosegold)] uppercase tracking-wider flex items-center gap-2">
+              <div className="p-5 rounded-none bg-slate-50 border border-slate-200 dark:border-slate-700 space-y-4">
+                <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
                   <MapPin className="w-4 h-4" /> Resepsi Pernikahan
                 </h3>
                 <div className="grid md:grid-cols-2 gap-4">
@@ -748,7 +748,7 @@ export default function NewInvitationPage() {
                       type="date"
                       value={formData.reception_date}
                       onChange={(e) => handleChange("reception_date", e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 text-xs sm:text-sm focus:outline-none focus:border-[var(--accent-rosegold)]"
+                      className="w-full px-4 py-2.5 rounded-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:border-white"
                     />
                   </div>
                   <div>
@@ -782,7 +782,7 @@ export default function NewInvitationPage() {
                       value={formData.reception_address}
                       onChange={(e) => handleChange("reception_address", e.target.value)}
                       placeholder="Jl. Sudirman No. 1, Jakarta"
-                      className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-[var(--accent-rosegold)]"
+                      className="w-full px-4 py-2.5 rounded-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:border-white"
                     />
                   </div>
                   <div>
@@ -792,7 +792,7 @@ export default function NewInvitationPage() {
                       value={formData.reception_maps_url}
                       onChange={(e) => handleChange("reception_maps_url", e.target.value)}
                       placeholder="https://maps.google.com/..."
-                      className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-[var(--accent-rosegold)]"
+                      className="w-full px-4 py-2.5 rounded-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:border-white"
                     />
                   </div>
                 </div>
@@ -809,8 +809,8 @@ export default function NewInvitationPage() {
               exit={{ opacity: 0, x: -20 }}
               className="space-y-6"
             >
-              <h2 className="text-base sm:text-lg font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
-                <Sparkles className="w-5 h-5 text-[var(--accent-rosegold)]" /> Pilih Tema Undangan
+              <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
+                <Sparkles className="w-5 h-5 text-slate-900 dark:text-white" /> Pilih Tema Undangan
               </h2>
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -831,8 +831,8 @@ export default function NewInvitationPage() {
                         }
                         handleChange("theme_slug", theme.slug);
                       }}
-                      className={`relative overflow-hidden rounded-2xl cursor-pointer border-2 transition-all group ${
-                        isSelected ? "border-[var(--accent-rosegold)]  scale-[1.02]" : "border-slate-100 dark:border-slate-800 hover:border-rose-200 dark:hover:border-rose-900/50"
+                      className={`relative overflow-hidden rounded-none cursor-pointer border-2 transition-all group ${
+                        isSelected ? "border-slate-900 dark:border-white  scale-[1.02]" : "border-slate-100 dark:border-slate-800 hover:border-rose-200 dark:hover:border-rose-900/50"
                       }`}
                     >
                       <div className="aspect-[3/4] relative">
@@ -849,13 +849,13 @@ export default function NewInvitationPage() {
                         </div>
                         
                         {theme.is_premium && (
-                          <span className="absolute top-2 right-2 text-[10px] bg-slate-100 dark:bg-slate-800 dark:bg-[var(--accent-rosegold)]/20 text-[var(--accent-rosegold)] border border-slate-200 dark:border-[var(--accent-rosegold)]/30 px-2 py-0.5 rounded-full font-bold">
+                          <span className="absolute top-2 right-2 text-[10px] bg-slate-100 dark:bg-slate-800 dark:bg-slate-900 dark:bg-slate-50/20 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-900 dark:border-white/30 px-2 py-0.5 rounded-none font-bold">
                             PREMIUM
                           </span>
                         )}
                       </div>
                       {isSelected && (
-                        <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-[var(--accent-rosegold)] text-white flex items-center justify-center">
+                        <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-slate-900 dark:bg-slate-50 text-white flex items-center justify-center">
                           <Check className="w-3.5 h-3.5" />
                         </div>
                       )}
@@ -875,14 +875,14 @@ export default function NewInvitationPage() {
               exit={{ opacity: 0, x: -20 }}
               className="space-y-6"
             >
-              <h2 className="text-base sm:text-lg font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
-                <ImageIcon className="w-5 h-5 text-[var(--accent-rosegold)]" /> Galeri Foto & Musik Latar
+              <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
+                <ImageIcon className="w-5 h-5 text-slate-900 dark:text-white" /> Galeri Foto & Musik Latar
               </h2>
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 dark:text-slate-400 mb-2">Musik Latar (MP3 / WAV)</label>
                 <div className="flex items-center gap-3">
-                  <Music className="w-5 h-5 text-[var(--accent-rosegold)] flex-shrink-0" />
+                  <Music className="w-5 h-5 text-slate-900 dark:text-white flex-shrink-0" />
                   <div className="flex-1">
                     <input
                       type="file"
@@ -901,17 +901,17 @@ export default function NewInvitationPage() {
                         uploadAudio(e, 'music_url');
                       }}
                       disabled={uploading['music_url']}
-                      className="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-100 dark:bg-slate-800 dark:bg-[var(--accent-rosegold)]/20 file:text-[var(--accent-rosegold)] hover:file:bg-[#F8D5E3] transition-all cursor-pointer disabled:opacity-50"
+                      className="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-none file:border-0 file:text-xs file:font-semibold file:bg-slate-100 dark:bg-slate-800 dark:bg-slate-900 dark:bg-slate-50/20 file:text-slate-900 dark:text-white hover:file:bg-[#F8D5E3] transition-all cursor-pointer disabled:opacity-50"
                     />
                     {uploading['music_url'] ? (
-                      <p className="text-[10px] text-[var(--accent-rosegold)] mt-1 animate-pulse">Mengunggah audio...</p>
+                      <p className="text-[10px] text-slate-900 dark:text-white mt-1 animate-pulse">Mengunggah audio...</p>
                     ) : (
                       <p className="text-[10px] text-slate-400 mt-1">Maks. 5 MB (MP3, WAV, OGG, M4A)</p>
                     )}
                   </div>
                 </div>
                 {formData.music_url && (
-                  <div className="mt-4 bg-slate-50 p-3 rounded-xl border border-slate-200 dark:border-slate-700">
+                  <div className="mt-4 bg-slate-50 p-3 rounded-none border border-slate-200 dark:border-slate-700">
                     <audio controls className="h-8 w-full" src={formData.music_url}>
                       Browser Anda tidak mendukung elemen audio.
                     </audio>
@@ -928,7 +928,7 @@ export default function NewInvitationPage() {
                 <label className="block text-xs font-bold text-slate-700 dark:text-slate-400 mb-2">Foto Cover Utama</label>
                 <div className="flex items-center gap-3">
                   {formData.cover_image_url && (
-                    <div className="w-16 h-24 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden shrink-0 bg-slate-100">
+                    <div className="w-16 h-24 rounded-none border border-slate-200 dark:border-slate-700 overflow-hidden shrink-0 bg-slate-100">
                       <img src={formData.cover_image_url} alt="Cover" className="w-full h-full object-cover" />
                     </div>
                   )}
@@ -938,10 +938,10 @@ export default function NewInvitationPage() {
                       accept="image/jpeg,image/png,image/gif,image/webp,image/svg+xml,image/bmp,image/tiff,image/x-icon,image/avif"
                       onChange={(e) => uploadImage(e, 'cover_image_url')}
                       disabled={uploading['cover_image_url']}
-                      className="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-100 dark:bg-slate-800 dark:bg-[var(--accent-rosegold)]/20 file:text-[var(--accent-rosegold)] hover:file:bg-[#F8D5E3] transition-all cursor-pointer disabled:opacity-50"
+                      className="w-full text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-none file:border-0 file:text-xs file:font-semibold file:bg-slate-100 dark:bg-slate-800 dark:bg-slate-900 dark:bg-slate-50/20 file:text-slate-900 dark:text-white hover:file:bg-[#F8D5E3] transition-all cursor-pointer disabled:opacity-50"
                     />
                     {uploading['cover_image_url'] ? (
-                      <p className="text-[10px] text-[var(--accent-rosegold)] mt-1 animate-pulse">Mengunggah...</p>
+                      <p className="text-[10px] text-slate-900 dark:text-white mt-1 animate-pulse">Mengunggah...</p>
                     ) : (
                       <p className="text-[10px] text-slate-400 mt-1">Maks. 1 MB (JPG, PNG, GIF, WEBP, dll)</p>
                     )}
@@ -955,7 +955,7 @@ export default function NewInvitationPage() {
                   rows={3}
                   value={formData.custom_message}
                   onChange={(e) => handleChange("custom_message", e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 dark:border-slate-700 text-slate-800 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-[var(--accent-rosegold)]"
+                  className="w-full px-4 py-3 rounded-none bg-slate-50 border border-slate-200 dark:border-slate-700 text-slate-800 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:border-white"
                 />
               </div>
             </motion.div>
@@ -970,18 +970,18 @@ export default function NewInvitationPage() {
               exit={{ opacity: 0, x: -20 }}
               className="space-y-6"
             >
-              <h2 className="text-base sm:text-lg font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
-                <Gift className="w-5 h-5 text-[var(--accent-rosegold)]" /> Rekening Kado Digital & Amplop Cashless
+              <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
+                <Gift className="w-5 h-5 text-slate-900 dark:text-white" /> Rekening Kado Digital & Amplop Cashless
               </h2>
 
-              <div className="bg-slate-100 dark:bg-slate-800 dark:bg-[var(--accent-rosegold)]/20 p-4 rounded-xl border border-slate-200 dark:border-[var(--accent-rosegold)]/30 flex gap-3">
-                <Gift className="w-5 h-5 text-[var(--accent-rosegold)] flex-shrink-0" />
-                <div className="text-xs text-[var(--accent-rosegold)] dark:text-[#F8D5E3] font-medium leading-relaxed">
+              <div className="bg-slate-100 dark:bg-slate-800 dark:bg-slate-900 dark:bg-slate-50/20 p-4 rounded-none border border-slate-200 dark:border-slate-900 dark:border-white/30 flex gap-3">
+                <Gift className="w-5 h-5 text-slate-900 dark:text-white flex-shrink-0" />
+                <div className="text-xs text-slate-900 dark:text-white dark:text-[#F8D5E3] font-medium leading-relaxed">
                   Kamu bisa mendaftarkan 1 rekening utama di sini. Untuk menambahkan <strong>lebih banyak rekening (GoPay, OVO, Bank lain)</strong>, silakan kelola melalui menu <strong className="font-bold">Kado & Amplop</strong> di Dashboard setelah undangan selesai dibuat (mendukung hingga 3 rekening untuk Premium, dan Tak Terbatas untuk Pro).
                 </div>
               </div>
 
-              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 dark:border-slate-700 space-y-4">
+              <div className="p-5 rounded-none bg-slate-50 border border-slate-200 dark:border-slate-700 space-y-4">
                 <div className="grid md:grid-cols-3 gap-4">
                   <div>
                     <label className="block text-xs font-bold text-slate-700 dark:text-slate-400 mb-1">Nama Bank / E-Wallet</label>
@@ -990,7 +990,7 @@ export default function NewInvitationPage() {
                       value={formData.bank_name}
                       onChange={(e) => handleChange("bank_name", e.target.value)}
                       placeholder="BCA / Mandiri / GoPay"
-                      className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 text-xs sm:text-sm focus:outline-none focus:border-[var(--accent-rosegold)]"
+                      className="w-full px-4 py-2.5 rounded-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:border-white"
                     />
                   </div>
                   <div>
@@ -1000,7 +1000,7 @@ export default function NewInvitationPage() {
                       value={formData.account_number}
                       onChange={(e) => handleChange("account_number", e.target.value)}
                       placeholder="1234567890"
-                      className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 text-xs sm:text-sm focus:outline-none focus:border-[var(--accent-rosegold)]"
+                      className="w-full px-4 py-2.5 rounded-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:border-white"
                     />
                   </div>
                   <div>
@@ -1010,7 +1010,7 @@ export default function NewInvitationPage() {
                       value={formData.account_name}
                       onChange={(e) => handleChange("account_name", e.target.value)}
                       placeholder="A.N. Romeo Montague"
-                      className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 text-xs sm:text-sm focus:outline-none focus:border-[var(--accent-rosegold)]"
+                      className="w-full px-4 py-2.5 rounded-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:border-white"
                     />
                   </div>
                 </div>
@@ -1027,8 +1027,8 @@ export default function NewInvitationPage() {
               exit={{ opacity: 0, x: -20 }}
               className="space-y-6"
             >
-              <h2 className="text-base sm:text-lg font-bold text-[var(--text-primary)] dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
-                <Settings className="w-5 h-5 text-[var(--accent-rosegold)]" /> Pengaturan Fitur Undangan
+              <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
+                <Settings className="w-5 h-5 text-slate-900 dark:text-white" /> Pengaturan Fitur Undangan
               </h2>
 
               <div className="space-y-3">
@@ -1039,9 +1039,9 @@ export default function NewInvitationPage() {
                   { key: "show_gallery", label: "Tampilkan Galeri Foto", desc: "Menampilkan koleksi foto ke tamu" },
                   { key: "is_published", label: "Publikasikan Sekarang (Live)", desc: "Dapat diakses melalui URL link" },
                 ].map((item) => (
-                  <div key={item.key} className="flex items-center justify-between p-4 rounded-xl bg-slate-50 border border-slate-200 dark:border-slate-700">
+                  <div key={item.key} className="flex items-center justify-between p-4 rounded-none bg-slate-50 border border-slate-200 dark:border-slate-700">
                     <div>
-                      <h4 className="text-xs sm:text-sm font-bold text-[var(--text-primary)] dark:text-white">{item.label}</h4>
+                      <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">{item.label}</h4>
                       <p className="text-slate-400 text-xs">{item.desc}</p>
                     </div>
                     <input
@@ -1063,7 +1063,7 @@ export default function NewInvitationPage() {
             type="button"
             onClick={handlePrev}
             disabled={currentStep === 0}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-none text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           >
             <ArrowLeft className="w-4 h-4" /> Sebelum
           </button>
@@ -1072,7 +1072,7 @@ export default function NewInvitationPage() {
             <button
               type="button"
               onClick={handleNext}
-              className="flex items-center gap-2  px-6 py-2.5 rounded-xl font-bold text-white text-xs sm:text-sm "
+              className="flex items-center gap-2  px-6 py-2.5 rounded-none font-bold text-white text-xs sm:text-sm "
             >
               Lanjut <ArrowRight className="w-4 h-4" />
             </button>
@@ -1081,7 +1081,7 @@ export default function NewInvitationPage() {
               type="button"
               onClick={() => setShowConfirmModal(true)}
               disabled={loading}
-              className="flex items-center gap-2  px-8 py-3 rounded-xl font-bold text-white text-xs sm:text-sm  disabled:opacity-50"
+              className="flex items-center gap-2  px-8 py-3 rounded-none font-bold text-white text-xs sm:text-sm  disabled:opacity-50"
             >
               {loading ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
