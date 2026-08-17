@@ -87,7 +87,7 @@ function FloatingThemeCards() {
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full pt-16 md:pt-24 lg:pt-32 pb-16 overflow-hidden bg-white dark:bg-slate-950 text-slate-900 dark:text-white transition-colors">
+    <section className="relative w-full pt-4 md:pt-8 lg:pt-12 pb-16 overflow-hidden bg-white dark:bg-slate-950 text-slate-900 dark:text-white transition-colors">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-20 items-center">
           
