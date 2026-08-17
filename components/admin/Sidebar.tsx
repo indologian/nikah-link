@@ -15,6 +15,7 @@ import {
   ShieldAlert,
 } from "lucide-react";
 import { useState } from "react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const NAV_ITEMS = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard },
@@ -44,12 +45,12 @@ export default function AdminSidebar() {
       <div className="h-16 flex items-center justify-between px-4 border-b border-slate-200 dark:border-slate-800">
         {!isCollapsed && (
           <Link href="/admin" className="flex items-center gap-2 font-black text-xl text-slate-900 dark:text-white">
-            <ShieldAlert className="w-6 h-6 text-slate-900 dark:text-slate-900 dark:text-white" />
+            <ShieldAlert className="w-6 h-6 text-slate-900 dark:text-white" />
             <span>SuperAdmin</span>
           </Link>
         )}
         {isCollapsed && (
-          <ShieldAlert className="w-6 h-6 text-slate-900 dark:text-slate-900 dark:text-white mx-auto" />
+          <ShieldAlert className="w-6 h-6 text-slate-900 dark:text-white mx-auto" />
         )}
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
@@ -69,14 +70,14 @@ export default function AdminSidebar() {
               href={item.href}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-none transition-all group ${
                 isActive
-                  ? "bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-slate-900 dark:text-white font-bold"
+                  ? "bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white font-bold"
                   : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800"
               }`}
               title={isCollapsed ? item.label : undefined}
             >
               <item.icon
                 className={`w-5 h-5 shrink-0 ${
-                  isActive ? "text-slate-900 dark:text-slate-900 dark:text-white" : "text-slate-400 group-hover:text-slate-200"
+                  isActive ? "text-slate-900 dark:text-white" : "text-slate-400 group-hover:text-slate-200"
                 }`}
               />
               {!isCollapsed && <span className="text-sm">{item.label}</span>}
@@ -87,6 +88,13 @@ export default function AdminSidebar() {
 
       {/* Footer */}
       <div className="p-4 border-t border-slate-200 dark:border-slate-800 space-y-2">
+        <div className={`flex items-center ${isCollapsed ? 'justify-center' : 'justify-between px-3'} mb-4`}>
+          {!isCollapsed && <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Tema Tema</span>}
+          <div className="scale-90 origin-left">
+            <ThemeToggle />
+          </div>
+        </div>
+        
         <Link
           href="/dashboard"
           className={`flex items-center gap-3 px-3 py-2.5 rounded-none transition-all text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800 ${
@@ -99,7 +107,7 @@ export default function AdminSidebar() {
         </Link>
         <button
           onClick={handleLogout}
-          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-none transition-all text-slate-400 hover:text-slate-900 dark:hover:text-slate-900 dark:text-white hover:bg-slate-200 dark:bg-slate-800 ${
+          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-none transition-all text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-800 ${
             isCollapsed ? "justify-center" : ""
           }`}
           title={isCollapsed ? "Keluar" : undefined}
