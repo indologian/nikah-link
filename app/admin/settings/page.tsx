@@ -14,16 +14,7 @@ export default async function SettingsPage() {
     redirect("/masuk");
   }
 
-  // Check if admin
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("role")
-    .eq("user_id", user.id)
-    .single();
 
-  if (profile?.role !== "admin") {
-    redirect("/dashboard");
-  }
 
   const { data: settings } = await supabase
     .from("site_settings")
