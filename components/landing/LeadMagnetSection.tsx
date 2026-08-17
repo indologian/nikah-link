@@ -77,7 +77,7 @@ export default function LeadMagnetSection() {
                   </p>
 
                   <a 
-                    href="/Buku_Panduan_NikahLink.pdf" 
+                    href="/Buku_Panduan_NikahLink.xlsx" 
                     download
                     className="flex items-center justify-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-6 py-4 font-bold uppercase tracking-wider text-xs transition-colors hover:bg-slate-800 dark:hover:bg-slate-100 mb-6 w-full"
                   >
