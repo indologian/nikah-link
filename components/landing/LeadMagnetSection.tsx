@@ -73,13 +73,23 @@ export default function LeadMagnetSection() {
                 <div>
                   <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Terima Kasih!</h3>
                   <p className="text-slate-500 text-sm mb-6">
-                    Link download akan segera kami kirimkan ke WhatsApp dan Email Anda.
+                    Data Anda telah berhasil disimpan. Silakan unduh Buku Panduan melalui tombol di bawah ini.
                   </p>
+
+                  <a 
+                    href="/Buku_Panduan_NikahLink.pdf" 
+                    download
+                    className="flex items-center justify-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-6 py-4 font-bold uppercase tracking-wider text-xs transition-colors hover:bg-slate-800 dark:hover:bg-slate-100 mb-6 w-full"
+                  >
+                    Mulai Unduh
+                    <Download size={16} />
+                  </a>
+
                   <button 
                     onClick={() => setStatus("idle")}
                     className="text-xs font-bold uppercase tracking-wider text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors border-b border-transparent hover:border-slate-900 dark:hover:border-white pb-1"
                   >
-                    Kembali
+                    Tutup
                   </button>
                 </div>
               </div>
