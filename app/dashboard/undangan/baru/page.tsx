@@ -1093,7 +1093,7 @@ export default function NewInvitationPage() {
             type="button"
             onClick={handlePrev}
             disabled={currentStep === 0}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-none text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-none text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           >
             <ArrowLeft className="w-4 h-4" /> Sebelum
           </button>
@@ -1102,7 +1102,7 @@ export default function NewInvitationPage() {
             <button
               type="button"
               onClick={handleNext}
-              className="flex items-center gap-2  px-6 py-2.5 rounded-none font-bold text-white text-xs sm:text-sm "
+              className="flex items-center gap-2 px-6 py-2.5 rounded-none font-bold text-white bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 transition-colors text-xs sm:text-sm"
             >
               Lanjut <ArrowRight className="w-4 h-4" />
             </button>
@@ -1111,7 +1111,7 @@ export default function NewInvitationPage() {
               type="button"
               onClick={() => setShowConfirmModal(true)}
               disabled={loading}
-              className="flex items-center gap-2  px-8 py-3 rounded-none font-bold text-white text-xs sm:text-sm  disabled:opacity-50"
+              className="flex items-center gap-2 px-8 py-3 rounded-none font-bold text-white bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 transition-colors text-xs sm:text-sm disabled:opacity-50"
             >
               {loading ? (
                 <Loader2 className="w-4 h-4 animate-spin" />

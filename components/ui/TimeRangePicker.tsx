@@ -93,7 +93,7 @@ export default function TimeRangePicker({
       </button>
 
       {isOpen && (
-        <div className="absolute z-50 w-full md:w-80 mt-1 p-5 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 space-y-5">
+        <div className="absolute z-50 w-[calc(100vw-3rem)] max-w-[320px] -left-2 sm:left-0 mt-1 p-5 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 space-y-5 shadow-2xl">
           <div className="flex items-center gap-4">
             <div className="flex-1">
               <label className="block text-[10px] font-bold tracking-widest text-slate-500 uppercase mb-2">Mulai</label>
