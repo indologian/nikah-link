@@ -29,8 +29,8 @@ function FloatingThemeCards() {
         Instead of a fake phone with dynamic islands, we show the invitation
         as a pure, floating editorial card.
       */}
-      <div className="relative w-full max-w-[320px] mx-auto h-[400px] lg:h-[500px]">
-        <AnimatePresence mode="popLayout">
+      <div className="relative w-full max-w-[320px] mx-auto h-[400px] lg:h-[500px] rounded-sm shadow-xl shadow-black/5 dark:shadow-white/5 bg-white dark:bg-slate-950 overflow-hidden border border-slate-200 dark:border-slate-800">
+        <AnimatePresence>
           {THEME_PREVIEWS.map((theme, i) => (
             i === active && (
               <motion.div
@@ -38,7 +38,7 @@ function FloatingThemeCards() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className={`absolute inset-0 ${theme.bg} border-x border-t border-black/10 dark:border-white/10 flex flex-col justify-between p-6 sm:p-8 text-center overflow-hidden`}
+                className={`absolute inset-0 ${theme.bg} flex flex-col justify-between p-6 sm:p-8 text-center`}
               >
                 <div className="mt-4 sm:mt-8 space-y-4 sm:space-y-6">
                   <div className="w-12 h-12 sm:w-14 sm:h-14 mx-auto bg-slate-900 dark:bg-white flex items-center justify-center">
@@ -55,7 +55,7 @@ function FloatingThemeCards() {
                   </div>
                 </div>
 
-                <div className="mb-2 sm:mb-4">
+                <div className="mb-6 sm:mb-8">
                   <div className={`w-8 sm:w-12 h-px mx-auto mb-4 sm:mb-6 ${theme.textColor === "text-white" ? "bg-white/20" : "bg-black/10"}`} />
                   <p className={`text-sm ${theme.textColor === "text-white" ? "text-white/70" : "text-slate-500"}`}>
                     24 Oktober 2026
@@ -66,16 +66,18 @@ function FloatingThemeCards() {
           ))}
         </AnimatePresence>
 
-        {/* Flat Indicator Bar */}
-        <div className="absolute -bottom-1 left-0 right-0 flex items-center justify-center bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-2 z-10 gap-1">
-          {THEME_PREVIEWS.map((_, i) => (
+        {/* Floating Dot Indicators */}
+        <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center z-10 gap-1.5">
+          {THEME_PREVIEWS.map((theme, i) => (
             <button
-              key={i}
+              key={theme.name}
               onClick={() => setActive(i)}
-              className={`h-1 transition-all duration-300 ${
-                i === active ? "w-8 bg-slate-900 dark:bg-white" : "w-2 bg-slate-200 dark:bg-slate-800"
+              className={`w-1.5 h-1.5 rounded-full transition-colors ${
+                i === active 
+                  ? THEME_PREVIEWS[active].textColor === "text-white" ? "bg-white" : "bg-slate-900" 
+                  : THEME_PREVIEWS[active].textColor === "text-white" ? "bg-white/30" : "bg-black/20"
               }`}
-              aria-label={`Show theme ${i + 1}`}
+              aria-label={`Go to theme ${theme.name}`}
             />
           ))}
         </div>
@@ -86,7 +88,7 @@ function FloatingThemeCards() {
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full pt-4 md:pt-8 lg:pt-12 pb-16 overflow-hidden bg-white dark:bg-slate-950 text-slate-900 dark:text-white transition-colors">
+    <section className="relative w-full pt-4 md:pt-8 lg:pt-12 pb-16 bg-white dark:bg-slate-950 text-slate-900 dark:text-white transition-colors">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
           
