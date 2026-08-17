@@ -9,6 +9,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://nikahlink.com"),
   title: {
     template: "%s | NikahLink",
     default: "NikahLink — Undangan Pernikahan Digital Premium",
@@ -63,6 +64,23 @@ export default function RootLayout({
         >
           {children}
         </ThemeProvider>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": "NikahLink",
+              "applicationCategory": "BusinessApplication",
+              "operatingSystem": "Web",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "IDR"
+              }
+            }),
+          }}
+        />
       </body>
     </html>
   );

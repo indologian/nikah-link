@@ -110,7 +110,7 @@ export default function HeroSection() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="font-playfair text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-medium leading-[1.05] tracking-tight mb-4"
             >
-              Undangan elegan, siap dalam <span className="italic text-slate-500">hitungan menit.</span>
+              Undangan Mewah, Siap Disebar dalam <span className="italic text-slate-500">Hitungan Menit.</span>
             </motion.h1>
 
             <motion.p
@@ -119,7 +119,7 @@ export default function HeroSection() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-slate-500 text-base sm:text-lg leading-relaxed mb-6 max-w-lg"
             >
-              Buat undangan pernikahan digital yang modern. Lengkap dengan RSVP Online, manajemen tamu, hingga penerimaan kado cashless.
+              Buat undangan digital eksklusif tanpa ribet. Dilengkapi RSVP otomatis, buku tamu digital, hingga penerimaan kado tanpa kontak (cashless).
             </motion.p>
 
             <motion.div

@@ -6,33 +6,33 @@ import { Palette, Zap, Users, Heart, Leaf, ShoppingBag } from "lucide-react";
 const WHY_ITEMS = [
   {
     icon: Palette,
-    title: "Desain Premium & Modern",
-    description: "15+ tema eksklusif bergaya minimalis, floral, elegan hingga adat Nusantara. Diperbarui rutin mengikuti tren pernikahan terkini.",
+    title: "Eksklusif & Tidak Pasaran",
+    description: "Tinggalkan desain undangan yang kaku. Nikmati puluhan tema premium yang membuat tamu Anda terkesan sejak detik pertama.",
   },
   {
     icon: Zap,
-    title: "Siap dalam 5 Menit",
-    description: "Isi data mempelai, pilih tema favorit, tambah daftar tamu. Tanpa butuh kemampuan koding atau desain, langsung bisa dibagikan.",
+    title: "Bikinnya Cuma 5 Menit",
+    description: "Tidak perlu jago desain atau koding. Cukup isi formulir, masukkan foto, dan undangan siap disebar hari ini juga.",
   },
   {
     icon: Users,
-    title: "Personalisasi Nama Tamu",
-    description: "Setiap tamu menerima undangan dengan sapaan khusus namanya sendiri + QR Code unik untuk check-in di lokasi acara.",
+    title: "Bebas Drama RSVP",
+    description: "Lupakan mencatat kehadiran tamu satu-satu lewat WhatsApp. Semua konfirmasi kehadiran terekap otomatis di dashboard Anda.",
   },
   {
     icon: Heart,
-    title: "Aktif Selamanya",
-    description: "Cukup bayar sekali tanpa biaya langganan bulanan. Website undanganmu tetap aktif selamanya sebagai kenangan abadi.",
-  },
-  {
-    icon: Leaf,
-    title: "Ramah Lingkungan (Eco)",
-    description: "Setiap undangan digital membantu menghemat kertas, tinta cetak, dan menekan emisi CO₂. Pilihan tepat untuk bumi kita.",
+    title: "Bayar Sekali, Aktif Selamanya",
+    description: "Tanpa biaya langganan bulanan yang mencekik. Website undangan pernikahan Anda akan menjadi kenangan digital yang abadi.",
   },
   {
     icon: ShoppingBag,
-    title: "Marketplace Vendor",
-    description: "Temukan fotografer, katering, dekorasi, WO, hingga makeup artist terpercaya dengan ulasan jujur di satu platform.",
+    title: "Terima Kado Tanpa Ribet",
+    description: "Tamu yang berhalangan hadir tetap bisa memberikan kado melalui fitur amplop digital (QRIS, e-Wallet, Bank Transfer) yang aman.",
+  },
+  {
+    icon: Leaf,
+    title: "Praktis & Ramah Lingkungan",
+    description: "Hemat jutaan rupiah dari biaya cetak dan ongkos kirim. Cukup bagikan link via WA, dan bantu kurangi limbah kertas.",
   },
 ];
 
@@ -43,13 +43,13 @@ export default function WhySection() {
         {/* Section Heading */}
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
           <span className="text-slate-900 dark:text-white font-mono tracking-widest text-xs uppercase block">
-            Kenapa NikahLink?
+            Tinggalkan Cara Lama
           </span>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-medium tracking-tight text-slate-900 dark:text-white leading-[1.05]">
-            Platform Terbaik<br />Untuk Hari Bahagiamu
+            Kenapa Beralih ke<br />Undangan Digital?
           </h2>
           <p className="text-slate-500 text-lg leading-relaxed max-w-lg mx-auto">
-            Kami menggabungkan teknologi terkini dan kemudahan penggunaan untuk menciptakan pengalaman undangan digital yang sempurna.
+            Kami menyelesaikan semua masalah undangan cetak yang mahal, lambat, dan merepotkan. Saatnya beralih ke cara yang lebih cerdas.
           </p>
         </div>
 

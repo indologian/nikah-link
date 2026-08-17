@@ -407,3 +407,17 @@ LEFT JOIN guests g ON g.invitation_id = i.id
 LEFT JOIN wishes w ON w.invitation_id = i.id
 LEFT JOIN invitation_views v ON v.invitation_id = i.id
 GROUP BY i.id;
+-- ============================================================
+-- LEADS TABLE
+-- ============================================================
+CREATE TABLE leads (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  email TEXT NOT NULL,
+  whatsapp TEXT NOT NULL,
+  source TEXT DEFAULT 'homepage_lead_magnet',
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE leads ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Anyone can insert leads" ON leads FOR INSERT WITH CHECK (TRUE);
+CREATE POLICY "Only authenticated admins can view leads" ON leads FOR SELECT USING (auth.role() = 'authenticated');

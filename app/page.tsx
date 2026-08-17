@@ -9,6 +9,7 @@ import VendorPreview from "@/components/landing/VendorPreview";
 import PricingSection from "@/components/landing/PricingSection";
 import TestimonialSection from "@/components/landing/TestimonialSection";
 import FaqSection from "@/components/landing/FaqSection";
+import LeadMagnetSection from "@/components/landing/LeadMagnetSection";
 import Footer from "@/components/landing/Footer";
 import { createClient } from "@/lib/supabase/server";
 
@@ -30,6 +31,7 @@ export default async function HomePage() {
     showVendor: true,
     showPricing: true,
     showTestimonial: true,
+    showLeadMagnet: true,
     showFaq: true,
   };
 
@@ -38,13 +40,14 @@ export default async function HomePage() {
       <Navbar />
       {config.showHero && <HeroSection />}
       {config.showWhy && <WhySection />}
-      {config.showThemes && <ThemeCarousel />}
       {config.showFeatures && <FeaturesSection />}
+      {config.showThemes && <ThemeCarousel />}
       {config.showHowItWorks && <HowItWorks />}
+      {config.showTestimonial && <TestimonialSection />}
+      {config.showPricing && <PricingSection />}
+      {config.showLeadMagnet && <LeadMagnetSection />}
       {config.showEcoImpact && <EcoImpact />}
       {config.showVendor && <VendorPreview />}
-      {config.showPricing && <PricingSection />}
-      {config.showTestimonial && <TestimonialSection />}
       {config.showFaq && <FaqSection />}
       <Footer />
     </main>
