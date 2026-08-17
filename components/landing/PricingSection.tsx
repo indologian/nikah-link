@@ -18,17 +18,18 @@ const PLANS = [
     price: "Rp0",
     priceNote: "Selamanya gratis",
     features: [
-      "1 Undangan Digital",
-      "Aktif 24 jam",
-      "Hingga 50 tamu",
-      "5 foto galeri",
-      "Musik latar standard",
-      "Ucapan & doa tamu",
-      "3 tema gratis",
+      { text: "1 Undangan Digital", included: true },
+      { text: "Aktif 24 jam", included: true },
+      { text: "Hingga 50 tamu", included: true },
+      { text: "5 foto galeri", included: true },
+      { text: "Musik latar standard", included: true },
+      { text: "Ucapan & doa tamu", included: true },
+      { text: "Aktif Selamanya", included: false },
+      { text: "Kado cashless (QRIS)", included: false },
+      { text: "Custom domain", included: false },
     ],
-    cta: "Daftar Gratis",
+    cta: "Coba 24 Jam",
     ctaHref: "/daftar",
-    ctaStyle: "border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50",
   },
   {
     id: "premium",
@@ -38,18 +39,18 @@ const PLANS = [
     originalPrice: "Rp150K",
     priceNote: "Sekali bayar, aktif selamanya",
     features: [
-      "1 Undangan Premium",
-      "Aktif Selamanya",
-      "Unlimited tamu terundang",
-      "30 foto + 3 video galeri",
-      "Musik latar custom MP3",
-      "Akses semua 30+ tema premium",
-      "Kado cashless (QRIS)",
-      "Personalisasi nama tamu pada URL",
+      { text: "1 Undangan Premium", included: true },
+      { text: "Aktif Selamanya", included: true },
+      { text: "Unlimited tamu terundang", included: true },
+      { text: "30 foto + 3 video galeri", included: true },
+      { text: "Musik latar custom MP3", included: true },
+      { text: "Akses semua 30+ tema premium", included: true },
+      { text: "Kado cashless (QRIS)", included: true },
+      { text: "Personalisasi URL", included: true },
+      { text: "Custom domain sendiri", included: false },
     ],
-    cta: "Pilih Premium",
+    cta: "Upgrade & Bebas Akses",
     ctaHref: "/daftar?plan=premium",
-    ctaStyle: "bg-[var(--accent-rosegold)] text-white hover:bg-[var(--accent-rosegold-hover)]",
   },
   {
     id: "pro",
@@ -57,20 +58,19 @@ const PLANS = [
     subtitle: "Untuk yang Terbaik",
     price: "Rp149K",
     originalPrice: "Rp300K",
-    priceNote: "Sekali bayar, aktif selamanya",
+    priceNote: "Promo Terbatas",
     features: [
-      "Semua fitur paket Premium",
-      "Unlimited foto & video galeri",
-      "Custom domain sendiri",
-      "Hapus logo & branding NikahLink",
-      "Kustomisasi CSS/JS bebas",
-      "2 undangan dalam 1 akun",
-      "Prioritas dukungan 24/7",
-      "Ekspor data tamu (XLSX)",
+      { text: "Semua fitur paket Premium", included: true },
+      { text: "Unlimited foto & video galeri", included: true },
+      { text: "Custom domain sendiri", included: true, highlight: true },
+      { text: "Hapus logo & branding", included: true, highlight: true },
+      { text: "Kustomisasi CSS/JS bebas", included: true },
+      { text: "2 undangan dalam 1 akun", included: true },
+      { text: "Prioritas dukungan 24/7", included: true },
+      { text: "Ekspor data tamu (XLSX)", included: true },
     ],
-    cta: "Pilih Pro VIP",
+    cta: "Dapatkan Akses Penuh",
     ctaHref: "/daftar?plan=pro",
-    ctaStyle: "bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100",
   },
 ];
 
@@ -96,24 +96,29 @@ export default function PricingSection({ onCheckout, isLoading }: PricingSection
       <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-0 border-y border-x md:border-x-0 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
         {PLANS.map((plan, i) => {
           const isProcessing = isLoading === plan.id;
+          const isPremium = plan.id === "premium";
           
           return (
             <div
               key={plan.id}
               className={cn(
                 "p-8 sm:p-10 flex flex-col justify-between relative",
-                "border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800",
+                "border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800 transition-colors",
                 i === 0 && "md:border-l",
-                i === PLANS.length - 1 && "md:border-r"
+                i === PLANS.length - 1 && "md:border-r",
+                isPremium ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900" : ""
               )}
             >
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-mono font-bold uppercase tracking-widest text-slate-900 dark:text-white">
+                  <span className={cn(
+                    "text-xs font-mono font-bold uppercase tracking-widest",
+                    isPremium ? "text-white dark:text-slate-900" : "text-slate-900 dark:text-white"
+                  )}>
                     {plan.name}
                   </span>
-                  {plan.id === "premium" && (
-                    <span className="text-[10px] uppercase font-bold tracking-wider text-white bg-slate-900 dark:text-slate-900 dark:bg-white px-2 py-0.5 flex items-center gap-1">
+                  {isPremium && (
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-slate-900 bg-white dark:text-white dark:bg-slate-900 px-2 py-0.5 flex items-center gap-1">
                       <Sparkles size={10} /> Favorit
                     </span>
                   )}
@@ -122,28 +127,57 @@ export default function PricingSection({ onCheckout, isLoading }: PricingSection
                 {/* Pricing */}
                 <div className="my-8">
                   <div className="flex items-baseline gap-2">
-                    <span className="text-5xl font-medium tracking-tight text-slate-900 dark:text-white">
+                    <span className={cn(
+                      "text-5xl font-medium tracking-tight",
+                      isPremium ? "text-white dark:text-slate-900" : "text-slate-900 dark:text-white"
+                    )}>
                       {plan.price}
                     </span>
                     {plan.originalPrice && (
-                      <span className="text-sm font-mono text-slate-400 line-through">
+                      <span className={cn(
+                        "text-sm font-mono line-through",
+                        isPremium ? "text-slate-400 dark:text-slate-500" : "text-slate-400"
+                      )}>
                         {plan.originalPrice}
                       </span>
                     )}
                   </div>
-                  <p className="text-sm text-slate-500 mt-2 font-mono">
+                  <p className={cn(
+                    "text-sm mt-2 font-mono",
+                    isPremium ? "text-slate-300 dark:text-slate-600" : "text-slate-500"
+                  )}>
                     {plan.priceNote}
                   </p>
                 </div>
 
-                <div className="w-full h-px bg-slate-200 dark:bg-slate-800 my-8" />
+                <div className={cn(
+                  "w-full h-px my-8",
+                  isPremium ? "bg-slate-800 dark:bg-slate-200" : "bg-slate-200 dark:bg-slate-800"
+                )} />
 
                 {/* Features List */}
                 <ul className="space-y-4 mb-12">
                   {plan.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-300">
-                      <Check className="w-4 h-4 text-slate-900 dark:text-white shrink-0 mt-0.5" />
-                      <span className="leading-snug">{feature}</span>
+                    <li key={idx} className={cn(
+                      "flex items-start gap-3 text-sm",
+                      !feature.included && "opacity-50",
+                      feature.highlight && "font-bold"
+                    )}>
+                      {feature.included ? (
+                        <Check className={cn(
+                          "w-4 h-4 shrink-0 mt-0.5",
+                          isPremium ? "text-white dark:text-slate-900" : "text-slate-900 dark:text-white"
+                        )} />
+                      ) : (
+                        <span className="w-4 h-4 shrink-0 mt-0.5 flex items-center justify-center font-bold font-mono text-xs">×</span>
+                      )}
+                      <span className={cn(
+                        "leading-snug",
+                        !feature.included && "line-through",
+                        isPremium 
+                          ? (feature.highlight ? "text-white dark:text-slate-900" : "text-slate-300 dark:text-slate-700") 
+                          : (feature.highlight ? "text-slate-900 dark:text-white" : "text-slate-600 dark:text-slate-300")
+                      )}>{feature.text}</span>
                     </li>
                   ))}
                 </ul>
@@ -155,9 +189,9 @@ export default function PricingSection({ onCheckout, isLoading }: PricingSection
                   disabled={!!isLoading}
                   className={cn(
                     "w-full flex items-center justify-center gap-2 py-4 font-bold uppercase tracking-wider text-xs transition-colors mt-auto border",
-                    plan.id === "premium" 
-                      ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white hover:bg-slate-800 dark:hover:bg-slate-100"
-                      : "bg-white dark:bg-slate-950 text-slate-900 dark:text-white border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900",
+                    isPremium 
+                      ? "bg-white dark:bg-slate-900 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 border-white dark:border-slate-900"
+                      : "bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white hover:bg-slate-800 dark:hover:bg-slate-100",
                     isLoading ? "opacity-70 cursor-not-allowed" : ""
                   )}
                 >
@@ -174,8 +208,8 @@ export default function PricingSection({ onCheckout, isLoading }: PricingSection
                   href={plan.ctaHref}
                   className={cn(
                     "w-full block text-center py-4 font-bold uppercase tracking-wider text-xs transition-colors mt-auto border",
-                    plan.id === "premium"
-                      ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white hover:bg-slate-800 dark:hover:bg-slate-100"
+                    isPremium
+                      ? "bg-white dark:bg-slate-900 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 border-white dark:border-slate-900"
                       : "bg-white dark:bg-slate-950 text-slate-900 dark:text-white border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900"
                   )}
                 >
