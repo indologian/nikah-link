@@ -17,6 +17,7 @@ interface SettingsClientProps {
     showVendor: boolean;
     showPricing: boolean;
     showTestimonial: boolean;
+    showLeadMagnet: boolean;
     showFaq: boolean;
   };
 }
@@ -31,6 +32,7 @@ const SECTION_NAMES: Record<keyof SettingsClientProps["initialConfig"], string> 
   showVendor: "Daftar Vendor (Vendors)",
   showPricing: "Pilihan Harga (Pricing)",
   showTestimonial: "Testimoni Pelanggan (Testimonial)",
+  showLeadMagnet: "Buku Panduan & Checklist (Lead Magnet)",
   showFaq: "Tanya Jawab (FAQ)"
 };
 

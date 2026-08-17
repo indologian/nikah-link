@@ -21,7 +21,7 @@ export default async function HomePage() {
     .eq("id", 1)
     .single();
 
-  const config = settings?.config || {
+  const defaultConfig = {
     showHero: true,
     showWhy: true,
     showThemes: true,
@@ -34,6 +34,8 @@ export default async function HomePage() {
     showLeadMagnet: true,
     showFaq: true,
   };
+
+  const config = { ...defaultConfig, ...(settings?.config || {}) };
 
   return (
     <main className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50 flex flex-col w-full">

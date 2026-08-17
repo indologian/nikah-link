@@ -32,6 +32,7 @@ export default async function SettingsPage() {
     showVendor: true,
     showPricing: true,
     showTestimonial: true,
+    showLeadMagnet: true,
     showFaq: true,
   };
 
