@@ -6,10 +6,12 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50">
+    <div className="flex h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50 overflow-hidden transition-colors relative">
       <AdminSidebar />
-      <main className="transition-all duration-300 pl-20 lg:pl-64 min-h-screen">
-        <div className="p-6 md:p-8 max-w-7xl mx-auto">{children}</div>
+      <main className="flex-1 overflow-y-auto h-full pt-16 md:pt-0">
+        <div className="px-4 sm:px-8 md:px-10 py-6 max-w-7xl mx-auto w-full box-border">
+          {children}
+        </div>
       </main>
     </div>
   );

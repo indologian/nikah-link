@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -15,8 +16,11 @@ import {
   ShieldAlert,
   Settings,
   Inbox,
+  Menu,
+  X,
+  Home,
 } from "lucide-react";
-import { useState } from "react";
+import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 const NAV_ITEMS = [
@@ -33,6 +37,12 @@ export default function AdminSidebar() {
   const router = useRouter();
   const supabase = createClient();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Close mobile drawer when route changes
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -40,84 +50,130 @@ export default function AdminSidebar() {
   };
 
   return (
-    <aside
-      className={`fixed left-0 top-0 h-screen bg-slate-50 dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transition-all duration-300 z-40 flex flex-col ${
-        isCollapsed ? "w-20" : "w-64"
-      }`}
-    >
-      {/* Logo Area */}
-      <div className="h-16 flex items-center justify-between px-4 border-b border-slate-200 dark:border-slate-800">
-        {!isCollapsed ? (
-          <>
-            <Link href="/admin" className="flex items-center gap-2 font-black text-slate-900 dark:text-white">
-              <ShieldAlert className="w-5 h-5 text-slate-900 dark:text-white flex-shrink-0" />
-              <span className="text-lg tracking-tight">SuperAdmin</span>
-            </Link>
-            <div className="scale-75 origin-right flex-shrink-0">
-              <ThemeToggle />
-            </div>
-          </>
-        ) : (
-          <ShieldAlert className="w-6 h-6 text-slate-900 dark:text-white mx-auto" />
+    <>
+      {/* Mobile Top Bar */}
+      <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-4 z-40">
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setMobileOpen(true)}
+            className="p-2 -ml-2 text-slate-900 dark:text-white"
+          >
+            <Menu className="w-6 h-6" />
+          </button>
+          <div className="flex items-center gap-2">
+            <ShieldAlert className="w-5 h-5 text-slate-900 dark:text-white flex-shrink-0" />
+            <span className="font-black text-base text-slate-900 dark:text-white tracking-tight">
+              SuperAdmin
+            </span>
+          </div>
+        </div>
+        <div className="flex-shrink-0 scale-90">
+          <ThemeToggle />
+        </div>
+      </div>
+
+      {/* Mobile Overlay */}
+      {mobileOpen && (
+        <div
+          className="md:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+
+      {/* Sidebar Drawer */}
+      <aside
+        className={cn(
+          "fixed md:relative top-0 left-0 z-50 flex flex-col h-full bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 transition-all duration-300 ease-in-out",
+          mobileOpen ? "translate-x-0 w-[280px]" : "-translate-x-full w-[280px] md:translate-x-0",
+          isCollapsed ? "md:w-[70px]" : "md:w-[240px]"
         )}
+      >
+        {/* Logo Area */}
+        <div className="h-16 flex items-center justify-between px-4 border-b border-slate-200 dark:border-slate-800">
+          <div className="flex items-center gap-2">
+            <ShieldAlert className="w-5 h-5 text-slate-900 dark:text-white flex-shrink-0" />
+            {(!isCollapsed || mobileOpen) && (
+              <Link href="/admin" className="font-black text-lg text-slate-900 dark:text-white tracking-tight whitespace-nowrap">
+                SuperAdmin
+              </Link>
+            )}
+          </div>
+
+          {/* Close button for Mobile */}
+          <button
+            className="md:hidden p-2 text-slate-500 hover:text-slate-900 dark:hover:text-white"
+            onClick={() => setMobileOpen(false)}
+          >
+            <X className="w-5 h-5" />
+          </button>
+
+          {/* Theme Toggle (Desktop Only) */}
+          <div className="hidden md:block flex-shrink-0 scale-75 origin-right">
+            {!isCollapsed && <ThemeToggle />}
+          </div>
+        </div>
+
+        {/* Navigation */}
+        <nav className="flex-1 py-4 overflow-y-auto flex flex-col gap-1">
+          {NAV_ITEMS.map((item) => {
+            const isActive = item.href === "/admin"
+              ? pathname === item.href
+              : pathname === item.href || pathname.startsWith(item.href + "/");
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "flex items-center gap-3 px-6 py-3 text-sm font-medium transition-colors border-l-2",
+                  isActive
+                    ? "bg-slate-50 dark:bg-slate-900 border-slate-900 dark:border-white text-slate-900 dark:text-white font-bold"
+                    : "border-transparent text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white",
+                  (isCollapsed && !mobileOpen) && "justify-center px-0"
+                )}
+                title={(isCollapsed && !mobileOpen) ? item.label : undefined}
+              >
+                <item.icon className="w-4 h-4 flex-shrink-0" />
+                {(!isCollapsed || mobileOpen) && <span className="whitespace-nowrap">{item.label}</span>}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Footer */}
+        <div className="py-4 border-t border-slate-200 dark:border-slate-800 flex flex-col gap-1">
+          <Link
+            href="/dashboard"
+            className={cn(
+              "flex items-center gap-3 px-6 py-3 text-sm font-medium border-l-2 border-transparent text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white transition-colors",
+              (isCollapsed && !mobileOpen) && "justify-center px-0"
+            )}
+            title={(isCollapsed && !mobileOpen) ? "User Dashboard" : undefined}
+          >
+            <Home className="w-4 h-4 flex-shrink-0" />
+            {(!isCollapsed || mobileOpen) && <span>User Dashboard</span>}
+          </Link>
+
+          <button
+            onClick={handleLogout}
+            className={cn(
+              "w-full flex items-center gap-3 px-6 py-3 text-sm font-medium border-l-2 border-transparent text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-rose-600 dark:hover:text-rose-400 transition-colors",
+              (isCollapsed && !mobileOpen) && "justify-center px-0"
+            )}
+            title={(isCollapsed && !mobileOpen) ? "Keluar" : undefined}
+          >
+            <LogOut className="w-4 h-4 flex-shrink-0" />
+            {(!isCollapsed || mobileOpen) && <span>Keluar</span>}
+          </button>
+        </div>
+
+        {/* Collapse toggle (Desktop only) */}
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="p-1.5 rounded-none hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-400 absolute -right-3 top-5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800"
+          className="hidden md:flex absolute top-1/2 -right-3.5 z-20 w-7 h-7 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 items-center justify-center text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
         >
           {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
         </button>
-      </div>
-
-      {/* Navigation */}
-      <div className="flex-1 py-6 px-3 flex flex-col gap-1 overflow-y-auto">
-        {NAV_ITEMS.map((item) => {
-          const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-none transition-all group ${
-                isActive
-                  ? "bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white font-bold"
-                  : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800"
-              }`}
-              title={isCollapsed ? item.label : undefined}
-            >
-              <item.icon
-                className={`w-5 h-5 shrink-0 ${
-                  isActive ? "text-slate-900 dark:text-white" : "text-slate-400 group-hover:text-slate-200"
-                }`}
-              />
-              {!isCollapsed && <span className="text-sm">{item.label}</span>}
-            </Link>
-          );
-        })}
-      </div>
-
-      {/* Footer */}
-      <div className="p-4 border-t border-slate-200 dark:border-slate-800 space-y-2">
-        
-        <Link
-          href="/dashboard"
-          className={`flex items-center gap-3 px-3 py-2.5 rounded-none transition-all text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800 ${
-            isCollapsed ? "justify-center" : ""
-          }`}
-          title={isCollapsed ? "Kembali ke Dashboard User" : undefined}
-        >
-          <ChevronLeft className="w-5 h-5 shrink-0" />
-          {!isCollapsed && <span className="text-sm font-semibold">User Dashboard</span>}
-        </Link>
-        <button
-          onClick={handleLogout}
-          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-none transition-all text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-800 ${
-            isCollapsed ? "justify-center" : ""
-          }`}
-          title={isCollapsed ? "Keluar" : undefined}
-        >
-          <LogOut className="w-5 h-5 shrink-0" />
-          {!isCollapsed && <span className="text-sm font-bold">Keluar</span>}
-        </button>
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 }
