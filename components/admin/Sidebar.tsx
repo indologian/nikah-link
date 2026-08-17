@@ -14,6 +14,7 @@ import {
   ChevronRight,
   ShieldAlert,
   Settings,
+  Inbox,
 } from "lucide-react";
 import { useState } from "react";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -23,6 +24,7 @@ const NAV_ITEMS = [
   { href: "/admin/users", label: "Users", icon: Users },
   { href: "/admin/invitations", label: "Undangan", icon: LinkIcon },
   { href: "/admin/themes", label: "Tema", icon: Palette },
+  { href: "/admin/leads", label: "Data Leads", icon: Inbox },
   { href: "/admin/settings", label: "Pengaturan", icon: Settings },
 ];
 
