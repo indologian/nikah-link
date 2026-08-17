@@ -29,7 +29,7 @@ function FloatingThemeCards() {
         Instead of a fake phone with dynamic islands, we show the invitation
         as a pure, floating editorial card.
       */}
-      <div className="relative w-full max-w-[320px] mx-auto h-[500px]">
+      <div className="relative w-full max-w-[320px] mx-auto h-[400px] lg:h-[500px]">
         <AnimatePresence mode="popLayout">
           {THEME_PREVIEWS.map((theme, i) => (
             i === active && (
@@ -87,7 +87,7 @@ function FloatingThemeCards() {
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full min-h-[calc(100vh-4rem)] flex items-center py-12 md:py-20 overflow-hidden bg-white dark:bg-slate-950 text-slate-900 dark:text-white transition-colors">
+    <section className="relative w-full min-h-[calc(100vh-4rem)] flex items-center py-8 md:py-12 lg:py-20 overflow-hidden bg-white dark:bg-slate-950 text-slate-900 dark:text-white transition-colors">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-20 items-center">
           
@@ -97,7 +97,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 border border-slate-900 dark:border-white text-slate-900 dark:text-white text-xs font-bold uppercase tracking-widest mb-8"
+              className="inline-flex items-center gap-2 px-3 py-1.5 border border-slate-900 dark:border-white text-slate-900 dark:text-white text-xs font-bold uppercase tracking-widest mb-4 sm:mb-6"
             >
               <Sparkles size={14} />
               Platform Undangan Digital
@@ -107,7 +107,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="font-playfair text-5xl sm:text-6xl lg:text-7xl font-medium leading-[1.05] tracking-tight mb-6"
+              className="font-playfair text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-medium leading-[1.05] tracking-tight mb-4 sm:mb-6"
             >
               Undangan elegan, <br/>
               siap dalam <span className="italic text-slate-500">hitungan menit.</span>
@@ -117,7 +117,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-slate-500 text-lg leading-relaxed mb-10 max-w-lg"
+              className="text-slate-500 text-base sm:text-lg leading-relaxed mb-6 sm:mb-8 max-w-lg"
             >
               Buat undangan pernikahan digital yang modern. Lengkap dengan RSVP Online, manajemen tamu, hingga penerimaan kado cashless.
             </motion.p>
