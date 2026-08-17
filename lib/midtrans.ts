@@ -3,7 +3,9 @@
 const MIDTRANS_SERVER_KEY = process.env.MIDTRANS_SERVER_KEY || "";
 const MIDTRANS_CLIENT_KEY = process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY || "";
 
-export const IS_PRODUCTION = process.env.MIDTRANS_IS_PRODUCTION === "true";
+// MUST use NEXT_PUBLIC_ prefix so this value is available in client components
+// (e.g. app/harga/page.tsx uses SNAP_URL to load the correct Snap.js script)
+export const IS_PRODUCTION = process.env.NEXT_PUBLIC_MIDTRANS_IS_PRODUCTION === "true";
 
 export const SNAP_URL = IS_PRODUCTION
   ? "https://app.midtrans.com/snap/snap.js"
