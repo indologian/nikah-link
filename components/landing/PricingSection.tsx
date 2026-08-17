@@ -8,15 +8,33 @@ import { cn } from "@/lib/utils";
 interface PricingSectionProps {
   onCheckout?: (plan: "premium" | "pro") => void;
   isLoading?: string | null;
+interface PlanFeature {
+  text: string;
+  included: boolean;
+  highlight?: boolean;
 }
 
-const PLANS = [
+interface Plan {
+  id: string;
+  name: string;
+  subtitle: string;
+  price: string;
+  originalPrice?: string;
+  priceNote: string;
+  fomoBadge?: string;
+  features: PlanFeature[];
+  cta: string;
+  ctaHref: string;
+}
+
+const PLANS: Plan[] = [
   {
     id: "free",
     name: "Gratis",
     subtitle: "Coba Dulu",
     price: "Rp0",
-    priceNote: "Selamanya gratis",
+    priceNote: "Hanya untuk uji coba",
+    fomoBadge: "⏳ Habis dalam 24 Jam",
     features: [
       { text: "1 Undangan Digital", included: true },
       { text: "Aktif 24 jam", included: true },
@@ -126,6 +144,13 @@ export default function PricingSection({ onCheckout, isLoading }: PricingSection
 
                 {/* Pricing */}
                 <div className="my-8">
+                  {plan.fomoBadge && (
+                    <div className="mb-3">
+                      <span className="inline-block px-2 py-1 bg-rose-50 dark:bg-rose-950/30 text-rose-600 dark:text-rose-400 text-[10px] font-mono font-bold uppercase tracking-wider border border-rose-200 dark:border-rose-900/50">
+                        {plan.fomoBadge}
+                      </span>
+                    </div>
+                  )}
                   <div className="flex items-baseline gap-2">
                     <span className={cn(
                       "text-5xl font-medium tracking-tight",
