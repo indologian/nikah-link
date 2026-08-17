@@ -89,7 +89,7 @@ export default function AdminSidebar() {
       {/* Footer */}
       <div className="p-4 border-t border-slate-200 dark:border-slate-800 space-y-2">
         <div className={`flex items-center ${isCollapsed ? 'justify-center' : 'justify-between px-3'} mb-4`}>
-          {!isCollapsed && <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Tema Tema</span>}
+          {!isCollapsed && <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Tampilan</span>}
           <div className="scale-90 origin-left">
             <ThemeToggle />
           </div>
