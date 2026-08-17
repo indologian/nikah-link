@@ -56,8 +56,8 @@ const PLANS: Plan[] = [
     id: "premium",
     name: "Premium",
     subtitle: "Paling Favorit",
-    price: "Rp79K",
-    originalPrice: "Rp150K",
+    price: "Rp99K",
+    originalPrice: "Rp249K",
     priceNote: "Sekali bayar, masa aktif 3 bulan",
     features: [
       { text: "1 Undangan Premium", included: true },
@@ -77,8 +77,8 @@ const PLANS: Plan[] = [
     id: "pro",
     name: "Pro VIP",
     subtitle: "Untuk yang Terbaik",
-    price: "Rp149K",
-    originalPrice: "Rp300K",
+    price: "Rp299K",
+    originalPrice: "Rp499K",
     priceNote: "Sekali bayar, aktif selamanya",
     features: [
       { text: "Semua fitur paket Premium", included: true },
