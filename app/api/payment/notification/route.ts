@@ -41,25 +41,22 @@ export async function POST(request: Request) {
         .select()
         .single();
 
-      // 2. If status is success, update user profile plan and their invitations
+      // 2. If status is success, update user profile plan and plan_expires_at
       if (status === "success" && sub) {
-        await supabase
-          .from("profiles")
-          .update({ plan: sub.plan })
-          .eq("user_id", sub.user_id);
-
-        // Update expires_at for existing invitations
-        let expiresAt: string | null = null;
+        let planExpiresAt: string | null = null;
         if (sub.plan === "premium") {
           // Add 3 months (90 days) from now
-          expiresAt = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString();
+          planExpiresAt = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString();
         } else if (sub.plan === "pro") {
-          expiresAt = null; // Lifetime
+          planExpiresAt = null; // Lifetime
         }
 
         await supabase
-          .from("invitations")
-          .update({ expires_at: expiresAt })
+          .from("profiles")
+          .update({ 
+            plan: sub.plan,
+            plan_expires_at: planExpiresAt
+          })
           .eq("user_id", sub.user_id);
       }
     }

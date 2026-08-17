@@ -42,19 +42,22 @@ export default function Sidebar() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
       const [{ data: profile }, { count }] = await Promise.all([
-        supabase.from("profiles").select("plan, role, has_used_free_trial").eq("user_id", user.id).single(),
+        supabase.from("profiles").select("plan, role, has_used_free_trial, plan_expires_at").eq("user_id", user.id).single(),
         supabase.from("invitations").select("*", { count: "exact", head: true }).eq("user_id", user.id)
       ]);
       if (profile && profile.plan) setUserPlan(profile.plan);
       if (profile && profile.role) setUserRole(profile.role);
       // Determine if they can still create
       const hasUsedTrial = profile?.has_used_free_trial || false;
+      const planExpiresAt = profile?.plan_expires_at ? new Date(profile.plan_expires_at) : null;
       const limits = { free: 1, premium: 1, pro: 2 };
       const planLimit = limits[(profile?.plan as "free" | "premium" | "pro") || "free"];
       
-      // If plan is free and trial is used, they effectively have 0 limit left
+      // If plan is free and trial is used OR premium is expired, force it to look full
       if (profile?.plan === "free" && hasUsedTrial) {
-        setInvCount(planLimit); // Force it to look "full" so Upsell triggers
+        setInvCount(planLimit); 
+      } else if (profile?.plan === "premium" && planExpiresAt && planExpiresAt < new Date()) {
+        setInvCount(planLimit);
       } else if (count !== null) {
         setInvCount(count);
       }

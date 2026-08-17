@@ -142,12 +142,13 @@ export default function NewInvitationPage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
         const [{ data: profile }, { count }] = await Promise.all([
-          supabase.from("profiles").select("plan, has_used_free_trial").eq("user_id", user.id).single(),
+          supabase.from("profiles").select("plan, has_used_free_trial, plan_expires_at").eq("user_id", user.id).single(),
           supabase.from("invitations").select("*", { count: "exact", head: true }).eq("user_id", user.id)
         ]);
 
         const plan = profile?.plan || "free";
         const hasUsedTrial = profile?.has_used_free_trial || false;
+        const planExpiresAt = profile?.plan_expires_at ? new Date(profile.plan_expires_at) : null;
         setUserPlan(plan);
 
         // Check if limit is exceeded or free trial is already used
@@ -162,6 +163,14 @@ export default function NewInvitationPage() {
             description: "Kamu sudah pernah menggunakan kuota undangan Gratis (Trial 24 Jam) milikmu. Silakan tingkatkan paketmu ke Premium untuk membuat undangan yang aktif 3 bulan!",
             planNeeded: "premium"
           });
+        } else if (plan === "premium" && planExpiresAt && planExpiresAt < new Date()) {
+           setIsLimitReached(true);
+           setUpsellConfig({
+             isOpen: true,
+             title: "Paket Premium Kedaluwarsa",
+             description: "Masa aktif paket Premium kamu (3 bulan) telah habis. Silakan perpanjang atau tingkatkan paketmu untuk membuat undangan baru.",
+             planNeeded: "premium"
+           });
         } else if (count !== null && count >= planLimit) {
           setIsLimitReached(true);
           setUpsellConfig({
