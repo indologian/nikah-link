@@ -76,26 +76,24 @@ const PLANS = [
 
 export default function PricingSection({ onCheckout, isLoading }: PricingSectionProps = {}) {
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full relative border-t border-slate-200 dark:border-slate-800 bg-[var(--bg-primary)]">
-      {/* Hallmark: No aurora blobs or glowing gradients here */}
-
+    <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full relative border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 transition-colors">
       <div className="flex flex-col items-start lg:flex-row lg:justify-between mb-16 gap-8">
         <div className="max-w-2xl space-y-4">
-          <span className="text-[var(--accent-rosegold)] font-semibold tracking-widest text-xs uppercase">
+          <span className="text-slate-900 dark:text-white font-mono tracking-widest text-xs uppercase">
             Investasi Momen Bahagia
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-playfair font-bold text-[var(--text-primary)] dark:text-white leading-[1.1]">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-medium tracking-tight text-slate-900 dark:text-white leading-[1.05]">
             Satu kali bayar.<br/>
             Aktif selamanya.
           </h2>
         </div>
-        <p className="text-slate-600 dark:text-slate-400 text-base max-w-md lg:text-right lg:self-end">
+        <p className="text-slate-500 text-lg max-w-md lg:text-right lg:self-end">
           Pilih paket yang sesuai dengan kebutuhan pernikahan Anda. Tanpa biaya langganan bulanan yang tersembunyi.
         </p>
       </div>
 
       {/* Pricing Grid - Flat, editorial aesthetic */}
-      <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-0 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden bg-white dark:bg-slate-900">
+      <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-0 border-y border-x md:border-x-0 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
         {PLANS.map((plan, i) => {
           const isProcessing = isLoading === plan.id;
           
@@ -103,46 +101,48 @@ export default function PricingSection({ onCheckout, isLoading }: PricingSection
             <div
               key={plan.id}
               className={cn(
-                "p-8 flex flex-col justify-between relative",
-                i !== 0 && "border-t md:border-t-0 md:border-l border-slate-200 dark:border-slate-800"
+                "p-8 sm:p-10 flex flex-col justify-between relative",
+                "border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800",
+                i === 0 && "md:border-l",
+                i === PLANS.length - 1 && "md:border-r"
               )}
             >
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[var(--accent-rosegold)]">
+                  <span className="text-xs font-mono font-bold uppercase tracking-widest text-slate-900 dark:text-white">
                     {plan.name}
                   </span>
                   {plan.id === "premium" && (
-                    <span className="text-[10px] uppercase font-bold tracking-wider text-[var(--accent-rosegold)] bg-[var(--accent-rosegold)]/10 px-2 py-0.5 rounded-full flex items-center gap-1">
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-white bg-slate-900 dark:text-slate-900 dark:bg-white px-2 py-0.5 flex items-center gap-1">
                       <Sparkles size={10} /> Favorit
                     </span>
                   )}
                 </div>
 
                 {/* Pricing */}
-                <div className="my-6">
+                <div className="my-8">
                   <div className="flex items-baseline gap-2">
-                    <span className="text-4xl font-bold font-playfair tracking-tight text-[var(--text-primary)] dark:text-white">
+                    <span className="text-5xl font-medium tracking-tight text-slate-900 dark:text-white">
                       {plan.price}
                     </span>
                     {plan.originalPrice && (
-                      <span className="text-sm font-medium text-slate-400 dark:text-slate-500 line-through">
+                      <span className="text-sm font-mono text-slate-400 line-through">
                         {plan.originalPrice}
                       </span>
                     )}
                   </div>
-                  <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                  <p className="text-sm text-slate-500 mt-2 font-mono">
                     {plan.priceNote}
                   </p>
                 </div>
 
-                <div className="w-full h-px bg-slate-100 dark:bg-slate-800/50 my-8" />
+                <div className="w-full h-px bg-slate-200 dark:bg-slate-800 my-8" />
 
                 {/* Features List */}
-                <ul className="space-y-4 mb-10">
+                <ul className="space-y-4 mb-12">
                   {plan.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-300">
-                      <Check className="w-4 h-4 text-[var(--accent-rosegold)] shrink-0 mt-0.5" />
+                      <Check className="w-4 h-4 text-slate-900 dark:text-white shrink-0 mt-0.5" />
                       <span className="leading-snug">{feature}</span>
                     </li>
                   ))}
@@ -154,8 +154,10 @@ export default function PricingSection({ onCheckout, isLoading }: PricingSection
                   onClick={() => onCheckout(plan.id as "premium" | "pro")}
                   disabled={!!isLoading}
                   className={cn(
-                    "w-full flex items-center justify-center gap-2 py-3.5 rounded-full font-semibold text-sm transition-colors mt-auto",
-                    plan.ctaStyle,
+                    "w-full flex items-center justify-center gap-2 py-4 font-bold uppercase tracking-wider text-xs transition-colors mt-auto border",
+                    plan.id === "premium" 
+                      ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white hover:bg-slate-800 dark:hover:bg-slate-100"
+                      : "bg-white dark:bg-slate-950 text-slate-900 dark:text-white border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900",
                     isLoading ? "opacity-70 cursor-not-allowed" : ""
                   )}
                 >
@@ -171,8 +173,10 @@ export default function PricingSection({ onCheckout, isLoading }: PricingSection
                 <Link
                   href={plan.ctaHref}
                   className={cn(
-                    "w-full block text-center py-3.5 rounded-full font-semibold text-sm transition-colors mt-auto",
-                    plan.ctaStyle
+                    "w-full block text-center py-4 font-bold uppercase tracking-wider text-xs transition-colors mt-auto border",
+                    plan.id === "premium"
+                      ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white hover:bg-slate-800 dark:hover:bg-slate-100"
+                      : "bg-white dark:bg-slate-950 text-slate-900 dark:text-white border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900"
                   )}
                 >
                   {plan.cta}
@@ -182,8 +186,8 @@ export default function PricingSection({ onCheckout, isLoading }: PricingSection
           );
         })}
       </div>
-      <div className="mt-8 text-center sm:text-left">
-        <p className="text-slate-500 dark:text-slate-400 text-xs font-medium">
+      <div className="mt-12 text-center sm:text-left border-t border-slate-200 dark:border-slate-800 pt-6">
+        <p className="text-slate-500 font-mono text-xs uppercase tracking-wider">
           Pembayaran terverifikasi otomatis melalui Midtrans (Bank Transfer, GoPay, QRIS).
         </p>
       </div>

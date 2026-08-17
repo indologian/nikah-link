@@ -41,31 +41,35 @@ export default function ConfirmModal({
   if (!mounted || !isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       <div 
-        className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden animate-in zoom-in-95 duration-200"
+        className="absolute inset-0 bg-slate-900/40 dark:bg-black/60 backdrop-blur-sm"
+        onClick={onClose}
+      />
+      <div 
+        className="relative bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 w-full max-w-md"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex justify-between items-center p-5 border-b border-slate-100">
-          <h3 className="font-bold text-lg text-slate-800">{title}</h3>
+        <div className="flex justify-between items-center p-6 border-b border-slate-200 dark:border-slate-800">
+          <h3 className="font-medium tracking-tight text-lg text-slate-900 dark:text-white">{title}</h3>
           <button 
             onClick={onClose}
-            className="p-1 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors"
+            className="p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
         
-        <div className="p-5">
-          <p className="text-slate-600 text-sm leading-relaxed">
+        <div className="p-6">
+          <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
             {description}
           </p>
         </div>
         
-        <div className="p-5 bg-slate-50 border-t border-slate-100 flex justify-end gap-3 rounded-b-2xl">
+        <div className="p-6 border-t border-slate-200 dark:border-slate-800 flex justify-end gap-4 bg-slate-50 dark:bg-slate-900/50">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-200 transition-colors"
+            className="px-6 py-3 border border-slate-300 dark:border-slate-700 text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
           >
             {cancelText}
           </button>
@@ -74,10 +78,10 @@ export default function ConfirmModal({
               onConfirm();
               onClose();
             }}
-            className={`px-4 py-2 rounded-xl text-sm font-bold text-white transition-colors ${
+            className={`px-6 py-3 border text-sm font-bold uppercase tracking-wider transition-colors ${
               isDestructive 
-                ? 'bg-red-500 hover:bg-red-600' 
-                : 'bg-[#9E1B54] hover:bg-[#831545]'
+                ? 'bg-red-600 border-red-600 text-white hover:bg-red-700 hover:border-red-700' 
+                : 'bg-slate-900 border-slate-900 text-white dark:bg-white dark:border-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-200 hover:border-slate-800 dark:hover:border-slate-200'
             }`}
           >
             {confirmText}

@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Crown, Sparkles, ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { X, Crown, Sparkles } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface UpsellModalProps {
@@ -49,50 +48,47 @@ export default function UpsellModal({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-[#221C28]/60 dark:bg-black/70 backdrop-blur-sm"
+            className="absolute inset-0 bg-slate-900/40 dark:bg-black/60 backdrop-blur-sm"
           />
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-md bg-white dark:bg-[#1A1517] rounded-3xl shadow-2xl border border-[#C58F78]/30 dark:border-[#C58F78]/20 overflow-hidden"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            className="relative w-full max-w-md bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800"
           >
-            {/* Header Pattern */}
-            <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-br from-[#F7EDE8] to-[#FDFBF7] dark:from-[#251E21] dark:to-[#1A1517] opacity-80 pointer-events-none" />
-            
-            <div className="relative p-6 sm:p-8 text-center pt-10">
+            <div className="relative p-8 text-center pt-12">
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 rounded-full transition-colors z-10"
+                className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors z-10"
               >
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="w-16 h-16 mx-auto bg-gradient-to-br from-[#C58F78] to-[#A3735E] rounded-2xl flex items-center justify-center text-white shadow-lg shadow-[#C58F78]/30 mb-6 rotate-3">
-                <Crown className="w-8 h-8 -rotate-3" />
+              <div className="w-16 h-16 mx-auto bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800 mb-6">
+                <Crown className="w-8 h-8" />
               </div>
 
-              <h3 className="text-2xl font-bold font-playfair text-[#2D2424] dark:text-[#FDFBF7] mb-3">
+              <h3 className="text-2xl font-medium tracking-tight text-slate-900 dark:text-white mb-3">
                 {title}
               </h3>
               
-              <p className="text-slate-600 dark:text-[#B39E9E] text-sm leading-relaxed mb-8">
+              <p className="text-slate-500 text-base leading-relaxed mb-8">
                 {description}
               </p>
 
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <button
                   onClick={() => {
                     onClose();
                     router.push(`/harga?plan=${planNeeded}`);
                   }}
-                  className="w-full flex items-center justify-center gap-2 btn-wevitation text-white py-3.5 rounded-xl font-bold text-sm shadow-md"
+                  className="w-full flex items-center justify-center gap-2 bg-amber-600 text-white dark:bg-amber-500 dark:text-amber-950 py-4 font-bold uppercase tracking-widest text-sm hover:bg-amber-700 dark:hover:bg-amber-400 transition-colors"
                 >
                   <Sparkles className="w-4 h-4" /> Upgrade ke {targetPlanName}
                 </button>
                 <button
                   onClick={onClose}
-                  className="w-full py-3 rounded-xl text-sm font-bold text-slate-500 dark:text-[#8D7575] hover:bg-slate-50 dark:hover:bg-[#251E21] transition-colors"
+                  className="w-full py-4 border border-slate-200 dark:border-slate-800 text-sm font-bold uppercase tracking-widest text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors"
                 >
                   Mungkin Nanti
                 </button>

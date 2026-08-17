@@ -37,63 +37,50 @@ const ECO_STATS = [
 export default function EcoImpact() {
   return (
     <section
-      className="w-full flex flex-col items-center justify-center py-14 sm:py-20 lg:py-24 bg-[#FDFBF7] dark:bg-[#120E10] border-b border-[#EBE4DD] dark:border-[#33272B] box-border"
-      style={{
-        width: "100%",
-        boxSizing: "border-box",
-        paddingLeft: "clamp(20px, 5vw, 40px)",
-        paddingRight: "clamp(20px, 5vw, 40px)",
-      }}
+      className="w-full flex flex-col items-center justify-center py-20 lg:py-24 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 transition-colors"
     >
-      <div className="w-full max-w-4xl lg:max-w-5xl flex flex-col items-center justify-center text-center">
+      <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center">
         {/* Heading */}
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12 space-y-3">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-300 bg-emerald-50 inline-block">
-            <Leaf size={16} className="text-emerald-700" />
-            <span className="text-emerald-800 text-xs font-bold uppercase tracking-wider">
-              Eco-Friendly Platform
-            </span>
-          </div>
-          <h2 className="font-playfair text-3xl sm:text-4xl lg:text-5xl font-bold text-[#2D2424] dark:text-[#FDFBF7]">
-            Undangan Digital untuk <br />
-            <span className="italic text-emerald-700">Bumi yang Lebih Baik</span>
+        <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
+          <span className="text-slate-900 dark:text-white font-mono tracking-widest text-xs uppercase block">
+            Dampak Lingkungan
+          </span>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-medium tracking-tight text-slate-900 dark:text-white leading-[1.05]">
+            Undangan Digital<br />
+            Untuk Bumi yang Lebih Baik
           </h2>
-          <p className="text-[#756767] dark:text-[#B39E9E] text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-            Setiap undangan digital yang kalian buat berdampak nyata bagi lingkungan.
-            Bersama NikahLink, rayakan cinta sekaligus jaga bumi.
+          <p className="text-slate-500 text-lg max-w-xl mx-auto leading-relaxed">
+            Setiap undangan digital yang kalian buat berdampak nyata bagi lingkungan. Bersama NikahLink, rayakan cinta sekaligus jaga bumi.
           </p>
         </div>
 
-        {/* Stats Grid */}
-        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+        {/* Stats Grid - Hairline border grid trick */}
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-slate-200 dark:bg-slate-800 border border-slate-200 dark:border-slate-800">
           {ECO_STATS.map((stat, i) => {
             const Icon = stat.icon;
             return (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="bg-white dark:bg-[#1A1517] rounded-2xl p-6 sm:p-7 border border-emerald-100 shadow-sm text-center flex flex-col items-center justify-between space-y-3"
+                className="bg-white dark:bg-slate-950 p-8 sm:p-10 text-center flex flex-col items-center group"
               >
-                <div className="space-y-3">
-                  <div
-                    className="rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-center mx-auto"
-                    style={{ width: "44px", height: "44px", minWidth: "44px", minHeight: "44px" }}
-                  >
-                    <Icon size={22} className="text-emerald-700" />
+                <div className="space-y-4">
+                  <div className="w-12 h-12 bg-slate-900 dark:bg-white flex items-center justify-center mx-auto mb-6">
+                    <Icon size={20} className="text-white dark:text-slate-900" />
                   </div>
 
                   <div>
-                    <span className="text-3xl font-extrabold text-[#2D2424] dark:text-[#FDFBF7]">{stat.value}</span>
+                    <span className="text-4xl font-medium tracking-tight text-slate-900 dark:text-white block mb-1">{stat.value}</span>
                     {stat.unit && (
-                      <span className="text-xs text-emerald-700 ml-1 font-bold">{stat.unit}</span>
+                      <span className="text-xs font-mono uppercase tracking-wider text-slate-500 block mb-4">{stat.unit}</span>
                     )}
                   </div>
 
-                  <p className="text-slate-900 font-bold text-sm">{stat.label}</p>
-                  <p className="text-[#756767] dark:text-[#B39E9E] text-xs leading-relaxed">{stat.description}</p>
+                  <p className="text-slate-900 dark:text-white font-medium text-base mb-2">{stat.label}</p>
+                  <p className="text-slate-500 text-xs leading-relaxed">{stat.description}</p>
                 </div>
               </motion.div>
             );

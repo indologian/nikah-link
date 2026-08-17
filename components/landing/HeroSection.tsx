@@ -35,15 +35,15 @@ function FloatingThemeCards() {
             i === active && (
               <motion.div
                 key={theme.name}
-                initial={{ opacity: 0, y: 40, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -40, scale: 0.95 }}
-                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                className={`absolute inset-0 rounded-2xl ${theme.bg} shadow-2xl border border-black/5 dark:border-white/5 flex flex-col justify-between p-8 text-center backdrop-blur-sm overflow-hidden`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className={`absolute inset-0 ${theme.bg} border-x border-t border-black/10 dark:border-white/10 flex flex-col justify-between p-8 text-center overflow-hidden`}
               >
                 <div className="mt-8 space-y-6">
-                  <div className="w-14 h-14 mx-auto rounded-full bg-[var(--accent-rosegold)] flex items-center justify-center shadow-lg">
-                    <Heart size={24} className="text-white fill-white" strokeWidth={0} />
+                  <div className="w-14 h-14 mx-auto bg-slate-900 dark:bg-white flex items-center justify-center">
+                    <Heart size={24} className="text-white dark:text-slate-900 fill-current" strokeWidth={0} />
                   </div>
 
                   <div className="space-y-2">
@@ -67,14 +67,14 @@ function FloatingThemeCards() {
           ))}
         </AnimatePresence>
 
-        {/* Floating Indicator Pill */}
-        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md px-4 py-2 rounded-full border border-slate-200/50 dark:border-slate-800/50 shadow-sm z-10">
+        {/* Flat Indicator Bar */}
+        <div className="absolute -bottom-1 left-0 right-0 flex items-center justify-center bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-2 z-10 gap-1">
           {THEME_PREVIEWS.map((_, i) => (
             <button
               key={i}
               onClick={() => setActive(i)}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
-                i === active ? "w-6 bg-[var(--accent-rosegold)]" : "w-1.5 bg-slate-300 dark:bg-slate-700"
+              className={`h-1 transition-all duration-300 ${
+                i === active ? "w-8 bg-slate-900 dark:bg-white" : "w-2 bg-slate-200 dark:bg-slate-800"
               }`}
               aria-label={`Show theme ${i + 1}`}
             />
@@ -87,20 +87,17 @@ function FloatingThemeCards() {
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden bg-[var(--bg-primary)] text-[var(--text-primary)]">
-      {/* Minimal grid background for subtle texture (not an aurora blob) */}
-      <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] dark:opacity-10 opacity-40 pointer-events-none" />
-
+    <section className="relative w-full pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden bg-white dark:bg-slate-950 text-slate-900 dark:text-white transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-20 items-center">
           
-          {/* Left Column: Typography (H2 Split Diptych) */}
+          {/* Left Column: Typography */}
           <div className="flex flex-col items-start text-left max-w-2xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--accent-rosegold)]/10 text-[var(--accent-rosegold)] text-xs font-semibold uppercase tracking-wider mb-6"
+              className="inline-flex items-center gap-2 px-3 py-1.5 border border-slate-900 dark:border-white text-slate-900 dark:text-white text-xs font-bold uppercase tracking-widest mb-8"
             >
               <Sparkles size={14} />
               Platform Undangan Digital
@@ -110,19 +107,19 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="font-playfair text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-6"
+              className="font-playfair text-5xl sm:text-6xl lg:text-7xl font-medium leading-[1.05] tracking-tight mb-6"
             >
               Undangan elegan, <br/>
-              siap dalam <span className="text-[var(--accent-rosegold)] italic">hitungan menit.</span>
+              siap dalam <span className="italic text-slate-500">hitungan menit.</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed mb-10 max-w-lg"
+              className="text-slate-500 text-lg leading-relaxed mb-10 max-w-lg"
             >
-              Buat undangan pernikahan digital yang cantik dan modern. Lengkap dengan RSVP Online, manajemen tamu, hingga penerimaan kado cashless.
+              Buat undangan pernikahan digital yang modern. Lengkap dengan RSVP Online, manajemen tamu, hingga penerimaan kado cashless.
             </motion.p>
 
             <motion.div
@@ -131,10 +128,10 @@ export default function HeroSection() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="flex flex-wrap items-center gap-4"
             >
-              {/* C3 Typographic Link CTA pattern instead of generic button block */}
+              {/* Flat CTA Buttons */}
               <Link
                 href="/daftar"
-                className="group flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-6 py-3.5 rounded-full font-medium text-sm transition-all hover:bg-slate-800 dark:hover:bg-slate-100 shadow-sm"
+                className="group flex items-center gap-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-8 py-4 font-bold uppercase tracking-wider text-sm transition-colors hover:bg-slate-800 dark:hover:bg-slate-100"
               >
                 Buat Undangan Gratis
                 <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
@@ -142,7 +139,7 @@ export default function HeroSection() {
               
               <Link
                 href="/tema"
-                className="group flex items-center gap-2 px-6 py-3.5 rounded-full font-medium text-sm text-slate-600 dark:text-slate-300 transition-all hover:bg-slate-100 dark:hover:bg-slate-800"
+                className="group flex items-center gap-2 px-8 py-4 border border-slate-200 dark:border-slate-800 font-bold uppercase tracking-wider text-sm text-slate-900 dark:text-white transition-colors hover:bg-slate-50 dark:hover:bg-slate-900"
               >
                 Lihat Galeri Tema
               </Link>
@@ -152,16 +149,16 @@ export default function HeroSection() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className="mt-16 flex items-center gap-6 pt-6 border-t border-slate-200 dark:border-slate-800"
+              className="mt-16 flex items-center gap-8 pt-6 border-t border-slate-200 dark:border-slate-800"
             >
               <div>
-                <div className="font-bold text-2xl text-slate-900 dark:text-white">125K+</div>
-                <div className="text-xs text-slate-500 uppercase tracking-wider mt-1">Pasangan</div>
+                <div className="font-medium text-3xl tracking-tight text-slate-900 dark:text-white">125K+</div>
+                <div className="text-xs font-mono text-slate-500 uppercase tracking-widest mt-1">Pasangan</div>
               </div>
-              <div className="w-px h-10 bg-slate-200 dark:bg-slate-800" />
+              <div className="w-px h-12 bg-slate-200 dark:bg-slate-800" />
               <div>
-                <div className="font-bold text-2xl text-slate-900 dark:text-white">8.5M+</div>
-                <div className="text-xs text-slate-500 uppercase tracking-wider mt-1">Tamu Undangan</div>
+                <div className="font-medium text-3xl tracking-tight text-slate-900 dark:text-white">8.5M+</div>
+                <div className="text-xs font-mono text-slate-500 uppercase tracking-widest mt-1">Tamu Undangan</div>
               </div>
             </motion.div>
           </div>

@@ -36,49 +36,43 @@ export default function FaqSection() {
 
   return (
     <section
-      className="w-full flex flex-col items-center justify-center py-14 sm:py-20 lg:py-24 bg-[#FDFBF7] dark:bg-[#120E10] border-b border-[#EBE4DD] dark:border-[#33272B] box-border"
-      style={{
-        width: "100%",
-        boxSizing: "border-box",
-        paddingLeft: "clamp(20px, 5vw, 40px)",
-        paddingRight: "clamp(20px, 5vw, 40px)",
-      }}
+      className="w-full flex flex-col items-center justify-center py-20 lg:py-24 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 transition-colors"
     >
-      <div className="w-full max-w-3xl flex flex-col items-center justify-center text-center">
+      <div className="w-full max-w-3xl px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center">
         {/* Section Heading */}
-        <div className="text-center max-w-xl mx-auto mb-10 sm:mb-12 space-y-3">
-          <span className="px-4 py-1.5 rounded-full bg-[#F7EDE8] dark:bg-[#251E21] border border-[#F0DDD5] dark:border-[#423338] text-[#C58F78] text-xs font-semibold uppercase tracking-wider inline-block">
+        <div className="text-center max-w-xl mx-auto mb-16 space-y-4">
+          <span className="text-slate-900 dark:text-white font-mono tracking-widest text-xs uppercase block">
             FAQ
           </span>
-          <h2 className="font-playfair text-3xl sm:text-4xl lg:text-5xl font-bold text-[#2D2424] dark:text-[#FDFBF7]">
-            Pertanyaan Sering Diajukan
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-medium tracking-tight text-slate-900 dark:text-white leading-[1.05]">
+            Pertanyaan<br />Sering Diajukan
           </h2>
-          <p className="text-[#756767] dark:text-[#B39E9E] text-sm sm:text-base leading-relaxed">
+          <p className="text-slate-500 text-lg leading-relaxed">
             Punya pertanyaan lain? Kami siap membantu menjawab semua keraguan kalian.
           </p>
         </div>
 
-        {/* Accordion */}
-        <div className="w-full space-y-4 text-left">
+        {/* Accordion - Flat borders */}
+        <div className="w-full text-left border-t border-slate-200 dark:border-slate-800">
           {FAQS.map((faq, i) => {
             const isOpen = openIndex === i;
             return (
               <div
                 key={faq.q}
-                className="w-full bg-white dark:bg-[#1A1517] rounded-2xl border border-[#EBE4DD] dark:border-[#33272B] shadow-sm overflow-hidden transition-all"
+                className="w-full border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 transition-colors"
               >
                 <button
                   onClick={() => toggle(i)}
-                  className="w-full p-5 sm:p-6 text-left font-bold text-[#2D2424] dark:text-[#FDFBF7] text-sm sm:text-base flex items-center justify-between gap-4 hover:text-[#C58F78] transition-colors"
+                  className="w-full py-6 text-left font-medium tracking-tight text-slate-900 dark:text-white text-base sm:text-lg flex items-center justify-between gap-4 hover:bg-slate-50 dark:hover:bg-slate-900 px-4 transition-colors"
                 >
-                  <span className="flex items-center gap-3">
-                    <HelpCircle size={18} className="text-[#C58F78] flex-shrink-0" />
+                  <span className="flex items-center gap-4">
+                    <HelpCircle size={18} className="text-slate-400 flex-shrink-0" />
                     {faq.q}
                   </span>
                   <ChevronDown
                     size={18}
-                    className={`text-slate-400 transition-transform duration-300 ${
-                      isOpen ? "rotate-180 text-[#C58F78]" : ""
+                    className={`text-slate-400 transition-transform duration-300 flex-shrink-0 ${
+                      isOpen ? "rotate-180" : ""
                     }`}
                   />
                 </button>
@@ -92,7 +86,7 @@ export default function FaqSection() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <div className="px-5 pb-5 pt-1 sm:px-6 sm:pb-6 text-[#756767] dark:text-[#B39E9E] text-xs sm:text-sm leading-relaxed border-t border-slate-100 dark:border-[#33272B]">
+                      <div className="px-4 pb-6 pt-2 pl-[3.25rem] text-slate-500 text-sm sm:text-base leading-relaxed">
                         {faq.a}
                       </div>
                     </motion.div>

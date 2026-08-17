@@ -82,15 +82,15 @@ export default function LocationAutocomplete({
           }}
           onFocus={() => { if (results.length > 0) setShowDropdown(true); }}
           placeholder={placeholder || "Cari nama tempat / gedung..."}
-          className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-[#1A1517] border border-slate-200 dark:border-[#423338] text-slate-800 dark:text-slate-100 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-[#9E1B54]"
+          className="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 text-sm focus:outline-none focus:border-slate-900 dark:focus:border-white transition-colors"
         />
-        <div className="absolute left-3 text-slate-400">
+        <div className="absolute left-4 text-slate-400">
           {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
         </div>
       </div>
 
       {showDropdown && results.length > 0 && (
-        <div className="absolute z-50 w-full mt-1 bg-white dark:bg-[#1A1517] border border-slate-200 dark:border-[#423338] rounded-xl shadow-lg max-h-60 overflow-y-auto">
+        <div className="absolute z-50 w-full mt-1 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 max-h-60 overflow-y-auto">
           {results.map((place) => {
             const placeName = place.name || place.display_name.split(",")[0];
             return (
@@ -103,14 +103,14 @@ export default function LocationAutocomplete({
                   setShowDropdown(false);
                   onSelect(place);
                 }}
-                className="w-full text-left px-4 py-3 hover:bg-slate-50 dark:hover:bg-[#251E21] border-b border-slate-100 dark:border-[#33272B] last:border-0 flex items-start gap-3 transition-colors"
+                className="w-full text-left px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-900 border-b border-slate-200 dark:border-slate-800 last:border-0 flex items-start gap-3 transition-colors"
               >
-                <MapPin className="w-4 h-4 text-[#9E1B54] mt-0.5 shrink-0" />
+                <MapPin className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
                 <div>
-                  <p className="text-xs font-bold text-slate-800 dark:text-[#FDFBF7]">
+                  <p className="text-sm font-medium tracking-tight text-slate-900 dark:text-white">
                     {placeName}
                   </p>
-                  <p className="text-[10px] text-slate-500 dark:text-[#B39E9E] mt-0.5 line-clamp-2">
+                  <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-2">
                     {place.display_name}
                   </p>
                 </div>

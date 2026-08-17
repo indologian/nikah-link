@@ -37,7 +37,7 @@ export default function DeleteButton({ id, title }: { id: string; title: string 
           setShowModal(true);
         }}
         disabled={isDeleting}
-        className="flex-1 py-2 text-center text-xs font-semibold text-rose-600 dark:text-rose-400 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl hover:border-rose-300 dark:hover:border-rose-900 transition-colors flex items-center justify-center gap-1.5"
+        className="flex-1 py-2.5 text-center text-xs uppercase tracking-widest font-bold text-red-600 dark:text-red-400 bg-white dark:bg-slate-950 border border-red-200 dark:border-red-900 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors flex items-center justify-center gap-2"
         title="Hapus Undangan"
       >
         {isDeleting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}

@@ -25,52 +25,43 @@ export default function FeaturesSection() {
   return (
     <section
       id="fitur"
-      className="w-full flex flex-col items-center justify-center py-14 sm:py-20 lg:py-24 bg-[#FDFBF7] dark:bg-[#120E10] border-b border-[#EBE4DD] dark:border-[#33272B] box-border"
-      style={{
-        width: "100%",
-        boxSizing: "border-box",
-        paddingLeft: "clamp(20px, 5vw, 40px)",
-        paddingRight: "clamp(20px, 5vw, 40px)",
-      }}
+      className="w-full flex flex-col items-center justify-center py-20 lg:py-24 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 transition-colors"
     >
-      <div className="w-full max-w-4xl lg:max-w-5xl flex flex-col items-center justify-center text-center">
+      <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center">
         {/* Section Heading */}
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12 space-y-3">
-          <span className="px-4 py-1.5 rounded-full bg-[#F7EDE8] dark:bg-[#251E21] border border-[#F0DDD5] dark:border-[#423338] text-[#C58F78] text-xs font-semibold uppercase tracking-wider inline-block">
+        <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
+          <span className="text-slate-900 dark:text-white font-mono tracking-widest text-xs uppercase block">
             Fitur Terlengkap
           </span>
-          <h2 className="font-playfair text-3xl sm:text-4xl lg:text-5xl font-bold text-[#2D2424] dark:text-[#FDFBF7]">
-            18+ Fitur Unggulan untuk Undangan Sempurna
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-medium tracking-tight text-slate-900 dark:text-white leading-[1.05]">
+            18+ Fitur Unggulan<br />Untuk Hari Sempurna
           </h2>
-          <p className="text-[#756767] dark:text-[#B39E9E] text-sm sm:text-base max-w-md mx-auto leading-relaxed">
+          <p className="text-slate-500 text-lg max-w-md mx-auto leading-relaxed">
             Semua yang kalian butuhkan untuk pernikahan impian telah siap digunakan tanpa perlu biaya tambahan.
           </p>
         </div>
 
-        {/* Features Grid */}
-        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 text-left">
+        {/* Features Grid - Hairline border grid trick */}
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-slate-200 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 text-left">
           {FEATURES.map((feat, i) => {
             const Icon = feat.icon;
             return (
               <motion.div
                 key={feat.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.03 }}
-                className="card-wevitation p-6 sm:p-7 rounded-2xl bg-white dark:bg-[#1A1517] border border-[#EBE4DD] dark:border-[#33272B] shadow-sm flex flex-col justify-between space-y-3 group"
+                className="bg-white dark:bg-slate-950 p-6 sm:p-8 flex flex-col space-y-4 group"
               >
-                <div
-                  className="rounded-xl bg-[#F7EDE8] dark:bg-[#251E21] border border-[#F0DDD5] dark:border-[#423338] flex items-center justify-center group-hover:scale-105 transition-transform mb-1"
-                  style={{ width: "44px", height: "44px", minWidth: "44px", minHeight: "44px" }}
-                >
-                  <Icon size={22} className="text-[#C58F78]" />
+                <div className="w-10 h-10 bg-slate-900 dark:bg-white flex items-center justify-center mb-2">
+                  <Icon size={18} className="text-white dark:text-slate-900" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-[#2D2424] dark:text-[#FDFBF7] text-base group-hover:text-[#C58F78] transition-colors">
+                  <h3 className="font-medium tracking-tight text-slate-900 dark:text-white text-base">
                     {feat.title}
                   </h3>
-                  <p className="text-[#756767] dark:text-[#B39E9E] text-xs sm:text-sm mt-1.5 leading-relaxed">
+                  <p className="text-slate-500 text-sm mt-2 leading-relaxed">
                     {feat.desc}
                   </p>
                 </div>

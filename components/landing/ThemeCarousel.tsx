@@ -83,22 +83,22 @@ export default function ThemeCarousel() {
     : THEMES.filter((t) => t.category === activeCategory);
 
   return (
-    <section className="w-full pt-32 pb-24 bg-[var(--bg-primary)]">
+    <section className="w-full pt-20 pb-24 bg-white dark:bg-slate-950 transition-colors border-b border-slate-200 dark:border-slate-800">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Editorial Heading */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
           <div className="max-w-2xl">
-            <h2 className="font-playfair text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--text-primary)] dark:text-white leading-[1.1] mb-4">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-medium tracking-tight text-slate-900 dark:text-white leading-[1.05] mb-4">
               Koleksi Tema Desain
             </h2>
-            <p className="text-slate-600 dark:text-slate-400 text-lg">
+            <p className="text-slate-500 text-lg">
               30+ desain eksklusif yang dirancang dengan dedikasi untuk merayakan cerita Anda.
             </p>
           </div>
           <Link
             href="/daftar"
-            className="group flex items-center gap-2 bg-[var(--accent-rosegold)] text-white px-6 py-3 rounded-full font-medium text-sm transition-all hover:bg-[var(--accent-rosegold-hover)] shrink-0"
+            className="group flex items-center gap-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-8 py-4 font-bold uppercase tracking-wider text-sm transition-colors hover:bg-slate-800 dark:hover:bg-slate-100 shrink-0"
           >
             Buat Undangan Gratis
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
@@ -112,10 +112,10 @@ export default function ThemeCarousel() {
               key={cat}
               onClick={() => setActiveCategory(cat)}
               className={cn(
-                "px-5 py-2 rounded-full text-sm font-medium transition-colors",
+                "px-6 py-2.5 text-xs font-bold uppercase tracking-wider transition-colors border",
                 activeCategory === cat
-                  ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900"
-                  : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white"
+                  : "text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900"
               )}
             >
               {cat}
@@ -123,18 +123,18 @@ export default function ThemeCarousel() {
           ))}
         </div>
 
-        {/* Photographic / Bento Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        {/* Photographic Grid - Hairline borders */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-slate-200 dark:bg-slate-800 border border-slate-200 dark:border-slate-800">
           <AnimatePresence mode="popLayout">
             {filtered.map((theme, i) => (
               <motion.div
                 layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 key={theme.id}
-                className="group relative rounded-2xl overflow-hidden aspect-[3/4] border border-black/5 dark:border-white/5"
+                className="group relative overflow-hidden aspect-[3/4] bg-white dark:bg-slate-950"
               >
                 {/* Simulated Visual Content */}
                 <div className={cn("absolute inset-0 transition-transform duration-700 group-hover:scale-105 flex flex-col justify-center items-center text-center p-8", theme.bg)}>
@@ -153,26 +153,26 @@ export default function ThemeCarousel() {
                 {/* Badges */}
                 {theme.badge && (
                   <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-md text-[10px] uppercase font-bold tracking-wider text-slate-900 dark:text-white shadow-sm">
+                    <span className="px-3 py-1 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md text-[10px] uppercase font-bold tracking-wider text-slate-900 dark:text-white border border-slate-200/50 dark:border-slate-800/50">
                       {theme.badge}
                     </span>
                   </div>
                 )}
 
                 {/* Hover / Mobile Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/5 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                <div className="absolute inset-0 bg-black/60 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                   <div className="translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-300">
-                    <h3 className="text-white font-medium mb-4">{theme.name}</h3>
+                    <h3 className="text-white font-medium tracking-tight mb-4">{theme.name}</h3>
                     <div className="flex gap-2">
                       <Link
-                        href={`/demo/${theme.id}`}
-                        className="flex-1 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white px-4 py-2.5 rounded-xl text-xs font-semibold text-center transition-colors flex items-center justify-center gap-1"
+                         href={`/demo/${theme.id}`}
+                        className="flex-1 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white px-4 py-3 text-xs font-bold uppercase tracking-wider text-center transition-colors flex items-center justify-center gap-2"
                       >
                         <Eye size={14} /> Lihat
                       </Link>
                       <Link
                         href={`/daftar?tema=${theme.id}`}
-                        className="flex-1 bg-[var(--accent-rosegold)] hover:bg-[var(--accent-rosegold-hover)] text-white px-4 py-2.5 rounded-xl text-xs font-semibold text-center transition-colors"
+                        className="flex-1 bg-white hover:bg-slate-200 text-slate-900 px-4 py-3 text-xs font-bold uppercase tracking-wider text-center transition-colors"
                       >
                         Gunakan
                       </Link>

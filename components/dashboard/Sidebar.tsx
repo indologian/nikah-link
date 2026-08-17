@@ -66,20 +66,19 @@ export default function Sidebar() {
   return (
     <>
       {/* Mobile Top Bar */}
-      <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-white dark:bg-[#120E10]/80 dark:backdrop-blur-xl border-b border-[#F0E2DA] dark:border-[#33272B] flex items-center justify-between px-4 z-40 shadow-xs">
+      <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-4 z-40">
         <div className="flex items-center gap-3">
           <button
             onClick={() => setMobileOpen(true)}
-            className="p-2 -ml-2 text-slate-600 dark:text-[#D1C4C4] hover:text-[#9E1B54] transition-colors"
+            className="p-2 -ml-2 text-slate-900 dark:text-white"
           >
             <Menu className="w-6 h-6" />
           </button>
           <div className="flex items-center gap-2">
-            <div className="relative w-6 h-6 flex-shrink-0">
-              <div className="absolute inset-0 rounded-full bg-[#9E1B54]" />
-              <Heart className="absolute inset-0 m-auto w-3 h-3 text-white fill-white" strokeWidth={0} />
+            <div className="w-6 h-6 flex items-center justify-center bg-slate-900 dark:bg-white flex-shrink-0">
+              <Heart className="w-3 h-3 text-white dark:text-slate-900 fill-current" strokeWidth={0} />
             </div>
-            <span className="font-playfair text-base font-bold text-[#221C28] dark:text-[#FDFBF7]">
+            <span className="font-playfair text-base font-bold text-slate-900 dark:text-white">
               NikahLink
             </span>
           </div>
@@ -92,7 +91,7 @@ export default function Sidebar() {
       {/* Mobile Overlay */}
       {mobileOpen && (
         <div 
-          className="md:hidden fixed inset-0 bg-[#221C28]/20 dark:bg-black/50 backdrop-blur-sm z-40 transition-opacity"
+          className="md:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity"
           onClick={() => setMobileOpen(false)}
         />
       )}
@@ -100,17 +99,16 @@ export default function Sidebar() {
       {/* Sidebar Drawer */}
       <aside
         className={cn(
-          "fixed md:relative top-0 left-0 z-50 flex flex-col h-full bg-white dark:bg-[#120E10]/90 md:dark:bg-[#120E10]/80 dark:backdrop-blur-2xl md:dark:backdrop-blur-xl border-r border-[#F0E2DA] dark:border-[#33272B] shadow-2xl md:shadow-xs transition-all duration-300 ease-in-out",
+          "fixed md:relative top-0 left-0 z-50 flex flex-col h-full bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 transition-all duration-300 ease-in-out",
           mobileOpen ? "translate-x-0 w-[280px]" : "-translate-x-full w-[280px] md:translate-x-0",
           collapsed ? "md:w-[70px]" : "md:w-[240px]"
         )}
       >
         {/* Logo (Desktop Only / Drawer Header on Mobile) */}
-        <div className="flex items-center justify-between p-4 border-b border-[#F0E2DA] dark:border-[#33272B] h-16">
+        <div className="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-800 h-16">
           <div className="flex items-center gap-3">
-            <div className="relative w-8 h-8 flex-shrink-0">
-              <div className="absolute inset-0 rounded-full bg-[#9E1B54]" />
-              <Heart className="absolute inset-0 m-auto w-4 h-4 text-white fill-white" strokeWidth={0} />
+            <div className="w-8 h-8 flex items-center justify-center bg-slate-900 dark:bg-white flex-shrink-0">
+              <Heart className="w-4 h-4 text-white dark:text-slate-900 fill-current" strokeWidth={0} />
             </div>
             <AnimatePresence>
               {(!collapsed || mobileOpen) && (
@@ -118,7 +116,7 @@ export default function Sidebar() {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -10 }}
-                  className="font-playfair text-lg font-bold text-[#221C28] dark:text-[#FDFBF7] whitespace-nowrap"
+                  className="font-playfair text-lg font-bold text-slate-900 dark:text-white whitespace-nowrap"
                 >
                   NikahLink
                 </motion.span>
@@ -128,7 +126,7 @@ export default function Sidebar() {
           
           {/* Close button for Mobile */}
           <button 
-            className="md:hidden p-2 text-slate-500 hover:text-rose-500"
+            className="md:hidden p-2 text-slate-500 hover:text-slate-900 dark:hover:text-white"
             onClick={() => setMobileOpen(false)}
           >
             <X className="w-5 h-5" />
@@ -141,7 +139,7 @@ export default function Sidebar() {
         </div>
 
         {/* New invitation CTA */}
-        <div className="p-3">
+        <div className="p-4 border-b border-slate-200 dark:border-slate-800">
           <button
             onClick={() => {
               const limits = { free: 1, premium: 1, pro: 2 };
@@ -154,7 +152,7 @@ export default function Sidebar() {
               }
             }}
             className={cn(
-              "w-full flex items-center gap-2 btn-wevitation rounded-xl py-2.5 font-bold text-white text-xs sm:text-sm transition-all shadow-sm",
+              "w-full flex items-center gap-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 py-3 font-bold uppercase tracking-wider text-xs transition-colors hover:bg-slate-800 dark:hover:bg-slate-200",
               (collapsed && !mobileOpen) ? "justify-center px-2" : "px-4"
             )}
           >
@@ -164,7 +162,7 @@ export default function Sidebar() {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
+        <nav className="flex-1 py-4 overflow-y-auto flex flex-col gap-1">
           {NAV_ITEMS.map(({ icon: Icon, label, href }) => {
             const isActive = href === "/dashboard"
               ? pathname === href
@@ -174,18 +172,15 @@ export default function Sidebar() {
                 key={href}
                 href={href}
                 className={cn(
-                  "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 group",
+                  "flex items-center gap-3 px-6 py-3 text-sm font-medium transition-colors border-l-2",
                   isActive
-                    ? "bg-[#FCEBF2] dark:bg-[#9E1B54]/20 text-[#9E1B54] border border-[#F8D5E3] dark:border-[#9E1B54]/30"
-                    : "text-slate-600 dark:text-[#D1C4C4] hover:text-[#9E1B54] hover:bg-[#FAF4F0] dark:hover:bg-[#251E21] dark:bg-[#120E10]",
+                    ? "bg-slate-50 dark:bg-slate-900 border-slate-900 dark:border-white text-slate-900 dark:text-white"
+                    : "border-transparent text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white",
                   (collapsed && !mobileOpen) && "justify-center px-0"
                 )}
                 title={(collapsed && !mobileOpen) ? label : undefined}
               >
-                <Icon className={cn(
-                  "w-5 h-5 flex-shrink-0",
-                  isActive ? "text-[#9E1B54]" : "text-slate-400 group-hover:text-[#9E1B54]"
-                )} />
+                <Icon className="w-4 h-4 flex-shrink-0" />
                 <AnimatePresence>
                   {(!collapsed || mobileOpen) && (
                     <motion.span
@@ -204,16 +199,16 @@ export default function Sidebar() {
         </nav>
 
         {/* Bottom actions */}
-        <div className="p-3 border-t border-[#F0E2DA] dark:border-[#33272B] space-y-1">
+        <div className="py-4 border-t border-slate-200 dark:border-slate-800 flex flex-col gap-1">
           <Link
             href="/"
             className={cn(
-              "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-500 dark:text-[#B39E9E] hover:text-[#9E1B54] hover:bg-[#FAF4F0] dark:hover:bg-[#251E21] transition-all",
+              "flex items-center gap-3 px-6 py-3 text-sm font-medium border-l-2 border-transparent text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white transition-colors",
               (collapsed && !mobileOpen) && "justify-center px-0"
             )}
             title={(collapsed && !mobileOpen) ? "Beranda Utama" : undefined}
           >
-            <Home className="w-5 h-5 flex-shrink-0" />
+            <Home className="w-4 h-4 flex-shrink-0" />
             {(!collapsed || mobileOpen) && <span>Beranda Utama</span>}
           </Link>
 
@@ -221,12 +216,12 @@ export default function Sidebar() {
             <Link
               href="/admin"
               className={cn(
-                "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-bold text-rose-600 bg-rose-50 dark:bg-rose-950/20 hover:bg-rose-100 dark:hover:bg-rose-950/40 transition-all border border-rose-100 dark:border-rose-900/30",
+                "flex items-center gap-3 px-6 py-3 text-sm font-bold border-l-2 border-transparent text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors",
                 (collapsed && !mobileOpen) && "justify-center px-0"
               )}
               title={(collapsed && !mobileOpen) ? "Super Admin" : undefined}
             >
-              <ShieldAlert className="w-5 h-5 flex-shrink-0" />
+              <ShieldAlert className="w-4 h-4 flex-shrink-0" />
               {(!collapsed || mobileOpen) && <span>Super Admin</span>}
             </Link>
           )}
@@ -234,24 +229,24 @@ export default function Sidebar() {
           <Link
             href="/harga"
             className={cn(
-              "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-amber-700 hover:bg-amber-50 dark:hover:bg-amber-950/30 dark:bg-amber-950/30 transition-all",
+              "flex items-center gap-3 px-6 py-3 text-sm font-medium border-l-2 border-transparent text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white transition-colors",
               (collapsed && !mobileOpen) && "justify-center px-0"
             )}
             title={(collapsed && !mobileOpen) ? "Upgrade Plan" : undefined}
           >
-            <CreditCard className="w-5 h-5 flex-shrink-0 text-amber-600" />
+            <CreditCard className="w-4 h-4 flex-shrink-0" />
             {(!collapsed || mobileOpen) && <span>Upgrade Plan</span>}
           </Link>
 
           <button
             onClick={handleLogout}
             className={cn(
-              "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-500 dark:text-[#B39E9E] hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 dark:bg-rose-950/30 transition-all",
+              "w-full flex items-center gap-3 px-6 py-3 text-sm font-medium border-l-2 border-transparent text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-rose-600 dark:hover:text-rose-400 transition-colors",
               (collapsed && !mobileOpen) && "justify-center px-0"
             )}
             title={(collapsed && !mobileOpen) ? "Keluar" : undefined}
           >
-            <LogOut className="w-5 h-5 flex-shrink-0" />
+            <LogOut className="w-4 h-4 flex-shrink-0" />
             {(!collapsed || mobileOpen) && <span>Keluar</span>}
           </button>
         </div>
@@ -259,9 +254,9 @@ export default function Sidebar() {
         {/* Collapse toggle (Desktop only) */}
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="hidden md:flex absolute top-1/2 -right-3 z-20 w-6 h-6 rounded-full bg-white dark:bg-[#1A1517] border border-[#F0E2DA] dark:border-[#33272B] items-center justify-center text-slate-500 dark:text-[#B39E9E] hover:text-[#9E1B54] transition-all shadow-md"
+          className="hidden md:flex absolute top-1/2 -right-3.5 z-20 w-7 h-7 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 items-center justify-center text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
         >
-          {collapsed ? <ChevronRight className="w-3 h-3" /> : <ChevronLeft className="w-3 h-3" />}
+          {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
         </button>
       </aside>
 

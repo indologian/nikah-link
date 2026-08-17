@@ -35,7 +35,7 @@ export default function CreateInvitationButton({ plan, currentCount }: CreateInv
     <>
       <button
         onClick={handleClick}
-        className="btn-wevitation px-5 py-2.5 rounded-xl font-bold text-white text-xs sm:text-sm flex items-center gap-2 shadow-sm"
+        className="px-6 py-3 font-bold uppercase tracking-widest text-[11px] flex items-center gap-2 bg-slate-900 text-white dark:bg-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors"
       >
         <Plus className="w-4 h-4" /> Buat Undangan Baru
       </button>

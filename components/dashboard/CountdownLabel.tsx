@@ -41,7 +41,7 @@ export default function CountdownLabel({ plan, createdAt }: Props) {
 
   if (isExpired) {
     return (
-      <span className="flex items-center gap-1.5 text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-50 text-rose-600 border border-rose-200">
+      <span className="flex items-center gap-1.5 text-[10px] font-mono font-bold tracking-widest uppercase px-2 py-1 bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900">
         <Clock className="w-3 h-3" /> Kedaluwarsa
       </span>
     );
@@ -50,7 +50,7 @@ export default function CountdownLabel({ plan, createdAt }: Props) {
   if (!timeLeftStr) return null;
 
   return (
-    <span className="flex items-center gap-1.5 text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
+    <span className="flex items-center gap-1.5 text-[10px] font-mono font-bold tracking-widest uppercase px-2 py-1 bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
       <Clock className="w-3 h-3" /> {timeLeftStr}
     </span>
   );
