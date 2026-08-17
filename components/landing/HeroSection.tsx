@@ -52,7 +52,6 @@ function FloatingThemeCards() {
                     <h3 className={`font-playfair text-4xl font-bold leading-tight ${theme.textColor}`}>
                       Romeo <br/>& Juliet
                     </h3>
-                    </h3>
                   </div>
                 </div>
 
