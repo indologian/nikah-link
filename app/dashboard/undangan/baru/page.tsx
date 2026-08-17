@@ -142,18 +142,27 @@ export default function NewInvitationPage() {
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
         const [{ data: profile }, { count }] = await Promise.all([
-          supabase.from("profiles").select("plan").eq("user_id", user.id).single(),
+          supabase.from("profiles").select("plan, has_used_free_trial").eq("user_id", user.id).single(),
           supabase.from("invitations").select("*", { count: "exact", head: true }).eq("user_id", user.id)
         ]);
 
         const plan = profile?.plan || "free";
+        const hasUsedTrial = profile?.has_used_free_trial || false;
         setUserPlan(plan);
 
-        // Check if limit is exceeded
+        // Check if limit is exceeded or free trial is already used
         const limits = { free: 1, premium: 1, pro: 2 };
         const planLimit = limits[plan as "free" | "premium" | "pro"] || 1;
         
-        if (count !== null && count >= planLimit) {
+        if (plan === "free" && hasUsedTrial) {
+          setIsLimitReached(true);
+          setUpsellConfig({
+            isOpen: true,
+            title: "Masa Coba Gratis Habis",
+            description: "Kamu sudah pernah menggunakan kuota undangan Gratis (Trial 24 Jam) milikmu. Silakan tingkatkan paketmu ke Premium untuk membuat undangan yang aktif 3 bulan!",
+            planNeeded: "premium"
+          });
+        } else if (count !== null && count >= planLimit) {
           setIsLimitReached(true);
           setUpsellConfig({
             isOpen: true,
