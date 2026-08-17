@@ -54,80 +54,80 @@ export default function UsersClient({ initialUsers }: { initialUsers: Profile[] 
   };
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
-      <div className="p-4 border-b border-slate-800 flex flex-col sm:flex-row justify-between gap-4">
+    <div className="w-full">
+      <div className="pb-4 flex flex-col sm:flex-row justify-between gap-4">
         <div className="relative w-full sm:w-96">
           <input
             type="text"
             placeholder="Cari nama atau nomor HP..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-rose-500"
+            className="w-full pl-9 pr-4 py-2 bg-transparent border-b border-slate-200 dark:border-slate-800 text-sm text-slate-900 dark:text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-slate-900 dark:focus:border-slate-100 transition-colors"
           />
-          <Search className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+          <Search className="w-4 h-4 text-slate-500 absolute left-0 top-2.5" />
         </div>
       </div>
       
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-sm text-slate-400">
-          <thead className="bg-slate-950 text-slate-500 font-medium">
-            <tr>
-              <th className="px-6 py-4">Nama</th>
-              <th className="px-6 py-4">Nomor HP</th>
-              <th className="px-6 py-4">Terdaftar</th>
-              <th className="px-6 py-4">Paket</th>
-              <th className="px-6 py-4">Role</th>
-              <th className="px-6 py-4">Aksi</th>
+        <table className="w-full text-left text-sm text-slate-600 dark:text-slate-400">
+          <thead>
+            <tr className="border-b border-slate-200 dark:border-slate-800 text-xs uppercase tracking-wider text-slate-500">
+              <th className="py-3 font-medium whitespace-nowrap">Nama</th>
+              <th className="px-4 py-3 font-medium">Nomor HP</th>
+              <th className="px-4 py-3 font-medium">Terdaftar</th>
+              <th className="px-4 py-3 font-medium">Paket</th>
+              <th className="px-4 py-3 font-medium">Role</th>
+              <th className="py-3 font-medium text-right">Aksi</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-800">
+          <tbody>
             {filteredUsers.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-6 py-8 text-center text-slate-500">
+                <td colSpan={6} className="py-8 text-center text-slate-500">
                   Tidak ada pengguna ditemukan.
                 </td>
               </tr>
             ) : (
               filteredUsers.map((user) => (
-                <tr key={user.id} className="hover:bg-slate-800/50 transition-colors">
-                  <td className="px-6 py-4 font-bold text-slate-200 flex items-center gap-2">
+                <tr key={user.id} className="border-b border-slate-100 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-900/20 transition-colors">
+                  <td className="py-4 font-medium text-slate-900 dark:text-slate-200 flex items-center gap-2">
                     {user.name}
                     {user.role === 'super_admin' && (
                       <span title="Super Admin">
-                        <ShieldAlert className="w-4 h-4 text-rose-500" />
+                        <ShieldAlert className="w-4 h-4 text-slate-900 dark:text-white" />
                       </span>
                     )}
                   </td>
-                  <td className="px-6 py-4">{user.phone || "-"}</td>
-                  <td className="px-6 py-4">{new Date(user.created_at).toLocaleDateString("id-ID")}</td>
-                  <td className="px-6 py-4">
+                  <td className="px-4 py-4 text-slate-700 dark:text-slate-300 font-mono text-xs">{user.phone || "-"}</td>
+                  <td className="px-4 py-4 whitespace-nowrap">{new Date(user.created_at).toLocaleDateString("id-ID")}</td>
+                  <td className="px-4 py-4">
                     <select
                       value={user.plan}
                       onChange={(e) => handleUpdatePlan(user.id, e.target.value)}
                       disabled={loadingId === user.id}
-                      className="bg-slate-950 border border-slate-700 text-slate-200 text-xs rounded-lg px-2 py-1 outline-none focus:border-rose-500"
+                      className="bg-transparent border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-200 text-xs uppercase tracking-wider rounded-none px-2 py-1 outline-none focus:border-slate-900 dark:focus:border-slate-100"
                     >
                       <option value="free">Free</option>
                       <option value="premium">Premium</option>
                       <option value="pro">Pro</option>
                     </select>
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-4 py-4">
                     <select
                       value={user.role || 'user'}
                       onChange={(e) => handleUpdateRole(user.id, e.target.value)}
                       disabled={loadingId === user.id}
-                      className="bg-slate-950 border border-slate-700 text-slate-200 text-xs rounded-lg px-2 py-1 outline-none focus:border-rose-500"
+                      className="bg-transparent border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-200 text-xs uppercase tracking-wider rounded-none px-2 py-1 outline-none focus:border-slate-900 dark:focus:border-slate-100"
                     >
                       <option value="user">User</option>
                       <option value="super_admin">Super Admin</option>
                     </select>
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="py-4 text-right">
                     {loadingId === user.id ? (
-                      <span className="text-xs text-rose-400 animate-pulse">Menyimpan...</span>
+                      <span className="text-[10px] uppercase tracking-wider font-mono text-slate-400 animate-pulse">Wait...</span>
                     ) : (
-                      <CheckCircle2 className="w-5 h-5 text-emerald-500 opacity-50" />
+                      <CheckCircle2 className="w-4 h-4 text-slate-300 dark:text-slate-700 inline-block" />
                     )}
                   </td>
                 </tr>

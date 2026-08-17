@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Theme } from "@/types";
-import { Plus, Trash2, Loader2, Image as ImageIcon } from "lucide-react";
+import { Plus, Trash2, Loader2, Image as ImageIcon, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
 
 export default function ThemesClient({ initialThemes }: { initialThemes: Theme[] }) {
@@ -92,48 +92,51 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h2 className="text-xl font-bold text-slate-200">Daftar Tema</h2>
+    <div className="w-full">
+      <div className="flex justify-between items-end pb-6 mb-8 border-b border-slate-200 dark:border-slate-800">
+        <div>
+          <h2 className="text-lg font-medium text-slate-900 dark:text-white tracking-tight">Katalog Tema</h2>
+        </div>
         <button
           onClick={() => setIsAdding(!isAdding)}
-          className="flex items-center gap-2 bg-rose-500 hover:bg-rose-600 text-white px-4 py-2 rounded-xl text-sm font-bold transition-colors"
+          className="inline-flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2 text-xs font-bold uppercase tracking-wider hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors"
         >
-          <Plus className="w-4 h-4" /> Tambah Tema
+          <Plus className="w-4 h-4" /> {isAdding ? "Tutup" : "Tambah Tema"}
         </button>
       </div>
 
       {isAdding && (
-        <form onSubmit={handleAdd} className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
-          <h3 className="font-bold text-white mb-4">Tambah Tema Baru</h3>
+        <form onSubmit={handleAdd} className="mb-12 pt-6 border-t border-slate-200 dark:border-slate-800 space-y-6">
+          <h3 className="font-medium text-slate-900 dark:text-white tracking-tight text-lg mb-6">Parameter Tema Baru</h3>
           
-          <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-bold text-slate-400 mb-1">ID Tema (Unik, misal: rustic-gold)</label>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="space-y-1">
+              <label className="block text-xs font-mono uppercase tracking-wider text-slate-500">ID Tema (Unik)</label>
               <input
                 type="text"
                 required
                 value={formData.id}
                 onChange={e => setFormData({...formData, id: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "")})}
-                className="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-200 focus:outline-none focus:border-rose-500"
+                className="w-full px-0 py-2 bg-transparent border-b border-slate-200 dark:border-slate-800 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-slate-900 dark:focus:border-slate-100 transition-colors rounded-none"
+                placeholder="misal: rustic-gold"
               />
             </div>
-            <div>
-              <label className="block text-xs font-bold text-slate-400 mb-1">Nama Tema (Tampilan)</label>
+            <div className="space-y-1">
+              <label className="block text-xs font-mono uppercase tracking-wider text-slate-500">Nama Tema</label>
               <input
                 type="text"
                 required
                 value={formData.name}
                 onChange={e => setFormData({...formData, name: e.target.value})}
-                className="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-200 focus:outline-none focus:border-rose-500"
+                className="w-full px-0 py-2 bg-transparent border-b border-slate-200 dark:border-slate-800 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-slate-900 dark:focus:border-slate-100 transition-colors rounded-none"
               />
             </div>
-            <div>
-              <label className="block text-xs font-bold text-slate-400 mb-1">Kategori</label>
+            <div className="space-y-1">
+              <label className="block text-xs font-mono uppercase tracking-wider text-slate-500">Kategori</label>
               <select
                 value={formData.category}
                 onChange={e => setFormData({...formData, category: e.target.value})}
-                className="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-200 focus:outline-none focus:border-rose-500"
+                className="w-full px-0 py-2 bg-transparent border-b border-slate-200 dark:border-slate-800 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-slate-900 dark:focus:border-slate-100 transition-colors rounded-none"
               >
                 <option value="minimalis">Minimalis</option>
                 <option value="floral">Floral / Bunga</option>
@@ -141,92 +144,88 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
                 <option value="budaya">Adat / Budaya</option>
               </select>
             </div>
-            <div>
-              <label className="block text-xs font-bold text-slate-400 mb-1">Warna Utama (Hex)</label>
-              <div className="flex gap-2">
+            <div className="space-y-1">
+              <label className="block text-xs font-mono uppercase tracking-wider text-slate-500">Warna Utama (Hex)</label>
+              <div className="flex gap-4 items-end">
                 <input
                   type="color"
                   value={formData.colors_primary}
                   onChange={e => setFormData({...formData, colors_primary: e.target.value})}
-                  className="w-10 h-10 rounded cursor-pointer bg-transparent border-0"
+                  className="w-8 h-8 cursor-pointer bg-transparent border-0 p-0"
                 />
                 <input
                   type="text"
                   required
                   value={formData.colors_primary}
                   onChange={e => setFormData({...formData, colors_primary: e.target.value})}
-                  className="flex-1 px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-200 focus:outline-none focus:border-rose-500"
+                  className="flex-1 px-0 py-2 bg-transparent border-b border-slate-200 dark:border-slate-800 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-slate-900 dark:focus:border-slate-100 transition-colors rounded-none font-mono"
                 />
               </div>
             </div>
-            <div>
-              <label className="block text-xs font-bold text-slate-400 mb-1">Jenis Tema</label>
-              <label className="flex items-center gap-2 mt-2 cursor-pointer">
+            <div className="space-y-1">
+              <label className="block text-xs font-mono uppercase tracking-wider text-slate-500">Jenis Tema</label>
+              <label className="flex items-center gap-3 mt-3 cursor-pointer group">
+                <div className={`w-4 h-4 border flex items-center justify-center transition-colors ${formData.is_premium ? 'border-slate-900 bg-slate-900 dark:border-white dark:bg-white' : 'border-slate-300 dark:border-slate-600'}`}>
+                   {formData.is_premium && <CheckCircle2 className="w-3 h-3 text-white dark:text-slate-900" />}
+                </div>
                 <input
                   type="checkbox"
                   checked={formData.is_premium}
                   onChange={e => setFormData({...formData, is_premium: e.target.checked})}
-                  className="w-4 h-4 rounded text-rose-500 focus:ring-rose-500 bg-slate-950 border-slate-800"
+                  className="hidden"
                 />
-                <span className="text-sm text-slate-200">Tema Premium (Berbayar)</span>
+                <span className="text-sm text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Tema Premium (Berbayar)</span>
               </label>
             </div>
-            <div>
-              <label className="block text-xs font-bold text-slate-400 mb-1">Upload Thumbnail (.jpg / .png)</label>
+            <div className="space-y-1">
+              <label className="block text-xs font-mono uppercase tracking-wider text-slate-500">Upload Thumbnail</label>
               <input
                 type="file"
                 accept="image/*"
                 required
                 onChange={e => setThumbnailFile(e.target.files?.[0] || null)}
-                className="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-200 focus:outline-none focus:border-rose-500 file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-rose-500/10 file:text-rose-500 hover:file:bg-rose-500/20"
+                className="w-full px-0 py-2 bg-transparent text-sm text-slate-900 dark:text-slate-200 focus:outline-none file:mr-4 file:py-1.5 file:px-4 file:border file:border-slate-200 dark:file:border-slate-800 file:bg-transparent file:text-xs file:font-mono file:uppercase file:tracking-wider file:text-slate-900 dark:file:text-white hover:file:bg-slate-50 dark:hover:file:bg-slate-900 cursor-pointer"
               />
             </div>
           </div>
           
-          <div className="flex justify-end gap-3 pt-4">
-            <button
-              type="button"
-              onClick={() => setIsAdding(false)}
-              className="px-4 py-2 rounded-xl text-sm font-bold text-slate-400 hover:text-slate-200"
-            >
-              Batal
-            </button>
+          <div className="flex justify-end pt-8">
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex items-center gap-2 bg-rose-500 hover:bg-rose-600 text-white px-6 py-2 rounded-xl text-sm font-bold transition-colors disabled:opacity-50"
+              className="inline-flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-8 py-3 text-xs font-bold uppercase tracking-wider hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors disabled:opacity-50"
             >
-              {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : "Simpan Tema"}
+              {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : "Simpan Tema Ke Database"}
             </button>
           </div>
         </form>
       )}
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
         {themes.map((theme) => (
-          <div key={theme.id} className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden group">
-            <div className="aspect-[3/4] relative bg-slate-800">
+          <div key={theme.id} className="group relative">
+            <div className="aspect-[3/4] relative bg-slate-100 dark:bg-slate-900 mb-3 overflow-hidden border border-slate-200 dark:border-slate-800">
               {theme.thumbnail_url ? (
-                <img src={theme.thumbnail_url} alt={theme.name} className="w-full h-full object-cover" />
+                <img src={theme.thumbnail_url} alt={theme.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
-                  <ImageIcon className="w-8 h-8 text-slate-700" />
+                  <ImageIcon className="w-6 h-6 text-slate-400" />
                 </div>
               )}
               {theme.is_premium && (
-                <div className="absolute top-2 right-2 bg-amber-500 text-white text-[10px] font-black px-2 py-1 rounded-full uppercase tracking-wider">
+                <div className="absolute top-3 left-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 text-[9px] font-mono px-2 py-1 uppercase tracking-widest shadow-sm">
                   Premium
                 </div>
               )}
             </div>
-            <div className="p-4 flex justify-between items-start">
+            <div className="flex justify-between items-start">
               <div>
-                <h3 className="font-bold text-slate-200 text-sm">{theme.name}</h3>
-                <p className="text-xs text-slate-500 mt-1 capitalize">{theme.category}</p>
+                <h3 className="font-medium text-slate-900 dark:text-white text-sm tracking-tight">{theme.name}</h3>
+                <p className="text-xs text-slate-500 mt-0.5 font-mono uppercase tracking-wider">{theme.category}</p>
               </div>
               <button
                 onClick={() => handleDelete(theme.id, theme.thumbnail_url)}
-                className="text-slate-500 hover:text-rose-500 transition-colors p-1"
+                className="text-slate-400 hover:text-rose-600 transition-colors opacity-0 group-hover:opacity-100 p-1"
                 title="Hapus Tema"
               >
                 <Trash2 className="w-4 h-4" />

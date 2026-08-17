@@ -81,69 +81,70 @@ export default function InvitationsClient({ initialInvitations }: { initialInvit
   };
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
-      <div className="p-4 border-b border-slate-800 flex flex-col sm:flex-row justify-between gap-4">
+    <div className="w-full">
+      <div className="pb-4 flex flex-col sm:flex-row justify-between gap-4">
         <div className="relative w-full sm:w-96">
           <input
             type="text"
             placeholder="Cari URL username atau nama mempelai..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-rose-500"
+            className="w-full pl-9 pr-4 py-2 bg-transparent border-b border-slate-200 dark:border-slate-800 text-sm text-slate-900 dark:text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-slate-900 dark:focus:border-slate-100 transition-colors"
           />
-          <Search className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+          <Search className="w-4 h-4 text-slate-500 absolute left-0 top-2.5" />
         </div>
       </div>
       
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-sm text-slate-400">
-          <thead className="bg-slate-950 text-slate-500 font-medium">
-            <tr>
-              <th className="px-6 py-4">Link (Username)</th>
-              <th className="px-6 py-4">Mempelai</th>
-              <th className="px-6 py-4">Pemilik (Plan)</th>
-              <th className="px-6 py-4">Status</th>
-              <th className="px-6 py-4">Dibuat</th>
-              <th className="px-6 py-4">Aksi</th>
+        <table className="w-full text-left text-sm text-slate-600 dark:text-slate-400">
+          <thead>
+            <tr className="border-b border-slate-200 dark:border-slate-800 text-xs uppercase tracking-wider text-slate-500">
+              <th className="py-3 font-medium whitespace-nowrap">Link (Username)</th>
+              <th className="px-4 py-3 font-medium">Mempelai</th>
+              <th className="px-4 py-3 font-medium">Pemilik (Plan)</th>
+              <th className="px-4 py-3 font-medium">Status</th>
+              <th className="px-4 py-3 font-medium">Dibuat</th>
+              <th className="py-3 font-medium text-right">Aksi</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-800">
+          <tbody>
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-6 py-8 text-center text-slate-500">
+                <td colSpan={6} className="py-8 text-center text-slate-500">
                   Tidak ada undangan ditemukan.
                 </td>
               </tr>
             ) : (
               filtered.map((inv) => (
-                <tr key={inv.id} className="hover:bg-slate-800/50 transition-colors">
-                  <td className="px-6 py-4 font-bold text-rose-400">
-                    <Link href={`/${inv.username}`} target="_blank" className="flex items-center gap-2 hover:underline">
-                      /{inv.username} <ExternalLink className="w-3 h-3" />
+                <tr key={inv.id} className="border-b border-slate-100 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-900/20 transition-colors">
+                  <td className="py-4 font-medium text-slate-900 dark:text-slate-200">
+                    <Link href={`/${inv.username}`} target="_blank" className="inline-flex items-center gap-1.5 hover:underline decoration-slate-300 underline-offset-4">
+                      /{inv.username} <ExternalLink className="w-3 h-3 text-slate-400" />
                     </Link>
                   </td>
-                  <td className="px-6 py-4 font-medium text-slate-200">
+                  <td className="px-4 py-4 text-slate-700 dark:text-slate-300">
                     {inv.bride_name} & {inv.groom_name}
                   </td>
-                  <td className="px-6 py-4">
-                    {inv.profiles?.name || "Unknown"} <span className="text-xs text-slate-500 bg-slate-800 px-2 py-0.5 rounded-full ml-1 uppercase">{inv.profiles?.plan || "free"}</span>
+                  <td className="px-4 py-4">
+                    <span className="text-slate-900 dark:text-slate-200">{inv.profiles?.name || "Unknown"}</span>
+                    <span className="block mt-0.5 text-[10px] font-mono text-slate-500 uppercase tracking-wider">{inv.profiles?.plan || "free"}</span>
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-4 py-4">
                     <CountdownStatus 
                       createdAt={inv.created_at} 
                       isPublished={inv.is_published} 
                       plan={inv.profiles?.plan || "free"} 
                     />
                   </td>
-                  <td className="px-6 py-4">{new Date(inv.created_at).toLocaleDateString("id-ID")}</td>
-                  <td className="px-6 py-4">
+                  <td className="px-4 py-4 whitespace-nowrap">{new Date(inv.created_at).toLocaleDateString("id-ID")}</td>
+                  <td className="py-4 text-right">
                     <button
                       onClick={() => handleDelete(inv.id)}
                       disabled={loadingId === inv.id}
-                      className="text-slate-400 hover:text-rose-500 disabled:opacity-50 transition-colors"
+                      className="inline-flex p-2 text-slate-400 hover:text-rose-600 disabled:opacity-50 transition-colors"
                       title="Hapus Undangan"
                     >
-                      <Trash2 className="w-5 h-5" />
+                      <Trash2 className="w-4 h-4" />
                     </button>
                   </td>
                 </tr>
