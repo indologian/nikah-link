@@ -178,7 +178,7 @@ export default function GiftClient({ initialAccounts, invitations, plan }: GiftC
         
         <button
           onClick={() => handleOpenModal()}
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-6 py-3 rounded-none font-semibold text-sm hover:opacity-90 transition-opacity"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 dark:text-slate-900 px-6 py-3 rounded-none font-semibold text-sm hover:opacity-90 transition-opacity"
         >
           <Plus className="w-4 h-4" /> Tambah Rekening
         </button>

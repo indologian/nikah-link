@@ -719,7 +719,7 @@ export default function EditInvitationPage() {
                         )}
                       </div>
                       {isSelected && (
-                        <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-slate-900 dark:bg-slate-50 text-white flex items-center justify-center">
+                        <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-slate-900 dark:bg-slate-50 text-white dark:text-slate-900 dark:text-slate-900 flex items-center justify-center">
                           <Check className="w-3.5 h-3.5" />
                         </div>
                       )}

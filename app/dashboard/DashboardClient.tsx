@@ -24,7 +24,7 @@ interface Props {
 const PlanBadge = ({ plan }: { plan: string }) => {
   if (plan === "pro") {
     return (
-      <span className="flex items-center gap-1 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[10px] font-bold px-3 py-1 rounded-none uppercase tracking-widest">
+      <span className="flex items-center gap-1 bg-slate-900 dark:bg-white text-white dark:text-slate-900 dark:text-slate-900 text-[10px] font-bold px-3 py-1 rounded-none uppercase tracking-widest">
         PRO VIP
       </span>
     );
@@ -102,7 +102,7 @@ export default function DashboardClient({ user, invitations, stats, plan }: Prop
         </div>
         <Link
           href="/dashboard/undangan/baru"
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-900 dark:bg-slate-50 text-white px-6 py-3 rounded-none font-semibold text-sm hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-900 dark:bg-slate-50 text-white dark:text-slate-900 dark:text-slate-900 px-6 py-3 rounded-none font-semibold text-sm hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors"
         >
           <Plus className="w-4 h-4" /> Buat Undangan
         </Link>
@@ -162,7 +162,7 @@ export default function DashboardClient({ user, invitations, stats, plan }: Prop
             </p>
             <Link
               href="/dashboard/undangan/baru"
-              className="inline-flex items-center justify-center gap-2 bg-slate-900 dark:bg-slate-50 text-white px-6 py-2.5 rounded-none font-semibold text-xs hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors"
+              className="inline-flex items-center justify-center gap-2 bg-slate-900 dark:bg-slate-50 text-white dark:text-slate-900 dark:text-slate-900 px-6 py-2.5 rounded-none font-semibold text-xs hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors"
             >
               <Plus className="w-4 h-4" /> Buat Undangan
             </Link>
