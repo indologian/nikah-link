@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Loader2, CheckCircle2, LayoutTemplate } from "lucide-react";
+import ConfirmModal from "@/components/ui/ConfirmModal";
 // I will just use standard custom tailwind toggle to avoid missing dependencies.
 
 interface SettingsClientProps {
@@ -37,6 +38,7 @@ export default function SettingsClient({ initialConfig }: SettingsClientProps) {
   const [config, setConfig] = useState(initialConfig);
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const supabase = createClient();
 
   const handleToggle = (key: keyof typeof config) => {
@@ -46,22 +48,31 @@ export default function SettingsClient({ initialConfig }: SettingsClientProps) {
     }));
   };
 
-  const handleSave = async () => {
+  const handleSave = () => {
+    setShowConfirm(true);
+  };
+
+  const executeSave = async () => {
+    setShowConfirm(false);
     setIsSaving(true);
     setSaveSuccess(false);
     
     try {
       const { error } = await supabase
         .from("site_settings")
-        .upsert({ id: 1, config: config })
+        .update({ config: config })
         .eq("id", 1);
         
       if (!error) {
         setSaveSuccess(true);
         setTimeout(() => setSaveSuccess(false), 3000);
+      } else {
+        console.error("Save error:", error);
+        alert("Gagal menyimpan: " + error.message);
       }
     } catch (err) {
       console.error(err);
+      alert("Terjadi kesalahan.");
     } finally {
       setIsSaving(false);
     }
@@ -114,6 +125,16 @@ export default function SettingsClient({ initialConfig }: SettingsClientProps) {
           </span>
         )}
       </div>
+
+      <ConfirmModal
+        isOpen={showConfirm}
+        onClose={() => setShowConfirm(false)}
+        onConfirm={executeSave}
+        title="Simpan Pengaturan?"
+        description="Perubahan ini akan langsung berdampak pada halaman depan (Landing Page) website Anda. Lanjutkan?"
+        confirmText="Ya, Simpan"
+        cancelText="Batal"
+      />
     </div>
   );
 }
