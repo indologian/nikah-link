@@ -19,6 +19,25 @@ export default function UsersClient({ initialUsers }: { initialUsers: Profile[] 
   const handleUpdatePlan = async (userId: string, newPlan: string) => {
     setLoadingId(userId);
     try {
+      // 1. Cek jumlah undangan saat ini
+      const { count } = await supabase
+        .from("invitations")
+        .select("*", { count: "exact", head: true })
+        .eq("user_id", userId);
+
+      // 2. Tentukan batas paket baru
+      const limits: Record<string, number> = { free: 1, premium: 1, pro: 2 };
+      const planLimit = limits[newPlan] || 1;
+
+      // 3. Validasi
+      if (count !== null && count > planLimit) {
+        alert(
+          `Tindakan Ditolak: Pengguna ini sudah memiliki ${count} undangan.\n\nPaket ${newPlan.toUpperCase()} hanya mengizinkan maksimal ${planLimit} undangan.\n\nHarap hapus undangan yang kelebihan dari menu Undangan terlebih dahulu sebelum melakukan downgrade.`
+        );
+        return;
+      }
+
+      // 4. Lanjutkan update jika valid
       const { error } = await supabase
         .from("profiles")
         .update({ plan: newPlan })
