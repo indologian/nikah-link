@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Pagination from "@/components/ui/Pagination";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import { Search, MapPin, Star, ShieldCheck, Phone, ArrowRight } from "lucide-react";
@@ -95,12 +96,22 @@ const CATEGORIES = [
 export default function VendorPage() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, selectedCategory]);
 
   const filteredVendors = SAMPLE_VENDORS.filter((v) => {
     const matchesCategory = selectedCategory === "all" || v.category === selectedCategory;
     const matchesSearch = v.name.toLowerCase().includes(search.toLowerCase()) || v.city.toLowerCase().includes(search.toLowerCase());
     return matchesCategory && matchesSearch;
   });
+
+  const totalPages = Math.ceil(filteredVendors.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedVendors = filteredVendors.slice(startIndex, startIndex + itemsPerPage);
 
   return (
     <main className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] dark:text-white flex flex-col w-full">
@@ -154,7 +165,7 @@ export default function VendorPage() {
 
         {/* Vendor List - Tabular/Flat Editorial format instead of AI slop cards */}
         <div className="flex flex-col gap-4">
-          {filteredVendors.map((vendor) => (
+          {paginatedVendors.map((vendor) => (
             <div 
               key={vendor.id} 
               className="group flex flex-col md:flex-row gap-6 p-6 rounded-2xl border border-black/5 dark:border-white/5 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors items-start md:items-center justify-between"
@@ -211,6 +222,13 @@ export default function VendorPage() {
             </div>
           ))}
         </div>
+
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+          totalItems={filteredVendors.length}
+        />
       </div>
 
       <Footer />

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Search, ExternalLink, Trash2 } from "lucide-react";
 import Link from "next/link";
+import Pagination from "@/components/ui/Pagination";
 
 function CountdownStatus({ createdAt, isPublished, plan }: { createdAt: string, isPublished: boolean, plan: string }) {
   const [timeLeft, setTimeLeft] = useState("");
@@ -56,6 +57,8 @@ function CountdownStatus({ createdAt, isPublished, plan }: { createdAt: string, 
 export default function InvitationsClient({ initialInvitations }: { initialInvitations: any[] }) {
   const [invitations, setInvitations] = useState(initialInvitations);
   const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const supabase = createClient();
 
@@ -63,6 +66,16 @@ export default function InvitationsClient({ initialInvitations }: { initialInvit
     inv.username.toLowerCase().includes(search.toLowerCase()) || 
     inv.bride_name.toLowerCase().includes(search.toLowerCase()) ||
     inv.groom_name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search]);
+
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const paginatedInvitations = filtered.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
   );
 
   const handleDelete = async (id: string) => {
@@ -108,14 +121,14 @@ export default function InvitationsClient({ initialInvitations }: { initialInvit
             </tr>
           </thead>
           <tbody>
-            {filtered.length === 0 ? (
+            {paginatedInvitations.length === 0 ? (
               <tr>
                 <td colSpan={6} className="py-8 text-center text-slate-500">
                   Tidak ada undangan ditemukan.
                 </td>
               </tr>
             ) : (
-              filtered.map((inv) => (
+              paginatedInvitations.map((inv) => (
                 <tr key={inv.id} className="border-b border-slate-100 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-900/20 transition-colors">
                   <td className="py-4 font-medium text-slate-900 dark:text-slate-200">
                     <Link href={`/${inv.username}`} target="_blank" className="inline-flex items-center gap-1.5 hover:underline decoration-slate-300 underline-offset-4">
@@ -153,6 +166,16 @@ export default function InvitationsClient({ initialInvitations }: { initialInvit
           </tbody>
         </table>
       </div>
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+        totalItems={filtered.length}
+        perPageOptions={[10, 25, 50]}
+        currentPerPage={itemsPerPage}
+        onPerPageChange={setItemsPerPage}
+      />
     </div>
   );
 }

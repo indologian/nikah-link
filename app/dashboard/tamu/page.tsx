@@ -10,6 +10,7 @@ import {
 import type { Guest, Invitation } from "@/types";
 import UpsellModal from "@/components/dashboard/UpsellModal";
 import AlertModal from "@/components/dashboard/AlertModal";
+import Pagination from "@/components/ui/Pagination";
 import * as XLSX from "xlsx";
 
 export default function GuestManagementPage() {
@@ -20,6 +21,12 @@ export default function GuestManagementPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, statusFilter]);
 
   // Add Guest Modal State
   const [showAddModal, setShowAddModal] = useState(false);
@@ -262,6 +269,10 @@ Salam hangat,
     return matchesSearch && matchesStatus;
   });
 
+  const totalPages = Math.ceil(filteredGuests.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedGuests = filteredGuests.slice(startIndex, startIndex + itemsPerPage);
+
   return (
     <div className="space-y-8 max-w-6xl mx-auto px-4 py-8 md:py-12">
       <UpsellModal 
@@ -400,14 +411,14 @@ Salam hangat,
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 text-sm">
-              {filteredGuests.length === 0 ? (
+              {paginatedGuests.length === 0 ? (
                 <tr>
                   <td colSpan={5} className="text-center py-16 text-slate-500 dark:text-slate-400">
                     Belum ada tamu terdaftar.
                   </td>
                 </tr>
               ) : (
-                filteredGuests.map((guest) => (
+                paginatedGuests.map((guest) => (
                   <tr key={guest.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
                     <td className="py-4 px-4 align-top">
                       <div className="font-medium text-slate-900 dark:text-white">{guest.name}</div>
@@ -481,6 +492,16 @@ Salam hangat,
             </tbody>
           </table>
         </div>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+          totalItems={filteredGuests.length}
+          perPageOptions={[10, 25, 50]}
+          currentPerPage={itemsPerPage}
+          onPerPageChange={setItemsPerPage}
+          className="px-4 pb-4 pt-4"
+        />
       </div>
 
       {/* Modal Add Guest */}

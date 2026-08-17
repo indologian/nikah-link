@@ -1,19 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Profile } from "@/types";
 import { Search, Edit2, CheckCircle2, ShieldAlert } from "lucide-react";
+import Pagination from "@/components/ui/Pagination";
 
 export default function UsersClient({ initialUsers }: { initialUsers: Profile[] }) {
   const [users, setUsers] = useState<Profile[]>(initialUsers);
   const [search, setSearch] = useState("");
   const [loadingId, setLoadingId] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const supabase = createClient();
 
   const filteredUsers = users.filter((u) => 
     u.name.toLowerCase().includes(search.toLowerCase()) || 
     (u.phone && u.phone.includes(search))
+  );
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search]);
+
+  const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
+  const paginatedUsers = filteredUsers.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
   );
 
   const handleUpdatePlan = async (userId: string, newPlan: string) => {
@@ -108,7 +121,7 @@ export default function UsersClient({ initialUsers }: { initialUsers: Profile[] 
                 </td>
               </tr>
             ) : (
-              filteredUsers.map((user) => (
+              paginatedUsers.map((user) => (
                 <tr key={user.id} className="border-b border-slate-100 dark:border-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-900/20 transition-colors">
                   <td className="py-4 font-medium text-slate-900 dark:text-slate-200 flex items-center gap-2">
                     {user.name}
@@ -156,6 +169,15 @@ export default function UsersClient({ initialUsers }: { initialUsers: Profile[] 
           </tbody>
         </table>
       </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+        totalItems={filteredUsers.length}
+        perPageOptions={[10, 25, 50]}
+        currentPerPage={itemsPerPage}
+        onPerPageChange={setItemsPerPage}
+      />
     </div>
   );
 }
