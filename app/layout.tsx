@@ -1,6 +1,33 @@
 import type { Metadata, Viewport } from "next";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { Plus_Jakarta_Sans, Playfair_Display, Cormorant_Garamond, Great_Vibes } from "next/font/google";
 import "./globals.css";
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-jakarta",
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+  display: "swap",
+});
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-cormorant",
+  display: "swap",
+});
+
+const greatVibes = Great_Vibes({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-great-vibes",
+  display: "swap",
+});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -55,7 +82,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id" suppressHydrationWarning>
-      <body className="font-jakarta antialiased bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50 transition-colors">
+      <body className={`${jakarta.variable} ${playfair.variable} ${cormorant.variable} ${greatVibes.variable} font-jakarta antialiased bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50 transition-colors`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

@@ -21,6 +21,14 @@ const MinimalistTheme = dynamic(() => import('@/components/themes/MinimalistThem
   loading: () => <div className="min-h-screen flex items-center justify-center bg-slate-50"><div className="w-8 h-8 border-4 border-slate-200 border-t-slate-900 rounded-full animate-spin"></div></div>
 });
 
+const VintageEleganceTheme = dynamic(() => import('@/components/themes/VintageEleganceTheme'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center bg-[#F9F6F0]"><div className="w-8 h-8 border-4 border-[#8B7355]/30 border-t-[#8B7355] rounded-full animate-spin"></div></div>
+});
+
+const RoyalBotanicalTheme = dynamic(() => import('@/components/themes/RoyalBotanicalTheme'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center bg-[#064E3B]"><div className="w-8 h-8 border-4 border-[#D4AF37]/30 border-t-[#D4AF37] rounded-full animate-spin"></div></div>
+});
+
 // A fallback component if a theme is not found
 const FallbackTheme = ({ invitation }: { invitation: any }) => (
   <div className="min-h-screen flex items-center justify-center flex-col gap-4 p-8 text-center bg-white">
@@ -34,7 +42,6 @@ export const themesConfig: Record<string, ThemeConfig> = {
     slug: "minimalis",
     component: MinimalistTheme,
     fields: [
-      // Minimalist uses mostly core fields, but let's add an example custom field
       {
         name: "greeting",
         label: "Salam Pembuka Khusus",
@@ -43,15 +50,30 @@ export const themesConfig: Record<string, ThemeConfig> = {
       }
     ]
   },
-  // Future themes can be added here:
-  // "vintage-01": {
-  //   slug: "vintage-01",
-  //   component: dynamic(() => import('@/components/themes/VintageTheme')),
-  //   fields: [
-  //     { name: "video_url", label: "Link Video YouTube", type: "url" },
-  //     { name: "quote", label: "Kutipan", type: "textarea" },
-  //   ]
-  // }
+  "vintage-elegance": {
+    slug: "vintage-elegance",
+    component: VintageEleganceTheme,
+    fields: [
+      {
+        name: "quote",
+        label: "Kutipan Pernikahan",
+        type: "textarea",
+        placeholder: "Dan di antara tanda-tanda kekuasaan-Nya..."
+      }
+    ]
+  },
+  "royal-botanical": {
+    slug: "royal-botanical",
+    component: RoyalBotanicalTheme,
+    fields: [
+      {
+        name: "quote",
+        label: "Kutipan Pernikahan",
+        type: "textarea",
+        placeholder: "Dan di antara tanda-tanda kekuasaan-Nya..."
+      }
+    ]
+  }
 };
 
 export const getThemeConfig = (slug: string): ThemeConfig => {
