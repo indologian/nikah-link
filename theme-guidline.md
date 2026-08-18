@@ -32,10 +32,15 @@ Themes generally fall into a few specific aesthetic categories:
 *   **SVG Path Drawing:** Vector elements (like botanical leaves, golden arches, or bohemian palm fronds) utilize sequential path drawing animations (`pathLength` in Framer Motion) that "draw themselves" as the user scrolls, creating a highly artistic, hand-crafted feel.
 *   **3D Interactive Galleries (Tilt Effect):** Moving beyond static grids, premium galleries utilize Framer Motion 3D transforms (`rotateX`, `rotateY`, `perspective`) to create floating, overlapping photo arrangements that react dynamically to mouse movement or device orientation, offering an immersive spatial experience.
 *   **Scroll Reveals & Parallax:** Elements fade in, slide up, or zoom in slightly. Backgrounds utilize parallax scrolling to create a sense of depth between sections.
-*   **Organic Looping Animations:** Elements like dried palm leaves or delicate flowers incorporate continuous, gentle swaying animations to mimic natural wind, adding life without distracting the user.
+*   **Organic Looping & Particle Systems:** Moving beyond simple fading, use continuous custom animations (swaying, bouncing, floating) for organic elements. Implement performant particle systems (falling leaves, snow, or stardust) using Framer Motion or Canvas, creating an immersive atmosphere.
 *   **Immersive Features:** Integration of interactive "Save the Date" calendar buttons and stylized CTAs for custom Instagram AR Filters directly within the invitation flow.
 
-## 5. Mobile Responsiveness Paradigms
+## 5. Photo Layouts & Advanced Framing
+*   **Justified Masonry & Lightboxes:** Galleries should utilize tightly packed, flush masonry grids (`justified-gallery` style). Clicking thumbnails must trigger smooth full-screen lightboxes with swipe/zoom capabilities.
+*   **Cross-Fade Carousels:** For photo sliders, move away from basic horizontal sliding and utilize smooth cross-fade transitions (`opacity` fades) for a more cinematic feel.
+*   **Advanced SVG Photo Masking:** Instead of relying solely on CSS `border-radius` and `box-shadow` (which is common in standard templates), premium themes should use intricate SVG `mask-image` properties or SVG `<clipPath>` to frame photos in unique geometric or organic shapes, layered with drop-shadows for a faux-3D depth effect.
+
+## 6. Mobile Responsiveness Paradigms
 *   **Mobile-First Design:** Over 90% of invitations are viewed on smartphones via WhatsApp links. Designs are strictly optimized for portrait aspect ratios.
 *   **Touch-Friendly UI:** Large, easily tappable buttons for crucial actions (Maps, Copy Bank Account).
 *   **Galleries:** On mobile, masonry grids often collapse to 2 columns, or utilize a horizontal swipe/carousel (Swiper.js) to save vertical space.

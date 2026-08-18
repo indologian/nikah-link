@@ -101,6 +101,18 @@ const TerracottaRustTheme = dynamic(() => import('@/components/themes/Terracotta
   loading: () => <div className="min-h-screen flex items-center justify-center bg-[#F7F3EE]"><div className="w-8 h-8 border-4 border-[#C87963]/30 border-t-[#C87963] rounded-full animate-spin"></div></div>
 });
 
+const EtherealSnowTheme = dynamic(() => import('@/components/themes/EtherealSnowTheme'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center bg-[#1C2541]"><div className="w-8 h-8 border-4 border-white/30 border-t-white rounded-full animate-spin"></div></div>
+});
+
+const GeometricAbstractTheme = dynamic(() => import('@/components/themes/GeometricAbstractTheme'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center bg-[#0F0F0F]"><div className="w-8 h-8 border-4 border-[#B76E79]/30 border-t-[#B76E79] rounded-full animate-spin"></div></div>
+});
+
+const EditorialGalleryTheme = dynamic(() => import('@/components/themes/EditorialGalleryTheme'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center bg-[#F5F5F5]"><div className="w-8 h-8 border-4 border-black/30 border-t-black rounded-full animate-spin"></div></div>
+});
+
 // A fallback component if a theme is not found
 const FallbackTheme = ({ invitation }: { invitation: any }) => (
   <div className="min-h-screen flex items-center justify-center flex-col gap-4 p-8 text-center bg-white">
@@ -359,6 +371,42 @@ export const themesConfig: Record<string, ThemeConfig> = {
         label: "Kutipan",
         type: "textarea",
         placeholder: "Earthy love..."
+      }
+    ]
+  },
+  "ethereal-snow": {
+    slug: "ethereal-snow",
+    component: EtherealSnowTheme,
+    fields: [
+      {
+        name: "quote",
+        label: "Kutipan",
+        type: "textarea",
+        placeholder: "Winter romance..."
+      }
+    ]
+  },
+  "geometric-abstract": {
+    slug: "geometric-abstract",
+    component: GeometricAbstractTheme,
+    fields: [
+      {
+        name: "quote",
+        label: "Kutipan",
+        type: "textarea",
+        placeholder: "Abstract love..."
+      }
+    ]
+  },
+  "editorial-gallery": {
+    slug: "editorial-gallery",
+    component: EditorialGalleryTheme,
+    fields: [
+      {
+        name: "quote",
+        label: "Kutipan",
+        type: "textarea",
+        placeholder: "A visual story..."
       }
     ]
   }

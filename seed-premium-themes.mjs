@@ -320,6 +320,51 @@ async function main() {
         accent: "#A65E49"
       },
       sort_order: 21
+    },
+    {
+      name: "Ethereal Snow",
+      slug: "ethereal-snow",
+      category: "elegan",
+      thumbnail_url: "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=600&auto=format&fit=crop",
+      is_premium: true,
+      is_active: true,
+      colors: {
+        background: "#1C2541",
+        text: "#E5E7EB",       
+        primary: "#C0C0C0",
+        accent: "#0B132B"
+      },
+      sort_order: 22
+    },
+    {
+      name: "Geometric Abstract",
+      slug: "geometric-abstract",
+      category: "elegan",
+      thumbnail_url: "https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=600&auto=format&fit=crop",
+      is_premium: true,
+      is_active: true,
+      colors: {
+        background: "#0F0F0F",
+        text: "#E0E0E0",       
+        primary: "#B76E79",
+        accent: "#1a1a1a"
+      },
+      sort_order: 23
+    },
+    {
+      name: "Editorial Gallery",
+      slug: "editorial-gallery",
+      category: "elegan",
+      thumbnail_url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop",
+      is_premium: true,
+      is_active: true,
+      colors: {
+        background: "#F5F5F5",
+        text: "#111111",       
+        primary: "#000000",
+        accent: "#888888"
+      },
+      sort_order: 24
     }
   ];
   

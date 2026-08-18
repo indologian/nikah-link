@@ -113,17 +113,17 @@
   },
   "nodes": [
     {
-      "label": "Lead",
+      "label": "SettingsClientProps",
       "file_type": "code",
-      "source_file": "app/admin/leads/LeadsClient.tsx",
-      "source_location": "L6",
+      "source_file": "app/admin/settings/SettingsClient.tsx",
+      "source_location": "L9",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "id": "app_admin_leads_leadsclient_lead",
+      "id": "app_admin_settings_settingsclient_settingsclientprops",
       "community": 0,
       "community_name": "createClient",
-      "norm_label": "lead"
+      "norm_label": "settingsclientprops"
     },
     {
       "label": "GiftAccount",
@@ -191,6 +191,19 @@
       "norm_label": "props"
     },
     {
+      "label": "Lead",
+      "file_type": "code",
+      "source_file": "app/admin/leads/LeadsClient.tsx",
+      "source_location": "L6",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "app_admin_leads_leadsclient_lead",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "lead"
+    },
+    {
       "label": "AlertModalProps",
       "file_type": "code",
       "source_file": "components/dashboard/AlertModal.tsx",
@@ -202,6 +215,19 @@
       "community": 1,
       "community_name": "index.ts",
       "norm_label": "alertmodalprops"
+    },
+    {
+      "label": "PaginationProps",
+      "file_type": "code",
+      "source_file": "components/ui/Pagination.tsx",
+      "source_location": "L6",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "components_ui_pagination_paginationprops",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "paginationprops"
     },
     {
       "label": "BlogPost",
@@ -321,6 +347,19 @@
       "norm_label": "plan"
     },
     {
+      "label": "Profile",
+      "file_type": "code",
+      "source_file": "types/index.ts",
+      "source_location": "L28",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "types_index_profile",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "profile"
+    },
+    {
       "label": "RsvpStatus",
       "file_type": "code",
       "source_file": "types/index.ts",
@@ -438,6 +477,45 @@
       "norm_label": "props"
     },
     {
+      "label": "CreateInvitationButtonProps",
+      "file_type": "code",
+      "source_file": "components/dashboard/CreateInvitationButton.tsx",
+      "source_location": "L8",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "components_dashboard_createinvitationbutton_createinvitationbuttonprops",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "createinvitationbuttonprops"
+    },
+    {
+      "label": "UpsellModalProps",
+      "file_type": "code",
+      "source_file": "components/dashboard/UpsellModal.tsx",
+      "source_location": "L8",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "components_dashboard_upsellmodal_upsellmodalprops",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "upsellmodalprops"
+    },
+    {
+      "label": "ConfirmModalProps",
+      "file_type": "code",
+      "source_file": "components/ui/ConfirmModal.tsx",
+      "source_location": "L6",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "components_ui_confirmmodal_confirmmodalprops",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "confirmmodalprops"
+    },
+    {
       "label": "Invitation",
       "file_type": "code",
       "source_file": "types/index.ts",
@@ -453,14 +531,14 @@
     {
       "label": "Props",
       "file_type": "code",
-      "source_file": "components/themes/CosmicStarlightTheme.tsx",
-      "source_location": "L19",
+      "source_file": "components/themes/EditorialGalleryTheme.tsx",
+      "source_location": "L15",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "id": "components_themes_cosmicstarlighttheme_props",
+      "id": "components_themes_editorialgallerytheme_props",
       "community": 11,
-      "community_name": "CosmicStarlightTheme.tsx",
+      "community_name": "EditorialGalleryTheme.tsx",
       "norm_label": "props"
     },
     {
@@ -477,82 +555,30 @@
       "norm_label": "props"
     },
     {
-      "label": "SettingsClientProps",
+      "label": "Props",
       "file_type": "code",
-      "source_file": "app/admin/settings/SettingsClient.tsx",
-      "source_location": "L9",
+      "source_file": "components/themes/EtherealSnowTheme.tsx",
+      "source_location": "L15",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "id": "app_admin_settings_settingsclient_settingsclientprops",
+      "id": "components_themes_etherealsnowtheme_props",
       "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "settingsclientprops"
+      "community_name": "EtherealSnowTheme.tsx",
+      "norm_label": "props"
     },
     {
-      "label": "CreateInvitationButtonProps",
+      "label": "Props",
       "file_type": "code",
-      "source_file": "components/dashboard/CreateInvitationButton.tsx",
-      "source_location": "L8",
+      "source_file": "components/themes/GeometricAbstractTheme.tsx",
+      "source_location": "L15",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "id": "components_dashboard_createinvitationbutton_createinvitationbuttonprops",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "createinvitationbuttonprops"
-    },
-    {
-      "label": "UpsellModalProps",
-      "file_type": "code",
-      "source_file": "components/dashboard/UpsellModal.tsx",
-      "source_location": "L8",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "components_dashboard_upsellmodal_upsellmodalprops",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "upsellmodalprops"
-    },
-    {
-      "label": "ConfirmModalProps",
-      "file_type": "code",
-      "source_file": "components/ui/ConfirmModal.tsx",
-      "source_location": "L6",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "components_ui_confirmmodal_confirmmodalprops",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "confirmmodalprops"
-    },
-    {
-      "label": "PaginationProps",
-      "file_type": "code",
-      "source_file": "components/ui/Pagination.tsx",
-      "source_location": "L6",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "components_ui_pagination_paginationprops",
+      "id": "components_themes_geometricabstracttheme_props",
       "community": 20,
-      "community_name": "Pagination.tsx",
-      "norm_label": "paginationprops"
-    },
-    {
-      "label": "Profile",
-      "file_type": "code",
-      "source_file": "types/index.ts",
-      "source_location": "L28",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "types_index_profile",
-      "community": 20,
-      "community_name": "Pagination.tsx",
-      "norm_label": "profile"
+      "community_name": "GeometricAbstractTheme.tsx",
+      "norm_label": "props"
     },
     {
       "label": "Props",
@@ -583,12 +609,12 @@
     {
       "label": "Props",
       "file_type": "code",
-      "source_file": "components/themes/LineArtBotanicalTheme.tsx",
-      "source_location": "L14",
+      "source_file": "components/themes/CosmicStarlightTheme.tsx",
+      "source_location": "L19",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "id": "components_themes_lineartbotanicaltheme_props",
+      "id": "components_themes_cosmicstarlighttheme_props",
       "community": 25,
       "community_name": "registry.tsx",
       "norm_label": "props"
@@ -609,12 +635,12 @@
     {
       "label": "Props",
       "file_type": "code",
-      "source_file": "components/themes/RusticWoodlandTheme.tsx",
-      "source_location": "L19",
+      "source_file": "components/themes/SereinWhiteTheme.tsx",
+      "source_location": "L12",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "id": "components_themes_rusticwoodlandtheme_props",
+      "id": "components_themes_sereinwhitetheme_props",
       "community": 25,
       "community_name": "registry.tsx",
       "norm_label": "props"
@@ -700,6 +726,19 @@
     {
       "label": "Props",
       "file_type": "code",
+      "source_file": "components/themes/LineArtBotanicalTheme.tsx",
+      "source_location": "L14",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "components_themes_lineartbotanicaltheme_props",
+      "community": 36,
+      "community_name": "LineArtBotanicalTheme.tsx",
+      "norm_label": "props"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
       "source_file": "components/themes/BotanicalEleganceTheme.tsx",
       "source_location": "L15",
       "_callable": true,
@@ -713,6 +752,19 @@
     {
       "label": "Props",
       "file_type": "code",
+      "source_file": "components/themes/ElegantBlushTheme.tsx",
+      "source_location": "L12",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "components_themes_elegantblushtheme_props",
+      "community": 39,
+      "community_name": "client.ts",
+      "norm_label": "props"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
       "source_file": "components/themes/GoldenArchTheme.tsx",
       "source_location": "L15",
       "_callable": true,
@@ -720,7 +772,7 @@
       "_origin": "ast",
       "id": "components_themes_goldenarchtheme_props",
       "community": 39,
-      "community_name": "GoldenArchTheme.tsx",
+      "community_name": "client.ts",
       "norm_label": "props"
     },
     {
@@ -830,6 +882,32 @@
     {
       "label": "Props",
       "file_type": "code",
+      "source_file": "components/themes/RusticWoodlandTheme.tsx",
+      "source_location": "L19",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "components_themes_rusticwoodlandtheme_props",
+      "community": 86,
+      "community_name": "RusticWoodlandTheme.tsx",
+      "norm_label": "props"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "components/themes/MinimalistTheme.tsx",
+      "source_location": "L14",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "components_themes_minimalisttheme_props",
+      "community": 87,
+      "community_name": "MinimalistTheme.tsx",
+      "norm_label": "props"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
       "source_file": "components/themes/ModernMonochromeTheme.tsx",
       "source_location": "L19",
       "_callable": true,
@@ -843,19 +921,6 @@
     {
       "label": "Props",
       "file_type": "code",
-      "source_file": "components/themes/ElegantBlushTheme.tsx",
-      "source_location": "L12",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "components_themes_elegantblushtheme_props",
-      "community": 9,
-      "community_name": "createClient",
-      "norm_label": "props"
-    },
-    {
-      "label": "Props",
-      "file_type": "code",
       "source_file": "components/themes/HeritageGununganTheme.tsx",
       "source_location": "L15",
       "_callable": true,
@@ -863,33 +928,7 @@
       "_origin": "ast",
       "id": "components_themes_heritagegunungantheme_props",
       "community": 9,
-      "community_name": "createClient",
-      "norm_label": "props"
-    },
-    {
-      "label": "Props",
-      "file_type": "code",
-      "source_file": "components/themes/MinimalistTheme.tsx",
-      "source_location": "L14",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "components_themes_minimalisttheme_props",
-      "community": 9,
-      "community_name": "createClient",
-      "norm_label": "props"
-    },
-    {
-      "label": "Props",
-      "file_type": "code",
-      "source_file": "components/themes/SereinWhiteTheme.tsx",
-      "source_location": "L12",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "components_themes_sereinwhitetheme_props",
-      "community": 9,
-      "community_name": "createClient",
+      "community_name": "HeritageGununganTheme.tsx",
       "norm_label": "props"
     },
     {
@@ -976,6 +1015,18 @@
       "community": 0,
       "community_name": "createClient",
       "norm_label": "delete()"
+    },
+    {
+      "label": "POST()",
+      "file_type": "code",
+      "source_file": "app/api/payment/token/route.ts",
+      "source_location": "L10",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_api_payment_token_route_post",
+      "community": 0,
+      "community_name": "createClient",
+      "norm_label": "post()"
     },
     {
       "label": "GET()",
@@ -1098,18 +1149,6 @@
       "norm_label": "temalayout()"
     },
     {
-      "label": "TemaPage()",
-      "file_type": "code",
-      "source_file": "app/tema/page.tsx",
-      "source_location": "L13",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_tema_page_temapage",
-      "community": 0,
-      "community_name": "createClient",
-      "norm_label": "temapage()"
-    },
-    {
       "label": "generateMetadata()",
       "file_type": "code",
       "source_file": "app/[username]/page.tsx",
@@ -1146,18 +1185,6 @@
       "norm_label": "vendorlayout()"
     },
     {
-      "label": "DeleteAccountSection()",
-      "file_type": "code",
-      "source_file": "components/dashboard/DeleteAccountSection.tsx",
-      "source_location": "L8",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_dashboard_deleteaccountsection_deleteaccountsection",
-      "community": 0,
-      "community_name": "createClient",
-      "norm_label": "deleteaccountsection()"
-    },
-    {
       "label": "LeadMagnetSection()",
       "file_type": "code",
       "source_file": "components/landing/LeadMagnetSection.tsx",
@@ -1170,6 +1197,18 @@
       "norm_label": "leadmagnetsection()"
     },
     {
+      "label": "createMidtransTransaction()",
+      "file_type": "code",
+      "source_file": "lib/midtrans.ts",
+      "source_location": "L19",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "lib_midtrans_createmidtranstransaction",
+      "community": 0,
+      "community_name": "createClient",
+      "norm_label": "createmidtranstransaction()"
+    },
+    {
       "label": "createClient()",
       "file_type": "code",
       "source_file": "lib/supabase/server.ts",
@@ -1180,6 +1219,42 @@
       "community": 0,
       "community_name": "createClient",
       "norm_label": "createclient()"
+    },
+    {
+      "label": "CountdownStatus()",
+      "file_type": "code",
+      "source_file": "app/admin/invitations/InvitationsClient.tsx",
+      "source_location": "L9",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_admin_invitations_invitationsclient_countdownstatus",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "countdownstatus()"
+    },
+    {
+      "label": "InvitationsClient()",
+      "file_type": "code",
+      "source_file": "app/admin/invitations/InvitationsClient.tsx",
+      "source_location": "L57",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_admin_invitations_invitationsclient_invitationsclient",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "invitationsclient()"
+    },
+    {
+      "label": "AdminInvitationsPage()",
+      "file_type": "code",
+      "source_file": "app/admin/invitations/page.tsx",
+      "source_location": "L7",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_admin_invitations_page_admininvitationspage",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "admininvitationspage()"
     },
     {
       "label": "AdminThemesPage()",
@@ -1204,6 +1279,30 @@
       "community": 1,
       "community_name": "index.ts",
       "norm_label": "themesclient()"
+    },
+    {
+      "label": "AdminUsersPage()",
+      "file_type": "code",
+      "source_file": "app/admin/users/page.tsx",
+      "source_location": "L7",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_admin_users_page_adminuserspage",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "adminuserspage()"
+    },
+    {
+      "label": "UsersClient()",
+      "file_type": "code",
+      "source_file": "app/admin/users/UsersClient.tsx",
+      "source_location": "L9",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_admin_users_usersclient_usersclient",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "usersclient()"
     },
     {
       "label": "GuestManagementPage()",
@@ -1254,6 +1353,18 @@
       "norm_label": "alertmodal()"
     },
     {
+      "label": "Pagination()",
+      "file_type": "code",
+      "source_file": "components/ui/Pagination.tsx",
+      "source_location": "L19",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_ui_pagination_pagination",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "pagination()"
+    },
+    {
       "label": "DashboardClient()",
       "file_type": "code",
       "source_file": "app/dashboard/DashboardClient.tsx",
@@ -1290,6 +1401,42 @@
       "norm_label": "statcard()"
     },
     {
+      "label": "NewInvitationPage()",
+      "file_type": "code",
+      "source_file": "app/dashboard/undangan/baru/page.tsx",
+      "source_location": "L72",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_dashboard_undangan_baru_page_newinvitationpage",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "newinvitationpage()"
+    },
+    {
+      "label": "fetchPlanAndCheckLimit()",
+      "file_type": "code",
+      "source_file": "app/dashboard/undangan/baru/page.tsx",
+      "source_location": "L143",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_dashboard_undangan_baru_page_newinvitationpage_fetchplanandchecklimit",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "fetchplanandchecklimit()"
+    },
+    {
+      "label": "EditInvitationPage()",
+      "file_type": "code",
+      "source_file": "app/dashboard/undangan/[id]/edit/page.tsx",
+      "source_location": "L28",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_dashboard_undangan_id_edit_page_editinvitationpage",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "editinvitationpage()"
+    },
+    {
       "label": "MyInvitationsPage()",
       "file_type": "code",
       "source_file": "app/dashboard/undangan/page.tsx",
@@ -1314,6 +1461,18 @@
       "norm_label": "countdownlabel()"
     },
     {
+      "label": "CreateInvitationButton()",
+      "file_type": "code",
+      "source_file": "components/dashboard/CreateInvitationButton.tsx",
+      "source_location": "L13",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_dashboard_createinvitationbutton_createinvitationbutton",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "createinvitationbutton()"
+    },
+    {
       "label": "DeleteButton()",
       "file_type": "code",
       "source_file": "components/dashboard/DeleteButton.tsx",
@@ -1324,6 +1483,78 @@
       "community": 10,
       "community_name": "utils.ts",
       "norm_label": "deletebutton()"
+    },
+    {
+      "label": "UpsellModal()",
+      "file_type": "code",
+      "source_file": "components/dashboard/UpsellModal.tsx",
+      "source_location": "L16",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_dashboard_upsellmodal_upsellmodal",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "upsellmodal()"
+    },
+    {
+      "label": "ConfirmModal()",
+      "file_type": "code",
+      "source_file": "components/ui/ConfirmModal.tsx",
+      "source_location": "L17",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_ui_confirmmodal_confirmmodal",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "confirmmodal()"
+    },
+    {
+      "label": "LocationAutocomplete()",
+      "file_type": "code",
+      "source_file": "components/ui/LocationAutocomplete.tsx",
+      "source_location": "L6",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_ui_locationautocomplete_locationautocomplete",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "locationautocomplete()"
+    },
+    {
+      "label": "TimeRangePicker()",
+      "file_type": "code",
+      "source_file": "components/ui/TimeRangePicker.tsx",
+      "source_location": "L6",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_ui_timerangepicker_timerangepicker",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "timerangepicker()"
+    },
+    {
+      "label": "FallbackTheme()",
+      "file_type": "code",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L117",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "lib_themes_registry_fallbacktheme",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "fallbacktheme()"
+    },
+    {
+      "label": "getThemeConfig()",
+      "file_type": "code",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L415",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "lib_themes_registry_getthemeconfig",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "getthemeconfig()"
     },
     {
       "label": "formatCurrency()",
@@ -1446,16 +1677,28 @@
       "norm_label": "truncate()"
     },
     {
-      "label": "CosmicStarlightTheme()",
+      "label": "EditorialGalleryTheme()",
       "file_type": "code",
-      "source_file": "components/themes/CosmicStarlightTheme.tsx",
-      "source_location": "L29",
+      "source_file": "components/themes/EditorialGalleryTheme.tsx",
+      "source_location": "L79",
       "_callable": true,
       "_origin": "ast",
-      "id": "components_themes_cosmicstarlighttheme_cosmicstarlighttheme",
+      "id": "components_themes_editorialgallerytheme_editorialgallerytheme",
       "community": 11,
-      "community_name": "CosmicStarlightTheme.tsx",
-      "norm_label": "cosmicstarlighttheme()"
+      "community_name": "EditorialGalleryTheme.tsx",
+      "norm_label": "editorialgallerytheme()"
+    },
+    {
+      "label": "TiltCard()",
+      "file_type": "code",
+      "source_file": "components/themes/EditorialGalleryTheme.tsx",
+      "source_location": "L26",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_themes_editorialgallerytheme_tiltcard",
+      "community": 11,
+      "community_name": "EditorialGalleryTheme.tsx",
+      "norm_label": "tiltcard()"
     },
     {
       "label": "JavaneseBatikTheme()",
@@ -1470,124 +1713,28 @@
       "norm_label": "javanesebatiktheme()"
     },
     {
-      "label": "NewInvitationPage()",
+      "label": "EtherealSnowTheme()",
       "file_type": "code",
-      "source_file": "app/dashboard/undangan/baru/page.tsx",
-      "source_location": "L72",
+      "source_file": "components/themes/EtherealSnowTheme.tsx",
+      "source_location": "L76",
       "_callable": true,
       "_origin": "ast",
-      "id": "app_dashboard_undangan_baru_page_newinvitationpage",
+      "id": "components_themes_etherealsnowtheme_etherealsnowtheme",
       "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "newinvitationpage()"
+      "community_name": "EtherealSnowTheme.tsx",
+      "norm_label": "etherealsnowtheme()"
     },
     {
-      "label": "fetchPlanAndCheckLimit()",
+      "label": "ParticleSystem()",
       "file_type": "code",
-      "source_file": "app/dashboard/undangan/baru/page.tsx",
-      "source_location": "L143",
+      "source_file": "components/themes/EtherealSnowTheme.tsx",
+      "source_location": "L26",
       "_callable": true,
       "_origin": "ast",
-      "id": "app_dashboard_undangan_baru_page_newinvitationpage_fetchplanandchecklimit",
+      "id": "components_themes_etherealsnowtheme_particlesystem",
       "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "fetchplanandchecklimit()"
-    },
-    {
-      "label": "EditInvitationPage()",
-      "file_type": "code",
-      "source_file": "app/dashboard/undangan/[id]/edit/page.tsx",
-      "source_location": "L28",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_dashboard_undangan_id_edit_page_editinvitationpage",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "editinvitationpage()"
-    },
-    {
-      "label": "CreateInvitationButton()",
-      "file_type": "code",
-      "source_file": "components/dashboard/CreateInvitationButton.tsx",
-      "source_location": "L13",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_dashboard_createinvitationbutton_createinvitationbutton",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "createinvitationbutton()"
-    },
-    {
-      "label": "UpsellModal()",
-      "file_type": "code",
-      "source_file": "components/dashboard/UpsellModal.tsx",
-      "source_location": "L16",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_dashboard_upsellmodal_upsellmodal",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "upsellmodal()"
-    },
-    {
-      "label": "ConfirmModal()",
-      "file_type": "code",
-      "source_file": "components/ui/ConfirmModal.tsx",
-      "source_location": "L17",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_ui_confirmmodal_confirmmodal",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "confirmmodal()"
-    },
-    {
-      "label": "LocationAutocomplete()",
-      "file_type": "code",
-      "source_file": "components/ui/LocationAutocomplete.tsx",
-      "source_location": "L6",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_ui_locationautocomplete_locationautocomplete",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "locationautocomplete()"
-    },
-    {
-      "label": "TimeRangePicker()",
-      "file_type": "code",
-      "source_file": "components/ui/TimeRangePicker.tsx",
-      "source_location": "L6",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_ui_timerangepicker_timerangepicker",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "timerangepicker()"
-    },
-    {
-      "label": "FallbackTheme()",
-      "file_type": "code",
-      "source_file": "lib/themes/registry.tsx",
-      "source_location": "L105",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "lib_themes_registry_fallbacktheme",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "fallbacktheme()"
-    },
-    {
-      "label": "getThemeConfig()",
-      "file_type": "code",
-      "source_file": "lib/themes/registry.tsx",
-      "source_location": "L367",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "lib_themes_registry_getthemeconfig",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "getthemeconfig()"
+      "community_name": "EtherealSnowTheme.tsx",
+      "norm_label": "particlesystem()"
     },
     {
       "label": "AdminLayout()",
@@ -1598,20 +1745,32 @@
       "_origin": "ast",
       "id": "app_admin_layout_adminlayout",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "createClient",
       "norm_label": "adminlayout()"
     },
     {
-      "label": "VendorPage()",
+      "label": "RegisterPage()",
       "file_type": "code",
-      "source_file": "app/vendor/page.tsx",
-      "source_location": "L96",
+      "source_file": "app/daftar/page.tsx",
+      "source_location": "L17",
       "_callable": true,
       "_origin": "ast",
-      "id": "app_vendor_page_vendorpage",
+      "id": "app_daftar_page_registerpage",
       "community": 14,
-      "community_name": "client.ts",
-      "norm_label": "vendorpage()"
+      "community_name": "createClient",
+      "norm_label": "registerpage()"
+    },
+    {
+      "label": "LoginPage()",
+      "file_type": "code",
+      "source_file": "app/masuk/page.tsx",
+      "source_location": "L11",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_masuk_page_loginpage",
+      "community": 14,
+      "community_name": "createClient",
+      "norm_label": "loginpage()"
     },
     {
       "label": "AdminSidebar()",
@@ -1622,7 +1781,7 @@
       "_origin": "ast",
       "id": "components_admin_sidebar_adminsidebar",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "createClient",
       "norm_label": "adminsidebar()"
     },
     {
@@ -1634,7 +1793,7 @@
       "_origin": "ast",
       "id": "components_dashboard_sidebar_sidebar",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "createClient",
       "norm_label": "sidebar()"
     },
     {
@@ -1646,7 +1805,7 @@
       "_origin": "ast",
       "id": "components_dashboard_sidebar_sidebar_fetchplanandcount",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "createClient",
       "norm_label": "fetchplanandcount()"
     },
     {
@@ -1658,7 +1817,7 @@
       "_origin": "ast",
       "id": "components_landing_navbar_navbar",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "createClient",
       "norm_label": "navbar()"
     },
     {
@@ -1670,8 +1829,20 @@
       "_origin": "ast",
       "id": "components_themetoggle_themetoggle",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "createClient",
       "norm_label": "themetoggle()"
+    },
+    {
+      "label": "createClient()",
+      "file_type": "code",
+      "source_file": "lib/supabase/client.ts",
+      "source_location": "L3",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "lib_supabase_client_createclient",
+      "community": 14,
+      "community_name": "createClient",
+      "norm_label": "createclient()"
     },
     {
       "label": "cn()",
@@ -1682,7 +1853,7 @@
       "_origin": "ast",
       "id": "lib_utils_cn",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "createClient",
       "norm_label": "cn()"
     },
     {
@@ -1710,76 +1881,28 @@
       "norm_label": "themeprovider()"
     },
     {
-      "label": "CountdownStatus()",
+      "label": "GeometricAbstractTheme()",
       "file_type": "code",
-      "source_file": "app/admin/invitations/InvitationsClient.tsx",
-      "source_location": "L9",
+      "source_file": "components/themes/GeometricAbstractTheme.tsx",
+      "source_location": "L52",
       "_callable": true,
       "_origin": "ast",
-      "id": "app_admin_invitations_invitationsclient_countdownstatus",
+      "id": "components_themes_geometricabstracttheme_geometricabstracttheme",
       "community": 20,
-      "community_name": "Pagination.tsx",
-      "norm_label": "countdownstatus()"
+      "community_name": "GeometricAbstractTheme.tsx",
+      "norm_label": "geometricabstracttheme()"
     },
     {
-      "label": "InvitationsClient()",
+      "label": "SvgPolygonMaskImage()",
       "file_type": "code",
-      "source_file": "app/admin/invitations/InvitationsClient.tsx",
-      "source_location": "L57",
+      "source_file": "components/themes/GeometricAbstractTheme.tsx",
+      "source_location": "L26",
       "_callable": true,
       "_origin": "ast",
-      "id": "app_admin_invitations_invitationsclient_invitationsclient",
+      "id": "components_themes_geometricabstracttheme_svgpolygonmaskimage",
       "community": 20,
-      "community_name": "Pagination.tsx",
-      "norm_label": "invitationsclient()"
-    },
-    {
-      "label": "AdminInvitationsPage()",
-      "file_type": "code",
-      "source_file": "app/admin/invitations/page.tsx",
-      "source_location": "L7",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_admin_invitations_page_admininvitationspage",
-      "community": 20,
-      "community_name": "Pagination.tsx",
-      "norm_label": "admininvitationspage()"
-    },
-    {
-      "label": "AdminUsersPage()",
-      "file_type": "code",
-      "source_file": "app/admin/users/page.tsx",
-      "source_location": "L7",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_admin_users_page_adminuserspage",
-      "community": 20,
-      "community_name": "Pagination.tsx",
-      "norm_label": "adminuserspage()"
-    },
-    {
-      "label": "UsersClient()",
-      "file_type": "code",
-      "source_file": "app/admin/users/UsersClient.tsx",
-      "source_location": "L9",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_admin_users_usersclient_usersclient",
-      "community": 20,
-      "community_name": "Pagination.tsx",
-      "norm_label": "usersclient()"
-    },
-    {
-      "label": "Pagination()",
-      "file_type": "code",
-      "source_file": "components/ui/Pagination.tsx",
-      "source_location": "L19",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_ui_pagination_pagination",
-      "community": 20,
-      "community_name": "Pagination.tsx",
-      "norm_label": "pagination()"
+      "community_name": "GeometricAbstractTheme.tsx",
+      "norm_label": "svgpolygonmaskimage()"
     },
     {
       "label": "MagazineCoverTheme()",
@@ -1806,16 +1929,16 @@
       "norm_label": "balineseharmonytheme()"
     },
     {
-      "label": "LineArtBotanicalTheme()",
+      "label": "CosmicStarlightTheme()",
       "file_type": "code",
-      "source_file": "components/themes/LineArtBotanicalTheme.tsx",
-      "source_location": "L24",
+      "source_file": "components/themes/CosmicStarlightTheme.tsx",
+      "source_location": "L29",
       "_callable": true,
       "_origin": "ast",
-      "id": "components_themes_lineartbotanicaltheme_lineartbotanicaltheme",
+      "id": "components_themes_cosmicstarlighttheme_cosmicstarlighttheme",
       "community": 25,
       "community_name": "registry.tsx",
-      "norm_label": "lineartbotanicaltheme()"
+      "norm_label": "cosmicstarlighttheme()"
     },
     {
       "label": "RoyalBotanicalTheme()",
@@ -1830,16 +1953,16 @@
       "norm_label": "royalbotanicaltheme()"
     },
     {
-      "label": "RusticWoodlandTheme()",
+      "label": "SereinWhiteTheme()",
       "file_type": "code",
-      "source_file": "components/themes/RusticWoodlandTheme.tsx",
-      "source_location": "L29",
+      "source_file": "components/themes/SereinWhiteTheme.tsx",
+      "source_location": "L22",
       "_callable": true,
       "_origin": "ast",
-      "id": "components_themes_rusticwoodlandtheme_rusticwoodlandtheme",
+      "id": "components_themes_sereinwhitetheme_sereinwhitetheme",
       "community": 25,
       "community_name": "registry.tsx",
-      "norm_label": "rusticwoodlandtheme()"
+      "norm_label": "sereinwhitetheme()"
     },
     {
       "label": "VintageEleganceTheme()",
@@ -1974,6 +2097,18 @@
       "norm_label": "walkdir()"
     },
     {
+      "label": "LineArtBotanicalTheme()",
+      "file_type": "code",
+      "source_file": "components/themes/LineArtBotanicalTheme.tsx",
+      "source_location": "L24",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_themes_lineartbotanicaltheme_lineartbotanicaltheme",
+      "community": 36,
+      "community_name": "LineArtBotanicalTheme.tsx",
+      "norm_label": "lineartbotanicaltheme()"
+    },
+    {
       "label": "BotanicalEleganceTheme()",
       "file_type": "code",
       "source_file": "components/themes/BotanicalEleganceTheme.tsx",
@@ -1986,6 +2121,30 @@
       "norm_label": "botanicalelegancetheme()"
     },
     {
+      "label": "DeleteAccountSection()",
+      "file_type": "code",
+      "source_file": "components/dashboard/DeleteAccountSection.tsx",
+      "source_location": "L8",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_dashboard_deleteaccountsection_deleteaccountsection",
+      "community": 39,
+      "community_name": "client.ts",
+      "norm_label": "deleteaccountsection()"
+    },
+    {
+      "label": "ElegantBlushTheme()",
+      "file_type": "code",
+      "source_file": "components/themes/ElegantBlushTheme.tsx",
+      "source_location": "L22",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_themes_elegantblushtheme_elegantblushtheme",
+      "community": 39,
+      "community_name": "client.ts",
+      "norm_label": "elegantblushtheme()"
+    },
+    {
       "label": "GoldenArchTheme()",
       "file_type": "code",
       "source_file": "components/themes/GoldenArchTheme.tsx",
@@ -1994,7 +2153,7 @@
       "_origin": "ast",
       "id": "components_themes_goldenarchtheme_goldenarchtheme",
       "community": 39,
-      "community_name": "GoldenArchTheme.tsx",
+      "community_name": "client.ts",
       "norm_label": "goldenarchtheme()"
     },
     {
@@ -2106,18 +2265,6 @@
       "norm_label": "midnightsparkletheme()"
     },
     {
-      "label": "POST()",
-      "file_type": "code",
-      "source_file": "app/api/payment/token/route.ts",
-      "source_location": "L10",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_api_payment_token_route_post",
-      "community": 6,
-      "community_name": "app/page.tsx",
-      "norm_label": "post()"
-    },
-    {
       "label": "PricingPage()",
       "file_type": "code",
       "source_file": "app/harga/page.tsx",
@@ -2140,6 +2287,30 @@
       "community": 6,
       "community_name": "app/page.tsx",
       "norm_label": "homepage()"
+    },
+    {
+      "label": "TemaPage()",
+      "file_type": "code",
+      "source_file": "app/tema/page.tsx",
+      "source_location": "L13",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_tema_page_temapage",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "temapage()"
+    },
+    {
+      "label": "VendorPage()",
+      "file_type": "code",
+      "source_file": "app/vendor/page.tsx",
+      "source_location": "L96",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_vendor_page_vendorpage",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "vendorpage()"
     },
     {
       "label": "EcoImpact()",
@@ -2286,18 +2457,6 @@
       "norm_label": "whysection()"
     },
     {
-      "label": "createMidtransTransaction()",
-      "file_type": "code",
-      "source_file": "lib/midtrans.ts",
-      "source_location": "L19",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "lib_midtrans_createmidtranstransaction",
-      "community": 6,
-      "community_name": "app/page.tsx",
-      "norm_label": "createmidtranstransaction()"
-    },
-    {
       "label": "EtherealWatercolorTheme()",
       "file_type": "code",
       "source_file": "components/themes/EtherealWatercolorTheme.tsx",
@@ -2308,6 +2467,30 @@
       "community": 7,
       "community_name": "EtherealWatercolorTheme.tsx",
       "norm_label": "etherealwatercolortheme()"
+    },
+    {
+      "label": "RusticWoodlandTheme()",
+      "file_type": "code",
+      "source_file": "components/themes/RusticWoodlandTheme.tsx",
+      "source_location": "L29",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_themes_rusticwoodlandtheme_rusticwoodlandtheme",
+      "community": 86,
+      "community_name": "RusticWoodlandTheme.tsx",
+      "norm_label": "rusticwoodlandtheme()"
+    },
+    {
+      "label": "MinimalistTheme()",
+      "file_type": "code",
+      "source_file": "components/themes/MinimalistTheme.tsx",
+      "source_location": "L24",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_themes_minimalisttheme_minimalisttheme",
+      "community": 87,
+      "community_name": "MinimalistTheme.tsx",
+      "norm_label": "minimalisttheme()"
     },
     {
       "label": "ModernMonochromeTheme()",
@@ -2322,42 +2505,6 @@
       "norm_label": "modernmonochrometheme()"
     },
     {
-      "label": "RegisterPage()",
-      "file_type": "code",
-      "source_file": "app/daftar/page.tsx",
-      "source_location": "L17",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_daftar_page_registerpage",
-      "community": 9,
-      "community_name": "createClient",
-      "norm_label": "registerpage()"
-    },
-    {
-      "label": "LoginPage()",
-      "file_type": "code",
-      "source_file": "app/masuk/page.tsx",
-      "source_location": "L11",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_masuk_page_loginpage",
-      "community": 9,
-      "community_name": "createClient",
-      "norm_label": "loginpage()"
-    },
-    {
-      "label": "ElegantBlushTheme()",
-      "file_type": "code",
-      "source_file": "components/themes/ElegantBlushTheme.tsx",
-      "source_location": "L22",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_themes_elegantblushtheme_elegantblushtheme",
-      "community": 9,
-      "community_name": "createClient",
-      "norm_label": "elegantblushtheme()"
-    },
-    {
       "label": "HeritageGununganTheme()",
       "file_type": "code",
       "source_file": "components/themes/HeritageGununganTheme.tsx",
@@ -2366,44 +2513,8 @@
       "_origin": "ast",
       "id": "components_themes_heritagegunungantheme_heritagegunungantheme",
       "community": 9,
-      "community_name": "createClient",
+      "community_name": "HeritageGununganTheme.tsx",
       "norm_label": "heritagegunungantheme()"
-    },
-    {
-      "label": "MinimalistTheme()",
-      "file_type": "code",
-      "source_file": "components/themes/MinimalistTheme.tsx",
-      "source_location": "L24",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_themes_minimalisttheme_minimalisttheme",
-      "community": 9,
-      "community_name": "createClient",
-      "norm_label": "minimalisttheme()"
-    },
-    {
-      "label": "SereinWhiteTheme()",
-      "file_type": "code",
-      "source_file": "components/themes/SereinWhiteTheme.tsx",
-      "source_location": "L22",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_themes_sereinwhitetheme_sereinwhitetheme",
-      "community": 9,
-      "community_name": "createClient",
-      "norm_label": "sereinwhitetheme()"
-    },
-    {
-      "label": "createClient()",
-      "file_type": "code",
-      "source_file": "lib/supabase/client.ts",
-      "source_location": "L3",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "lib_supabase_client_createclient",
-      "community": 9,
-      "community_name": "createClient",
-      "norm_label": "createclient()"
     },
     {
       "label": "OceanBreezeTheme()",
@@ -2427,17 +2538,6 @@
       "community": 0,
       "community_name": "createClient",
       "norm_label": "leads.ts"
-    },
-    {
-      "label": "LeadsClient.tsx",
-      "file_type": "code",
-      "source_file": "app/admin/leads/LeadsClient.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "app_admin_leads_leadsclient",
-      "community": 0,
-      "community_name": "createClient",
-      "norm_label": "leadsclient.tsx"
     },
     {
       "label": "leads/page.tsx",
@@ -2484,6 +2584,28 @@
       "norm_label": "metadata"
     },
     {
+      "label": "SettingsClient.tsx",
+      "file_type": "code",
+      "source_file": "app/admin/settings/SettingsClient.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_admin_settings_settingsclient",
+      "community": 0,
+      "community_name": "createClient",
+      "norm_label": "settingsclient.tsx"
+    },
+    {
+      "label": "SECTION_NAMES",
+      "file_type": "code",
+      "source_file": "app/admin/settings/SettingsClient.tsx",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "app_admin_settings_settingsclient_section_names",
+      "community": 0,
+      "community_name": "createClient",
+      "norm_label": "section_names"
+    },
+    {
       "label": "delete/route.ts",
       "file_type": "code",
       "source_file": "app/api/account/delete/route.ts",
@@ -2493,6 +2615,28 @@
       "community": 0,
       "community_name": "createClient",
       "norm_label": "delete/route.ts"
+    },
+    {
+      "label": "token/route.ts",
+      "file_type": "code",
+      "source_file": "app/api/payment/token/route.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_api_payment_token_route",
+      "community": 0,
+      "community_name": "createClient",
+      "norm_label": "token/route.ts"
+    },
+    {
+      "label": "PLAN_PRICES",
+      "file_type": "code",
+      "source_file": "app/api/payment/token/route.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "app_api_payment_token_route_plan_prices",
+      "community": 0,
+      "community_name": "createClient",
+      "norm_label": "plan_prices"
     },
     {
       "label": "callback/route.ts",
@@ -2627,28 +2771,6 @@
       "norm_label": "tema/layout.tsx"
     },
     {
-      "label": "tema/page.tsx",
-      "file_type": "code",
-      "source_file": "app/tema/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "app_tema_page",
-      "community": 0,
-      "community_name": "createClient",
-      "norm_label": "tema/page.tsx"
-    },
-    {
-      "label": "metadata",
-      "file_type": "code",
-      "source_file": "app/tema/page.tsx",
-      "source_location": "L8",
-      "_origin": "ast",
-      "id": "app_tema_page_metadata",
-      "community": 0,
-      "community_name": "createClient",
-      "norm_label": "metadata"
-    },
-    {
       "label": "[username]/page.tsx",
       "file_type": "code",
       "source_file": "app/[username]/page.tsx",
@@ -2671,17 +2793,6 @@
       "norm_label": "vendor/layout.tsx"
     },
     {
-      "label": "DeleteAccountSection.tsx",
-      "file_type": "code",
-      "source_file": "components/dashboard/DeleteAccountSection.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_dashboard_deleteaccountsection",
-      "community": 0,
-      "community_name": "createClient",
-      "norm_label": "deleteaccountsection.tsx"
-    },
-    {
       "label": "LeadMagnetSection.tsx",
       "file_type": "code",
       "source_file": "components/landing/LeadMagnetSection.tsx",
@@ -2702,6 +2813,50 @@
       "community": 0,
       "community_name": "createClient",
       "norm_label": "server.ts"
+    },
+    {
+      "label": "InvitationsClient.tsx",
+      "file_type": "code",
+      "source_file": "app/admin/invitations/InvitationsClient.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_admin_invitations_invitationsclient",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "invitationsclient.tsx"
+    },
+    {
+      "label": "invitations/page.tsx",
+      "file_type": "code",
+      "source_file": "app/admin/invitations/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_admin_invitations_page",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "invitations/page.tsx"
+    },
+    {
+      "label": "dynamic",
+      "file_type": "code",
+      "source_file": "app/admin/invitations/page.tsx",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "app_admin_invitations_page_dynamic",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "dynamic"
+    },
+    {
+      "label": "LeadsClient.tsx",
+      "file_type": "code",
+      "source_file": "app/admin/leads/LeadsClient.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_admin_leads_leadsclient",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "leadsclient.tsx"
     },
     {
       "label": "themes/page.tsx",
@@ -2737,6 +2892,39 @@
       "norm_label": "themesclient.tsx"
     },
     {
+      "label": "users/page.tsx",
+      "file_type": "code",
+      "source_file": "app/admin/users/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_admin_users_page",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "users/page.tsx"
+    },
+    {
+      "label": "dynamic",
+      "file_type": "code",
+      "source_file": "app/admin/users/page.tsx",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "app_admin_users_page_dynamic",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "dynamic"
+    },
+    {
+      "label": "UsersClient.tsx",
+      "file_type": "code",
+      "source_file": "app/admin/users/UsersClient.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_admin_users_usersclient",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "usersclient.tsx"
+    },
+    {
       "label": "tamu/page.tsx",
       "file_type": "code",
       "source_file": "app/dashboard/tamu/page.tsx",
@@ -2757,6 +2945,17 @@
       "community": 1,
       "community_name": "index.ts",
       "norm_label": "alertmodal.tsx"
+    },
+    {
+      "label": "Pagination.tsx",
+      "file_type": "code",
+      "source_file": "components/ui/Pagination.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_ui_pagination",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "pagination.tsx"
     },
     {
       "label": "index.ts",
@@ -2792,6 +2991,61 @@
       "norm_label": "quick_actions"
     },
     {
+      "label": "baru/page.tsx",
+      "file_type": "code",
+      "source_file": "app/dashboard/undangan/baru/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_dashboard_undangan_baru_page",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "baru/page.tsx"
+    },
+    {
+      "label": "DEFAULT_FORM_DATA",
+      "file_type": "code",
+      "source_file": "app/dashboard/undangan/baru/page.tsx",
+      "source_location": "L30",
+      "_origin": "ast",
+      "id": "app_dashboard_undangan_baru_page_default_form_data",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "default_form_data"
+    },
+    {
+      "label": "STEPS",
+      "file_type": "code",
+      "source_file": "app/dashboard/undangan/baru/page.tsx",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "app_dashboard_undangan_baru_page_steps",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "steps"
+    },
+    {
+      "label": "edit/page.tsx",
+      "file_type": "code",
+      "source_file": "app/dashboard/undangan/[id]/edit/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_dashboard_undangan_id_edit_page",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "edit/page.tsx"
+    },
+    {
+      "label": "STEPS",
+      "file_type": "code",
+      "source_file": "app/dashboard/undangan/[id]/edit/page.tsx",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "app_dashboard_undangan_id_edit_page_steps",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "steps"
+    },
+    {
       "label": "undangan/page.tsx",
       "file_type": "code",
       "source_file": "app/dashboard/undangan/page.tsx",
@@ -2812,6 +3066,72 @@
       "community": 10,
       "community_name": "utils.ts",
       "norm_label": "countdownlabel.tsx"
+    },
+    {
+      "label": "CreateInvitationButton.tsx",
+      "file_type": "code",
+      "source_file": "components/dashboard/CreateInvitationButton.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_dashboard_createinvitationbutton",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "createinvitationbutton.tsx"
+    },
+    {
+      "label": "DeleteButton.tsx",
+      "file_type": "code",
+      "source_file": "components/dashboard/DeleteButton.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_dashboard_deletebutton",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "deletebutton.tsx"
+    },
+    {
+      "label": "UpsellModal.tsx",
+      "file_type": "code",
+      "source_file": "components/dashboard/UpsellModal.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_dashboard_upsellmodal",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "upsellmodal.tsx"
+    },
+    {
+      "label": "ConfirmModal.tsx",
+      "file_type": "code",
+      "source_file": "components/ui/ConfirmModal.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_ui_confirmmodal",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "confirmmodal.tsx"
+    },
+    {
+      "label": "LocationAutocomplete.tsx",
+      "file_type": "code",
+      "source_file": "components/ui/LocationAutocomplete.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_ui_locationautocomplete",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "locationautocomplete.tsx"
+    },
+    {
+      "label": "TimeRangePicker.tsx",
+      "file_type": "code",
+      "source_file": "components/ui/TimeRangePicker.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_ui_timerangepicker",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "timerangepicker.tsx"
     },
     {
       "label": "utils.ts",
@@ -2847,48 +3167,48 @@
       "norm_label": "supabase_url"
     },
     {
-      "label": "CosmicStarlightTheme.tsx",
+      "label": "EditorialGalleryTheme.tsx",
       "file_type": "code",
-      "source_file": "components/themes/CosmicStarlightTheme.tsx",
+      "source_file": "components/themes/EditorialGalleryTheme.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "components_themes_cosmicstarlighttheme",
+      "id": "components_themes_editorialgallerytheme",
       "community": 11,
-      "community_name": "CosmicStarlightTheme.tsx",
-      "norm_label": "cosmicstarlighttheme.tsx"
+      "community_name": "EditorialGalleryTheme.tsx",
+      "norm_label": "editorialgallerytheme.tsx"
     },
     {
-      "label": "cinzel",
+      "label": "anton",
       "file_type": "code",
-      "source_file": "components/themes/CosmicStarlightTheme.tsx",
-      "source_location": "L16",
+      "source_file": "components/themes/EditorialGalleryTheme.tsx",
+      "source_location": "L12",
       "_origin": "ast",
-      "id": "components_themes_cosmicstarlighttheme_cinzel",
+      "id": "components_themes_editorialgallerytheme_anton",
       "community": 11,
-      "community_name": "CosmicStarlightTheme.tsx",
-      "norm_label": "cinzel"
+      "community_name": "EditorialGalleryTheme.tsx",
+      "norm_label": "anton"
     },
     {
-      "label": "outfit",
+      "label": "roboto",
       "file_type": "code",
-      "source_file": "components/themes/CosmicStarlightTheme.tsx",
-      "source_location": "L17",
+      "source_file": "components/themes/EditorialGalleryTheme.tsx",
+      "source_location": "L13",
       "_origin": "ast",
-      "id": "components_themes_cosmicstarlighttheme_outfit",
+      "id": "components_themes_editorialgallerytheme_roboto",
       "community": 11,
-      "community_name": "CosmicStarlightTheme.tsx",
-      "norm_label": "outfit"
+      "community_name": "EditorialGalleryTheme.tsx",
+      "norm_label": "roboto"
     },
     {
-      "label": "CosmicStarlightTheme",
+      "label": "EditorialGalleryTheme",
       "file_type": "code",
       "source_file": "lib/themes/registry.tsx",
-      "source_location": "L80",
+      "source_location": "L112",
       "_origin": "ast",
-      "id": "lib_themes_registry_cosmicstarlighttheme",
+      "id": "lib_themes_registry_editorialgallerytheme",
       "community": 11,
-      "community_name": "CosmicStarlightTheme.tsx",
-      "norm_label": "cosmicstarlighttheme"
+      "community_name": "EditorialGalleryTheme.tsx",
+      "norm_label": "editorialgallerytheme"
     },
     {
       "label": "JavaneseBatikTheme.tsx",
@@ -2935,147 +3255,48 @@
       "norm_label": "javanesebatiktheme"
     },
     {
-      "label": "SettingsClient.tsx",
+      "label": "EtherealSnowTheme.tsx",
       "file_type": "code",
-      "source_file": "app/admin/settings/SettingsClient.tsx",
+      "source_file": "components/themes/EtherealSnowTheme.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "app_admin_settings_settingsclient",
+      "id": "components_themes_etherealsnowtheme",
       "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "settingsclient.tsx"
+      "community_name": "EtherealSnowTheme.tsx",
+      "norm_label": "etherealsnowtheme.tsx"
     },
     {
-      "label": "SECTION_NAMES",
+      "label": "cormorant",
       "file_type": "code",
-      "source_file": "app/admin/settings/SettingsClient.tsx",
-      "source_location": "L25",
+      "source_file": "components/themes/EtherealSnowTheme.tsx",
+      "source_location": "L12",
       "_origin": "ast",
-      "id": "app_admin_settings_settingsclient_section_names",
+      "id": "components_themes_etherealsnowtheme_cormorant",
       "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "section_names"
+      "community_name": "EtherealSnowTheme.tsx",
+      "norm_label": "cormorant"
     },
     {
-      "label": "baru/page.tsx",
+      "label": "montserrat",
       "file_type": "code",
-      "source_file": "app/dashboard/undangan/baru/page.tsx",
-      "source_location": "L1",
+      "source_file": "components/themes/EtherealSnowTheme.tsx",
+      "source_location": "L13",
       "_origin": "ast",
-      "id": "app_dashboard_undangan_baru_page",
+      "id": "components_themes_etherealsnowtheme_montserrat",
       "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "baru/page.tsx"
+      "community_name": "EtherealSnowTheme.tsx",
+      "norm_label": "montserrat"
     },
     {
-      "label": "DEFAULT_FORM_DATA",
+      "label": "EtherealSnowTheme",
       "file_type": "code",
-      "source_file": "app/dashboard/undangan/baru/page.tsx",
-      "source_location": "L30",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L104",
       "_origin": "ast",
-      "id": "app_dashboard_undangan_baru_page_default_form_data",
+      "id": "lib_themes_registry_etherealsnowtheme",
       "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "default_form_data"
-    },
-    {
-      "label": "STEPS",
-      "file_type": "code",
-      "source_file": "app/dashboard/undangan/baru/page.tsx",
-      "source_location": "L19",
-      "_origin": "ast",
-      "id": "app_dashboard_undangan_baru_page_steps",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "steps"
-    },
-    {
-      "label": "edit/page.tsx",
-      "file_type": "code",
-      "source_file": "app/dashboard/undangan/[id]/edit/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "app_dashboard_undangan_id_edit_page",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "edit/page.tsx"
-    },
-    {
-      "label": "STEPS",
-      "file_type": "code",
-      "source_file": "app/dashboard/undangan/[id]/edit/page.tsx",
-      "source_location": "L18",
-      "_origin": "ast",
-      "id": "app_dashboard_undangan_id_edit_page_steps",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "steps"
-    },
-    {
-      "label": "CreateInvitationButton.tsx",
-      "file_type": "code",
-      "source_file": "components/dashboard/CreateInvitationButton.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_dashboard_createinvitationbutton",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "createinvitationbutton.tsx"
-    },
-    {
-      "label": "DeleteButton.tsx",
-      "file_type": "code",
-      "source_file": "components/dashboard/DeleteButton.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_dashboard_deletebutton",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "deletebutton.tsx"
-    },
-    {
-      "label": "UpsellModal.tsx",
-      "file_type": "code",
-      "source_file": "components/dashboard/UpsellModal.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_dashboard_upsellmodal",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "upsellmodal.tsx"
-    },
-    {
-      "label": "ConfirmModal.tsx",
-      "file_type": "code",
-      "source_file": "components/ui/ConfirmModal.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_ui_confirmmodal",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "confirmmodal.tsx"
-    },
-    {
-      "label": "LocationAutocomplete.tsx",
-      "file_type": "code",
-      "source_file": "components/ui/LocationAutocomplete.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_ui_locationautocomplete",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "locationautocomplete.tsx"
-    },
-    {
-      "label": "TimeRangePicker.tsx",
-      "file_type": "code",
-      "source_file": "components/ui/TimeRangePicker.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_ui_timerangepicker",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "timerangepicker.tsx"
+      "community_name": "EtherealSnowTheme.tsx",
+      "norm_label": "etherealsnowtheme"
     },
     {
       "label": "admin/layout.tsx",
@@ -3085,7 +3306,7 @@
       "_origin": "ast",
       "id": "app_admin_layout",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "createClient",
       "norm_label": "admin/layout.tsx"
     },
     {
@@ -3096,7 +3317,7 @@
       "_origin": "ast",
       "id": "app_daftar_page",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "createClient",
       "norm_label": "daftar/page.tsx"
     },
     {
@@ -3107,7 +3328,7 @@
       "_origin": "ast",
       "id": "app_daftar_page_benefits",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "createClient",
       "norm_label": "benefits"
     },
     {
@@ -3118,41 +3339,8 @@
       "_origin": "ast",
       "id": "app_masuk_page",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "createClient",
       "norm_label": "masuk/page.tsx"
-    },
-    {
-      "label": "vendor/page.tsx",
-      "file_type": "code",
-      "source_file": "app/vendor/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "app_vendor_page",
-      "community": 14,
-      "community_name": "client.ts",
-      "norm_label": "vendor/page.tsx"
-    },
-    {
-      "label": "CATEGORIES",
-      "file_type": "code",
-      "source_file": "app/vendor/page.tsx",
-      "source_location": "L86",
-      "_origin": "ast",
-      "id": "app_vendor_page_categories",
-      "community": 14,
-      "community_name": "client.ts",
-      "norm_label": "categories"
-    },
-    {
-      "label": "SAMPLE_VENDORS",
-      "file_type": "code",
-      "source_file": "app/vendor/page.tsx",
-      "source_location": "L11",
-      "_origin": "ast",
-      "id": "app_vendor_page_sample_vendors",
-      "community": 14,
-      "community_name": "client.ts",
-      "norm_label": "sample_vendors"
     },
     {
       "label": "admin/Sidebar.tsx",
@@ -3162,7 +3350,7 @@
       "_origin": "ast",
       "id": "components_admin_sidebar",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "createClient",
       "norm_label": "admin/sidebar.tsx"
     },
     {
@@ -3173,7 +3361,7 @@
       "_origin": "ast",
       "id": "components_admin_sidebar_nav_items",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "createClient",
       "norm_label": "nav_items"
     },
     {
@@ -3184,7 +3372,7 @@
       "_origin": "ast",
       "id": "components_dashboard_sidebar",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "createClient",
       "norm_label": "dashboard/sidebar.tsx"
     },
     {
@@ -3195,7 +3383,7 @@
       "_origin": "ast",
       "id": "components_dashboard_sidebar_nav_items",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "createClient",
       "norm_label": "nav_items"
     },
     {
@@ -3206,7 +3394,7 @@
       "_origin": "ast",
       "id": "components_landing_navbar",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "createClient",
       "norm_label": "navbar.tsx"
     },
     {
@@ -3217,7 +3405,7 @@
       "_origin": "ast",
       "id": "components_landing_navbar_default_nav_items",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "createClient",
       "norm_label": "default_nav_items"
     },
     {
@@ -3228,19 +3416,8 @@
       "_origin": "ast",
       "id": "components_themetoggle",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "createClient",
       "norm_label": "themetoggle.tsx"
-    },
-    {
-      "label": "client.ts",
-      "file_type": "code",
-      "source_file": "lib/supabase/client.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "lib_supabase_client",
-      "community": 14,
-      "community_name": "client.ts",
-      "norm_label": "client.ts"
     },
     {
       "label": "app/layout.tsx",
@@ -3342,15 +3519,15 @@
       "norm_label": "dependencies"
     },
     {
-      "label": "clsx",
+      "label": "class-variance-authority",
       "file_type": "code",
       "source_file": "package.json",
-      "source_location": "L24",
+      "source_location": "L23",
       "_origin": "ast",
-      "id": "package_dependencies_clsx",
+      "id": "package_dependencies_class_variance_authority",
       "community": 19,
       "community_name": "dependencies",
-      "norm_label": "clsx"
+      "norm_label": "class-variance-authority"
     },
     {
       "label": "@radix-ui/react-dialog",
@@ -3386,15 +3563,15 @@
       "norm_label": "xlsx"
     },
     {
-      "label": "clsx",
+      "label": "class-variance-authority",
       "file_type": "concept",
       "source_file": "package.json",
-      "source_location": "L24",
+      "source_location": "L23",
       "_origin": "ast",
-      "id": "clsx",
+      "id": "class_variance_authority",
       "community": 19,
       "community_name": "dependencies",
-      "norm_label": "clsx"
+      "norm_label": "class-variance-authority"
     },
     {
       "label": "@radix-ui/react-dialog",
@@ -3430,81 +3607,48 @@
       "norm_label": "xlsx"
     },
     {
-      "label": "InvitationsClient.tsx",
+      "label": "GeometricAbstractTheme.tsx",
       "file_type": "code",
-      "source_file": "app/admin/invitations/InvitationsClient.tsx",
+      "source_file": "components/themes/GeometricAbstractTheme.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "app_admin_invitations_invitationsclient",
+      "id": "components_themes_geometricabstracttheme",
       "community": 20,
-      "community_name": "Pagination.tsx",
-      "norm_label": "invitationsclient.tsx"
+      "community_name": "GeometricAbstractTheme.tsx",
+      "norm_label": "geometricabstracttheme.tsx"
     },
     {
-      "label": "invitations/page.tsx",
+      "label": "inter",
       "file_type": "code",
-      "source_file": "app/admin/invitations/page.tsx",
-      "source_location": "L1",
+      "source_file": "components/themes/GeometricAbstractTheme.tsx",
+      "source_location": "L13",
       "_origin": "ast",
-      "id": "app_admin_invitations_page",
+      "id": "components_themes_geometricabstracttheme_inter",
       "community": 20,
-      "community_name": "Pagination.tsx",
-      "norm_label": "invitations/page.tsx"
+      "community_name": "GeometricAbstractTheme.tsx",
+      "norm_label": "inter"
     },
     {
-      "label": "dynamic",
+      "label": "playfair",
       "file_type": "code",
-      "source_file": "app/admin/invitations/page.tsx",
-      "source_location": "L5",
+      "source_file": "components/themes/GeometricAbstractTheme.tsx",
+      "source_location": "L12",
       "_origin": "ast",
-      "id": "app_admin_invitations_page_dynamic",
+      "id": "components_themes_geometricabstracttheme_playfair",
       "community": 20,
-      "community_name": "Pagination.tsx",
-      "norm_label": "dynamic"
+      "community_name": "GeometricAbstractTheme.tsx",
+      "norm_label": "playfair"
     },
     {
-      "label": "users/page.tsx",
+      "label": "GeometricAbstractTheme",
       "file_type": "code",
-      "source_file": "app/admin/users/page.tsx",
-      "source_location": "L1",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L108",
       "_origin": "ast",
-      "id": "app_admin_users_page",
+      "id": "lib_themes_registry_geometricabstracttheme",
       "community": 20,
-      "community_name": "Pagination.tsx",
-      "norm_label": "users/page.tsx"
-    },
-    {
-      "label": "dynamic",
-      "file_type": "code",
-      "source_file": "app/admin/users/page.tsx",
-      "source_location": "L5",
-      "_origin": "ast",
-      "id": "app_admin_users_page_dynamic",
-      "community": 20,
-      "community_name": "Pagination.tsx",
-      "norm_label": "dynamic"
-    },
-    {
-      "label": "UsersClient.tsx",
-      "file_type": "code",
-      "source_file": "app/admin/users/UsersClient.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "app_admin_users_usersclient",
-      "community": 20,
-      "community_name": "Pagination.tsx",
-      "norm_label": "usersclient.tsx"
-    },
-    {
-      "label": "Pagination.tsx",
-      "file_type": "code",
-      "source_file": "components/ui/Pagination.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_ui_pagination",
-      "community": 20,
-      "community_name": "Pagination.tsx",
-      "norm_label": "pagination.tsx"
+      "community_name": "GeometricAbstractTheme.tsx",
+      "norm_label": "geometricabstracttheme"
     },
     {
       "label": "MagazineCoverTheme.tsx",
@@ -3815,37 +3959,37 @@
       "norm_label": "balineseharmonytheme"
     },
     {
-      "label": "LineArtBotanicalTheme.tsx",
+      "label": "CosmicStarlightTheme.tsx",
       "file_type": "code",
-      "source_file": "components/themes/LineArtBotanicalTheme.tsx",
+      "source_file": "components/themes/CosmicStarlightTheme.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "components_themes_lineartbotanicaltheme",
+      "id": "components_themes_cosmicstarlighttheme",
       "community": 25,
       "community_name": "registry.tsx",
-      "norm_label": "lineartbotanicaltheme.tsx"
+      "norm_label": "cosmicstarlighttheme.tsx"
     },
     {
-      "label": "italiana",
+      "label": "cinzel",
       "file_type": "code",
-      "source_file": "components/themes/LineArtBotanicalTheme.tsx",
-      "source_location": "L11",
+      "source_file": "components/themes/CosmicStarlightTheme.tsx",
+      "source_location": "L16",
       "_origin": "ast",
-      "id": "components_themes_lineartbotanicaltheme_italiana",
+      "id": "components_themes_cosmicstarlighttheme_cinzel",
       "community": 25,
       "community_name": "registry.tsx",
-      "norm_label": "italiana"
+      "norm_label": "cinzel"
     },
     {
-      "label": "lato",
+      "label": "outfit",
       "file_type": "code",
-      "source_file": "components/themes/LineArtBotanicalTheme.tsx",
-      "source_location": "L12",
+      "source_file": "components/themes/CosmicStarlightTheme.tsx",
+      "source_location": "L17",
       "_origin": "ast",
-      "id": "components_themes_lineartbotanicaltheme_lato",
+      "id": "components_themes_cosmicstarlighttheme_outfit",
       "community": 25,
       "community_name": "registry.tsx",
-      "norm_label": "lato"
+      "norm_label": "outfit"
     },
     {
       "label": "RoyalBotanicalTheme.tsx",
@@ -3859,37 +4003,15 @@
       "norm_label": "royalbotanicaltheme.tsx"
     },
     {
-      "label": "RusticWoodlandTheme.tsx",
+      "label": "SereinWhiteTheme.tsx",
       "file_type": "code",
-      "source_file": "components/themes/RusticWoodlandTheme.tsx",
+      "source_file": "components/themes/SereinWhiteTheme.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "components_themes_rusticwoodlandtheme",
+      "id": "components_themes_sereinwhitetheme",
       "community": 25,
       "community_name": "registry.tsx",
-      "norm_label": "rusticwoodlandtheme.tsx"
-    },
-    {
-      "label": "lora",
-      "file_type": "code",
-      "source_file": "components/themes/RusticWoodlandTheme.tsx",
-      "source_location": "L17",
-      "_origin": "ast",
-      "id": "components_themes_rusticwoodlandtheme_lora",
-      "community": 25,
-      "community_name": "registry.tsx",
-      "norm_label": "lora"
-    },
-    {
-      "label": "playfair",
-      "file_type": "code",
-      "source_file": "components/themes/RusticWoodlandTheme.tsx",
-      "source_location": "L16",
-      "_origin": "ast",
-      "id": "components_themes_rusticwoodlandtheme_playfair",
-      "community": 25,
-      "community_name": "registry.tsx",
-      "norm_label": "playfair"
+      "norm_label": "sereinwhitetheme.tsx"
     },
     {
       "label": "VintageEleganceTheme.tsx",
@@ -3925,15 +4047,15 @@
       "norm_label": "registry.tsx"
     },
     {
-      "label": "LineArtBotanicalTheme",
+      "label": "CosmicStarlightTheme",
       "file_type": "code",
       "source_file": "lib/themes/registry.tsx",
-      "source_location": "L60",
+      "source_location": "L80",
       "_origin": "ast",
-      "id": "lib_themes_registry_lineartbotanicaltheme",
+      "id": "lib_themes_registry_cosmicstarlighttheme",
       "community": 25,
       "community_name": "registry.tsx",
-      "norm_label": "lineartbotanicaltheme"
+      "norm_label": "cosmicstarlighttheme"
     },
     {
       "label": "RoyalBotanicalTheme",
@@ -3947,21 +4069,21 @@
       "norm_label": "royalbotanicaltheme"
     },
     {
-      "label": "RusticWoodlandTheme",
+      "label": "SereinWhiteTheme",
       "file_type": "code",
       "source_file": "lib/themes/registry.tsx",
-      "source_location": "L72",
+      "source_location": "L44",
       "_origin": "ast",
-      "id": "lib_themes_registry_rusticwoodlandtheme",
+      "id": "lib_themes_registry_sereinwhitetheme",
       "community": 25,
       "community_name": "registry.tsx",
-      "norm_label": "rusticwoodlandtheme"
+      "norm_label": "sereinwhitetheme"
     },
     {
       "label": "themesConfig",
       "file_type": "code",
       "source_file": "lib/themes/registry.tsx",
-      "source_location": "L112",
+      "source_location": "L124",
       "_origin": "ast",
       "id": "lib_themes_registry_themesconfig",
       "community": 25,
@@ -4530,26 +4652,48 @@
       "norm_label": "path"
     },
     {
-      "label": "class-variance-authority",
+      "label": "LineArtBotanicalTheme.tsx",
       "file_type": "code",
-      "source_file": "package.json",
-      "source_location": "L23",
+      "source_file": "components/themes/LineArtBotanicalTheme.tsx",
+      "source_location": "L1",
       "_origin": "ast",
-      "id": "package_dependencies_class_variance_authority",
+      "id": "components_themes_lineartbotanicaltheme",
       "community": 36,
-      "community_name": "class-variance-authority",
-      "norm_label": "class-variance-authority"
+      "community_name": "LineArtBotanicalTheme.tsx",
+      "norm_label": "lineartbotanicaltheme.tsx"
     },
     {
-      "label": "class-variance-authority",
-      "file_type": "concept",
-      "source_file": "package.json",
-      "source_location": "L23",
+      "label": "italiana",
+      "file_type": "code",
+      "source_file": "components/themes/LineArtBotanicalTheme.tsx",
+      "source_location": "L11",
       "_origin": "ast",
-      "id": "class_variance_authority",
+      "id": "components_themes_lineartbotanicaltheme_italiana",
       "community": 36,
-      "community_name": "class-variance-authority",
-      "norm_label": "class-variance-authority"
+      "community_name": "LineArtBotanicalTheme.tsx",
+      "norm_label": "italiana"
+    },
+    {
+      "label": "lato",
+      "file_type": "code",
+      "source_file": "components/themes/LineArtBotanicalTheme.tsx",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "components_themes_lineartbotanicaltheme_lato",
+      "community": 36,
+      "community_name": "LineArtBotanicalTheme.tsx",
+      "norm_label": "lato"
+    },
+    {
+      "label": "LineArtBotanicalTheme",
+      "file_type": "code",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L60",
+      "_origin": "ast",
+      "id": "lib_themes_registry_lineartbotanicaltheme",
+      "community": 36,
+      "community_name": "LineArtBotanicalTheme.tsx",
+      "norm_label": "lineartbotanicaltheme"
     },
     {
       "label": "theme-guidline.md",
@@ -4600,35 +4744,35 @@
       "norm_label": "3. icon styles and placement"
     },
     {
-      "label": "4. Animation Styles",
+      "label": "4. Animation Styles & Advanced Interactions",
       "file_type": "document",
       "node_kind": "heading",
       "source_file": "theme-guidline.md",
       "source_location": "L30",
       "_origin": "ast",
-      "id": "theme_guidline_4_animation_styles",
+      "id": "theme_guidline_4_animation_styles_advanced_interactions",
       "community": 37,
       "community_name": "Wedding Invitation Theme Research & Analysis",
-      "norm_label": "4. animation styles"
+      "norm_label": "4. animation styles & advanced interactions"
     },
     {
-      "label": "5. Mobile Responsiveness Paradigms",
+      "label": "5. Photo Layouts & Advanced Framing",
       "file_type": "document",
       "node_kind": "heading",
       "source_file": "theme-guidline.md",
-      "source_location": "L36",
+      "source_location": "L38",
       "_origin": "ast",
-      "id": "theme_guidline_5_mobile_responsiveness_paradigms",
+      "id": "theme_guidline_5_photo_layouts_advanced_framing",
       "community": 37,
       "community_name": "Wedding Invitation Theme Research & Analysis",
-      "norm_label": "5. mobile responsiveness paradigms"
+      "norm_label": "5. photo layouts & advanced framing"
     },
     {
       "label": "6. Background Music Integration and UI Controls",
       "file_type": "document",
       "node_kind": "heading",
       "source_file": "theme-guidline.md",
-      "source_location": "L42",
+      "source_location": "L49",
       "_origin": "ast",
       "id": "theme_guidline_6_background_music_integration_and_ui_controls",
       "community": 37,
@@ -4636,11 +4780,23 @@
       "norm_label": "6. background music integration and ui controls"
     },
     {
+      "label": "6. Mobile Responsiveness Paradigms",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "theme-guidline.md",
+      "source_location": "L43",
+      "_origin": "ast",
+      "id": "theme_guidline_6_mobile_responsiveness_paradigms",
+      "community": 37,
+      "community_name": "Wedding Invitation Theme Research & Analysis",
+      "norm_label": "6. mobile responsiveness paradigms"
+    },
+    {
       "label": "7. Premium vs Standard Tier Differentiation (Viding.co Deep Dive)",
       "file_type": "document",
       "node_kind": "heading",
       "source_file": "theme-guidline.md",
-      "source_location": "L59",
+      "source_location": "L66",
       "_origin": "ast",
       "id": "theme_guidline_7_premium_vs_standard_tier_differentiation_viding_co_deep_dive",
       "community": 37,
@@ -4652,7 +4808,7 @@
       "file_type": "document",
       "node_kind": "heading",
       "source_file": "theme-guidline.md",
-      "source_location": "L49",
+      "source_location": "L56",
       "_origin": "ast",
       "id": "theme_guidline_actionable_recommendations_for_our_next_js_theme_development",
       "community": 37,
@@ -4716,6 +4872,28 @@
       "norm_label": "botanicalelegancetheme"
     },
     {
+      "label": "DeleteAccountSection.tsx",
+      "file_type": "code",
+      "source_file": "components/dashboard/DeleteAccountSection.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_dashboard_deleteaccountsection",
+      "community": 39,
+      "community_name": "client.ts",
+      "norm_label": "deleteaccountsection.tsx"
+    },
+    {
+      "label": "ElegantBlushTheme.tsx",
+      "file_type": "code",
+      "source_file": "components/themes/ElegantBlushTheme.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_themes_elegantblushtheme",
+      "community": 39,
+      "community_name": "client.ts",
+      "norm_label": "elegantblushtheme.tsx"
+    },
+    {
       "label": "GoldenArchTheme.tsx",
       "file_type": "code",
       "source_file": "components/themes/GoldenArchTheme.tsx",
@@ -4723,7 +4901,7 @@
       "_origin": "ast",
       "id": "components_themes_goldenarchtheme",
       "community": 39,
-      "community_name": "GoldenArchTheme.tsx",
+      "community_name": "client.ts",
       "norm_label": "goldenarchtheme.tsx"
     },
     {
@@ -4734,7 +4912,7 @@
       "_origin": "ast",
       "id": "components_themes_goldenarchtheme_cormorant",
       "community": 39,
-      "community_name": "GoldenArchTheme.tsx",
+      "community_name": "client.ts",
       "norm_label": "cormorant"
     },
     {
@@ -4745,8 +4923,30 @@
       "_origin": "ast",
       "id": "components_themes_goldenarchtheme_lato",
       "community": 39,
-      "community_name": "GoldenArchTheme.tsx",
+      "community_name": "client.ts",
       "norm_label": "lato"
+    },
+    {
+      "label": "client.ts",
+      "file_type": "code",
+      "source_file": "lib/supabase/client.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_supabase_client",
+      "community": 39,
+      "community_name": "client.ts",
+      "norm_label": "client.ts"
+    },
+    {
+      "label": "ElegantBlushTheme",
+      "file_type": "code",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "lib_themes_registry_elegantblushtheme",
+      "community": 39,
+      "community_name": "client.ts",
+      "norm_label": "elegantblushtheme"
     },
     {
       "label": "GoldenArchTheme",
@@ -4756,7 +4956,7 @@
       "_origin": "ast",
       "id": "lib_themes_registry_goldenarchtheme",
       "community": 39,
-      "community_name": "GoldenArchTheme.tsx",
+      "community_name": "client.ts",
       "norm_label": "goldenarchtheme"
     },
     {
@@ -5827,28 +6027,6 @@
       "norm_label": "next-themes"
     },
     {
-      "label": "token/route.ts",
-      "file_type": "code",
-      "source_file": "app/api/payment/token/route.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "app_api_payment_token_route",
-      "community": 6,
-      "community_name": "app/page.tsx",
-      "norm_label": "token/route.ts"
-    },
-    {
-      "label": "PLAN_PRICES",
-      "file_type": "code",
-      "source_file": "app/api/payment/token/route.ts",
-      "source_location": "L5",
-      "_origin": "ast",
-      "id": "app_api_payment_token_route_plan_prices",
-      "community": 6,
-      "community_name": "app/page.tsx",
-      "norm_label": "plan_prices"
-    },
-    {
       "label": "harga/page.tsx",
       "file_type": "code",
       "source_file": "app/harga/page.tsx",
@@ -5869,6 +6047,61 @@
       "community": 6,
       "community_name": "app/page.tsx",
       "norm_label": "app/page.tsx"
+    },
+    {
+      "label": "tema/page.tsx",
+      "file_type": "code",
+      "source_file": "app/tema/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_tema_page",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "tema/page.tsx"
+    },
+    {
+      "label": "metadata",
+      "file_type": "code",
+      "source_file": "app/tema/page.tsx",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "app_tema_page_metadata",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "metadata"
+    },
+    {
+      "label": "vendor/page.tsx",
+      "file_type": "code",
+      "source_file": "app/vendor/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_vendor_page",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "vendor/page.tsx"
+    },
+    {
+      "label": "CATEGORIES",
+      "file_type": "code",
+      "source_file": "app/vendor/page.tsx",
+      "source_location": "L86",
+      "_origin": "ast",
+      "id": "app_vendor_page_categories",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "categories"
+    },
+    {
+      "label": "SAMPLE_VENDORS",
+      "file_type": "code",
+      "source_file": "app/vendor/page.tsx",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "app_vendor_page_sample_vendors",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "sample_vendors"
     },
     {
       "label": "EcoImpact.tsx",
@@ -6883,6 +7116,94 @@
       "norm_label": "config"
     },
     {
+      "label": "RusticWoodlandTheme.tsx",
+      "file_type": "code",
+      "source_file": "components/themes/RusticWoodlandTheme.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_themes_rusticwoodlandtheme",
+      "community": 86,
+      "community_name": "RusticWoodlandTheme.tsx",
+      "norm_label": "rusticwoodlandtheme.tsx"
+    },
+    {
+      "label": "lora",
+      "file_type": "code",
+      "source_file": "components/themes/RusticWoodlandTheme.tsx",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "components_themes_rusticwoodlandtheme_lora",
+      "community": 86,
+      "community_name": "RusticWoodlandTheme.tsx",
+      "norm_label": "lora"
+    },
+    {
+      "label": "playfair",
+      "file_type": "code",
+      "source_file": "components/themes/RusticWoodlandTheme.tsx",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "components_themes_rusticwoodlandtheme_playfair",
+      "community": 86,
+      "community_name": "RusticWoodlandTheme.tsx",
+      "norm_label": "playfair"
+    },
+    {
+      "label": "RusticWoodlandTheme",
+      "file_type": "code",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L72",
+      "_origin": "ast",
+      "id": "lib_themes_registry_rusticwoodlandtheme",
+      "community": 86,
+      "community_name": "RusticWoodlandTheme.tsx",
+      "norm_label": "rusticwoodlandtheme"
+    },
+    {
+      "label": "MinimalistTheme.tsx",
+      "file_type": "code",
+      "source_file": "components/themes/MinimalistTheme.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_themes_minimalisttheme",
+      "community": 87,
+      "community_name": "MinimalistTheme.tsx",
+      "norm_label": "minimalisttheme.tsx"
+    },
+    {
+      "label": "MinimalistTheme",
+      "file_type": "code",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "lib_themes_registry_minimalisttheme",
+      "community": 87,
+      "community_name": "MinimalistTheme.tsx",
+      "norm_label": "minimalisttheme"
+    },
+    {
+      "label": "clsx",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "package_dependencies_clsx",
+      "community": 88,
+      "community_name": "clsx",
+      "norm_label": "clsx"
+    },
+    {
+      "label": "clsx",
+      "file_type": "concept",
+      "source_file": "package.json",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "clsx",
+      "community": 88,
+      "community_name": "clsx",
+      "norm_label": "clsx"
+    },
+    {
       "label": "ModernMonochromeTheme.tsx",
       "file_type": "code",
       "source_file": "components/themes/ModernMonochromeTheme.tsx",
@@ -6927,17 +7248,6 @@
       "norm_label": "modernmonochrometheme"
     },
     {
-      "label": "ElegantBlushTheme.tsx",
-      "file_type": "code",
-      "source_file": "components/themes/ElegantBlushTheme.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_themes_elegantblushtheme",
-      "community": 9,
-      "community_name": "createClient",
-      "norm_label": "elegantblushtheme.tsx"
-    },
-    {
       "label": "HeritageGununganTheme.tsx",
       "file_type": "code",
       "source_file": "components/themes/HeritageGununganTheme.tsx",
@@ -6945,7 +7255,7 @@
       "_origin": "ast",
       "id": "components_themes_heritagegunungantheme",
       "community": 9,
-      "community_name": "createClient",
+      "community_name": "HeritageGununganTheme.tsx",
       "norm_label": "heritagegunungantheme.tsx"
     },
     {
@@ -6956,7 +7266,7 @@
       "_origin": "ast",
       "id": "components_themes_heritagegunungantheme_lora",
       "community": 9,
-      "community_name": "createClient",
+      "community_name": "HeritageGununganTheme.tsx",
       "norm_label": "lora"
     },
     {
@@ -6967,41 +7277,8 @@
       "_origin": "ast",
       "id": "components_themes_heritagegunungantheme_playfair",
       "community": 9,
-      "community_name": "createClient",
+      "community_name": "HeritageGununganTheme.tsx",
       "norm_label": "playfair"
-    },
-    {
-      "label": "MinimalistTheme.tsx",
-      "file_type": "code",
-      "source_file": "components/themes/MinimalistTheme.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_themes_minimalisttheme",
-      "community": 9,
-      "community_name": "createClient",
-      "norm_label": "minimalisttheme.tsx"
-    },
-    {
-      "label": "SereinWhiteTheme.tsx",
-      "file_type": "code",
-      "source_file": "components/themes/SereinWhiteTheme.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_themes_sereinwhitetheme",
-      "community": 9,
-      "community_name": "createClient",
-      "norm_label": "sereinwhitetheme.tsx"
-    },
-    {
-      "label": "ElegantBlushTheme",
-      "file_type": "code",
-      "source_file": "lib/themes/registry.tsx",
-      "source_location": "L36",
-      "_origin": "ast",
-      "id": "lib_themes_registry_elegantblushtheme",
-      "community": 9,
-      "community_name": "createClient",
-      "norm_label": "elegantblushtheme"
     },
     {
       "label": "HeritageGununganTheme",
@@ -7011,30 +7288,8 @@
       "_origin": "ast",
       "id": "lib_themes_registry_heritagegunungantheme",
       "community": 9,
-      "community_name": "createClient",
+      "community_name": "HeritageGununganTheme.tsx",
       "norm_label": "heritagegunungantheme"
-    },
-    {
-      "label": "MinimalistTheme",
-      "file_type": "code",
-      "source_file": "lib/themes/registry.tsx",
-      "source_location": "L20",
-      "_origin": "ast",
-      "id": "lib_themes_registry_minimalisttheme",
-      "community": 9,
-      "community_name": "createClient",
-      "norm_label": "minimalisttheme"
-    },
-    {
-      "label": "SereinWhiteTheme",
-      "file_type": "code",
-      "source_file": "lib/themes/registry.tsx",
-      "source_location": "L44",
-      "_origin": "ast",
-      "id": "lib_themes_registry_sereinwhitetheme",
-      "community": 9,
-      "community_name": "createClient",
-      "norm_label": "sereinwhitetheme"
     },
     {
       "label": "OceanBreezeTheme.tsx",
@@ -9305,6 +9560,18 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
+      "source_file": "components/themes/EditorialGalleryTheme.tsx",
+      "source_location": "L146",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_editorialgallerytheme_editorialgallerytheme",
+      "target": "lib_supabase_client_createclient"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
       "source_file": "components/themes/ElegantBlushTheme.tsx",
       "source_location": "L103",
       "weight": 1.0,
@@ -9317,11 +9584,35 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
+      "source_file": "components/themes/EtherealSnowTheme.tsx",
+      "source_location": "L152",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_etherealsnowtheme_etherealsnowtheme",
+      "target": "lib_supabase_client_createclient"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
       "source_file": "components/themes/EtherealWatercolorTheme.tsx",
       "source_location": "L94",
       "weight": 1.0,
       "_origin": "ast",
       "source": "components_themes_etherealwatercolortheme_etherealwatercolortheme",
+      "target": "lib_supabase_client_createclient"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/themes/GeometricAbstractTheme.tsx",
+      "source_location": "L112",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_geometricabstracttheme_geometricabstracttheme",
       "target": "lib_supabase_client_createclient"
     },
     {
@@ -9657,6 +9948,19 @@
       "deferred": true,
       "confidence": "EXTRACTED",
       "source_file": "lib/themes/registry.tsx",
+      "source_location": "L112",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_themes_registry_editorialgallerytheme",
+      "target": "components_themes_editorialgallerytheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "deferred": true,
+      "confidence": "EXTRACTED",
+      "source_file": "lib/themes/registry.tsx",
       "source_location": "L36",
       "weight": 1.0,
       "_origin": "ast",
@@ -9670,11 +9974,37 @@
       "deferred": true,
       "confidence": "EXTRACTED",
       "source_file": "lib/themes/registry.tsx",
+      "source_location": "L104",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_themes_registry_etherealsnowtheme",
+      "target": "components_themes_etherealsnowtheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "deferred": true,
+      "confidence": "EXTRACTED",
+      "source_file": "lib/themes/registry.tsx",
       "source_location": "L84",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_themes_registry_etherealwatercolortheme",
       "target": "components_themes_etherealwatercolortheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "deferred": true,
+      "confidence": "EXTRACTED",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L108",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_themes_registry_geometricabstracttheme",
+      "target": "components_themes_geometricabstracttheme",
       "confidence_score": 1.0
     },
     {
@@ -11485,6 +11815,18 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "components/themes/EditorialGalleryTheme.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_editorialgallerytheme",
+      "target": "lib_supabase_client_createclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "components/themes/ElegantBlushTheme.tsx",
       "source_location": "L10",
       "weight": 1.0,
@@ -11497,11 +11839,35 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "components/themes/EtherealSnowTheme.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_etherealsnowtheme",
+      "target": "lib_supabase_client_createclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "components/themes/EtherealWatercolorTheme.tsx",
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
       "source": "components_themes_etherealwatercolortheme",
+      "target": "lib_supabase_client_createclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/GeometricAbstractTheme.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_geometricabstracttheme",
       "target": "lib_supabase_client_createclient",
       "confidence_score": 1.0
     },
@@ -13645,6 +14011,18 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "components/themes/EditorialGalleryTheme.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_editorialgallerytheme",
+      "target": "lib_supabase_client",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "components/themes/ElegantBlushTheme.tsx",
       "source_location": "L10",
       "weight": 1.0,
@@ -13657,11 +14035,35 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "components/themes/EtherealSnowTheme.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_etherealsnowtheme",
+      "target": "lib_supabase_client",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "components/themes/EtherealWatercolorTheme.tsx",
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
       "source": "components_themes_etherealwatercolortheme",
+      "target": "lib_supabase_client",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/GeometricAbstractTheme.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_geometricabstracttheme",
       "target": "lib_supabase_client",
       "confidence_score": 1.0
     },
@@ -15391,6 +15793,61 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "components/themes/EditorialGalleryTheme.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_editorialgallerytheme",
+      "target": "components_themes_editorialgallerytheme_anton",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/EditorialGalleryTheme.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_editorialgallerytheme",
+      "target": "components_themes_editorialgallerytheme_roboto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/EditorialGalleryTheme.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_editorialgallerytheme",
+      "target": "components_themes_editorialgallerytheme_props",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/EditorialGalleryTheme.tsx",
+      "source_location": "L26",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_editorialgallerytheme",
+      "target": "components_themes_editorialgallerytheme_tiltcard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/EditorialGalleryTheme.tsx",
+      "source_location": "L79",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_editorialgallerytheme",
+      "target": "components_themes_editorialgallerytheme_editorialgallerytheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "components/themes/ElegantBlushTheme.tsx",
       "source_location": "L12",
       "weight": 1.0,
@@ -15408,6 +15865,61 @@
       "_origin": "ast",
       "source": "components_themes_elegantblushtheme",
       "target": "components_themes_elegantblushtheme_elegantblushtheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/EtherealSnowTheme.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_etherealsnowtheme",
+      "target": "components_themes_etherealsnowtheme_cormorant",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/EtherealSnowTheme.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_etherealsnowtheme",
+      "target": "components_themes_etherealsnowtheme_montserrat",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/EtherealSnowTheme.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_etherealsnowtheme",
+      "target": "components_themes_etherealsnowtheme_props",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/EtherealSnowTheme.tsx",
+      "source_location": "L26",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_etherealsnowtheme",
+      "target": "components_themes_etherealsnowtheme_particlesystem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/EtherealSnowTheme.tsx",
+      "source_location": "L76",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_etherealsnowtheme",
+      "target": "components_themes_etherealsnowtheme_etherealsnowtheme",
       "confidence_score": 1.0
     },
     {
@@ -15463,6 +15975,61 @@
       "_origin": "ast",
       "source": "components_themes_etherealwatercolortheme",
       "target": "components_themes_etherealwatercolortheme_etherealwatercolortheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/GeometricAbstractTheme.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_geometricabstracttheme",
+      "target": "components_themes_geometricabstracttheme_playfair",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/GeometricAbstractTheme.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_geometricabstracttheme",
+      "target": "components_themes_geometricabstracttheme_inter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/GeometricAbstractTheme.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_geometricabstracttheme",
+      "target": "components_themes_geometricabstracttheme_props",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/GeometricAbstractTheme.tsx",
+      "source_location": "L26",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_geometricabstracttheme",
+      "target": "components_themes_geometricabstracttheme_svgpolygonmaskimage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/GeometricAbstractTheme.tsx",
+      "source_location": "L52",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_geometricabstracttheme",
+      "target": "components_themes_geometricabstracttheme_geometricabstracttheme",
       "confidence_score": 1.0
     },
     {
@@ -16250,7 +16817,40 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/themes/registry.tsx",
-      "source_location": "L105",
+      "source_location": "L104",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_themes_registry",
+      "target": "lib_themes_registry_etherealsnowtheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L108",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_themes_registry",
+      "target": "lib_themes_registry_geometricabstracttheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L112",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_themes_registry",
+      "target": "lib_themes_registry_editorialgallerytheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L117",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_themes_registry",
@@ -16261,7 +16861,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/themes/registry.tsx",
-      "source_location": "L112",
+      "source_location": "L124",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_themes_registry",
@@ -16349,22 +16949,22 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/themes/registry.tsx",
-      "source_location": "L367",
+      "source_location": "L40",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_themes_registry",
-      "target": "lib_themes_registry_getthemeconfig",
+      "target": "lib_themes_registry_midnightsparkletheme",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/themes/registry.tsx",
-      "source_location": "L40",
+      "source_location": "L415",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_themes_registry",
-      "target": "lib_themes_registry_midnightsparkletheme",
+      "target": "lib_themes_registry_getthemeconfig",
       "confidence_score": 1.0
     },
     {
@@ -18201,29 +18801,29 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "theme_guidline_wedding_invitation_theme_research_analysis",
-      "target": "theme_guidline_4_animation_styles",
+      "target": "theme_guidline_4_animation_styles_advanced_interactions",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "theme-guidline.md",
-      "source_location": "L36",
+      "source_location": "L38",
       "weight": 1.0,
       "_origin": "ast",
       "source": "theme_guidline_wedding_invitation_theme_research_analysis",
-      "target": "theme_guidline_5_mobile_responsiveness_paradigms",
+      "target": "theme_guidline_5_photo_layouts_advanced_framing",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "theme-guidline.md",
-      "source_location": "L42",
+      "source_location": "L43",
       "weight": 1.0,
       "_origin": "ast",
       "source": "theme_guidline_wedding_invitation_theme_research_analysis",
-      "target": "theme_guidline_6_background_music_integration_and_ui_controls",
+      "target": "theme_guidline_6_mobile_responsiveness_paradigms",
       "confidence_score": 1.0
     },
     {
@@ -18234,7 +18834,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "theme_guidline_wedding_invitation_theme_research_analysis",
-      "target": "theme_guidline_actionable_recommendations_for_our_next_js_theme_development",
+      "target": "theme_guidline_6_background_music_integration_and_ui_controls",
       "confidence_score": 1.0
     },
     {
@@ -18252,7 +18852,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "theme-guidline.md",
-      "source_location": "L59",
+      "source_location": "L56",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "theme_guidline_wedding_invitation_theme_research_analysis",
+      "target": "theme_guidline_actionable_recommendations_for_our_next_js_theme_development",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "theme-guidline.md",
+      "source_location": "L66",
       "weight": 1.0,
       "_origin": "ast",
       "source": "theme_guidline_wedding_invitation_theme_research_analysis",
@@ -18688,6 +19299,15 @@
       "source_file": "lib/themes/registry.tsx",
       "_origin": "ast",
       "source": "lib_themes_registry",
+      "target": "components_themes_editorialgallerytheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "dynamic_import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/themes/registry.tsx",
+      "_origin": "ast",
+      "source": "lib_themes_registry",
       "target": "components_themes_elegantblushtheme",
       "confidence_score": 1.0
     },
@@ -18697,7 +19317,25 @@
       "source_file": "lib/themes/registry.tsx",
       "_origin": "ast",
       "source": "lib_themes_registry",
+      "target": "components_themes_etherealsnowtheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "dynamic_import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/themes/registry.tsx",
+      "_origin": "ast",
+      "source": "lib_themes_registry",
       "target": "components_themes_etherealwatercolortheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "dynamic_import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/themes/registry.tsx",
+      "_origin": "ast",
+      "source": "lib_themes_registry",
+      "target": "components_themes_geometricabstracttheme",
       "confidence_score": 1.0
     },
     {
@@ -19091,7 +19729,7 @@
       "context": "collection",
       "confidence": "INFERRED",
       "source_file": "lib/themes/registry.tsx",
-      "source_location": "L371",
+      "source_location": "L419",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_themes_registry_getthemeconfig",
@@ -20562,5 +21200,5 @@
       "source_file": "implementation.md"
     }
   ],
-  "built_at_commit": "3bdff0d72538d9893e2c1089200b226911d6920b"
+  "built_at_commit": "02f8778587f9db51967bf6b0a7eaba1ef8d9e44b"
 }
