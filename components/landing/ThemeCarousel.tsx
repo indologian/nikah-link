@@ -6,81 +6,30 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Eye, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const CATEGORIES = ["Semua", "Minimalis", "Floral", "Elegan", "Budaya", "Dark"];
+export interface ThemeProps {
+  id: string;
+  name: string;
+  slug: string;
+  category: string;
+  colors?: any;
+  thumbnail_url?: string;
+  is_premium?: boolean;
+}
 
-const THEMES = [
-  {
-    id: "sakura-bloom",
-    name: "Sakura Bloom",
-    category: "Floral",
-    bg: "bg-pink-50/80",
-    textColor: "text-slate-800",
-    badge: "Populer",
-  },
-  {
-    id: "midnight-luxe",
-    name: "Midnight Luxe",
-    category: "Dark",
-    bg: "bg-slate-900",
-    textColor: "text-white",
-    badge: "Premium",
-  },
-  {
-    id: "javanese-heritage",
-    name: "Javanese Heritage",
-    category: "Budaya",
-    bg: "bg-amber-50/80",
-    textColor: "text-slate-800",
-    badge: "Baru",
-  },
-  {
-    id: "minimalist-clean",
-    name: "Minimalist Clean",
-    category: "Minimalis",
-    bg: "bg-slate-100",
-    textColor: "text-slate-800",
-    badge: null,
-  },
-  {
-    id: "tropical-garden",
-    name: "Tropical Garden",
-    category: "Floral",
-    bg: "bg-emerald-50/80",
-    textColor: "text-slate-800",
-    badge: "Populer",
-  },
-  {
-    id: "golden-arch",
-    name: "Golden Arch",
-    category: "Elegan",
-    bg: "bg-amber-100/50",
-    textColor: "text-slate-800",
-    badge: "Premium",
-  },
-  {
-    id: "rustic-charm",
-    name: "Rustic Charm",
-    category: "Minimalis",
-    bg: "bg-stone-100",
-    textColor: "text-slate-800",
-    badge: null,
-  },
-  {
-    id: "royal-blue",
-    name: "Royal Blue",
-    category: "Elegan",
-    bg: "bg-indigo-950",
-    textColor: "text-white",
-    badge: "Baru",
-  },
-];
+const DEFAULT_CATEGORIES = ["Semua", "Minimalis", "Floral", "Elegan", "Budaya", "Dark"];
 
-export default function ThemeCarousel() {
+export default function ThemeCarousel({ themes = [] }: { themes?: ThemeProps[] }) {
   const [activeCategory, setActiveCategory] = useState("Semua");
 
+  const categories = ["Semua", ...Array.from(new Set(themes.map(t => t.category).filter(Boolean)))];
+
   const filtered = activeCategory === "Semua"
-    ? THEMES
-    : THEMES.filter((t) => t.category === activeCategory);
+    ? themes
+    : themes.filter((t) => t.category === activeCategory);
+
+  if (!themes || themes.length === 0) {
+    return null;
+  }
 
   return (
     <section className="w-full pt-16 pb-20 bg-white dark:bg-slate-950 transition-colors border-b border-slate-200 dark:border-slate-800">
@@ -105,9 +54,8 @@ export default function ThemeCarousel() {
           </Link>
         </div>
 
-        {/* Categories (F2 Tabbed Panel Pattern style) */}
         <div className="flex flex-wrap gap-2 mb-12 border-b border-slate-200 dark:border-slate-800 pb-4">
-          {CATEGORIES.map((cat) => (
+          {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
@@ -136,25 +84,40 @@ export default function ThemeCarousel() {
                 key={theme.id}
                 className="group relative overflow-hidden aspect-[3/4] bg-white dark:bg-slate-950"
               >
-                {/* Simulated Visual Content */}
-                <div className={cn("absolute inset-0 transition-transform duration-700 group-hover:scale-105 flex flex-col justify-center items-center text-center p-8", theme.bg)}>
-                  <span className={`text-[10px] uppercase tracking-[0.2em] font-medium block mb-2 ${theme.textColor === 'text-white' ? 'text-white/60' : 'text-slate-500'}`}>
+                {/* Real Visual Content using colors */}
+                <div 
+                  className="absolute inset-0 transition-transform duration-700 group-hover:scale-105 flex flex-col justify-center items-center text-center p-8"
+                  style={{
+                    backgroundColor: theme.colors?.background || '#f8fafc',
+                    color: theme.colors?.text || '#0f172a'
+                  }}
+                >
+                  {theme.thumbnail_url ? (
+                    <img src={theme.thumbnail_url} alt={theme.name} className="absolute inset-0 w-full h-full object-cover opacity-50" />
+                  ) : null}
+                  <span 
+                    className="text-[10px] uppercase tracking-[0.2em] font-medium block mb-2 relative z-10"
+                    style={{ color: theme.colors?.accent || 'inherit' }}
+                  >
                     The Wedding of
                   </span>
-                  <h4 className={`font-playfair text-2xl sm:text-3xl font-bold leading-tight ${theme.textColor}`}>
+                  <h4 className="font-playfair text-2xl sm:text-3xl font-bold leading-tight relative z-10">
                     Romeo <br/>& Juliet
                   </h4>
-                  <div className={`w-8 h-px mx-auto my-4 ${theme.textColor === 'text-white' ? 'bg-white/20' : 'bg-black/10'}`} />
-                  <p className={`text-xs ${theme.textColor === 'text-white' ? 'text-white/70' : 'text-slate-500'}`}>
+                  <div 
+                    className="w-8 h-px mx-auto my-4 relative z-10" 
+                    style={{ backgroundColor: theme.colors?.primary || '#0f172a', opacity: 0.3 }} 
+                  />
+                  <p className="text-xs relative z-10 opacity-70">
                     24 Oktober 2026
                   </p>
                 </div>
 
                 {/* Badges */}
-                {theme.badge && (
-                  <div className="absolute top-4 left-4">
+                {theme.is_premium && (
+                  <div className="absolute top-4 left-4 z-20">
                     <span className="px-3 py-1 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md text-[10px] uppercase font-bold tracking-wider text-slate-900 dark:text-white border border-slate-200/50 dark:border-slate-800/50">
-                      {theme.badge}
+                      Premium
                     </span>
                   </div>
                 )}

@@ -35,6 +35,11 @@ export default async function HomePage() {
     showFaq: true,
   };
 
+  const { data: themes } = await supabase
+    .from("themes")
+    .select("*")
+    .order("created_at", { ascending: false });
+
   const config = { ...defaultConfig, ...(settings?.config || {}) };
 
   return (
@@ -43,7 +48,7 @@ export default async function HomePage() {
       {config.showHero && <HeroSection />}
       {config.showWhy && <WhySection />}
       {config.showFeatures && <FeaturesSection />}
-      {config.showThemes && <ThemeCarousel />}
+      {config.showThemes && <ThemeCarousel themes={themes || []} />}
       {config.showHowItWorks && <HowItWorks />}
       {config.showTestimonial && <TestimonialSection />}
       {config.showPricing && <PricingSection />}
