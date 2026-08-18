@@ -344,6 +344,18 @@ export default function EditInvitationPage() {
   };
 
   const handleNext = () => {
+    if (STEPS[currentStep].id === "theme") {
+      const selectedThemeConfig = getThemeConfig(formData.theme_slug);
+      if (selectedThemeConfig.fields && selectedThemeConfig.fields.length > 0) {
+        for (const field of selectedThemeConfig.fields) {
+          if (!formData.custom_data || !formData.custom_data[field.name]) {
+            setError(`Mohon isi field "${field.label}" pada pengaturan khusus tema.`);
+            return;
+          }
+        }
+      }
+    }
+
     if (STEPS[currentStep].id === "basic") {
       if (!formData.bride_name || !formData.groom_name || !formData.username) {
         setError("Nama pengantin dan URL undangan wajib diisi!");
