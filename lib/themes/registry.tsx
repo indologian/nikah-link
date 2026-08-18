@@ -77,6 +77,18 @@ const ModernMonochromeTheme = dynamic(() => import('@/components/themes/ModernMo
   loading: () => <div className="min-h-screen flex items-center justify-center bg-[#111111]"><div className="w-8 h-8 border-4 border-white/30 border-t-white rounded-full animate-spin"></div></div>
 });
 
+const CosmicStarlightTheme = dynamic(() => import('@/components/themes/CosmicStarlightTheme'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center bg-[#050510]"><div className="w-8 h-8 border-4 border-[#A0A0FF]/30 border-t-[#A0A0FF] rounded-full animate-spin"></div></div>
+});
+
+const EtherealWatercolorTheme = dynamic(() => import('@/components/themes/EtherealWatercolorTheme'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center bg-[#FDFBF7]"><div className="w-8 h-8 border-4 border-[#FAD2E1]/30 border-t-[#FAD2E1] rounded-full animate-spin"></div></div>
+});
+
+const HeritageGununganTheme = dynamic(() => import('@/components/themes/HeritageGununganTheme'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center bg-[#1F1010]"><div className="w-8 h-8 border-4 border-[#D4AF37]/30 border-t-[#D4AF37] rounded-full animate-spin"></div></div>
+});
+
 // A fallback component if a theme is not found
 const FallbackTheme = ({ invitation }: { invitation: any }) => (
   <div className="min-h-screen flex items-center justify-center flex-col gap-4 p-8 text-center bg-white">
@@ -263,6 +275,42 @@ export const themesConfig: Record<string, ThemeConfig> = {
         label: "Kutipan",
         type: "textarea",
         placeholder: "Elegance in simplicity..."
+      }
+    ]
+  },
+  "cosmic-starlight": {
+    slug: "cosmic-starlight",
+    component: CosmicStarlightTheme,
+    fields: [
+      {
+        name: "quote",
+        label: "Kutipan",
+        type: "textarea",
+        placeholder: "Written in the stars..."
+      }
+    ]
+  },
+  "ethereal-watercolor": {
+    slug: "ethereal-watercolor",
+    component: EtherealWatercolorTheme,
+    fields: [
+      {
+        name: "quote",
+        label: "Kutipan",
+        type: "textarea",
+        placeholder: "A dream painted in reality..."
+      }
+    ]
+  },
+  "heritage-gunungan": {
+    slug: "heritage-gunungan",
+    component: HeritageGununganTheme,
+    fields: [
+      {
+        name: "quote",
+        label: "Kutipan",
+        type: "textarea",
+        placeholder: "Pahargyan Ageng..."
       }
     ]
   }

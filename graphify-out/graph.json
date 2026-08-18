@@ -113,19 +113,6 @@
   },
   "nodes": [
     {
-      "label": "SettingsClientProps",
-      "file_type": "code",
-      "source_file": "app/admin/settings/SettingsClient.tsx",
-      "source_location": "L9",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "app_admin_settings_settingsclient_settingsclientprops",
-      "community": 0,
-      "community_name": "createClient",
-      "norm_label": "settingsclientprops"
-    },
-    {
       "label": "GiftAccount",
       "file_type": "code",
       "source_file": "app/dashboard/kado/GiftClient.tsx",
@@ -189,6 +176,45 @@
       "community": 0,
       "community_name": "createClient",
       "norm_label": "props"
+    },
+    {
+      "label": "Lead",
+      "file_type": "code",
+      "source_file": "app/admin/leads/LeadsClient.tsx",
+      "source_location": "L6",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "app_admin_leads_leadsclient_lead",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "lead"
+    },
+    {
+      "label": "AlertModalProps",
+      "file_type": "code",
+      "source_file": "components/dashboard/AlertModal.tsx",
+      "source_location": "L7",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "components_dashboard_alertmodal_alertmodalprops",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "alertmodalprops"
+    },
+    {
+      "label": "PaginationProps",
+      "file_type": "code",
+      "source_file": "components/ui/Pagination.tsx",
+      "source_location": "L6",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "components_ui_pagination_paginationprops",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "paginationprops"
     },
     {
       "label": "BlogPost",
@@ -269,6 +295,19 @@
       "norm_label": "gifttransaction"
     },
     {
+      "label": "Guest",
+      "file_type": "code",
+      "source_file": "types/index.ts",
+      "source_location": "L103",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "types_index_guest",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "guest"
+    },
+    {
       "label": "InvitationStatus",
       "file_type": "code",
       "source_file": "types/index.ts",
@@ -295,6 +334,19 @@
       "norm_label": "plan"
     },
     {
+      "label": "Profile",
+      "file_type": "code",
+      "source_file": "types/index.ts",
+      "source_location": "L28",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "types_index_profile",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "profile"
+    },
+    {
       "label": "RsvpStatus",
       "file_type": "code",
       "source_file": "types/index.ts",
@@ -319,6 +371,19 @@
       "community": 1,
       "community_name": "index.ts",
       "norm_label": "session"
+    },
+    {
+      "label": "Theme",
+      "file_type": "code",
+      "source_file": "types/index.ts",
+      "source_location": "L39",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "types_index_theme",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "theme"
     },
     {
       "label": "Transaction",
@@ -373,56 +438,56 @@
       "norm_label": "wish"
     },
     {
-      "label": "Window",
+      "label": "Props",
       "file_type": "code",
-      "source_file": "app/harga/page.tsx",
-      "source_location": "L13",
+      "source_file": "app/dashboard/DashboardClient.tsx",
+      "source_location": "L14",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "id": "app_harga_page_window",
-      "community": 11,
-      "community_name": "harga/page.tsx",
-      "norm_label": "window"
+      "id": "app_dashboard_dashboardclient_props",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "props"
     },
     {
-      "label": "Plan",
+      "label": "Props",
       "file_type": "code",
-      "source_file": "components/landing/PricingSection.tsx",
+      "source_file": "components/dashboard/CountdownLabel.tsx",
+      "source_location": "L6",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "components_dashboard_countdownlabel_props",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "props"
+    },
+    {
+      "label": "Invitation",
+      "file_type": "code",
+      "source_file": "types/index.ts",
+      "source_location": "L57",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "types_index_invitation",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "invitation"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "components/themes/CosmicStarlightTheme.tsx",
       "source_location": "L19",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "id": "components_landing_pricingsection_plan",
+      "id": "components_themes_cosmicstarlighttheme_props",
       "community": 11,
-      "community_name": "harga/page.tsx",
-      "norm_label": "plan"
-    },
-    {
-      "label": "PlanFeature",
-      "file_type": "code",
-      "source_file": "components/landing/PricingSection.tsx",
-      "source_location": "L13",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "components_landing_pricingsection_planfeature",
-      "community": 11,
-      "community_name": "harga/page.tsx",
-      "norm_label": "planfeature"
-    },
-    {
-      "label": "PricingSectionProps",
-      "file_type": "code",
-      "source_file": "components/landing/PricingSection.tsx",
-      "source_location": "L8",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "components_landing_pricingsection_pricingsectionprops",
-      "community": 11,
-      "community_name": "harga/page.tsx",
-      "norm_label": "pricingsectionprops"
+      "community_name": "CosmicStarlightTheme.tsx",
+      "norm_label": "props"
     },
     {
       "label": "Props",
@@ -438,17 +503,17 @@
       "norm_label": "props"
     },
     {
-      "label": "Props",
+      "label": "SettingsClientProps",
       "file_type": "code",
-      "source_file": "components/dashboard/CountdownLabel.tsx",
-      "source_location": "L6",
+      "source_file": "app/admin/settings/SettingsClient.tsx",
+      "source_location": "L9",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "id": "components_dashboard_countdownlabel_props",
+      "id": "app_admin_settings_settingsclient_settingsclientprops",
       "community": 13,
       "community_name": "baru/page.tsx",
-      "norm_label": "props"
+      "norm_label": "settingsclientprops"
     },
     {
       "label": "CreateInvitationButtonProps",
@@ -492,6 +557,19 @@
     {
       "label": "Props",
       "file_type": "code",
+      "source_file": "components/themes/HeritageGununganTheme.tsx",
+      "source_location": "L15",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "components_themes_heritagegunungantheme_props",
+      "community": 20,
+      "community_name": "HeritageGununganTheme.tsx",
+      "norm_label": "props"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
       "source_file": "components/themes/MagazineCoverTheme.tsx",
       "source_location": "L19",
       "_callable": true,
@@ -518,6 +596,19 @@
     {
       "label": "Props",
       "file_type": "code",
+      "source_file": "components/themes/ElegantBlushTheme.tsx",
+      "source_location": "L12",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "components_themes_elegantblushtheme_props",
+      "community": 25,
+      "community_name": "registry.tsx",
+      "norm_label": "props"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
       "source_file": "components/themes/LineArtBotanicalTheme.tsx",
       "source_location": "L14",
       "_callable": true,
@@ -525,8 +616,73 @@
       "_origin": "ast",
       "id": "components_themes_lineartbotanicaltheme_props",
       "community": 25,
-      "community_name": "LineArtBotanicalTheme.tsx",
+      "community_name": "registry.tsx",
       "norm_label": "props"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "components/themes/MidnightSparkleTheme.tsx",
+      "source_location": "L13",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "components_themes_midnightsparkletheme_props",
+      "community": 25,
+      "community_name": "registry.tsx",
+      "norm_label": "props"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "components/themes/RoyalBotanicalTheme.tsx",
+      "source_location": "L13",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "components_themes_royalbotanicaltheme_props",
+      "community": 25,
+      "community_name": "registry.tsx",
+      "norm_label": "props"
+    },
+    {
+      "label": "FieldType",
+      "file_type": "code",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L3",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "lib_themes_registry_fieldtype",
+      "community": 25,
+      "community_name": "registry.tsx",
+      "norm_label": "fieldtype"
+    },
+    {
+      "label": "ThemeConfig",
+      "file_type": "code",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L13",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "lib_themes_registry_themeconfig",
+      "community": 25,
+      "community_name": "registry.tsx",
+      "norm_label": "themeconfig"
+    },
+    {
+      "label": "ThemeField",
+      "file_type": "code",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L5",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "lib_themes_registry_themefield",
+      "community": 25,
+      "community_name": "registry.tsx",
+      "norm_label": "themefield"
     },
     {
       "label": "Props",
@@ -542,160 +698,82 @@
       "norm_label": "props"
     },
     {
-      "label": "Props",
+      "label": "Window",
       "file_type": "code",
-      "source_file": "components/themes/ElegantBlushTheme.tsx",
-      "source_location": "L12",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "components_themes_elegantblushtheme_props",
-      "community": 36,
-      "community_name": "ElegantBlushTheme.tsx",
-      "norm_label": "props"
-    },
-    {
-      "label": "Props",
-      "file_type": "code",
-      "source_file": "components/themes/RoyalBotanicalTheme.tsx",
+      "source_file": "app/harga/page.tsx",
       "source_location": "L13",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "id": "components_themes_royalbotanicaltheme_props",
-      "community": 38,
-      "community_name": "createClient",
-      "norm_label": "props"
+      "id": "app_harga_page_window",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "window"
+    },
+    {
+      "label": "Plan",
+      "file_type": "code",
+      "source_file": "components/landing/PricingSection.tsx",
+      "source_location": "L19",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "components_landing_pricingsection_plan",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "plan"
+    },
+    {
+      "label": "PlanFeature",
+      "file_type": "code",
+      "source_file": "components/landing/PricingSection.tsx",
+      "source_location": "L13",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "components_landing_pricingsection_planfeature",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "planfeature"
+    },
+    {
+      "label": "PricingSectionProps",
+      "file_type": "code",
+      "source_file": "components/landing/PricingSection.tsx",
+      "source_location": "L8",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "components_landing_pricingsection_pricingsectionprops",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "pricingsectionprops"
+    },
+    {
+      "label": "ThemeProps",
+      "file_type": "code",
+      "source_file": "components/landing/ThemeCarousel.tsx",
+      "source_location": "L9",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "components_landing_themecarousel_themeprops",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "themeprops"
     },
     {
       "label": "Props",
       "file_type": "code",
-      "source_file": "components/themes/SereinWhiteTheme.tsx",
-      "source_location": "L12",
+      "source_file": "components/themes/EtherealWatercolorTheme.tsx",
+      "source_location": "L16",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "id": "components_themes_sereinwhitetheme_props",
-      "community": 38,
-      "community_name": "createClient",
-      "norm_label": "props"
-    },
-    {
-      "label": "Props",
-      "file_type": "code",
-      "source_file": "components/themes/WayangClassicTheme.tsx",
-      "source_location": "L12",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "components_themes_wayangclassictheme_props",
-      "community": 38,
-      "community_name": "createClient",
-      "norm_label": "props"
-    },
-    {
-      "label": "Props",
-      "file_type": "code",
-      "source_file": "app/dashboard/DashboardClient.tsx",
-      "source_location": "L14",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "app_dashboard_dashboardclient_props",
-      "community": 39,
-      "community_name": "DashboardClient.tsx",
-      "norm_label": "props"
-    },
-    {
-      "label": "Invitation",
-      "file_type": "code",
-      "source_file": "types/index.ts",
-      "source_location": "L57",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "types_index_invitation",
-      "community": 39,
-      "community_name": "DashboardClient.tsx",
-      "norm_label": "invitation"
-    },
-    {
-      "label": "AlertModalProps",
-      "file_type": "code",
-      "source_file": "components/dashboard/AlertModal.tsx",
-      "source_location": "L7",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "components_dashboard_alertmodal_alertmodalprops",
-      "community": 40,
-      "community_name": "tamu/page.tsx",
-      "norm_label": "alertmodalprops"
-    },
-    {
-      "label": "Guest",
-      "file_type": "code",
-      "source_file": "types/index.ts",
-      "source_location": "L103",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "types_index_guest",
-      "community": 40,
-      "community_name": "tamu/page.tsx",
-      "norm_label": "guest"
-    },
-    {
-      "label": "PaginationProps",
-      "file_type": "code",
-      "source_file": "components/ui/Pagination.tsx",
-      "source_location": "L6",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "components_ui_pagination_paginationprops",
+      "id": "components_themes_etherealwatercolortheme_props",
       "community": 7,
-      "community_name": "Pagination.tsx",
-      "norm_label": "paginationprops"
-    },
-    {
-      "label": "Lead",
-      "file_type": "code",
-      "source_file": "app/admin/leads/LeadsClient.tsx",
-      "source_location": "L6",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "app_admin_leads_leadsclient_lead",
-      "community": 86,
-      "community_name": "leads/page.tsx",
-      "norm_label": "lead"
-    },
-    {
-      "label": "Theme",
-      "file_type": "code",
-      "source_file": "types/index.ts",
-      "source_location": "L39",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "types_index_theme",
-      "community": 87,
-      "community_name": "ThemesClient.tsx",
-      "norm_label": "theme"
-    },
-    {
-      "label": "Profile",
-      "file_type": "code",
-      "source_file": "types/index.ts",
-      "source_location": "L28",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "types_index_profile",
-      "community": 88,
-      "community_name": "UsersClient.tsx",
-      "norm_label": "profile"
+      "community_name": "EtherealWatercolorTheme.tsx",
+      "norm_label": "props"
     },
     {
       "label": "Props",
@@ -713,19 +791,6 @@
     {
       "label": "Props",
       "file_type": "code",
-      "source_file": "components/themes/MidnightSparkleTheme.tsx",
-      "source_location": "L13",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "components_themes_midnightsparkletheme_props",
-      "community": 9,
-      "community_name": "registry.tsx",
-      "norm_label": "props"
-    },
-    {
-      "label": "Props",
-      "file_type": "code",
       "source_file": "components/themes/MinimalistTheme.tsx",
       "source_location": "L14",
       "_callable": true,
@@ -733,7 +798,20 @@
       "_origin": "ast",
       "id": "components_themes_minimalisttheme_props",
       "community": 9,
-      "community_name": "registry.tsx",
+      "community_name": "createClient",
+      "norm_label": "props"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "components/themes/SereinWhiteTheme.tsx",
+      "source_location": "L12",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "id": "components_themes_sereinwhitetheme_props",
+      "community": 9,
+      "community_name": "createClient",
       "norm_label": "props"
     },
     {
@@ -746,47 +824,21 @@
       "_origin": "ast",
       "id": "components_themes_vintageelegancetheme_props",
       "community": 9,
-      "community_name": "registry.tsx",
+      "community_name": "createClient",
       "norm_label": "props"
     },
     {
-      "label": "FieldType",
+      "label": "Props",
       "file_type": "code",
-      "source_file": "lib/themes/registry.tsx",
-      "source_location": "L3",
+      "source_file": "components/themes/WayangClassicTheme.tsx",
+      "source_location": "L12",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "id": "lib_themes_registry_fieldtype",
+      "id": "components_themes_wayangclassictheme_props",
       "community": 9,
-      "community_name": "registry.tsx",
-      "norm_label": "fieldtype"
-    },
-    {
-      "label": "ThemeConfig",
-      "file_type": "code",
-      "source_file": "lib/themes/registry.tsx",
-      "source_location": "L13",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "lib_themes_registry_themeconfig",
-      "community": 9,
-      "community_name": "registry.tsx",
-      "norm_label": "themeconfig"
-    },
-    {
-      "label": "ThemeField",
-      "file_type": "code",
-      "source_file": "lib/themes/registry.tsx",
-      "source_location": "L5",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "lib_themes_registry_themefield",
-      "community": 9,
-      "community_name": "registry.tsx",
-      "norm_label": "themefield"
+      "community_name": "createClient",
+      "norm_label": "props"
     },
     {
       "label": "Props",
@@ -815,19 +867,6 @@
       "norm_label": "props"
     },
     {
-      "label": "ThemeProps",
-      "file_type": "code",
-      "source_file": "components/landing/ThemeCarousel.tsx",
-      "source_location": "L9",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "id": "components_landing_themecarousel_themeprops",
-      "community": 93,
-      "community_name": "ThemeCarousel.tsx",
-      "norm_label": "themeprops"
-    },
-    {
       "label": "submitLead()",
       "file_type": "code",
       "source_file": "app/actions/leads.ts",
@@ -838,30 +877,6 @@
       "community": 0,
       "community_name": "createClient",
       "norm_label": "submitlead()"
-    },
-    {
-      "label": "SettingsPage()",
-      "file_type": "code",
-      "source_file": "app/admin/settings/page.tsx",
-      "source_location": "L9",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_admin_settings_page_settingspage",
-      "community": 0,
-      "community_name": "createClient",
-      "norm_label": "settingspage()"
-    },
-    {
-      "label": "SettingsClient()",
-      "file_type": "code",
-      "source_file": "app/admin/settings/SettingsClient.tsx",
-      "source_location": "L39",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_admin_settings_settingsclient_settingsclient",
-      "community": 0,
-      "community_name": "createClient",
-      "norm_label": "settingsclient()"
     },
     {
       "label": "DELETE()",
@@ -1056,18 +1071,6 @@
       "norm_label": "vendorlayout()"
     },
     {
-      "label": "DeleteAccountSection()",
-      "file_type": "code",
-      "source_file": "components/dashboard/DeleteAccountSection.tsx",
-      "source_location": "L8",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_dashboard_deleteaccountsection_deleteaccountsection",
-      "community": 0,
-      "community_name": "createClient",
-      "norm_label": "deleteaccountsection()"
-    },
-    {
       "label": "LeadMagnetSection()",
       "file_type": "code",
       "source_file": "components/landing/LeadMagnetSection.tsx",
@@ -1104,6 +1107,246 @@
       "norm_label": "createclient()"
     },
     {
+      "label": "CountdownStatus()",
+      "file_type": "code",
+      "source_file": "app/admin/invitations/InvitationsClient.tsx",
+      "source_location": "L9",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_admin_invitations_invitationsclient_countdownstatus",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "countdownstatus()"
+    },
+    {
+      "label": "InvitationsClient()",
+      "file_type": "code",
+      "source_file": "app/admin/invitations/InvitationsClient.tsx",
+      "source_location": "L57",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_admin_invitations_invitationsclient_invitationsclient",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "invitationsclient()"
+    },
+    {
+      "label": "AdminInvitationsPage()",
+      "file_type": "code",
+      "source_file": "app/admin/invitations/page.tsx",
+      "source_location": "L7",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_admin_invitations_page_admininvitationspage",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "admininvitationspage()"
+    },
+    {
+      "label": "LeadsClient()",
+      "file_type": "code",
+      "source_file": "app/admin/leads/LeadsClient.tsx",
+      "source_location": "L14",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_admin_leads_leadsclient_leadsclient",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "leadsclient()"
+    },
+    {
+      "label": "LeadsPage()",
+      "file_type": "code",
+      "source_file": "app/admin/leads/page.tsx",
+      "source_location": "L10",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_admin_leads_page_leadspage",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "leadspage()"
+    },
+    {
+      "label": "AdminThemesPage()",
+      "file_type": "code",
+      "source_file": "app/admin/themes/page.tsx",
+      "source_location": "L7",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_admin_themes_page_adminthemespage",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "adminthemespage()"
+    },
+    {
+      "label": "ThemesClient()",
+      "file_type": "code",
+      "source_file": "app/admin/themes/ThemesClient.tsx",
+      "source_location": "L9",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_admin_themes_themesclient_themesclient",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "themesclient()"
+    },
+    {
+      "label": "AdminUsersPage()",
+      "file_type": "code",
+      "source_file": "app/admin/users/page.tsx",
+      "source_location": "L7",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_admin_users_page_adminuserspage",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "adminuserspage()"
+    },
+    {
+      "label": "UsersClient()",
+      "file_type": "code",
+      "source_file": "app/admin/users/UsersClient.tsx",
+      "source_location": "L9",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_admin_users_usersclient_usersclient",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "usersclient()"
+    },
+    {
+      "label": "GuestManagementPage()",
+      "file_type": "code",
+      "source_file": "app/dashboard/tamu/page.tsx",
+      "source_location": "L16",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_dashboard_tamu_page_guestmanagementpage",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "guestmanagementpage()"
+    },
+    {
+      "label": "loadData()",
+      "file_type": "code",
+      "source_file": "app/dashboard/tamu/page.tsx",
+      "source_location": "L69",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_dashboard_tamu_page_guestmanagementpage_loaddata",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "loaddata()"
+    },
+    {
+      "label": "loadGuests()",
+      "file_type": "code",
+      "source_file": "app/dashboard/tamu/page.tsx",
+      "source_location": "L98",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_dashboard_tamu_page_guestmanagementpage_loadguests",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "loadguests()"
+    },
+    {
+      "label": "AlertModal()",
+      "file_type": "code",
+      "source_file": "components/dashboard/AlertModal.tsx",
+      "source_location": "L14",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_dashboard_alertmodal_alertmodal",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "alertmodal()"
+    },
+    {
+      "label": "Pagination()",
+      "file_type": "code",
+      "source_file": "components/ui/Pagination.tsx",
+      "source_location": "L19",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_ui_pagination_pagination",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "pagination()"
+    },
+    {
+      "label": "DashboardClient()",
+      "file_type": "code",
+      "source_file": "app/dashboard/DashboardClient.tsx",
+      "source_location": "L82",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_dashboard_dashboardclient_dashboardclient",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "dashboardclient()"
+    },
+    {
+      "label": "PlanBadge()",
+      "file_type": "code",
+      "source_file": "app/dashboard/DashboardClient.tsx",
+      "source_location": "L24",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_dashboard_dashboardclient_planbadge",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "planbadge()"
+    },
+    {
+      "label": "StatCard()",
+      "file_type": "code",
+      "source_file": "app/dashboard/DashboardClient.tsx",
+      "source_location": "L55",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_dashboard_dashboardclient_statcard",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "statcard()"
+    },
+    {
+      "label": "MyInvitationsPage()",
+      "file_type": "code",
+      "source_file": "app/dashboard/undangan/page.tsx",
+      "source_location": "L10",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_dashboard_undangan_page_myinvitationspage",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "myinvitationspage()"
+    },
+    {
+      "label": "CountdownLabel()",
+      "file_type": "code",
+      "source_file": "components/dashboard/CountdownLabel.tsx",
+      "source_location": "L11",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_dashboard_countdownlabel_countdownlabel",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "countdownlabel()"
+    },
+    {
+      "label": "DeleteButton()",
+      "file_type": "code",
+      "source_file": "components/dashboard/DeleteButton.tsx",
+      "source_location": "L10",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_dashboard_deletebutton_deletebutton",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "deletebutton()"
+    },
+    {
       "label": "formatCurrency()",
       "file_type": "code",
       "source_file": "lib/utils.ts",
@@ -1114,6 +1357,18 @@
       "community": 10,
       "community_name": "utils.ts",
       "norm_label": "formatcurrency()"
+    },
+    {
+      "label": "formatDate()",
+      "file_type": "code",
+      "source_file": "lib/utils.ts",
+      "source_location": "L8",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "lib_utils_formatdate",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "formatdate()"
     },
     {
       "label": "formatDateShort()",
@@ -1164,6 +1419,18 @@
       "norm_label": "getdaysuntil()"
     },
     {
+      "label": "getInitials()",
+      "file_type": "code",
+      "source_file": "lib/utils.ts",
+      "source_location": "L73",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "lib_utils_getinitials",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "getinitials()"
+    },
+    {
       "label": "getStorageUrl()",
       "file_type": "code",
       "source_file": "lib/utils.ts",
@@ -1200,28 +1467,16 @@
       "norm_label": "truncate()"
     },
     {
-      "label": "PricingPage()",
+      "label": "CosmicStarlightTheme()",
       "file_type": "code",
-      "source_file": "app/harga/page.tsx",
-      "source_location": "L18",
+      "source_file": "components/themes/CosmicStarlightTheme.tsx",
+      "source_location": "L29",
       "_callable": true,
       "_origin": "ast",
-      "id": "app_harga_page_pricingpage",
+      "id": "components_themes_cosmicstarlighttheme_cosmicstarlighttheme",
       "community": 11,
-      "community_name": "harga/page.tsx",
-      "norm_label": "pricingpage()"
-    },
-    {
-      "label": "PricingSection()",
-      "file_type": "code",
-      "source_file": "components/landing/PricingSection.tsx",
-      "source_location": "L98",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_landing_pricingsection_pricingsection",
-      "community": 11,
-      "community_name": "harga/page.tsx",
-      "norm_label": "pricingsection()"
+      "community_name": "CosmicStarlightTheme.tsx",
+      "norm_label": "cosmicstarlighttheme()"
     },
     {
       "label": "JavaneseBatikTheme()",
@@ -1234,6 +1489,30 @@
       "community": 12,
       "community_name": "JavaneseBatikTheme.tsx",
       "norm_label": "javanesebatiktheme()"
+    },
+    {
+      "label": "SettingsPage()",
+      "file_type": "code",
+      "source_file": "app/admin/settings/page.tsx",
+      "source_location": "L9",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_admin_settings_page_settingspage",
+      "community": 13,
+      "community_name": "baru/page.tsx",
+      "norm_label": "settingspage()"
+    },
+    {
+      "label": "SettingsClient()",
+      "file_type": "code",
+      "source_file": "app/admin/settings/SettingsClient.tsx",
+      "source_location": "L39",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_admin_settings_settingsclient_settingsclient",
+      "community": 13,
+      "community_name": "baru/page.tsx",
+      "norm_label": "settingsclient()"
     },
     {
       "label": "NewInvitationPage()",
@@ -1272,30 +1551,6 @@
       "norm_label": "editinvitationpage()"
     },
     {
-      "label": "MyInvitationsPage()",
-      "file_type": "code",
-      "source_file": "app/dashboard/undangan/page.tsx",
-      "source_location": "L10",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_dashboard_undangan_page_myinvitationspage",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "myinvitationspage()"
-    },
-    {
-      "label": "CountdownLabel()",
-      "file_type": "code",
-      "source_file": "components/dashboard/CountdownLabel.tsx",
-      "source_location": "L11",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_dashboard_countdownlabel_countdownlabel",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "countdownlabel()"
-    },
-    {
       "label": "CreateInvitationButton()",
       "file_type": "code",
       "source_file": "components/dashboard/CreateInvitationButton.tsx",
@@ -1306,18 +1561,6 @@
       "community": 13,
       "community_name": "baru/page.tsx",
       "norm_label": "createinvitationbutton()"
-    },
-    {
-      "label": "DeleteButton()",
-      "file_type": "code",
-      "source_file": "components/dashboard/DeleteButton.tsx",
-      "source_location": "L10",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_dashboard_deletebutton_deletebutton",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "deletebutton()"
     },
     {
       "label": "UpsellModal()",
@@ -1371,7 +1614,7 @@
       "label": "FallbackTheme()",
       "file_type": "code",
       "source_file": "lib/themes/registry.tsx",
-      "source_location": "L81",
+      "source_location": "L93",
       "_callable": true,
       "_origin": "ast",
       "id": "lib_themes_registry_fallbacktheme",
@@ -1383,25 +1626,13 @@
       "label": "getThemeConfig()",
       "file_type": "code",
       "source_file": "lib/themes/registry.tsx",
-      "source_location": "L271",
+      "source_location": "L319",
       "_callable": true,
       "_origin": "ast",
       "id": "lib_themes_registry_getthemeconfig",
       "community": 13,
       "community_name": "baru/page.tsx",
       "norm_label": "getthemeconfig()"
-    },
-    {
-      "label": "formatDate()",
-      "file_type": "code",
-      "source_file": "lib/utils.ts",
-      "source_location": "L8",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "lib_utils_formatdate",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "formatdate()"
     },
     {
       "label": "AdminLayout()",
@@ -1412,20 +1643,8 @@
       "_origin": "ast",
       "id": "app_admin_layout_adminlayout",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "cn",
       "norm_label": "adminlayout()"
-    },
-    {
-      "label": "RegisterPage()",
-      "file_type": "code",
-      "source_file": "app/daftar/page.tsx",
-      "source_location": "L17",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_daftar_page_registerpage",
-      "community": 14,
-      "community_name": "client.ts",
-      "norm_label": "registerpage()"
     },
     {
       "label": "LoginPage()",
@@ -1436,7 +1655,7 @@
       "_origin": "ast",
       "id": "app_masuk_page_loginpage",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "cn",
       "norm_label": "loginpage()"
     },
     {
@@ -1448,7 +1667,7 @@
       "_origin": "ast",
       "id": "components_admin_sidebar_adminsidebar",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "cn",
       "norm_label": "adminsidebar()"
     },
     {
@@ -1460,7 +1679,7 @@
       "_origin": "ast",
       "id": "components_dashboard_sidebar_sidebar",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "cn",
       "norm_label": "sidebar()"
     },
     {
@@ -1472,7 +1691,7 @@
       "_origin": "ast",
       "id": "components_dashboard_sidebar_sidebar_fetchplanandcount",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "cn",
       "norm_label": "fetchplanandcount()"
     },
     {
@@ -1484,7 +1703,7 @@
       "_origin": "ast",
       "id": "components_landing_navbar_navbar",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "cn",
       "norm_label": "navbar()"
     },
     {
@@ -1496,7 +1715,7 @@
       "_origin": "ast",
       "id": "components_themetoggle_themetoggle",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "cn",
       "norm_label": "themetoggle()"
     },
     {
@@ -1508,7 +1727,7 @@
       "_origin": "ast",
       "id": "lib_utils_cn",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "cn",
       "norm_label": "cn()"
     },
     {
@@ -1536,28 +1755,16 @@
       "norm_label": "themeprovider()"
     },
     {
-      "label": "VendorPage()",
+      "label": "HeritageGununganTheme()",
       "file_type": "code",
-      "source_file": "app/vendor/page.tsx",
-      "source_location": "L96",
+      "source_file": "components/themes/HeritageGununganTheme.tsx",
+      "source_location": "L25",
       "_callable": true,
       "_origin": "ast",
-      "id": "app_vendor_page_vendorpage",
+      "id": "components_themes_heritagegunungantheme_heritagegunungantheme",
       "community": 20,
-      "community_name": "vendor/page.tsx",
-      "norm_label": "vendorpage()"
-    },
-    {
-      "label": "VendorPreview()",
-      "file_type": "code",
-      "source_file": "components/landing/VendorPreview.tsx",
-      "source_location": "L48",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_landing_vendorpreview_vendorpreview",
-      "community": 20,
-      "community_name": "vendor/page.tsx",
-      "norm_label": "vendorpreview()"
+      "community_name": "HeritageGununganTheme.tsx",
+      "norm_label": "heritagegunungantheme()"
     },
     {
       "label": "MagazineCoverTheme()",
@@ -1584,6 +1791,18 @@
       "norm_label": "balineseharmonytheme()"
     },
     {
+      "label": "ElegantBlushTheme()",
+      "file_type": "code",
+      "source_file": "components/themes/ElegantBlushTheme.tsx",
+      "source_location": "L22",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_themes_elegantblushtheme_elegantblushtheme",
+      "community": 25,
+      "community_name": "registry.tsx",
+      "norm_label": "elegantblushtheme()"
+    },
+    {
       "label": "LineArtBotanicalTheme()",
       "file_type": "code",
       "source_file": "components/themes/LineArtBotanicalTheme.tsx",
@@ -1592,8 +1811,32 @@
       "_origin": "ast",
       "id": "components_themes_lineartbotanicaltheme_lineartbotanicaltheme",
       "community": 25,
-      "community_name": "LineArtBotanicalTheme.tsx",
+      "community_name": "registry.tsx",
       "norm_label": "lineartbotanicaltheme()"
+    },
+    {
+      "label": "MidnightSparkleTheme()",
+      "file_type": "code",
+      "source_file": "components/themes/MidnightSparkleTheme.tsx",
+      "source_location": "L23",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_themes_midnightsparkletheme_midnightsparkletheme",
+      "community": 25,
+      "community_name": "registry.tsx",
+      "norm_label": "midnightsparkletheme()"
+    },
+    {
+      "label": "RoyalBotanicalTheme()",
+      "file_type": "code",
+      "source_file": "components/themes/RoyalBotanicalTheme.tsx",
+      "source_location": "L23",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_themes_royalbotanicaltheme_royalbotanicaltheme",
+      "community": 25,
+      "community_name": "registry.tsx",
+      "norm_label": "royalbotanicaltheme()"
     },
     {
       "label": "RoyalGoldTheme()",
@@ -1704,162 +1947,6 @@
       "norm_label": "walkdir()"
     },
     {
-      "label": "ElegantBlushTheme()",
-      "file_type": "code",
-      "source_file": "components/themes/ElegantBlushTheme.tsx",
-      "source_location": "L22",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_themes_elegantblushtheme_elegantblushtheme",
-      "community": 36,
-      "community_name": "ElegantBlushTheme.tsx",
-      "norm_label": "elegantblushtheme()"
-    },
-    {
-      "label": "RoyalBotanicalTheme()",
-      "file_type": "code",
-      "source_file": "components/themes/RoyalBotanicalTheme.tsx",
-      "source_location": "L23",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_themes_royalbotanicaltheme_royalbotanicaltheme",
-      "community": 38,
-      "community_name": "createClient",
-      "norm_label": "royalbotanicaltheme()"
-    },
-    {
-      "label": "SereinWhiteTheme()",
-      "file_type": "code",
-      "source_file": "components/themes/SereinWhiteTheme.tsx",
-      "source_location": "L22",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_themes_sereinwhitetheme_sereinwhitetheme",
-      "community": 38,
-      "community_name": "createClient",
-      "norm_label": "sereinwhitetheme()"
-    },
-    {
-      "label": "WayangClassicTheme()",
-      "file_type": "code",
-      "source_file": "components/themes/WayangClassicTheme.tsx",
-      "source_location": "L22",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_themes_wayangclassictheme_wayangclassictheme",
-      "community": 38,
-      "community_name": "createClient",
-      "norm_label": "wayangclassictheme()"
-    },
-    {
-      "label": "createClient()",
-      "file_type": "code",
-      "source_file": "lib/supabase/client.ts",
-      "source_location": "L3",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "lib_supabase_client_createclient",
-      "community": 38,
-      "community_name": "createClient",
-      "norm_label": "createclient()"
-    },
-    {
-      "label": "DashboardClient()",
-      "file_type": "code",
-      "source_file": "app/dashboard/DashboardClient.tsx",
-      "source_location": "L82",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_dashboard_dashboardclient_dashboardclient",
-      "community": 39,
-      "community_name": "DashboardClient.tsx",
-      "norm_label": "dashboardclient()"
-    },
-    {
-      "label": "PlanBadge()",
-      "file_type": "code",
-      "source_file": "app/dashboard/DashboardClient.tsx",
-      "source_location": "L24",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_dashboard_dashboardclient_planbadge",
-      "community": 39,
-      "community_name": "DashboardClient.tsx",
-      "norm_label": "planbadge()"
-    },
-    {
-      "label": "StatCard()",
-      "file_type": "code",
-      "source_file": "app/dashboard/DashboardClient.tsx",
-      "source_location": "L55",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_dashboard_dashboardclient_statcard",
-      "community": 39,
-      "community_name": "DashboardClient.tsx",
-      "norm_label": "statcard()"
-    },
-    {
-      "label": "getInitials()",
-      "file_type": "code",
-      "source_file": "lib/utils.ts",
-      "source_location": "L73",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "lib_utils_getinitials",
-      "community": 39,
-      "community_name": "DashboardClient.tsx",
-      "norm_label": "getinitials()"
-    },
-    {
-      "label": "GuestManagementPage()",
-      "file_type": "code",
-      "source_file": "app/dashboard/tamu/page.tsx",
-      "source_location": "L16",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_dashboard_tamu_page_guestmanagementpage",
-      "community": 40,
-      "community_name": "tamu/page.tsx",
-      "norm_label": "guestmanagementpage()"
-    },
-    {
-      "label": "loadData()",
-      "file_type": "code",
-      "source_file": "app/dashboard/tamu/page.tsx",
-      "source_location": "L69",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_dashboard_tamu_page_guestmanagementpage_loaddata",
-      "community": 40,
-      "community_name": "tamu/page.tsx",
-      "norm_label": "loaddata()"
-    },
-    {
-      "label": "loadGuests()",
-      "file_type": "code",
-      "source_file": "app/dashboard/tamu/page.tsx",
-      "source_location": "L98",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_dashboard_tamu_page_guestmanagementpage_loadguests",
-      "community": 40,
-      "community_name": "tamu/page.tsx",
-      "norm_label": "loadguests()"
-    },
-    {
-      "label": "AlertModal()",
-      "file_type": "code",
-      "source_file": "components/dashboard/AlertModal.tsx",
-      "source_location": "L14",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_dashboard_alertmodal_alertmodal",
-      "community": 40,
-      "community_name": "tamu/page.tsx",
-      "norm_label": "alertmodal()"
-    },
-    {
       "label": "walkDir()",
       "file_type": "code",
       "source_file": "fix_buttons.js",
@@ -1944,6 +2031,18 @@
       "norm_label": "sitemap()"
     },
     {
+      "label": "PricingPage()",
+      "file_type": "code",
+      "source_file": "app/harga/page.tsx",
+      "source_location": "L18",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_harga_page_pricingpage",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "pricingpage()"
+    },
+    {
       "label": "HomePage()",
       "file_type": "code",
       "source_file": "app/page.tsx",
@@ -1956,6 +2055,18 @@
       "norm_label": "homepage()"
     },
     {
+      "label": "VendorPage()",
+      "file_type": "code",
+      "source_file": "app/vendor/page.tsx",
+      "source_location": "L96",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "app_vendor_page_vendorpage",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "vendorpage()"
+    },
+    {
       "label": "EcoImpact()",
       "file_type": "code",
       "source_file": "components/landing/EcoImpact.tsx",
@@ -1966,6 +2077,18 @@
       "community": 6,
       "community_name": "app/page.tsx",
       "norm_label": "ecoimpact()"
+    },
+    {
+      "label": "FaqSection()",
+      "file_type": "code",
+      "source_file": "components/landing/FaqSection.tsx",
+      "source_location": "L30",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_landing_faqsection_faqsection",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "faqsection()"
     },
     {
       "label": "FeaturesSection()",
@@ -1992,6 +2115,30 @@
       "norm_label": "footer()"
     },
     {
+      "label": "FloatingThemeCards()",
+      "file_type": "code",
+      "source_file": "components/landing/HeroSection.tsx",
+      "source_location": "L15",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_landing_herosection_floatingthemecards",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "floatingthemecards()"
+    },
+    {
+      "label": "HeroSection()",
+      "file_type": "code",
+      "source_file": "components/landing/HeroSection.tsx",
+      "source_location": "L89",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_landing_herosection_herosection",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "herosection()"
+    },
+    {
       "label": "HowItWorks()",
       "file_type": "code",
       "source_file": "components/landing/HowItWorks.tsx",
@@ -2002,6 +2149,54 @@
       "community": 6,
       "community_name": "app/page.tsx",
       "norm_label": "howitworks()"
+    },
+    {
+      "label": "PricingSection()",
+      "file_type": "code",
+      "source_file": "components/landing/PricingSection.tsx",
+      "source_location": "L98",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_landing_pricingsection_pricingsection",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "pricingsection()"
+    },
+    {
+      "label": "TestimonialSection()",
+      "file_type": "code",
+      "source_file": "components/landing/TestimonialSection.tsx",
+      "source_location": "L30",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_landing_testimonialsection_testimonialsection",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "testimonialsection()"
+    },
+    {
+      "label": "ThemeCarousel()",
+      "file_type": "code",
+      "source_file": "components/landing/ThemeCarousel.tsx",
+      "source_location": "L21",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_landing_themecarousel_themecarousel",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "themecarousel()"
+    },
+    {
+      "label": "VendorPreview()",
+      "file_type": "code",
+      "source_file": "components/landing/VendorPreview.tsx",
+      "source_location": "L48",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_landing_vendorpreview_vendorpreview",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "vendorpreview()"
     },
     {
       "label": "WhySection()",
@@ -2016,124 +2211,16 @@
       "norm_label": "whysection()"
     },
     {
-      "label": "CountdownStatus()",
+      "label": "EtherealWatercolorTheme()",
       "file_type": "code",
-      "source_file": "app/admin/invitations/InvitationsClient.tsx",
-      "source_location": "L9",
+      "source_file": "components/themes/EtherealWatercolorTheme.tsx",
+      "source_location": "L26",
       "_callable": true,
       "_origin": "ast",
-      "id": "app_admin_invitations_invitationsclient_countdownstatus",
+      "id": "components_themes_etherealwatercolortheme_etherealwatercolortheme",
       "community": 7,
-      "community_name": "Pagination.tsx",
-      "norm_label": "countdownstatus()"
-    },
-    {
-      "label": "InvitationsClient()",
-      "file_type": "code",
-      "source_file": "app/admin/invitations/InvitationsClient.tsx",
-      "source_location": "L57",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_admin_invitations_invitationsclient_invitationsclient",
-      "community": 7,
-      "community_name": "Pagination.tsx",
-      "norm_label": "invitationsclient()"
-    },
-    {
-      "label": "AdminInvitationsPage()",
-      "file_type": "code",
-      "source_file": "app/admin/invitations/page.tsx",
-      "source_location": "L7",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_admin_invitations_page_admininvitationspage",
-      "community": 7,
-      "community_name": "Pagination.tsx",
-      "norm_label": "admininvitationspage()"
-    },
-    {
-      "label": "Pagination()",
-      "file_type": "code",
-      "source_file": "components/ui/Pagination.tsx",
-      "source_location": "L19",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_ui_pagination_pagination",
-      "community": 7,
-      "community_name": "Pagination.tsx",
-      "norm_label": "pagination()"
-    },
-    {
-      "label": "LeadsClient()",
-      "file_type": "code",
-      "source_file": "app/admin/leads/LeadsClient.tsx",
-      "source_location": "L14",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_admin_leads_leadsclient_leadsclient",
-      "community": 86,
-      "community_name": "leads/page.tsx",
-      "norm_label": "leadsclient()"
-    },
-    {
-      "label": "LeadsPage()",
-      "file_type": "code",
-      "source_file": "app/admin/leads/page.tsx",
-      "source_location": "L10",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_admin_leads_page_leadspage",
-      "community": 86,
-      "community_name": "leads/page.tsx",
-      "norm_label": "leadspage()"
-    },
-    {
-      "label": "AdminThemesPage()",
-      "file_type": "code",
-      "source_file": "app/admin/themes/page.tsx",
-      "source_location": "L7",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_admin_themes_page_adminthemespage",
-      "community": 87,
-      "community_name": "ThemesClient.tsx",
-      "norm_label": "adminthemespage()"
-    },
-    {
-      "label": "ThemesClient()",
-      "file_type": "code",
-      "source_file": "app/admin/themes/ThemesClient.tsx",
-      "source_location": "L9",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_admin_themes_themesclient_themesclient",
-      "community": 87,
-      "community_name": "ThemesClient.tsx",
-      "norm_label": "themesclient()"
-    },
-    {
-      "label": "AdminUsersPage()",
-      "file_type": "code",
-      "source_file": "app/admin/users/page.tsx",
-      "source_location": "L7",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_admin_users_page_adminuserspage",
-      "community": 88,
-      "community_name": "UsersClient.tsx",
-      "norm_label": "adminuserspage()"
-    },
-    {
-      "label": "UsersClient()",
-      "file_type": "code",
-      "source_file": "app/admin/users/UsersClient.tsx",
-      "source_location": "L9",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "app_admin_users_usersclient_usersclient",
-      "community": 88,
-      "community_name": "UsersClient.tsx",
-      "norm_label": "usersclient()"
+      "community_name": "EtherealWatercolorTheme.tsx",
+      "norm_label": "etherealwatercolortheme()"
     },
     {
       "label": "ModernMonochromeTheme()",
@@ -2148,16 +2235,28 @@
       "norm_label": "modernmonochrometheme()"
     },
     {
-      "label": "MidnightSparkleTheme()",
+      "label": "RegisterPage()",
       "file_type": "code",
-      "source_file": "components/themes/MidnightSparkleTheme.tsx",
-      "source_location": "L23",
+      "source_file": "app/daftar/page.tsx",
+      "source_location": "L17",
       "_callable": true,
       "_origin": "ast",
-      "id": "components_themes_midnightsparkletheme_midnightsparkletheme",
+      "id": "app_daftar_page_registerpage",
       "community": 9,
-      "community_name": "registry.tsx",
-      "norm_label": "midnightsparkletheme()"
+      "community_name": "createClient",
+      "norm_label": "registerpage()"
+    },
+    {
+      "label": "DeleteAccountSection()",
+      "file_type": "code",
+      "source_file": "components/dashboard/DeleteAccountSection.tsx",
+      "source_location": "L8",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_dashboard_deleteaccountsection_deleteaccountsection",
+      "community": 9,
+      "community_name": "createClient",
+      "norm_label": "deleteaccountsection()"
     },
     {
       "label": "MinimalistTheme()",
@@ -2168,8 +2267,20 @@
       "_origin": "ast",
       "id": "components_themes_minimalisttheme_minimalisttheme",
       "community": 9,
-      "community_name": "registry.tsx",
+      "community_name": "createClient",
       "norm_label": "minimalisttheme()"
+    },
+    {
+      "label": "SereinWhiteTheme()",
+      "file_type": "code",
+      "source_file": "components/themes/SereinWhiteTheme.tsx",
+      "source_location": "L22",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_themes_sereinwhitetheme_sereinwhitetheme",
+      "community": 9,
+      "community_name": "createClient",
+      "norm_label": "sereinwhitetheme()"
     },
     {
       "label": "VintageEleganceTheme()",
@@ -2180,8 +2291,32 @@
       "_origin": "ast",
       "id": "components_themes_vintageelegancetheme_vintageelegancetheme",
       "community": 9,
-      "community_name": "registry.tsx",
+      "community_name": "createClient",
       "norm_label": "vintageelegancetheme()"
+    },
+    {
+      "label": "WayangClassicTheme()",
+      "file_type": "code",
+      "source_file": "components/themes/WayangClassicTheme.tsx",
+      "source_location": "L22",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "components_themes_wayangclassictheme_wayangclassictheme",
+      "community": 9,
+      "community_name": "createClient",
+      "norm_label": "wayangclassictheme()"
+    },
+    {
+      "label": "createClient()",
+      "file_type": "code",
+      "source_file": "lib/supabase/client.ts",
+      "source_location": "L3",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "lib_supabase_client_createclient",
+      "community": 9,
+      "community_name": "createClient",
+      "norm_label": "createclient()"
     },
     {
       "label": "OceanBreezeTheme()",
@@ -2208,66 +2343,6 @@
       "norm_label": "rusticwoodlandtheme()"
     },
     {
-      "label": "FloatingThemeCards()",
-      "file_type": "code",
-      "source_file": "components/landing/HeroSection.tsx",
-      "source_location": "L15",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_landing_herosection_floatingthemecards",
-      "community": 92,
-      "community_name": "HeroSection.tsx",
-      "norm_label": "floatingthemecards()"
-    },
-    {
-      "label": "HeroSection()",
-      "file_type": "code",
-      "source_file": "components/landing/HeroSection.tsx",
-      "source_location": "L89",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_landing_herosection_herosection",
-      "community": 92,
-      "community_name": "HeroSection.tsx",
-      "norm_label": "herosection()"
-    },
-    {
-      "label": "ThemeCarousel()",
-      "file_type": "code",
-      "source_file": "components/landing/ThemeCarousel.tsx",
-      "source_location": "L21",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_landing_themecarousel_themecarousel",
-      "community": 93,
-      "community_name": "ThemeCarousel.tsx",
-      "norm_label": "themecarousel()"
-    },
-    {
-      "label": "FaqSection()",
-      "file_type": "code",
-      "source_file": "components/landing/FaqSection.tsx",
-      "source_location": "L30",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_landing_faqsection_faqsection",
-      "community": 94,
-      "community_name": "FaqSection.tsx",
-      "norm_label": "faqsection()"
-    },
-    {
-      "label": "TestimonialSection()",
-      "file_type": "code",
-      "source_file": "components/landing/TestimonialSection.tsx",
-      "source_location": "L30",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "components_landing_testimonialsection_testimonialsection",
-      "community": 95,
-      "community_name": "TestimonialSection.tsx",
-      "norm_label": "testimonialsection()"
-    },
-    {
       "label": "leads.ts",
       "file_type": "code",
       "source_file": "app/actions/leads.ts",
@@ -2277,50 +2352,6 @@
       "community": 0,
       "community_name": "createClient",
       "norm_label": "leads.ts"
-    },
-    {
-      "label": "settings/page.tsx",
-      "file_type": "code",
-      "source_file": "app/admin/settings/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "app_admin_settings_page",
-      "community": 0,
-      "community_name": "createClient",
-      "norm_label": "settings/page.tsx"
-    },
-    {
-      "label": "metadata",
-      "file_type": "code",
-      "source_file": "app/admin/settings/page.tsx",
-      "source_location": "L5",
-      "_origin": "ast",
-      "id": "app_admin_settings_page_metadata",
-      "community": 0,
-      "community_name": "createClient",
-      "norm_label": "metadata"
-    },
-    {
-      "label": "SettingsClient.tsx",
-      "file_type": "code",
-      "source_file": "app/admin/settings/SettingsClient.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "app_admin_settings_settingsclient",
-      "community": 0,
-      "community_name": "createClient",
-      "norm_label": "settingsclient.tsx"
-    },
-    {
-      "label": "SECTION_NAMES",
-      "file_type": "code",
-      "source_file": "app/admin/settings/SettingsClient.tsx",
-      "source_location": "L25",
-      "_origin": "ast",
-      "id": "app_admin_settings_settingsclient_section_names",
-      "community": 0,
-      "community_name": "createClient",
-      "norm_label": "section_names"
     },
     {
       "label": "delete/route.ts",
@@ -2532,17 +2563,6 @@
       "norm_label": "vendor/layout.tsx"
     },
     {
-      "label": "DeleteAccountSection.tsx",
-      "file_type": "code",
-      "source_file": "components/dashboard/DeleteAccountSection.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_dashboard_deleteaccountsection",
-      "community": 0,
-      "community_name": "createClient",
-      "norm_label": "deleteaccountsection.tsx"
-    },
-    {
       "label": "LeadMagnetSection.tsx",
       "file_type": "code",
       "source_file": "components/landing/LeadMagnetSection.tsx",
@@ -2552,6 +2572,39 @@
       "community": 0,
       "community_name": "createClient",
       "norm_label": "leadmagnetsection.tsx"
+    },
+    {
+      "label": "midtrans.ts",
+      "file_type": "code",
+      "source_file": "lib/midtrans.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_midtrans",
+      "community": 0,
+      "community_name": "createClient",
+      "norm_label": "midtrans.ts"
+    },
+    {
+      "label": "IS_PRODUCTION",
+      "file_type": "code",
+      "source_file": "lib/midtrans.ts",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "lib_midtrans_is_production",
+      "community": 0,
+      "community_name": "createClient",
+      "norm_label": "is_production"
+    },
+    {
+      "label": "SNAP_URL",
+      "file_type": "code",
+      "source_file": "lib/midtrans.ts",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "lib_midtrans_snap_url",
+      "community": 0,
+      "community_name": "createClient",
+      "norm_label": "snap_url"
     },
     {
       "label": "server.ts",
@@ -2565,6 +2618,171 @@
       "norm_label": "server.ts"
     },
     {
+      "label": "InvitationsClient.tsx",
+      "file_type": "code",
+      "source_file": "app/admin/invitations/InvitationsClient.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_admin_invitations_invitationsclient",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "invitationsclient.tsx"
+    },
+    {
+      "label": "invitations/page.tsx",
+      "file_type": "code",
+      "source_file": "app/admin/invitations/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_admin_invitations_page",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "invitations/page.tsx"
+    },
+    {
+      "label": "dynamic",
+      "file_type": "code",
+      "source_file": "app/admin/invitations/page.tsx",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "app_admin_invitations_page_dynamic",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "dynamic"
+    },
+    {
+      "label": "LeadsClient.tsx",
+      "file_type": "code",
+      "source_file": "app/admin/leads/LeadsClient.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_admin_leads_leadsclient",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "leadsclient.tsx"
+    },
+    {
+      "label": "leads/page.tsx",
+      "file_type": "code",
+      "source_file": "app/admin/leads/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_admin_leads_page",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "leads/page.tsx"
+    },
+    {
+      "label": "metadata",
+      "file_type": "code",
+      "source_file": "app/admin/leads/page.tsx",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "app_admin_leads_page_metadata",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "metadata"
+    },
+    {
+      "label": "themes/page.tsx",
+      "file_type": "code",
+      "source_file": "app/admin/themes/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_admin_themes_page",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "themes/page.tsx"
+    },
+    {
+      "label": "dynamic",
+      "file_type": "code",
+      "source_file": "app/admin/themes/page.tsx",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "app_admin_themes_page_dynamic",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "dynamic"
+    },
+    {
+      "label": "ThemesClient.tsx",
+      "file_type": "code",
+      "source_file": "app/admin/themes/ThemesClient.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_admin_themes_themesclient",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "themesclient.tsx"
+    },
+    {
+      "label": "users/page.tsx",
+      "file_type": "code",
+      "source_file": "app/admin/users/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_admin_users_page",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "users/page.tsx"
+    },
+    {
+      "label": "dynamic",
+      "file_type": "code",
+      "source_file": "app/admin/users/page.tsx",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "app_admin_users_page_dynamic",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "dynamic"
+    },
+    {
+      "label": "UsersClient.tsx",
+      "file_type": "code",
+      "source_file": "app/admin/users/UsersClient.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_admin_users_usersclient",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "usersclient.tsx"
+    },
+    {
+      "label": "tamu/page.tsx",
+      "file_type": "code",
+      "source_file": "app/dashboard/tamu/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_dashboard_tamu_page",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "tamu/page.tsx"
+    },
+    {
+      "label": "AlertModal.tsx",
+      "file_type": "code",
+      "source_file": "components/dashboard/AlertModal.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_dashboard_alertmodal",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "alertmodal.tsx"
+    },
+    {
+      "label": "Pagination.tsx",
+      "file_type": "code",
+      "source_file": "components/ui/Pagination.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_ui_pagination",
+      "community": 1,
+      "community_name": "index.ts",
+      "norm_label": "pagination.tsx"
+    },
+    {
       "label": "index.ts",
       "file_type": "code",
       "source_file": "types/index.ts",
@@ -2574,6 +2792,61 @@
       "community": 1,
       "community_name": "index.ts",
       "norm_label": "index.ts"
+    },
+    {
+      "label": "DashboardClient.tsx",
+      "file_type": "code",
+      "source_file": "app/dashboard/DashboardClient.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_dashboard_dashboardclient",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "dashboardclient.tsx"
+    },
+    {
+      "label": "QUICK_ACTIONS",
+      "file_type": "code",
+      "source_file": "app/dashboard/DashboardClient.tsx",
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "app_dashboard_dashboardclient_quick_actions",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "quick_actions"
+    },
+    {
+      "label": "undangan/page.tsx",
+      "file_type": "code",
+      "source_file": "app/dashboard/undangan/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_dashboard_undangan_page",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "undangan/page.tsx"
+    },
+    {
+      "label": "CountdownLabel.tsx",
+      "file_type": "code",
+      "source_file": "components/dashboard/CountdownLabel.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_dashboard_countdownlabel",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "countdownlabel.tsx"
+    },
+    {
+      "label": "DeleteButton.tsx",
+      "file_type": "code",
+      "source_file": "components/dashboard/DeleteButton.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_dashboard_deletebutton",
+      "community": 10,
+      "community_name": "utils.ts",
+      "norm_label": "deletebutton.tsx"
     },
     {
       "label": "utils.ts",
@@ -2609,70 +2882,48 @@
       "norm_label": "supabase_url"
     },
     {
-      "label": "harga/page.tsx",
+      "label": "CosmicStarlightTheme.tsx",
       "file_type": "code",
-      "source_file": "app/harga/page.tsx",
+      "source_file": "components/themes/CosmicStarlightTheme.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "app_harga_page",
+      "id": "components_themes_cosmicstarlighttheme",
       "community": 11,
-      "community_name": "harga/page.tsx",
-      "norm_label": "harga/page.tsx"
+      "community_name": "CosmicStarlightTheme.tsx",
+      "norm_label": "cosmicstarlighttheme.tsx"
     },
     {
-      "label": "PricingSection.tsx",
+      "label": "cinzel",
       "file_type": "code",
-      "source_file": "components/landing/PricingSection.tsx",
-      "source_location": "L1",
+      "source_file": "components/themes/CosmicStarlightTheme.tsx",
+      "source_location": "L16",
       "_origin": "ast",
-      "id": "components_landing_pricingsection",
+      "id": "components_themes_cosmicstarlighttheme_cinzel",
       "community": 11,
-      "community_name": "harga/page.tsx",
-      "norm_label": "pricingsection.tsx"
+      "community_name": "CosmicStarlightTheme.tsx",
+      "norm_label": "cinzel"
     },
     {
-      "label": "PLANS",
+      "label": "outfit",
       "file_type": "code",
-      "source_file": "components/landing/PricingSection.tsx",
-      "source_location": "L32",
+      "source_file": "components/themes/CosmicStarlightTheme.tsx",
+      "source_location": "L17",
       "_origin": "ast",
-      "id": "components_landing_pricingsection_plans",
+      "id": "components_themes_cosmicstarlighttheme_outfit",
       "community": 11,
-      "community_name": "harga/page.tsx",
-      "norm_label": "plans"
+      "community_name": "CosmicStarlightTheme.tsx",
+      "norm_label": "outfit"
     },
     {
-      "label": "midtrans.ts",
+      "label": "CosmicStarlightTheme",
       "file_type": "code",
-      "source_file": "lib/midtrans.ts",
-      "source_location": "L1",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L80",
       "_origin": "ast",
-      "id": "lib_midtrans",
+      "id": "lib_themes_registry_cosmicstarlighttheme",
       "community": 11,
-      "community_name": "harga/page.tsx",
-      "norm_label": "midtrans.ts"
-    },
-    {
-      "label": "IS_PRODUCTION",
-      "file_type": "code",
-      "source_file": "lib/midtrans.ts",
-      "source_location": "L8",
-      "_origin": "ast",
-      "id": "lib_midtrans_is_production",
-      "community": 11,
-      "community_name": "harga/page.tsx",
-      "norm_label": "is_production"
-    },
-    {
-      "label": "SNAP_URL",
-      "file_type": "code",
-      "source_file": "lib/midtrans.ts",
-      "source_location": "L10",
-      "_origin": "ast",
-      "id": "lib_midtrans_snap_url",
-      "community": 11,
-      "community_name": "harga/page.tsx",
-      "norm_label": "snap_url"
+      "community_name": "CosmicStarlightTheme.tsx",
+      "norm_label": "cosmicstarlighttheme"
     },
     {
       "label": "JavaneseBatikTheme.tsx",
@@ -2717,6 +2968,50 @@
       "community": 12,
       "community_name": "JavaneseBatikTheme.tsx",
       "norm_label": "javanesebatiktheme"
+    },
+    {
+      "label": "settings/page.tsx",
+      "file_type": "code",
+      "source_file": "app/admin/settings/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_admin_settings_page",
+      "community": 13,
+      "community_name": "baru/page.tsx",
+      "norm_label": "settings/page.tsx"
+    },
+    {
+      "label": "metadata",
+      "file_type": "code",
+      "source_file": "app/admin/settings/page.tsx",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "app_admin_settings_page_metadata",
+      "community": 13,
+      "community_name": "baru/page.tsx",
+      "norm_label": "metadata"
+    },
+    {
+      "label": "SettingsClient.tsx",
+      "file_type": "code",
+      "source_file": "app/admin/settings/SettingsClient.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_admin_settings_settingsclient",
+      "community": 13,
+      "community_name": "baru/page.tsx",
+      "norm_label": "settingsclient.tsx"
+    },
+    {
+      "label": "SECTION_NAMES",
+      "file_type": "code",
+      "source_file": "app/admin/settings/SettingsClient.tsx",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "app_admin_settings_settingsclient_section_names",
+      "community": 13,
+      "community_name": "baru/page.tsx",
+      "norm_label": "section_names"
     },
     {
       "label": "baru/page.tsx",
@@ -2774,28 +3069,6 @@
       "norm_label": "steps"
     },
     {
-      "label": "undangan/page.tsx",
-      "file_type": "code",
-      "source_file": "app/dashboard/undangan/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "app_dashboard_undangan_page",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "undangan/page.tsx"
-    },
-    {
-      "label": "CountdownLabel.tsx",
-      "file_type": "code",
-      "source_file": "components/dashboard/CountdownLabel.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_dashboard_countdownlabel",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "countdownlabel.tsx"
-    },
-    {
       "label": "CreateInvitationButton.tsx",
       "file_type": "code",
       "source_file": "components/dashboard/CreateInvitationButton.tsx",
@@ -2805,17 +3078,6 @@
       "community": 13,
       "community_name": "baru/page.tsx",
       "norm_label": "createinvitationbutton.tsx"
-    },
-    {
-      "label": "DeleteButton.tsx",
-      "file_type": "code",
-      "source_file": "components/dashboard/DeleteButton.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_dashboard_deletebutton",
-      "community": 13,
-      "community_name": "baru/page.tsx",
-      "norm_label": "deletebutton.tsx"
     },
     {
       "label": "UpsellModal.tsx",
@@ -2869,30 +3131,8 @@
       "_origin": "ast",
       "id": "app_admin_layout",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "cn",
       "norm_label": "admin/layout.tsx"
-    },
-    {
-      "label": "daftar/page.tsx",
-      "file_type": "code",
-      "source_file": "app/daftar/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "app_daftar_page",
-      "community": 14,
-      "community_name": "client.ts",
-      "norm_label": "daftar/page.tsx"
-    },
-    {
-      "label": "BENEFITS",
-      "file_type": "code",
-      "source_file": "app/daftar/page.tsx",
-      "source_location": "L10",
-      "_origin": "ast",
-      "id": "app_daftar_page_benefits",
-      "community": 14,
-      "community_name": "client.ts",
-      "norm_label": "benefits"
     },
     {
       "label": "masuk/page.tsx",
@@ -2902,7 +3142,7 @@
       "_origin": "ast",
       "id": "app_masuk_page",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "cn",
       "norm_label": "masuk/page.tsx"
     },
     {
@@ -2913,7 +3153,7 @@
       "_origin": "ast",
       "id": "components_admin_sidebar",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "cn",
       "norm_label": "admin/sidebar.tsx"
     },
     {
@@ -2924,7 +3164,7 @@
       "_origin": "ast",
       "id": "components_admin_sidebar_nav_items",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "cn",
       "norm_label": "nav_items"
     },
     {
@@ -2935,7 +3175,7 @@
       "_origin": "ast",
       "id": "components_dashboard_sidebar",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "cn",
       "norm_label": "dashboard/sidebar.tsx"
     },
     {
@@ -2946,7 +3186,7 @@
       "_origin": "ast",
       "id": "components_dashboard_sidebar_nav_items",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "cn",
       "norm_label": "nav_items"
     },
     {
@@ -2957,7 +3197,7 @@
       "_origin": "ast",
       "id": "components_landing_navbar",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "cn",
       "norm_label": "navbar.tsx"
     },
     {
@@ -2968,7 +3208,7 @@
       "_origin": "ast",
       "id": "components_landing_navbar_default_nav_items",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "cn",
       "norm_label": "default_nav_items"
     },
     {
@@ -2979,19 +3219,8 @@
       "_origin": "ast",
       "id": "components_themetoggle",
       "community": 14,
-      "community_name": "client.ts",
+      "community_name": "cn",
       "norm_label": "themetoggle.tsx"
-    },
-    {
-      "label": "client.ts",
-      "file_type": "code",
-      "source_file": "lib/supabase/client.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "lib_supabase_client",
-      "community": 14,
-      "community_name": "client.ts",
-      "norm_label": "client.ts"
     },
     {
       "label": "app/layout.tsx",
@@ -3093,17 +3322,6 @@
       "norm_label": "dependencies"
     },
     {
-      "label": "class-variance-authority",
-      "file_type": "code",
-      "source_file": "package.json",
-      "source_location": "L23",
-      "_origin": "ast",
-      "id": "package_dependencies_class_variance_authority",
-      "community": 19,
-      "community_name": "dependencies",
-      "norm_label": "class-variance-authority"
-    },
-    {
       "label": "@radix-ui/react-dialog",
       "file_type": "code",
       "source_file": "package.json",
@@ -3126,6 +3344,17 @@
       "norm_label": "@radix-ui/react-dropdown-menu"
     },
     {
+      "label": "react",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L35",
+      "_origin": "ast",
+      "id": "package_dependencies_react",
+      "community": 19,
+      "community_name": "dependencies",
+      "norm_label": "react"
+    },
+    {
       "label": "xlsx",
       "file_type": "code",
       "source_file": "package.json",
@@ -3135,17 +3364,6 @@
       "community": 19,
       "community_name": "dependencies",
       "norm_label": "xlsx"
-    },
-    {
-      "label": "class-variance-authority",
-      "file_type": "concept",
-      "source_file": "package.json",
-      "source_location": "L23",
-      "_origin": "ast",
-      "id": "class_variance_authority",
-      "community": 19,
-      "community_name": "dependencies",
-      "norm_label": "class-variance-authority"
     },
     {
       "label": "@radix-ui/react-dialog",
@@ -3170,6 +3388,17 @@
       "norm_label": "@radix-ui/react-dropdown-menu"
     },
     {
+      "label": "react",
+      "file_type": "concept",
+      "source_file": "package.json",
+      "source_location": "L35",
+      "_origin": "ast",
+      "id": "react",
+      "community": 19,
+      "community_name": "dependencies",
+      "norm_label": "react"
+    },
+    {
       "label": "xlsx",
       "file_type": "concept",
       "source_file": "package.json",
@@ -3181,81 +3410,48 @@
       "norm_label": "xlsx"
     },
     {
-      "label": "vendor/page.tsx",
+      "label": "HeritageGununganTheme.tsx",
       "file_type": "code",
-      "source_file": "app/vendor/page.tsx",
+      "source_file": "components/themes/HeritageGununganTheme.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "app_vendor_page",
+      "id": "components_themes_heritagegunungantheme",
       "community": 20,
-      "community_name": "vendor/page.tsx",
-      "norm_label": "vendor/page.tsx"
+      "community_name": "HeritageGununganTheme.tsx",
+      "norm_label": "heritagegunungantheme.tsx"
     },
     {
-      "label": "CATEGORIES",
+      "label": "lora",
       "file_type": "code",
-      "source_file": "app/vendor/page.tsx",
-      "source_location": "L86",
+      "source_file": "components/themes/HeritageGununganTheme.tsx",
+      "source_location": "L12",
       "_origin": "ast",
-      "id": "app_vendor_page_categories",
+      "id": "components_themes_heritagegunungantheme_lora",
       "community": 20,
-      "community_name": "vendor/page.tsx",
-      "norm_label": "categories"
+      "community_name": "HeritageGununganTheme.tsx",
+      "norm_label": "lora"
     },
     {
-      "label": "SAMPLE_VENDORS",
+      "label": "playfair",
       "file_type": "code",
-      "source_file": "app/vendor/page.tsx",
-      "source_location": "L11",
+      "source_file": "components/themes/HeritageGununganTheme.tsx",
+      "source_location": "L13",
       "_origin": "ast",
-      "id": "app_vendor_page_sample_vendors",
+      "id": "components_themes_heritagegunungantheme_playfair",
       "community": 20,
-      "community_name": "vendor/page.tsx",
-      "norm_label": "sample_vendors"
+      "community_name": "HeritageGununganTheme.tsx",
+      "norm_label": "playfair"
     },
     {
-      "label": "VendorPreview.tsx",
+      "label": "HeritageGununganTheme",
       "file_type": "code",
-      "source_file": "components/landing/VendorPreview.tsx",
-      "source_location": "L1",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L88",
       "_origin": "ast",
-      "id": "components_landing_vendorpreview",
+      "id": "lib_themes_registry_heritagegunungantheme",
       "community": 20,
-      "community_name": "vendor/page.tsx",
-      "norm_label": "vendorpreview.tsx"
-    },
-    {
-      "label": "FEATURED_VENDORS",
-      "file_type": "code",
-      "source_file": "components/landing/VendorPreview.tsx",
-      "source_location": "L18",
-      "_origin": "ast",
-      "id": "components_landing_vendorpreview_featured_vendors",
-      "community": 20,
-      "community_name": "vendor/page.tsx",
-      "norm_label": "featured_vendors"
-    },
-    {
-      "label": "VENDOR_CATEGORIES",
-      "file_type": "code",
-      "source_file": "components/landing/VendorPreview.tsx",
-      "source_location": "L9",
-      "_origin": "ast",
-      "id": "components_landing_vendorpreview_vendor_categories",
-      "community": 20,
-      "community_name": "vendor/page.tsx",
-      "norm_label": "vendor_categories"
-    },
-    {
-      "label": "formatRupiah",
-      "file_type": "code",
-      "source_file": "lib/utils.ts",
-      "source_location": "L35",
-      "_origin": "ast",
-      "id": "lib_utils_formatrupiah",
-      "community": 20,
-      "community_name": "vendor/page.tsx",
-      "norm_label": "formatrupiah"
+      "community_name": "HeritageGununganTheme.tsx",
+      "norm_label": "heritagegunungantheme"
     },
     {
       "label": "MagazineCoverTheme.tsx",
@@ -3566,6 +3762,17 @@
       "norm_label": "balineseharmonytheme"
     },
     {
+      "label": "ElegantBlushTheme.tsx",
+      "file_type": "code",
+      "source_file": "components/themes/ElegantBlushTheme.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_themes_elegantblushtheme",
+      "community": 25,
+      "community_name": "registry.tsx",
+      "norm_label": "elegantblushtheme.tsx"
+    },
+    {
       "label": "LineArtBotanicalTheme.tsx",
       "file_type": "code",
       "source_file": "components/themes/LineArtBotanicalTheme.tsx",
@@ -3573,7 +3780,7 @@
       "_origin": "ast",
       "id": "components_themes_lineartbotanicaltheme",
       "community": 25,
-      "community_name": "LineArtBotanicalTheme.tsx",
+      "community_name": "registry.tsx",
       "norm_label": "lineartbotanicaltheme.tsx"
     },
     {
@@ -3584,7 +3791,7 @@
       "_origin": "ast",
       "id": "components_themes_lineartbotanicaltheme_italiana",
       "community": 25,
-      "community_name": "LineArtBotanicalTheme.tsx",
+      "community_name": "registry.tsx",
       "norm_label": "italiana"
     },
     {
@@ -3595,8 +3802,52 @@
       "_origin": "ast",
       "id": "components_themes_lineartbotanicaltheme_lato",
       "community": 25,
-      "community_name": "LineArtBotanicalTheme.tsx",
+      "community_name": "registry.tsx",
       "norm_label": "lato"
+    },
+    {
+      "label": "MidnightSparkleTheme.tsx",
+      "file_type": "code",
+      "source_file": "components/themes/MidnightSparkleTheme.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_themes_midnightsparkletheme",
+      "community": 25,
+      "community_name": "registry.tsx",
+      "norm_label": "midnightsparkletheme.tsx"
+    },
+    {
+      "label": "RoyalBotanicalTheme.tsx",
+      "file_type": "code",
+      "source_file": "components/themes/RoyalBotanicalTheme.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_themes_royalbotanicaltheme",
+      "community": 25,
+      "community_name": "registry.tsx",
+      "norm_label": "royalbotanicaltheme.tsx"
+    },
+    {
+      "label": "registry.tsx",
+      "file_type": "code",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_themes_registry",
+      "community": 25,
+      "community_name": "registry.tsx",
+      "norm_label": "registry.tsx"
+    },
+    {
+      "label": "ElegantBlushTheme",
+      "file_type": "code",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "lib_themes_registry_elegantblushtheme",
+      "community": 25,
+      "community_name": "registry.tsx",
+      "norm_label": "elegantblushtheme"
     },
     {
       "label": "LineArtBotanicalTheme",
@@ -3606,8 +3857,41 @@
       "_origin": "ast",
       "id": "lib_themes_registry_lineartbotanicaltheme",
       "community": 25,
-      "community_name": "LineArtBotanicalTheme.tsx",
+      "community_name": "registry.tsx",
       "norm_label": "lineartbotanicaltheme"
+    },
+    {
+      "label": "MidnightSparkleTheme",
+      "file_type": "code",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L40",
+      "_origin": "ast",
+      "id": "lib_themes_registry_midnightsparkletheme",
+      "community": 25,
+      "community_name": "registry.tsx",
+      "norm_label": "midnightsparkletheme"
+    },
+    {
+      "label": "RoyalBotanicalTheme",
+      "file_type": "code",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L28",
+      "_origin": "ast",
+      "id": "lib_themes_registry_royalbotanicaltheme",
+      "community": 25,
+      "community_name": "registry.tsx",
+      "norm_label": "royalbotanicaltheme"
+    },
+    {
+      "label": "themesConfig",
+      "file_type": "code",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L100",
+      "_origin": "ast",
+      "id": "lib_themes_registry_themesconfig",
+      "community": 25,
+      "community_name": "registry.tsx",
+      "norm_label": "themesconfig"
     },
     {
       "label": "RoyalGoldTheme.tsx",
@@ -4149,26 +4433,26 @@
       "norm_label": "path"
     },
     {
-      "label": "ElegantBlushTheme.tsx",
+      "label": "class-variance-authority",
       "file_type": "code",
-      "source_file": "components/themes/ElegantBlushTheme.tsx",
-      "source_location": "L1",
+      "source_file": "package.json",
+      "source_location": "L23",
       "_origin": "ast",
-      "id": "components_themes_elegantblushtheme",
+      "id": "package_dependencies_class_variance_authority",
       "community": 36,
-      "community_name": "ElegantBlushTheme.tsx",
-      "norm_label": "elegantblushtheme.tsx"
+      "community_name": "class-variance-authority",
+      "norm_label": "class-variance-authority"
     },
     {
-      "label": "ElegantBlushTheme",
-      "file_type": "code",
-      "source_file": "lib/themes/registry.tsx",
-      "source_location": "L36",
+      "label": "class-variance-authority",
+      "file_type": "concept",
+      "source_file": "package.json",
+      "source_location": "L23",
       "_origin": "ast",
-      "id": "lib_themes_registry_elegantblushtheme",
+      "id": "class_variance_authority",
       "community": 36,
-      "community_name": "ElegantBlushTheme.tsx",
-      "norm_label": "elegantblushtheme"
+      "community_name": "class-variance-authority",
+      "norm_label": "class-variance-authority"
     },
     {
       "label": "theme-guidline.md",
@@ -4289,83 +4573,6 @@
       "community": 37,
       "community_name": "Wedding Invitation Theme Research & Analysis",
       "norm_label": "wedding invitation theme research & analysis"
-    },
-    {
-      "label": "RoyalBotanicalTheme.tsx",
-      "file_type": "code",
-      "source_file": "components/themes/RoyalBotanicalTheme.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_themes_royalbotanicaltheme",
-      "community": 38,
-      "community_name": "createClient",
-      "norm_label": "royalbotanicaltheme.tsx"
-    },
-    {
-      "label": "SereinWhiteTheme.tsx",
-      "file_type": "code",
-      "source_file": "components/themes/SereinWhiteTheme.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_themes_sereinwhitetheme",
-      "community": 38,
-      "community_name": "createClient",
-      "norm_label": "sereinwhitetheme.tsx"
-    },
-    {
-      "label": "WayangClassicTheme.tsx",
-      "file_type": "code",
-      "source_file": "components/themes/WayangClassicTheme.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_themes_wayangclassictheme",
-      "community": 38,
-      "community_name": "createClient",
-      "norm_label": "wayangclassictheme.tsx"
-    },
-    {
-      "label": "RoyalBotanicalTheme",
-      "file_type": "code",
-      "source_file": "lib/themes/registry.tsx",
-      "source_location": "L28",
-      "_origin": "ast",
-      "id": "lib_themes_registry_royalbotanicaltheme",
-      "community": 38,
-      "community_name": "createClient",
-      "norm_label": "royalbotanicaltheme"
-    },
-    {
-      "label": "WayangClassicTheme",
-      "file_type": "code",
-      "source_file": "lib/themes/registry.tsx",
-      "source_location": "L32",
-      "_origin": "ast",
-      "id": "lib_themes_registry_wayangclassictheme",
-      "community": 38,
-      "community_name": "createClient",
-      "norm_label": "wayangclassictheme"
-    },
-    {
-      "label": "DashboardClient.tsx",
-      "file_type": "code",
-      "source_file": "app/dashboard/DashboardClient.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "app_dashboard_dashboardclient",
-      "community": 39,
-      "community_name": "DashboardClient.tsx",
-      "norm_label": "dashboardclient.tsx"
-    },
-    {
-      "label": "QUICK_ACTIONS",
-      "file_type": "code",
-      "source_file": "app/dashboard/DashboardClient.tsx",
-      "source_location": "L48",
-      "_origin": "ast",
-      "id": "app_dashboard_dashboardclient_quick_actions",
-      "community": 39,
-      "community_name": "DashboardClient.tsx",
-      "norm_label": "quick_actions"
     },
     {
       "label": "tsconfig.json",
@@ -4685,28 +4892,6 @@
       "community": 4,
       "community_name": "compilerOptions",
       "norm_label": "**/*.tsx"
-    },
-    {
-      "label": "tamu/page.tsx",
-      "file_type": "code",
-      "source_file": "app/dashboard/tamu/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "app_dashboard_tamu_page",
-      "community": 40,
-      "community_name": "tamu/page.tsx",
-      "norm_label": "tamu/page.tsx"
-    },
-    {
-      "label": "AlertModal.tsx",
-      "file_type": "code",
-      "source_file": "components/dashboard/AlertModal.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_dashboard_alertmodal",
-      "community": 40,
-      "community_name": "tamu/page.tsx",
-      "norm_label": "alertmodal.tsx"
     },
     {
       "label": "fix_buttons.js",
@@ -5413,6 +5598,17 @@
       "norm_label": "next-themes"
     },
     {
+      "label": "harga/page.tsx",
+      "file_type": "code",
+      "source_file": "app/harga/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_harga_page",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "harga/page.tsx"
+    },
+    {
       "label": "app/page.tsx",
       "file_type": "code",
       "source_file": "app/page.tsx",
@@ -5422,6 +5618,39 @@
       "community": 6,
       "community_name": "app/page.tsx",
       "norm_label": "app/page.tsx"
+    },
+    {
+      "label": "vendor/page.tsx",
+      "file_type": "code",
+      "source_file": "app/vendor/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_vendor_page",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "vendor/page.tsx"
+    },
+    {
+      "label": "CATEGORIES",
+      "file_type": "code",
+      "source_file": "app/vendor/page.tsx",
+      "source_location": "L86",
+      "_origin": "ast",
+      "id": "app_vendor_page_categories",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "categories"
+    },
+    {
+      "label": "SAMPLE_VENDORS",
+      "file_type": "code",
+      "source_file": "app/vendor/page.tsx",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "app_vendor_page_sample_vendors",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "sample_vendors"
     },
     {
       "label": "EcoImpact.tsx",
@@ -5444,6 +5673,28 @@
       "community": 6,
       "community_name": "app/page.tsx",
       "norm_label": "eco_stats"
+    },
+    {
+      "label": "FaqSection.tsx",
+      "file_type": "code",
+      "source_file": "components/landing/FaqSection.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_landing_faqsection",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "faqsection.tsx"
+    },
+    {
+      "label": "FAQS",
+      "file_type": "code",
+      "source_file": "components/landing/FaqSection.tsx",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "components_landing_faqsection_faqs",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "faqs"
     },
     {
       "label": "FeaturesSection.tsx",
@@ -5479,6 +5730,28 @@
       "norm_label": "footer.tsx"
     },
     {
+      "label": "HeroSection.tsx",
+      "file_type": "code",
+      "source_file": "components/landing/HeroSection.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_landing_herosection",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "herosection.tsx"
+    },
+    {
+      "label": "THEME_PREVIEWS",
+      "file_type": "code",
+      "source_file": "components/landing/HeroSection.tsx",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "components_landing_herosection_theme_previews",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "theme_previews"
+    },
+    {
       "label": "HowItWorks.tsx",
       "file_type": "code",
       "source_file": "components/landing/HowItWorks.tsx",
@@ -5501,6 +5774,105 @@
       "norm_label": "steps"
     },
     {
+      "label": "PricingSection.tsx",
+      "file_type": "code",
+      "source_file": "components/landing/PricingSection.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_landing_pricingsection",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "pricingsection.tsx"
+    },
+    {
+      "label": "PLANS",
+      "file_type": "code",
+      "source_file": "components/landing/PricingSection.tsx",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "components_landing_pricingsection_plans",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "plans"
+    },
+    {
+      "label": "TestimonialSection.tsx",
+      "file_type": "code",
+      "source_file": "components/landing/TestimonialSection.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_landing_testimonialsection",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "testimonialsection.tsx"
+    },
+    {
+      "label": "TESTIMONIALS",
+      "file_type": "code",
+      "source_file": "components/landing/TestimonialSection.tsx",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "components_landing_testimonialsection_testimonials",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "testimonials"
+    },
+    {
+      "label": "ThemeCarousel.tsx",
+      "file_type": "code",
+      "source_file": "components/landing/ThemeCarousel.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_landing_themecarousel",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "themecarousel.tsx"
+    },
+    {
+      "label": "DEFAULT_CATEGORIES",
+      "file_type": "code",
+      "source_file": "components/landing/ThemeCarousel.tsx",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "components_landing_themecarousel_default_categories",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "default_categories"
+    },
+    {
+      "label": "VendorPreview.tsx",
+      "file_type": "code",
+      "source_file": "components/landing/VendorPreview.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_landing_vendorpreview",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "vendorpreview.tsx"
+    },
+    {
+      "label": "FEATURED_VENDORS",
+      "file_type": "code",
+      "source_file": "components/landing/VendorPreview.tsx",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "components_landing_vendorpreview_featured_vendors",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "featured_vendors"
+    },
+    {
+      "label": "VENDOR_CATEGORIES",
+      "file_type": "code",
+      "source_file": "components/landing/VendorPreview.tsx",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "components_landing_vendorpreview_vendor_categories",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "vendor_categories"
+    },
+    {
       "label": "WhySection.tsx",
       "file_type": "code",
       "source_file": "components/landing/WhySection.tsx",
@@ -5521,6 +5893,17 @@
       "community": 6,
       "community_name": "app/page.tsx",
       "norm_label": "why_items"
+    },
+    {
+      "label": "formatRupiah",
+      "file_type": "code",
+      "source_file": "lib/utils.ts",
+      "source_location": "L35",
+      "_origin": "ast",
+      "id": "lib_utils_formatrupiah",
+      "community": 6,
+      "community_name": "app/page.tsx",
+      "norm_label": "formatrupiah"
     },
     {
       "label": "papaparse",
@@ -5655,28 +6038,6 @@
       "norm_label": "@radix-ui/react-toast"
     },
     {
-      "label": "react",
-      "file_type": "code",
-      "source_file": "package.json",
-      "source_location": "L35",
-      "_origin": "ast",
-      "id": "package_dependencies_react",
-      "community": 66,
-      "community_name": "react",
-      "norm_label": "react"
-    },
-    {
-      "label": "react",
-      "file_type": "concept",
-      "source_file": "package.json",
-      "source_location": "L35",
-      "_origin": "ast",
-      "id": "react",
-      "community": 66,
-      "community_name": "react",
-      "norm_label": "react"
-    },
-    {
       "label": "react-dom",
       "file_type": "code",
       "source_file": "package.json",
@@ -5743,48 +6104,59 @@
       "norm_label": "react-hot-toast"
     },
     {
-      "label": "InvitationsClient.tsx",
+      "label": "EtherealWatercolorTheme.tsx",
       "file_type": "code",
-      "source_file": "app/admin/invitations/InvitationsClient.tsx",
+      "source_file": "components/themes/EtherealWatercolorTheme.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "app_admin_invitations_invitationsclient",
+      "id": "components_themes_etherealwatercolortheme",
       "community": 7,
-      "community_name": "Pagination.tsx",
-      "norm_label": "invitationsclient.tsx"
+      "community_name": "EtherealWatercolorTheme.tsx",
+      "norm_label": "etherealwatercolortheme.tsx"
     },
     {
-      "label": "invitations/page.tsx",
+      "label": "dancing",
       "file_type": "code",
-      "source_file": "app/admin/invitations/page.tsx",
-      "source_location": "L1",
+      "source_file": "components/themes/EtherealWatercolorTheme.tsx",
+      "source_location": "L14",
       "_origin": "ast",
-      "id": "app_admin_invitations_page",
+      "id": "components_themes_etherealwatercolortheme_dancing",
       "community": 7,
-      "community_name": "Pagination.tsx",
-      "norm_label": "invitations/page.tsx"
+      "community_name": "EtherealWatercolorTheme.tsx",
+      "norm_label": "dancing"
     },
     {
-      "label": "dynamic",
+      "label": "lato",
       "file_type": "code",
-      "source_file": "app/admin/invitations/page.tsx",
-      "source_location": "L5",
+      "source_file": "components/themes/EtherealWatercolorTheme.tsx",
+      "source_location": "L13",
       "_origin": "ast",
-      "id": "app_admin_invitations_page_dynamic",
+      "id": "components_themes_etherealwatercolortheme_lato",
       "community": 7,
-      "community_name": "Pagination.tsx",
-      "norm_label": "dynamic"
+      "community_name": "EtherealWatercolorTheme.tsx",
+      "norm_label": "lato"
     },
     {
-      "label": "Pagination.tsx",
+      "label": "playfair",
       "file_type": "code",
-      "source_file": "components/ui/Pagination.tsx",
-      "source_location": "L1",
+      "source_file": "components/themes/EtherealWatercolorTheme.tsx",
+      "source_location": "L12",
       "_origin": "ast",
-      "id": "components_ui_pagination",
+      "id": "components_themes_etherealwatercolortheme_playfair",
       "community": 7,
-      "community_name": "Pagination.tsx",
-      "norm_label": "pagination.tsx"
+      "community_name": "EtherealWatercolorTheme.tsx",
+      "norm_label": "playfair"
+    },
+    {
+      "label": "EtherealWatercolorTheme",
+      "file_type": "code",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L84",
+      "_origin": "ast",
+      "id": "lib_themes_registry_etherealwatercolortheme",
+      "community": 7,
+      "community_name": "EtherealWatercolorTheme.tsx",
+      "norm_label": "etherealwatercolortheme"
     },
     {
       "label": "recharts",
@@ -6238,105 +6610,6 @@
       "norm_label": "config"
     },
     {
-      "label": "LeadsClient.tsx",
-      "file_type": "code",
-      "source_file": "app/admin/leads/LeadsClient.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "app_admin_leads_leadsclient",
-      "community": 86,
-      "community_name": "leads/page.tsx",
-      "norm_label": "leadsclient.tsx"
-    },
-    {
-      "label": "leads/page.tsx",
-      "file_type": "code",
-      "source_file": "app/admin/leads/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "app_admin_leads_page",
-      "community": 86,
-      "community_name": "leads/page.tsx",
-      "norm_label": "leads/page.tsx"
-    },
-    {
-      "label": "metadata",
-      "file_type": "code",
-      "source_file": "app/admin/leads/page.tsx",
-      "source_location": "L6",
-      "_origin": "ast",
-      "id": "app_admin_leads_page_metadata",
-      "community": 86,
-      "community_name": "leads/page.tsx",
-      "norm_label": "metadata"
-    },
-    {
-      "label": "themes/page.tsx",
-      "file_type": "code",
-      "source_file": "app/admin/themes/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "app_admin_themes_page",
-      "community": 87,
-      "community_name": "ThemesClient.tsx",
-      "norm_label": "themes/page.tsx"
-    },
-    {
-      "label": "dynamic",
-      "file_type": "code",
-      "source_file": "app/admin/themes/page.tsx",
-      "source_location": "L5",
-      "_origin": "ast",
-      "id": "app_admin_themes_page_dynamic",
-      "community": 87,
-      "community_name": "ThemesClient.tsx",
-      "norm_label": "dynamic"
-    },
-    {
-      "label": "ThemesClient.tsx",
-      "file_type": "code",
-      "source_file": "app/admin/themes/ThemesClient.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "app_admin_themes_themesclient",
-      "community": 87,
-      "community_name": "ThemesClient.tsx",
-      "norm_label": "themesclient.tsx"
-    },
-    {
-      "label": "users/page.tsx",
-      "file_type": "code",
-      "source_file": "app/admin/users/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "app_admin_users_page",
-      "community": 88,
-      "community_name": "UsersClient.tsx",
-      "norm_label": "users/page.tsx"
-    },
-    {
-      "label": "dynamic",
-      "file_type": "code",
-      "source_file": "app/admin/users/page.tsx",
-      "source_location": "L5",
-      "_origin": "ast",
-      "id": "app_admin_users_page_dynamic",
-      "community": 88,
-      "community_name": "UsersClient.tsx",
-      "norm_label": "dynamic"
-    },
-    {
-      "label": "UsersClient.tsx",
-      "file_type": "code",
-      "source_file": "app/admin/users/UsersClient.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "app_admin_users_usersclient",
-      "community": 88,
-      "community_name": "UsersClient.tsx",
-      "norm_label": "usersclient.tsx"
-    },
-    {
       "label": "ModernMonochromeTheme.tsx",
       "file_type": "code",
       "source_file": "components/themes/ModernMonochromeTheme.tsx",
@@ -6381,15 +6654,37 @@
       "norm_label": "modernmonochrometheme"
     },
     {
-      "label": "MidnightSparkleTheme.tsx",
+      "label": "daftar/page.tsx",
       "file_type": "code",
-      "source_file": "components/themes/MidnightSparkleTheme.tsx",
+      "source_file": "app/daftar/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "components_themes_midnightsparkletheme",
+      "id": "app_daftar_page",
       "community": 9,
-      "community_name": "registry.tsx",
-      "norm_label": "midnightsparkletheme.tsx"
+      "community_name": "createClient",
+      "norm_label": "daftar/page.tsx"
+    },
+    {
+      "label": "BENEFITS",
+      "file_type": "code",
+      "source_file": "app/daftar/page.tsx",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "app_daftar_page_benefits",
+      "community": 9,
+      "community_name": "createClient",
+      "norm_label": "benefits"
+    },
+    {
+      "label": "DeleteAccountSection.tsx",
+      "file_type": "code",
+      "source_file": "components/dashboard/DeleteAccountSection.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_dashboard_deleteaccountsection",
+      "community": 9,
+      "community_name": "createClient",
+      "norm_label": "deleteaccountsection.tsx"
     },
     {
       "label": "MinimalistTheme.tsx",
@@ -6399,8 +6694,19 @@
       "_origin": "ast",
       "id": "components_themes_minimalisttheme",
       "community": 9,
-      "community_name": "registry.tsx",
+      "community_name": "createClient",
       "norm_label": "minimalisttheme.tsx"
+    },
+    {
+      "label": "SereinWhiteTheme.tsx",
+      "file_type": "code",
+      "source_file": "components/themes/SereinWhiteTheme.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_themes_sereinwhitetheme",
+      "community": 9,
+      "community_name": "createClient",
+      "norm_label": "sereinwhitetheme.tsx"
     },
     {
       "label": "VintageEleganceTheme.tsx",
@@ -6410,30 +6716,30 @@
       "_origin": "ast",
       "id": "components_themes_vintageelegancetheme",
       "community": 9,
-      "community_name": "registry.tsx",
+      "community_name": "createClient",
       "norm_label": "vintageelegancetheme.tsx"
     },
     {
-      "label": "registry.tsx",
+      "label": "WayangClassicTheme.tsx",
       "file_type": "code",
-      "source_file": "lib/themes/registry.tsx",
+      "source_file": "components/themes/WayangClassicTheme.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "lib_themes_registry",
+      "id": "components_themes_wayangclassictheme",
       "community": 9,
-      "community_name": "registry.tsx",
-      "norm_label": "registry.tsx"
+      "community_name": "createClient",
+      "norm_label": "wayangclassictheme.tsx"
     },
     {
-      "label": "MidnightSparkleTheme",
+      "label": "client.ts",
       "file_type": "code",
-      "source_file": "lib/themes/registry.tsx",
-      "source_location": "L40",
+      "source_file": "lib/supabase/client.ts",
+      "source_location": "L1",
       "_origin": "ast",
-      "id": "lib_themes_registry_midnightsparkletheme",
+      "id": "lib_supabase_client",
       "community": 9,
-      "community_name": "registry.tsx",
-      "norm_label": "midnightsparkletheme"
+      "community_name": "createClient",
+      "norm_label": "client.ts"
     },
     {
       "label": "MinimalistTheme",
@@ -6443,7 +6749,7 @@
       "_origin": "ast",
       "id": "lib_themes_registry_minimalisttheme",
       "community": 9,
-      "community_name": "registry.tsx",
+      "community_name": "createClient",
       "norm_label": "minimalisttheme"
     },
     {
@@ -6454,19 +6760,8 @@
       "_origin": "ast",
       "id": "lib_themes_registry_sereinwhitetheme",
       "community": 9,
-      "community_name": "registry.tsx",
+      "community_name": "createClient",
       "norm_label": "sereinwhitetheme"
-    },
-    {
-      "label": "themesConfig",
-      "file_type": "code",
-      "source_file": "lib/themes/registry.tsx",
-      "source_location": "L88",
-      "_origin": "ast",
-      "id": "lib_themes_registry_themesconfig",
-      "community": 9,
-      "community_name": "registry.tsx",
-      "norm_label": "themesconfig"
     },
     {
       "label": "VintageEleganceTheme",
@@ -6476,8 +6771,19 @@
       "_origin": "ast",
       "id": "lib_themes_registry_vintageelegancetheme",
       "community": 9,
-      "community_name": "registry.tsx",
+      "community_name": "createClient",
       "norm_label": "vintageelegancetheme"
+    },
+    {
+      "label": "WayangClassicTheme",
+      "file_type": "code",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "lib_themes_registry_wayangclassictheme",
+      "community": 9,
+      "community_name": "createClient",
+      "norm_label": "wayangclassictheme"
     },
     {
       "label": "OceanBreezeTheme.tsx",
@@ -6566,94 +6872,6 @@
       "community": 91,
       "community_name": "RusticWoodlandTheme.tsx",
       "norm_label": "rusticwoodlandtheme"
-    },
-    {
-      "label": "HeroSection.tsx",
-      "file_type": "code",
-      "source_file": "components/landing/HeroSection.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_landing_herosection",
-      "community": 92,
-      "community_name": "HeroSection.tsx",
-      "norm_label": "herosection.tsx"
-    },
-    {
-      "label": "THEME_PREVIEWS",
-      "file_type": "code",
-      "source_file": "components/landing/HeroSection.tsx",
-      "source_location": "L8",
-      "_origin": "ast",
-      "id": "components_landing_herosection_theme_previews",
-      "community": 92,
-      "community_name": "HeroSection.tsx",
-      "norm_label": "theme_previews"
-    },
-    {
-      "label": "ThemeCarousel.tsx",
-      "file_type": "code",
-      "source_file": "components/landing/ThemeCarousel.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_landing_themecarousel",
-      "community": 93,
-      "community_name": "ThemeCarousel.tsx",
-      "norm_label": "themecarousel.tsx"
-    },
-    {
-      "label": "DEFAULT_CATEGORIES",
-      "file_type": "code",
-      "source_file": "components/landing/ThemeCarousel.tsx",
-      "source_location": "L19",
-      "_origin": "ast",
-      "id": "components_landing_themecarousel_default_categories",
-      "community": 93,
-      "community_name": "ThemeCarousel.tsx",
-      "norm_label": "default_categories"
-    },
-    {
-      "label": "FaqSection.tsx",
-      "file_type": "code",
-      "source_file": "components/landing/FaqSection.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_landing_faqsection",
-      "community": 94,
-      "community_name": "FaqSection.tsx",
-      "norm_label": "faqsection.tsx"
-    },
-    {
-      "label": "FAQS",
-      "file_type": "code",
-      "source_file": "components/landing/FaqSection.tsx",
-      "source_location": "L7",
-      "_origin": "ast",
-      "id": "components_landing_faqsection_faqs",
-      "community": 94,
-      "community_name": "FaqSection.tsx",
-      "norm_label": "faqs"
-    },
-    {
-      "label": "TestimonialSection.tsx",
-      "file_type": "code",
-      "source_file": "components/landing/TestimonialSection.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_landing_testimonialsection",
-      "community": 95,
-      "community_name": "TestimonialSection.tsx",
-      "norm_label": "testimonialsection.tsx"
-    },
-    {
-      "label": "TESTIMONIALS",
-      "file_type": "code",
-      "source_file": "components/landing/TestimonialSection.tsx",
-      "source_location": "L6",
-      "_origin": "ast",
-      "id": "components_landing_testimonialsection_testimonials",
-      "community": 95,
-      "community_name": "TestimonialSection.tsx",
-      "norm_label": "testimonials"
     },
     {
       "label": "Claude CLAUDE.md Integration",
@@ -8856,11 +9074,47 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
+      "source_file": "components/themes/CosmicStarlightTheme.tsx",
+      "source_location": "L102",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_cosmicstarlighttheme_cosmicstarlighttheme",
+      "target": "lib_supabase_client_createclient"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
       "source_file": "components/themes/ElegantBlushTheme.tsx",
       "source_location": "L103",
       "weight": 1.0,
       "_origin": "ast",
       "source": "components_themes_elegantblushtheme_elegantblushtheme",
+      "target": "lib_supabase_client_createclient"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/themes/EtherealWatercolorTheme.tsx",
+      "source_location": "L94",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_etherealwatercolortheme_etherealwatercolortheme",
+      "target": "lib_supabase_client_createclient"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/themes/HeritageGununganTheme.tsx",
+      "source_location": "L93",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_heritagegunungantheme_heritagegunungantheme",
       "target": "lib_supabase_client_createclient"
     },
     {
@@ -9134,11 +9388,50 @@
       "deferred": true,
       "confidence": "EXTRACTED",
       "source_file": "lib/themes/registry.tsx",
+      "source_location": "L80",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_themes_registry_cosmicstarlighttheme",
+      "target": "components_themes_cosmicstarlighttheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "deferred": true,
+      "confidence": "EXTRACTED",
+      "source_file": "lib/themes/registry.tsx",
       "source_location": "L36",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_themes_registry_elegantblushtheme",
       "target": "components_themes_elegantblushtheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "deferred": true,
+      "confidence": "EXTRACTED",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L84",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_themes_registry_etherealwatercolortheme",
+      "target": "components_themes_etherealwatercolortheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "deferred": true,
+      "confidence": "EXTRACTED",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L88",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_themes_registry_heritagegunungantheme",
+      "target": "components_themes_heritagegunungantheme",
       "confidence_score": 1.0
     },
     {
@@ -10886,11 +11179,47 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "components/themes/CosmicStarlightTheme.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_cosmicstarlighttheme",
+      "target": "lib_supabase_client_createclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "components/themes/ElegantBlushTheme.tsx",
       "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "components_themes_elegantblushtheme",
+      "target": "lib_supabase_client_createclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/EtherealWatercolorTheme.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_etherealwatercolortheme",
+      "target": "lib_supabase_client_createclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/HeritageGununganTheme.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_heritagegunungantheme",
       "target": "lib_supabase_client_createclient",
       "confidence_score": 1.0
     },
@@ -12974,11 +13303,47 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "components/themes/CosmicStarlightTheme.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_cosmicstarlighttheme",
+      "target": "lib_supabase_client",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "components/themes/ElegantBlushTheme.tsx",
       "source_location": "L10",
       "weight": 1.0,
       "_origin": "ast",
       "source": "components_themes_elegantblushtheme",
+      "target": "lib_supabase_client",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/EtherealWatercolorTheme.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_etherealwatercolortheme",
+      "target": "lib_supabase_client",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/HeritageGununganTheme.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_heritagegunungantheme",
       "target": "lib_supabase_client",
       "confidence_score": 1.0
     },
@@ -14584,6 +14949,50 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "components/themes/CosmicStarlightTheme.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_cosmicstarlighttheme",
+      "target": "components_themes_cosmicstarlighttheme_cinzel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/CosmicStarlightTheme.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_cosmicstarlighttheme",
+      "target": "components_themes_cosmicstarlighttheme_outfit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/CosmicStarlightTheme.tsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_cosmicstarlighttheme",
+      "target": "components_themes_cosmicstarlighttheme_props",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/CosmicStarlightTheme.tsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_cosmicstarlighttheme",
+      "target": "components_themes_cosmicstarlighttheme_cosmicstarlighttheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "components/themes/ElegantBlushTheme.tsx",
       "source_location": "L12",
       "weight": 1.0,
@@ -14601,6 +15010,105 @@
       "_origin": "ast",
       "source": "components_themes_elegantblushtheme",
       "target": "components_themes_elegantblushtheme_elegantblushtheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/EtherealWatercolorTheme.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_etherealwatercolortheme",
+      "target": "components_themes_etherealwatercolortheme_playfair",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/EtherealWatercolorTheme.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_etherealwatercolortheme",
+      "target": "components_themes_etherealwatercolortheme_lato",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/EtherealWatercolorTheme.tsx",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_etherealwatercolortheme",
+      "target": "components_themes_etherealwatercolortheme_dancing",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/EtherealWatercolorTheme.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_etherealwatercolortheme",
+      "target": "components_themes_etherealwatercolortheme_props",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/EtherealWatercolorTheme.tsx",
+      "source_location": "L26",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_etherealwatercolortheme",
+      "target": "components_themes_etherealwatercolortheme_etherealwatercolortheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/HeritageGununganTheme.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_heritagegunungantheme",
+      "target": "components_themes_heritagegunungantheme_lora",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/HeritageGununganTheme.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_heritagegunungantheme",
+      "target": "components_themes_heritagegunungantheme_playfair",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/HeritageGununganTheme.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_heritagegunungantheme",
+      "target": "components_themes_heritagegunungantheme_props",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/themes/HeritageGununganTheme.tsx",
+      "source_location": "L25",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "components_themes_heritagegunungantheme",
+      "target": "components_themes_heritagegunungantheme_heritagegunungantheme",
       "confidence_score": 1.0
     },
     {
@@ -15245,6 +15753,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/themes/registry.tsx",
+      "source_location": "L100",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_themes_registry",
+      "target": "lib_themes_registry_themesconfig",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/themes/registry.tsx",
       "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
@@ -15278,17 +15797,6 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/themes/registry.tsx",
-      "source_location": "L271",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "lib_themes_registry",
-      "target": "lib_themes_registry_getthemeconfig",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/themes/registry.tsx",
       "source_location": "L28",
       "weight": 1.0,
       "_origin": "ast",
@@ -15305,6 +15813,17 @@
       "_origin": "ast",
       "source": "lib_themes_registry",
       "target": "lib_themes_registry_fieldtype",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L319",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_themes_registry",
+      "target": "lib_themes_registry_getthemeconfig",
       "confidence_score": 1.0
     },
     {
@@ -15454,11 +15973,22 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/themes/registry.tsx",
-      "source_location": "L81",
+      "source_location": "L80",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_themes_registry",
-      "target": "lib_themes_registry_fallbacktheme",
+      "target": "lib_themes_registry_cosmicstarlighttheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L84",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_themes_registry",
+      "target": "lib_themes_registry_etherealwatercolortheme",
       "confidence_score": 1.0
     },
     {
@@ -15469,7 +15999,18 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_themes_registry",
-      "target": "lib_themes_registry_themesconfig",
+      "target": "lib_themes_registry_heritagegunungantheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/themes/registry.tsx",
+      "source_location": "L93",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "lib_themes_registry",
+      "target": "lib_themes_registry_fallbacktheme",
       "confidence_score": 1.0
     },
     {
@@ -17610,7 +18151,34 @@
       "source_file": "lib/themes/registry.tsx",
       "_origin": "ast",
       "source": "lib_themes_registry",
+      "target": "components_themes_cosmicstarlighttheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "dynamic_import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/themes/registry.tsx",
+      "_origin": "ast",
+      "source": "lib_themes_registry",
       "target": "components_themes_elegantblushtheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "dynamic_import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/themes/registry.tsx",
+      "_origin": "ast",
+      "source": "lib_themes_registry",
+      "target": "components_themes_etherealwatercolortheme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "dynamic_import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/themes/registry.tsx",
+      "_origin": "ast",
+      "source": "lib_themes_registry",
+      "target": "components_themes_heritagegunungantheme",
       "confidence_score": 1.0
     },
     {
@@ -17977,7 +18545,7 @@
       "context": "collection",
       "confidence": "INFERRED",
       "source_file": "lib/themes/registry.tsx",
-      "source_location": "L275",
+      "source_location": "L323",
       "weight": 1.0,
       "_origin": "ast",
       "source": "lib_themes_registry_getthemeconfig",
@@ -19448,5 +20016,5 @@
       "source_file": "implementation.md"
     }
   ],
-  "built_at_commit": "2ad4af2352e42a6ed712c06c869a8e50a2e0e828"
+  "built_at_commit": "538474cfd8e734307b62722337f29bde9ab00883"
 }

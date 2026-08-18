@@ -230,6 +230,51 @@ async function main() {
         accent: "#888888"
       },
       sort_order: 15
+    },
+    {
+      name: "Cosmic Starlight",
+      slug: "cosmic-starlight",
+      category: "dark",
+      thumbnail_url: "https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?q=80&w=600&auto=format&fit=crop",
+      is_premium: true,
+      is_active: true,
+      colors: {
+        background: "#050510",
+        text: "#E0E0FF",       
+        primary: "#A0A0FF",
+        accent: "#8080C0"
+      },
+      sort_order: 16
+    },
+    {
+      name: "Ethereal Watercolor",
+      slug: "ethereal-watercolor",
+      category: "elegan",
+      thumbnail_url: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=600&auto=format&fit=crop",
+      is_premium: true,
+      is_active: true,
+      colors: {
+        background: "#FDFBF7",
+        text: "#4A4A4A",       
+        primary: "#FAD2E1",
+        accent: "#C5D5CB"
+      },
+      sort_order: 17
+    },
+    {
+      name: "Heritage Gunungan",
+      slug: "heritage-gunungan",
+      category: "budaya",
+      thumbnail_url: "https://images.unsplash.com/photo-1583939000140-5242502690d7?q=80&w=600&auto=format&fit=crop",
+      is_premium: true,
+      is_active: true,
+      colors: {
+        background: "#1F1010",
+        text: "#F3E5D8",       
+        primary: "#D4AF37",
+        accent: "#2A1515"
+      },
+      sort_order: 18
     }
   ];
   
