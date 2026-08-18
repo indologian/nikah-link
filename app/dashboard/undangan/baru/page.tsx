@@ -14,6 +14,7 @@ import Link from "next/link";
 import UpsellModal from "@/components/dashboard/UpsellModal";
 import LocationAutocomplete from "@/components/ui/LocationAutocomplete";
 import TimeRangePicker from "@/components/ui/TimeRangePicker";
+import { getThemeConfig } from "@/lib/themes/registry";
 
 const STEPS = [
   { id: "basic", label: "Mempelai", icon: Heart },
@@ -65,6 +66,7 @@ const DEFAULT_FORM_DATA = {
   show_gallery: true,
   show_wishes: true,
   is_published: true,
+  custom_data: {} as Record<string, any>,
 };
 
 export default function NewInvitationPage() {
@@ -419,6 +421,7 @@ export default function NewInvitationPage() {
           show_gift: formData.show_gift,
           show_gallery: formData.show_gallery,
           show_wishes: formData.show_wishes,
+          custom_data: formData.custom_data,
         })
         .select()
         .single();
@@ -901,6 +904,68 @@ export default function NewInvitationPage() {
                   );
                 })}
               </div>
+              
+              {/* DYNAMIC FIELDS FROM THEME CONFIG */}
+              {(() => {
+                const selectedThemeConfig = getThemeConfig(formData.theme_slug);
+                if (!selectedThemeConfig.fields || selectedThemeConfig.fields.length === 0) return null;
+
+                return (
+                  <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 space-y-4">
+                    <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                      <Settings className="w-4 h-4" /> Pengaturan Khusus Tema Ini
+                    </h3>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      {selectedThemeConfig.fields.map((field) => (
+                        <div key={field.name} className={field.type === 'textarea' ? 'md:col-span-2' : ''}>
+                          <label className="block text-xs font-bold text-slate-700 dark:text-slate-400 mb-1">
+                            {field.label}
+                          </label>
+                          {field.type === 'textarea' ? (
+                            <textarea
+                              rows={3}
+                              value={formData.custom_data[field.name] || ""}
+                              onChange={(e) => setFormData(prev => ({ 
+                                ...prev, 
+                                custom_data: { ...prev.custom_data, [field.name]: e.target.value } 
+                              }))}
+                              placeholder={field.placeholder || ""}
+                              className="w-full px-4 py-2.5 rounded-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:border-white"
+                            />
+                          ) : field.type === 'boolean' ? (
+                            <label className="flex items-center gap-3 cursor-pointer mt-2 group">
+                              <div className={`w-4 h-4 border flex items-center justify-center transition-colors ${formData.custom_data[field.name] ? 'border-slate-900 bg-slate-900 dark:border-white dark:bg-white' : 'border-slate-300 dark:border-slate-600'}`}>
+                                 {formData.custom_data[field.name] && <Check className="w-3 h-3 text-white dark:text-slate-900" />}
+                              </div>
+                              <input
+                                type="checkbox"
+                                checked={formData.custom_data[field.name] || false}
+                                onChange={(e) => setFormData(prev => ({ 
+                                  ...prev, 
+                                  custom_data: { ...prev.custom_data, [field.name]: e.target.checked } 
+                                }))}
+                                className="hidden"
+                              />
+                              <span className="text-sm text-slate-700 dark:text-slate-300">{field.label}</span>
+                            </label>
+                          ) : (
+                            <input
+                              type={field.type === 'url' ? 'url' : field.type === 'date' ? 'date' : 'text'}
+                              value={formData.custom_data[field.name] || ""}
+                              onChange={(e) => setFormData(prev => ({ 
+                                ...prev, 
+                                custom_data: { ...prev.custom_data, [field.name]: e.target.value } 
+                              }))}
+                              placeholder={field.placeholder || ""}
+                              className="w-full px-4 py-2.5 rounded-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:border-white"
+                            />
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })()}
             </motion.div>
           )}
 

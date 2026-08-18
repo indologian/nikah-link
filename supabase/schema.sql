@@ -116,6 +116,7 @@ CREATE TABLE invitations (
   custom_message TEXT,
   livestream_url TEXT,
   opening_text TEXT DEFAULT 'Bersama keluarga besar kami, kami mengundang Bapak/Ibu/Saudara/i',
+  custom_data JSONB DEFAULT '{}'::jsonb,
 
   -- Settings
   is_published BOOLEAN DEFAULT FALSE,

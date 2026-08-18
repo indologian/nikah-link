@@ -3,12 +3,13 @@
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Theme } from "@/types";
-import { Plus, Trash2, Loader2, Image as ImageIcon, CheckCircle2 } from "lucide-react";
+import { Plus, Trash2, Edit2, Loader2, Image as ImageIcon, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
 
 export default function ThemesClient({ initialThemes }: { initialThemes: Theme[] }) {
   const [themes, setThemes] = useState<Theme[]>(initialThemes);
   const [isAdding, setIsAdding] = useState(false);
+  const [isEditing, setIsEditing] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const supabase = createClient();
 
@@ -21,30 +22,58 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
   });
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
 
-  const handleAdd = async (e: React.FormEvent) => {
+  const resetForm = () => {
+    setFormData({ id: "", name: "", category: "minimalis", is_premium: false, colors_primary: "#0F172A" });
+    setThumbnailFile(null);
+    setIsAdding(false);
+    setIsEditing(null);
+  };
+
+  const handleEditClick = (theme: Theme) => {
+    setFormData({
+      id: theme.id,
+      name: theme.name,
+      category: theme.category,
+      is_premium: theme.is_premium,
+      colors_primary: theme.colors?.primary || "#0F172A",
+    });
+    setIsEditing(theme.id);
+    setIsAdding(true);
+    setThumbnailFile(null);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!thumbnailFile) return alert("Pilih gambar thumbnail terlebih dahulu");
+    if (!isEditing && !thumbnailFile) return alert("Pilih gambar thumbnail terlebih dahulu");
     setIsSubmitting(true);
 
     try {
-      // 1. Upload image to Supabase Storage
-      const fileExt = thumbnailFile.name.split(".").pop();
-      const fileName = `${formData.id}-${Date.now()}.${fileExt}`;
-      const { error: uploadError } = await supabase.storage
-        .from("themes")
-        .upload(fileName, thumbnailFile);
+      let thumbnailUrl = "";
 
-      if (uploadError) throw uploadError;
+      // 1. Upload image to Supabase Storage if new file is selected
+      if (thumbnailFile) {
+        const fileExt = thumbnailFile.name.split(".").pop();
+        const fileName = `${formData.id}-${Date.now()}.${fileExt}`;
+        const { error: uploadError } = await supabase.storage
+          .from("themes")
+          .upload(fileName, thumbnailFile);
 
-      const { data: publicUrlData } = supabase.storage
-        .from("themes")
-        .getPublicUrl(fileName);
-      
-      const thumbnailUrl = publicUrlData.publicUrl;
+        if (uploadError) throw uploadError;
 
-      // 2. Insert to DB
-      const newTheme = {
-        id: formData.id,
+        const { data: publicUrlData } = supabase.storage
+          .from("themes")
+          .getPublicUrl(fileName);
+        
+        thumbnailUrl = publicUrlData.publicUrl;
+      } else if (isEditing) {
+        // keep existing
+        const existingTheme = themes.find((t) => t.id === isEditing);
+        thumbnailUrl = existingTheme?.thumbnail_url || "";
+      }
+
+      // 2. Insert or Update DB
+      const themeData = {
         name: formData.name,
         slug: formData.id,
         category: formData.category,
@@ -59,13 +88,21 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
         }
       };
 
-      const { error: insertError } = await supabase.from("themes").insert(newTheme);
-      if (insertError) throw insertError;
+      if (isEditing) {
+        const { error: updateError } = await supabase
+          .from("themes")
+          .update(themeData)
+          .eq("id", isEditing);
+        if (updateError) throw updateError;
+        setThemes(themes.map(t => t.id === isEditing ? { ...t, ...themeData } as Theme : t));
+      } else {
+        const newTheme = { ...themeData, id: formData.id };
+        const { error: insertError } = await supabase.from("themes").insert(newTheme);
+        if (insertError) throw insertError;
+        setThemes([newTheme as Theme, ...themes]);
+      }
 
-      setThemes([newTheme as Theme, ...themes]);
-      setIsAdding(false);
-      setFormData({ id: "", name: "", category: "minimalis", is_premium: false, colors_primary: "#0F172A" });
-      setThumbnailFile(null);
+      resetForm();
     } catch (err: any) {
       alert("Error: " + err.message);
     } finally {
@@ -98,16 +135,18 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
           <h2 className="text-lg font-medium text-slate-900 dark:text-white tracking-tight">Katalog Tema</h2>
         </div>
         <button
-          onClick={() => setIsAdding(!isAdding)}
+          onClick={() => isAdding ? resetForm() : setIsAdding(true)}
           className="inline-flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2 text-xs font-bold uppercase tracking-wider hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors"
         >
-          <Plus className="w-4 h-4" /> {isAdding ? "Tutup" : "Tambah Tema"}
+          <Plus className="w-4 h-4" /> {isAdding ? "Batal" : "Tambah Tema"}
         </button>
       </div>
 
       {isAdding && (
-        <form onSubmit={handleAdd} className="mb-12 pt-6 border-t border-slate-200 dark:border-slate-800 space-y-6">
-          <h3 className="font-medium text-slate-900 dark:text-white tracking-tight text-lg mb-6">Parameter Tema Baru</h3>
+        <form onSubmit={handleSave} className="mb-12 pt-6 border-t border-slate-200 dark:border-slate-800 space-y-6">
+          <h3 className="font-medium text-slate-900 dark:text-white tracking-tight text-lg mb-6">
+            {isEditing ? "Edit Tema" : "Parameter Tema Baru"}
+          </h3>
           
           <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-1">
@@ -115,9 +154,10 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
               <input
                 type="text"
                 required
+                disabled={!!isEditing} // Cannot change ID if editing
                 value={formData.id}
                 onChange={e => setFormData({...formData, id: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "")})}
-                className="w-full px-0 py-2 bg-transparent border-b border-slate-200 dark:border-slate-800 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-slate-900 dark:focus:border-slate-100 transition-colors rounded-none"
+                className="w-full px-0 py-2 bg-transparent border-b border-slate-200 dark:border-slate-800 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-slate-900 dark:focus:border-slate-100 transition-colors rounded-none disabled:opacity-50"
                 placeholder="misal: rustic-gold"
               />
             </div>
@@ -178,11 +218,13 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
               </label>
             </div>
             <div className="space-y-1">
-              <label className="block text-xs font-mono uppercase tracking-wider text-slate-500">Upload Thumbnail</label>
+              <label className="block text-xs font-mono uppercase tracking-wider text-slate-500">
+                {isEditing ? "Ganti Thumbnail (Opsional)" : "Upload Thumbnail"}
+              </label>
               <input
                 type="file"
                 accept="image/*"
-                required
+                required={!isEditing}
                 onChange={e => setThumbnailFile(e.target.files?.[0] || null)}
                 className="w-full px-0 py-2 bg-transparent text-sm text-slate-900 dark:text-slate-200 focus:outline-none file:mr-4 file:py-1.5 file:px-4 file:border file:border-slate-200 dark:file:border-slate-800 file:bg-transparent file:text-xs file:font-mono file:uppercase file:tracking-wider file:text-slate-900 dark:file:text-white hover:file:bg-slate-50 dark:hover:file:bg-slate-900 cursor-pointer"
               />
@@ -195,7 +237,7 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
               disabled={isSubmitting}
               className="inline-flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-8 py-3 text-xs font-bold uppercase tracking-wider hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors disabled:opacity-50"
             >
-              {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : "Simpan Tema Ke Database"}
+              {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : (isEditing ? "Simpan Perubahan" : "Simpan Tema Ke Database")}
             </button>
           </div>
         </form>
@@ -223,13 +265,22 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
                 <h3 className="font-medium text-slate-900 dark:text-white text-sm tracking-tight">{theme.name}</h3>
                 <p className="text-xs text-slate-500 mt-0.5 font-mono uppercase tracking-wider">{theme.category}</p>
               </div>
-              <button
-                onClick={() => handleDelete(theme.id, theme.thumbnail_url)}
-                className="text-slate-400 hover:text-rose-600 transition-colors opacity-0 group-hover:opacity-100 p-1"
-                title="Hapus Tema"
-              >
-                <Trash2 className="w-4 h-4" />
-              </button>
+              <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button
+                  onClick={() => handleEditClick(theme)}
+                  className="text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors p-1"
+                  title="Edit Tema"
+                >
+                  <Edit2 className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => handleDelete(theme.id, theme.thumbnail_url)}
+                  className="text-slate-400 hover:text-rose-600 transition-colors p-1"
+                  title="Hapus Tema"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
         ))}

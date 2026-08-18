@@ -18,15 +18,17 @@ interface Props {
   giftAccounts: any[];
   isFreePlan?: boolean;
   expiresAt?: string | null;
+  customData?: any;
 }
 
-export default function PublicInvitationClient({
+export default function MinimalistTheme({
   invitation,
   guestName,
   initialWishes,
   giftAccounts,
   isFreePlan,
   expiresAt,
+  customData,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);

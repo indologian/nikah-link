@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
-import PublicInvitationClient from "./PublicInvitationClient";
+import { getThemeConfig } from "@/lib/themes/registry";
 import type { Metadata } from "next";
 
 interface Props {
@@ -71,10 +71,13 @@ export default async function PublicInvitationPage({ params, searchParams }: Pro
       show_gift: true,
       show_gallery: true,
       show_wishes: true,
+      custom_data: {}
     };
 
+    const DemoTheme = getThemeConfig("minimalis").component;
+
     return (
-      <PublicInvitationClient
+      <DemoTheme
         invitation={demoInvitation as any}
         guestName={guestNameFromUrl || "Tamu Undangan"}
         initialWishes={[]}
@@ -84,6 +87,7 @@ export default async function PublicInvitationPage({ params, searchParams }: Pro
         ]}
         isFreePlan={false}
         expiresAt={null}
+        customData={{}}
       />
     );
   }
@@ -111,15 +115,20 @@ export default async function PublicInvitationPage({ params, searchParams }: Pro
   ]);
 
   const isFreePlan = profile?.plan !== "premium" && profile?.plan !== "pro";
+  
+  // Resolve Theme Component
+  const themeSlug = invitation.themes?.slug || "minimalis";
+  const ThemeUI = getThemeConfig(themeSlug).component;
 
   return (
-    <PublicInvitationClient
+    <ThemeUI
       invitation={invitation}
       guestName={guestNameFromUrl || "Tamu Undangan"}
       initialWishes={wishes || []}
       giftAccounts={gifts || []}
       isFreePlan={isFreePlan}
       expiresAt={invitation.expires_at}
+      customData={invitation.custom_data || {}}
     />
   );
 }
