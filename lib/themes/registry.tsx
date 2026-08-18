@@ -41,6 +41,18 @@ const MidnightSparkleTheme = dynamic(() => import('@/components/themes/MidnightS
   loading: () => <div className="min-h-screen flex items-center justify-center bg-[#0B132B]"><div className="w-8 h-8 border-4 border-[#FFD700]/30 border-t-[#FFD700] rounded-full animate-spin"></div></div>
 });
 
+const SereinWhiteTheme = dynamic(() => import('@/components/themes/SereinWhiteTheme'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center bg-white"><div className="w-8 h-8 border-4 border-gray-200 border-t-gray-400 rounded-full animate-spin"></div></div>
+});
+
+const BalineseHarmonyTheme = dynamic(() => import('@/components/themes/BalineseHarmonyTheme'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center bg-[#F4F4F0]"><div className="w-8 h-8 border-4 border-[#D4AF37]/30 border-t-[#D4AF37] rounded-full animate-spin"></div></div>
+});
+
+const MagazineCoverTheme = dynamic(() => import('@/components/themes/MagazineCoverTheme'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center bg-white"><div className="w-8 h-8 border-4 border-gray-200 border-t-black rounded-full animate-spin"></div></div>
+});
+
 // A fallback component if a theme is not found
 const FallbackTheme = ({ invitation }: { invitation: any }) => (
   <div className="min-h-screen flex items-center justify-center flex-col gap-4 p-8 text-center bg-white">
@@ -119,6 +131,42 @@ export const themesConfig: Record<string, ThemeConfig> = {
         label: "Kutipan",
         type: "textarea",
         placeholder: "You are the stars in my dark night."
+      }
+    ]
+  },
+  "serein-white": {
+    slug: "serein-white",
+    component: SereinWhiteTheme,
+    fields: [
+      {
+        name: "quote",
+        label: "Kutipan",
+        type: "textarea",
+        placeholder: "To love and be loved..."
+      }
+    ]
+  },
+  "balinese-harmony": {
+    slug: "balinese-harmony",
+    component: BalineseHarmonyTheme,
+    fields: [
+      {
+        name: "quote",
+        label: "Kutipan",
+        type: "textarea",
+        placeholder: "Om Swastyastu..."
+      }
+    ]
+  },
+  "magazine-cover": {
+    slug: "magazine-cover",
+    component: MagazineCoverTheme,
+    fields: [
+      {
+        name: "quote",
+        label: "Kutipan",
+        type: "textarea",
+        placeholder: "A modern romance..."
       }
     ]
   }

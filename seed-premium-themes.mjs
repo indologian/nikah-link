@@ -95,6 +95,51 @@ async function main() {
         accent: "#1C2541"
       },
       sort_order: 6
+    },
+    {
+      name: "Serein White",
+      slug: "serein-white",
+      category: "minimalis",
+      thumbnail_url: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600&auto=format&fit=crop",
+      is_premium: true,
+      is_active: true,
+      colors: {
+        background: "#FFFFFF",
+        text: "#333333",
+        primary: "#9CA3AF",
+        accent: "#E5E7EB"
+      },
+      sort_order: 7
+    },
+    {
+      name: "Balinese Harmony",
+      slug: "balinese-harmony",
+      category: "budaya",
+      thumbnail_url: "https://images.unsplash.com/photo-1543956690-333e387f3b60?q=80&w=600&auto=format&fit=crop",
+      is_premium: true,
+      is_active: true,
+      colors: {
+        background: "#F4F4F0",
+        text: "#4B4642",
+        primary: "#D4AF37",
+        accent: "#8B7355"
+      },
+      sort_order: 8
+    },
+    {
+      name: "Magazine Cover",
+      slug: "magazine-cover",
+      category: "elegan",
+      thumbnail_url: "https://images.unsplash.com/photo-1532712938736-98c5411961a8?q=80&w=600&auto=format&fit=crop",
+      is_premium: true,
+      is_active: true,
+      colors: {
+        background: "#FFFFFF",
+        text: "#000000",
+        primary: "#000000",
+        accent: "#E5E5E5"
+      },
+      sort_order: 9
     }
   ];
   
