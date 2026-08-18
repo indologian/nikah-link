@@ -16,9 +16,9 @@ import UpsellModal from "@/components/dashboard/UpsellModal";
 import { getThemeConfig } from "@/lib/themes/registry";
 
 const STEPS = [
+  { id: "theme", label: "Tema", icon: Sparkles },
   { id: "basic", label: "Mempelai", icon: Heart },
   { id: "events", label: "Acara", icon: Calendar },
-  { id: "theme", label: "Tema", icon: Sparkles },
   { id: "media", label: "Galeri & Musik", icon: ImageIcon },
   { id: "gift", label: "Kado Cashless", icon: Gift },
   { id: "settings", label: "Pengaturan", icon: Settings },
@@ -302,7 +302,7 @@ export default function EditInvitationPage() {
   };
 
   const handleNext = () => {
-    if (currentStep === 0) {
+    if (STEPS[currentStep].id === "basic") {
       if (!formData.bride_name || !formData.groom_name || !formData.username) {
         setError("Nama pengantin dan URL undangan wajib diisi!");
         return;
@@ -495,7 +495,7 @@ export default function EditInvitationPage() {
 
         <AnimatePresence mode="wait">
           {/* STEP 1: MEMPELAI */}
-          {currentStep === 0 && (
+          {STEPS[currentStep].id === "basic" && (
             <motion.div key="step-0" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
               <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
                 <Heart className="w-5 h-5 text-slate-900 dark:text-white" /> Profil Mempelai & Custom URL
@@ -591,7 +591,7 @@ export default function EditInvitationPage() {
           )}
 
           {/* STEP 2: ACAKA */}
-          {currentStep === 1 && (
+          {STEPS[currentStep].id === "events" && (
             <motion.div key="step-1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
               <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
                 <Calendar className="w-5 h-5 text-slate-900 dark:text-white" /> Detail Acara Pernikahan
@@ -676,7 +676,7 @@ export default function EditInvitationPage() {
           )}
 
           {/* STEP 3: TEMA */}
-          {currentStep === 2 && (
+          {STEPS[currentStep].id === "theme" && (
             <motion.div key="step-2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
               <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
                 <Sparkles className="w-5 h-5 text-slate-900 dark:text-white" /> Pilih Tema Undangan
@@ -797,7 +797,7 @@ export default function EditInvitationPage() {
           )}
 
           {/* STEP 4: MEDIA */}
-          {currentStep === 3 && (
+          {STEPS[currentStep].id === "media" && (
             <motion.div key="step-3" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
               <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
                 <ImageIcon className="w-5 h-5 text-slate-900 dark:text-white" /> Galeri Foto & Musik Latar
@@ -853,7 +853,7 @@ export default function EditInvitationPage() {
           )}
 
           {/* STEP 5: KADO */}
-          {currentStep === 4 && (
+          {STEPS[currentStep].id === "gift" && (
             <motion.div key="step-4" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
               <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
                 <Gift className="w-5 h-5 text-slate-900 dark:text-white" /> Rekening Kado Digital
@@ -875,7 +875,7 @@ export default function EditInvitationPage() {
           )}
 
           {/* STEP 6: PENGATURAN */}
-          {currentStep === 5 && (
+          {STEPS[currentStep].id === "settings" && (
             <motion.div key="step-5" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
               <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
                 <Settings className="w-5 h-5 text-slate-900 dark:text-white" /> Pengaturan Fitur Undangan
