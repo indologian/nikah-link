@@ -27,11 +27,13 @@ Themes generally fall into a few specific aesthetic categories:
 *   **Placement:** Used heavily in the Event Details section (calendar icon, clock icon, map pin). 
 *   **Floating Actions:** Often a floating bottom-right or bottom-left icon for Music Control (spinning vinyl or equalizer icon) and occasionally a "Back to Top" or "Share" button.
 
-## 4. Animation Styles
-*   **Entrance (Hero):** The "Open Invitation" button initiates an envelope opening animation or an upward slide/fade-out of the cover, transitioning smoothly into the main content.
-*   **Scroll Reveals (AOS - Animate On Scroll):** Elements fade in, slide up, or zoom in slightly as they enter the viewport. This keeps the page dynamic without being overwhelming.
-*   **Parallax:** Used in the background of transition sections (like quotes or between event details and gallery) to create a sense of depth.
-*   **Subtle Looping Animations:** Leaves falling, floating dust particles, or gentle pulsing on important buttons (like the Maps link or RSVP submit).
+## 4. Animation Styles & Advanced Interactions
+*   **Entrance (Hero):** The "Open Invitation" button initiates an envelope opening sequence or a modern **Split-Screen Cover** effect where the cover seamlessly parts upwards and downwards.
+*   **SVG Path Drawing:** Vector elements (like botanical leaves, golden arches, or bohemian palm fronds) utilize sequential path drawing animations (`pathLength` in Framer Motion) that "draw themselves" as the user scrolls, creating a highly artistic, hand-crafted feel.
+*   **3D Interactive Galleries (Tilt Effect):** Moving beyond static grids, premium galleries utilize Framer Motion 3D transforms (`rotateX`, `rotateY`, `perspective`) to create floating, overlapping photo arrangements that react dynamically to mouse movement or device orientation, offering an immersive spatial experience.
+*   **Scroll Reveals & Parallax:** Elements fade in, slide up, or zoom in slightly. Backgrounds utilize parallax scrolling to create a sense of depth between sections.
+*   **Organic Looping Animations:** Elements like dried palm leaves or delicate flowers incorporate continuous, gentle swaying animations to mimic natural wind, adding life without distracting the user.
+*   **Immersive Features:** Integration of interactive "Save the Date" calendar buttons and stylized CTAs for custom Instagram AR Filters directly within the invitation flow.
 
 ## 5. Mobile Responsiveness Paradigms
 *   **Mobile-First Design:** Over 90% of invitations are viewed on smartphones via WhatsApp links. Designs are strictly optimized for portrait aspect ratios.
@@ -50,8 +52,8 @@ Themes generally fall into a few specific aesthetic categories:
 
 1.  **Component Reusability:** Build modular Next.js components (e.g., `<Hero />`, `<CoupleProfile />`, `<EventDetails />`, `<Gallery masonry={true} />`, `<RSVPForm />`, `<DigitalWallet />`). This will allow us to easily swap out styles and layouts for different themes.
 2.  **State Management for Audio:** Use a global state (e.g., Zustand or React Context) to manage the playing state of the background music, ensuring it persists and can be toggled from anywhere.
-3.  **Framer Motion for Animations:** Instead of older libraries like AOS, utilize `framer-motion` in Next.js for highly performant, smooth scroll reveals, page transitions, and the initial envelope-opening sequence.
-4.  **Copy-to-Clipboard Hooks:** Implement a robust `useCopyToClipboard` hook for bank accounts and addresses, accompanied by a quick Toast notification for positive UX.
+3.  **Framer Motion for Advanced Animations:** Go beyond simple scroll reveals. Utilize `framer-motion` for complex `pathLength` SVG drawing animations, `useScroll` for parallax effects, and `useMotionValue` with `useTransform` for interactive 3D Tilt photo galleries.
+4.  **Copy-to-Clipboard & Integrations:** Implement robust hooks for bank accounts and addresses. Integrate "Save to Google Calendar" links (using `date-fns` and URL params) and CTA sections for custom Instagram AR Filters.
 5.  **Dynamic Theming:** Use CSS Variables (Custom Properties) or Tailwind CSS configuration to easily switch out primary colors, secondary colors, and typography fonts based on the selected theme payload.
 6.  **Next.js Image Optimization:** Utilize `next/image` extensively for the gallery and hero sections to ensure fast load times, critical for mobile users on cellular networks.
 
