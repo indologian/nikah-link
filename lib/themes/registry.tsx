@@ -29,6 +29,18 @@ const RoyalBotanicalTheme = dynamic(() => import('@/components/themes/RoyalBotan
   loading: () => <div className="min-h-screen flex items-center justify-center bg-[#064E3B]"><div className="w-8 h-8 border-4 border-[#D4AF37]/30 border-t-[#D4AF37] rounded-full animate-spin"></div></div>
 });
 
+const WayangClassicTheme = dynamic(() => import('@/components/themes/WayangClassicTheme'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center bg-[#2A1B14]"><div className="w-8 h-8 border-4 border-[#D4AF37]/30 border-t-[#D4AF37] rounded-full animate-spin"></div></div>
+});
+
+const ElegantBlushTheme = dynamic(() => import('@/components/themes/ElegantBlushTheme'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center bg-[#FFF5F5]"><div className="w-8 h-8 border-4 border-[#B76E79]/30 border-t-[#B76E79] rounded-full animate-spin"></div></div>
+});
+
+const MidnightSparkleTheme = dynamic(() => import('@/components/themes/MidnightSparkleTheme'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center bg-[#0B132B]"><div className="w-8 h-8 border-4 border-[#FFD700]/30 border-t-[#FFD700] rounded-full animate-spin"></div></div>
+});
+
 // A fallback component if a theme is not found
 const FallbackTheme = ({ invitation }: { invitation: any }) => (
   <div className="min-h-screen flex items-center justify-center flex-col gap-4 p-8 text-center bg-white">
@@ -71,6 +83,42 @@ export const themesConfig: Record<string, ThemeConfig> = {
         label: "Kutipan Pernikahan",
         type: "textarea",
         placeholder: "Dan di antara tanda-tanda kekuasaan-Nya..."
+      }
+    ]
+  },
+  "wayang-classic": {
+    slug: "wayang-classic",
+    component: WayangClassicTheme,
+    fields: [
+      {
+        name: "quote",
+        label: "Kutipan",
+        type: "textarea",
+        placeholder: "Maha Suci Allah yang telah menciptakan..."
+      }
+    ]
+  },
+  "elegant-blush": {
+    slug: "elegant-blush",
+    component: ElegantBlushTheme,
+    fields: [
+      {
+        name: "quote",
+        label: "Kutipan",
+        type: "textarea",
+        placeholder: "To love and to be loved is to feel the sun from both sides."
+      }
+    ]
+  },
+  "midnight-sparkle": {
+    slug: "midnight-sparkle",
+    component: MidnightSparkleTheme,
+    fields: [
+      {
+        name: "quote",
+        label: "Kutipan",
+        type: "textarea",
+        placeholder: "You are the stars in my dark night."
       }
     ]
   }
