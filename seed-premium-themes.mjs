@@ -140,6 +140,51 @@ async function main() {
         accent: "#E5E5E5"
       },
       sort_order: 9
+    },
+    {
+      name: "Javanese Batik",
+      slug: "javanese-batik",
+      category: "budaya",
+      thumbnail_url: "https://images.unsplash.com/photo-1583939000140-5242502690d7?q=80&w=600&auto=format&fit=crop",
+      is_premium: true,
+      is_active: true,
+      colors: {
+        background: "#FDFBF7",
+        text: "#3E2723",       
+        primary: "#B48B3D",
+        accent: "#5D4037"
+      },
+      sort_order: 10
+    },
+    {
+      name: "Line Art Botanical",
+      slug: "line-art-botanical",
+      category: "floral",
+      thumbnail_url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=600&auto=format&fit=crop",
+      is_premium: true,
+      is_active: true,
+      colors: {
+        background: "#FAF9F6",
+        text: "#2C3E2D",       
+        primary: "#6B8E23",
+        accent: "#E2C2B3"
+      },
+      sort_order: 11
+    },
+    {
+      name: "Royal Gold",
+      slug: "royal-gold",
+      category: "elegan",
+      thumbnail_url: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=600&auto=format&fit=crop",
+      is_premium: true,
+      is_active: true,
+      colors: {
+        background: "#080B13",
+        text: "#FFFFFF",       
+        primary: "#D4AF37",
+        accent: "#F2D26D"
+      },
+      sort_order: 12
     }
   ];
   

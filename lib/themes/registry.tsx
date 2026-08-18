@@ -53,6 +53,18 @@ const MagazineCoverTheme = dynamic(() => import('@/components/themes/MagazineCov
   loading: () => <div className="min-h-screen flex items-center justify-center bg-white"><div className="w-8 h-8 border-4 border-gray-200 border-t-black rounded-full animate-spin"></div></div>
 });
 
+const JavaneseBatikTheme = dynamic(() => import('@/components/themes/JavaneseBatikTheme'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center bg-[#FDFBF7]"><div className="w-8 h-8 border-4 border-[#B48B3D]/30 border-t-[#B48B3D] rounded-full animate-spin"></div></div>
+});
+
+const LineArtBotanicalTheme = dynamic(() => import('@/components/themes/LineArtBotanicalTheme'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center bg-[#FAF9F6]"><div className="w-8 h-8 border-4 border-[#6B8E23]/30 border-t-[#6B8E23] rounded-full animate-spin"></div></div>
+});
+
+const RoyalGoldTheme = dynamic(() => import('@/components/themes/RoyalGoldTheme'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center bg-[#080B13]"><div className="w-8 h-8 border-4 border-[#D4AF37]/30 border-t-[#D4AF37] rounded-full animate-spin"></div></div>
+});
+
 // A fallback component if a theme is not found
 const FallbackTheme = ({ invitation }: { invitation: any }) => (
   <div className="min-h-screen flex items-center justify-center flex-col gap-4 p-8 text-center bg-white">
@@ -167,6 +179,42 @@ export const themesConfig: Record<string, ThemeConfig> = {
         label: "Kutipan",
         type: "textarea",
         placeholder: "A modern romance..."
+      }
+    ]
+  },
+  "javanese-batik": {
+    slug: "javanese-batik",
+    component: JavaneseBatikTheme,
+    fields: [
+      {
+        name: "quote",
+        label: "Kutipan",
+        type: "textarea",
+        placeholder: "Tresno jalaran soko kulino..."
+      }
+    ]
+  },
+  "line-art-botanical": {
+    slug: "line-art-botanical",
+    component: LineArtBotanicalTheme,
+    fields: [
+      {
+        name: "quote",
+        label: "Kutipan",
+        type: "textarea",
+        placeholder: "Growing together in love..."
+      }
+    ]
+  },
+  "royal-gold": {
+    slug: "royal-gold",
+    component: RoyalGoldTheme,
+    fields: [
+      {
+        name: "quote",
+        label: "Kutipan",
+        type: "textarea",
+        placeholder: "A lifetime of luxury and love..."
       }
     ]
   }
