@@ -65,6 +65,18 @@ const RoyalGoldTheme = dynamic(() => import('@/components/themes/RoyalGoldTheme'
   loading: () => <div className="min-h-screen flex items-center justify-center bg-[#080B13]"><div className="w-8 h-8 border-4 border-[#D4AF37]/30 border-t-[#D4AF37] rounded-full animate-spin"></div></div>
 });
 
+const OceanBreezeTheme = dynamic(() => import('@/components/themes/OceanBreezeTheme'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center bg-[#0B2545]"><div className="w-8 h-8 border-4 border-[#8DA9C4]/30 border-t-[#DDA15E] rounded-full animate-spin"></div></div>
+});
+
+const RusticWoodlandTheme = dynamic(() => import('@/components/themes/RusticWoodlandTheme'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center bg-[#2A3B2C]"><div className="w-8 h-8 border-4 border-[#C19A6B]/30 border-t-[#C19A6B] rounded-full animate-spin"></div></div>
+});
+
+const ModernMonochromeTheme = dynamic(() => import('@/components/themes/ModernMonochromeTheme'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center bg-[#111111]"><div className="w-8 h-8 border-4 border-white/30 border-t-white rounded-full animate-spin"></div></div>
+});
+
 // A fallback component if a theme is not found
 const FallbackTheme = ({ invitation }: { invitation: any }) => (
   <div className="min-h-screen flex items-center justify-center flex-col gap-4 p-8 text-center bg-white">
@@ -215,6 +227,42 @@ export const themesConfig: Record<string, ThemeConfig> = {
         label: "Kutipan",
         type: "textarea",
         placeholder: "A lifetime of luxury and love..."
+      }
+    ]
+  },
+  "ocean-breeze": {
+    slug: "ocean-breeze",
+    component: OceanBreezeTheme,
+    fields: [
+      {
+        name: "quote",
+        label: "Kutipan",
+        type: "textarea",
+        placeholder: "Love like the ocean..."
+      }
+    ]
+  },
+  "rustic-woodland": {
+    slug: "rustic-woodland",
+    component: RusticWoodlandTheme,
+    fields: [
+      {
+        name: "quote",
+        label: "Kutipan",
+        type: "textarea",
+        placeholder: "Rooted in love..."
+      }
+    ]
+  },
+  "modern-monochrome": {
+    slug: "modern-monochrome",
+    component: ModernMonochromeTheme,
+    fields: [
+      {
+        name: "quote",
+        label: "Kutipan",
+        type: "textarea",
+        placeholder: "Elegance in simplicity..."
       }
     ]
   }

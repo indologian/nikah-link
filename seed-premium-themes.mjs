@@ -185,6 +185,51 @@ async function main() {
         accent: "#F2D26D"
       },
       sort_order: 12
+    },
+    {
+      name: "Ocean Breeze",
+      slug: "ocean-breeze",
+      category: "minimalis",
+      thumbnail_url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=600&auto=format&fit=crop",
+      is_premium: true,
+      is_active: true,
+      colors: {
+        background: "#EEF4ED",
+        text: "#0B2545",       
+        primary: "#DDA15E",
+        accent: "#134074"
+      },
+      sort_order: 13
+    },
+    {
+      name: "Rustic Woodland",
+      slug: "rustic-woodland",
+      category: "floral",
+      thumbnail_url: "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?q=80&w=600&auto=format&fit=crop",
+      is_premium: true,
+      is_active: true,
+      colors: {
+        background: "#2A3B2C",
+        text: "#F4F1EA",       
+        primary: "#C19A6B",
+        accent: "#4A3B32"
+      },
+      sort_order: 14
+    },
+    {
+      name: "Modern Monochrome",
+      slug: "modern-monochrome",
+      category: "dark",
+      thumbnail_url: "https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=600&auto=format&fit=crop",
+      is_premium: true,
+      is_active: true,
+      colors: {
+        background: "#111111",
+        text: "#FFFFFF",       
+        primary: "#F9F9F9",
+        accent: "#888888"
+      },
+      sort_order: 15
     }
   ];
   
