@@ -1,16 +1,16 @@
 # Graph Report - undangan-pernikahan  (2026-08-18)
 
 ## Corpus Check
-- 132 files · ~105,335 words
+- 135 files · ~111,654 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 711 nodes · 1035 edges · 88 communities (45 shown, 43 thin omitted)
-- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 16 edges (avg confidence: 0.77)
+- 733 nodes · 1069 edges · 91 communities (48 shown, 43 thin omitted)
+- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 16 edges (avg confidence: 0.77)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `3bdff0d7`
+- Built from commit: `02f87785`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -24,18 +24,18 @@
 - app/page.tsx
 - EtherealWatercolorTheme.tsx
 - schema.sql
-- createClient
+- HeritageGununganTheme.tsx
 - utils.ts
-- CosmicStarlightTheme.tsx
+- EditorialGalleryTheme.tsx
 - JavaneseBatikTheme.tsx
-- baru/page.tsx
-- client.ts
+- EtherealSnowTheme.tsx
+- createClient
 - AGENTS.md
 - Graphify Skill (Main)
 - app/layout.tsx
 - Semantic Extraction
 - dependencies
-- Pagination.tsx
+- GeometricAbstractTheme.tsx
 - Extraction Spec
 - MagazineCoverTheme.tsx
 - models
@@ -51,10 +51,10 @@
 - Exports Reference
 - proxy.ts
 - refactor_admin.js
-- class-variance-authority
+- LineArtBotanicalTheme.tsx
 - Wedding Invitation Theme Research & Analysis
 - BotanicalEleganceTheme.tsx
-- GoldenArchTheme.tsx
+- client.ts
 - TerracottaRustTheme.tsx
 - fix_buttons.js
 - refactor.js
@@ -99,11 +99,14 @@
 - Globe Icon SVG
 - Window Icon SVG
 - NikahLink README
+- RusticWoodlandTheme.tsx
+- MinimalistTheme.tsx
+- clsx
 - ModernMonochromeTheme.tsx
 - OceanBreezeTheme.tsx
 
 ## God Nodes (most connected - your core abstractions)
-1. `createClient()` - 73 edges
+1. `createClient()` - 79 edges
 2. `createClient()` - 40 edges
 3. `NikahLink Platform` - 29 edges
 4. `Graphify Skill (Main)` - 23 edges
@@ -111,7 +114,7 @@
 6. `compilerOptions` - 16 edges
 7. `invitations` - 11 edges
 8. `getThemeConfig()` - 10 edges
-9. `Wedding Invitation Theme Research & Analysis` - 9 edges
+9. `Wedding Invitation Theme Research & Analysis` - 10 edges
 10. `Extraction Spec` - 8 edges
 
 ## Surprising Connections (you probably didn't know these)
@@ -121,10 +124,10 @@
   public/vercel.svg → implementation.md
 - `HomePage()` --calls--> `createClient()`  [EXTRACTED]
   app/page.tsx → lib/supabase/server.ts
+- `TemaPage()` --calls--> `createClient()`  [EXTRACTED]
+  app/tema/page.tsx → lib/supabase/server.ts
 - `BalineseHarmonyTheme()` --calls--> `createClient()`  [EXTRACTED]
   components/themes/BalineseHarmonyTheme.tsx → lib/supabase/client.ts
-- `BotanicalEleganceTheme()` --calls--> `createClient()`  [EXTRACTED]
-  components/themes/BotanicalEleganceTheme.tsx → lib/supabase/client.ts
 
 ## Import Cycles
 - None detected.
@@ -137,15 +140,15 @@
 - **Theme Concept to Preview SVG Pairing** — implementation_theme_sakura_bloom, public_images_themes_sakura_bloom_svg, implementation_theme_midnight_luxe, public_images_themes_midnight_luxe_svg, implementation_theme_javanese_heritage, public_images_themes_javanese_heritage_svg, implementation_theme_minimalist_clean, public_images_themes_minimalist_clean_svg, implementation_theme_tropical_garden, public_images_themes_tropical_garden_svg, implementation_theme_golden_arch, public_images_themes_golden_arch_svg, implementation_theme_rustic_charm, public_images_themes_rustic_charm_svg, implementation_theme_royal_blue, public_images_themes_royal_blue_svg [EXTRACTED 1.00]
 - **Core Platform Features** — implementation_invitation_builder, implementation_rsvp_feature, implementation_kado_cashless, implementation_analytics_feature, implementation_guest_management, implementation_marketplace_vendor [INFERRED 0.85]
 
-## Communities (88 total, 43 thin omitted)
+## Communities (91 total, 43 thin omitted)
 
 ### Community 0 - "createClient"
 Cohesion: 0.06
-Nodes (34): submitLead(), Lead, LeadsClient(), LeadsPage(), metadata, metadata, SettingsPage(), SettingsClient() (+26 more)
+Nodes (35): submitLead(), LeadsClient(), LeadsPage(), metadata, metadata, SettingsPage(), SECTION_NAMES, SettingsClient() (+27 more)
 
 ### Community 1 - "index.ts"
-Cohesion: 0.08
-Nodes (21): dynamic, ThemesClient(), GuestManagementPage(), AlertModal(), AlertModalProps, BlogPost, DashboardStats, GalleryItem (+13 more)
+Cohesion: 0.06
+Nodes (29): InvitationsClient(), dynamic, Lead, dynamic, ThemesClient(), dynamic, UsersClient(), GuestManagementPage() (+21 more)
 
 ### Community 2 - "NikahLink Platform"
 Cohesion: 0.06
@@ -165,7 +168,7 @@ Nodes (25): eslint, eslint-config-next, devDependencies, eslint, eslint-config-n
 
 ### Community 6 - "app/page.tsx"
 Cohesion: 0.05
-Nodes (34): PLAN_PRICES, POST(), Window, HomePage(), ECO_STATS, EcoImpact(), FAQS, FaqSection() (+26 more)
+Nodes (36): Window, HomePage(), metadata, TemaPage(), CATEGORIES, SAMPLE_VENDORS, VendorPage(), ECO_STATS (+28 more)
 
 ### Community 7 - "EtherealWatercolorTheme.tsx"
 Cohesion: 0.29
@@ -175,29 +178,29 @@ Nodes (6): dancing, EtherealWatercolorTheme(), lato, playfair, Props, EtherealWa
 Cohesion: 0.22
 Nodes (18): auth, auth.users, blog_posts, gallery, gift_accounts, gift_transactions, guests, handle_new_user() (+10 more)
 
-### Community 9 - "createClient"
-Cohesion: 0.11
-Nodes (17): RegisterPage(), LoginPage(), ElegantBlushTheme(), Props, HeritageGununganTheme(), lora, playfair, Props (+9 more)
+### Community 9 - "HeritageGununganTheme.tsx"
+Cohesion: 0.33
+Nodes (5): HeritageGununganTheme(), lora, playfair, Props, HeritageGununganTheme
 
 ### Community 10 - "utils.ts"
-Cohesion: 0.10
-Nodes (12): DashboardClient(), Props, QUICK_ACTIONS, MyInvitationsPage(), CountdownLabel(), Props, DeleteButton(), formatDate() (+4 more)
+Cohesion: 0.06
+Nodes (27): DashboardClient(), Props, QUICK_ACTIONS, DEFAULT_FORM_DATA, NewInvitationPage(), STEPS, EditInvitationPage(), STEPS (+19 more)
 
-### Community 11 - "CosmicStarlightTheme.tsx"
-Cohesion: 0.33
-Nodes (5): cinzel, CosmicStarlightTheme(), outfit, Props, CosmicStarlightTheme
+### Community 11 - "EditorialGalleryTheme.tsx"
+Cohesion: 0.29
+Nodes (5): anton, EditorialGalleryTheme(), Props, roboto, EditorialGalleryTheme
 
 ### Community 12 - "JavaneseBatikTheme.tsx"
 Cohesion: 0.33
 Nodes (5): greatVibes, JavaneseBatikTheme(), Props, ptSerif, JavaneseBatikTheme
 
-### Community 13 - "baru/page.tsx"
-Cohesion: 0.12
-Nodes (17): SECTION_NAMES, SettingsClientProps, DEFAULT_FORM_DATA, NewInvitationPage(), STEPS, EditInvitationPage(), STEPS, CreateInvitationButton() (+9 more)
+### Community 13 - "EtherealSnowTheme.tsx"
+Cohesion: 0.29
+Nodes (5): cormorant, EtherealSnowTheme(), montserrat, Props, EtherealSnowTheme
 
-### Community 14 - "client.ts"
-Cohesion: 0.16
-Nodes (12): BENEFITS, CATEGORIES, SAMPLE_VENDORS, VendorPage(), AdminSidebar(), NAV_ITEMS, NAV_ITEMS, Sidebar() (+4 more)
+### Community 14 - "createClient"
+Cohesion: 0.20
+Nodes (12): BENEFITS, RegisterPage(), LoginPage(), AdminSidebar(), NAV_ITEMS, NAV_ITEMS, Sidebar(), DEFAULT_NAV_ITEMS (+4 more)
 
 ### Community 15 - "AGENTS.md"
 Cohesion: 0.20
@@ -217,11 +220,11 @@ Nodes (9): AST Extraction, Add and Watch Reference, Transcribe Reference, File D
 
 ### Community 19 - "dependencies"
 Cohesion: 0.22
-Nodes (9): clsx, dependencies, clsx, @radix-ui/react-dialog, @radix-ui/react-dropdown-menu, xlsx, @radix-ui/react-dialog, @radix-ui/react-dropdown-menu (+1 more)
+Nodes (9): class-variance-authority, dependencies, class-variance-authority, @radix-ui/react-dialog, @radix-ui/react-dropdown-menu, xlsx, @radix-ui/react-dialog, @radix-ui/react-dropdown-menu (+1 more)
 
-### Community 20 - "Pagination.tsx"
-Cohesion: 0.17
-Nodes (7): InvitationsClient(), dynamic, dynamic, UsersClient(), Pagination(), PaginationProps, Profile
+### Community 20 - "GeometricAbstractTheme.tsx"
+Cohesion: 0.29
+Nodes (5): GeometricAbstractTheme(), inter, playfair, Props, GeometricAbstractTheme
 
 ### Community 21 - "Extraction Spec"
 Cohesion: 0.25
@@ -240,8 +243,8 @@ Cohesion: 0.33
 Nodes (5): BalineseHarmonyTheme(), cormorant, playfair, Props, BalineseHarmonyTheme
 
 ### Community 25 - "registry.tsx"
-Cohesion: 0.08
-Nodes (23): italiana, lato, LineArtBotanicalTheme(), Props, Props, RoyalBotanicalTheme(), lora, playfair (+15 more)
+Cohesion: 0.09
+Nodes (21): cinzel, CosmicStarlightTheme(), outfit, Props, Props, RoyalBotanicalTheme(), Props, SereinWhiteTheme() (+13 more)
 
 ### Community 26 - "RoyalGoldTheme.tsx"
 Cohesion: 0.33
@@ -283,17 +286,21 @@ Nodes (3): updateSession(), config, proxy()
 Cohesion: 0.50
 Nodes (4): fs, path, refactorAdmin(), walkDir()
 
+### Community 36 - "LineArtBotanicalTheme.tsx"
+Cohesion: 0.33
+Nodes (5): italiana, lato, LineArtBotanicalTheme(), Props, LineArtBotanicalTheme
+
 ### Community 37 - "Wedding Invitation Theme Research & Analysis"
-Cohesion: 0.20
-Nodes (9): 1. Overall Structure and Layout Patterns, 2. Design Aesthetics, Color Palettes, and Typography, 3. Icon Styles and Placement, 4. Animation Styles, 5. Mobile Responsiveness Paradigms, 6. Background Music Integration and UI Controls, 7. Premium vs Standard Tier Differentiation (Viding.co Deep Dive), Actionable Recommendations for Our Next.js Theme Development (+1 more)
+Cohesion: 0.18
+Nodes (10): 1. Overall Structure and Layout Patterns, 2. Design Aesthetics, Color Palettes, and Typography, 3. Icon Styles and Placement, 4. Animation Styles & Advanced Interactions, 5. Photo Layouts & Advanced Framing, 6. Background Music Integration and UI Controls, 6. Mobile Responsiveness Paradigms, 7. Premium vs Standard Tier Differentiation (Viding.co Deep Dive) (+2 more)
 
 ### Community 38 - "BotanicalEleganceTheme.tsx"
 Cohesion: 0.33
 Nodes (5): BotanicalEleganceTheme(), greatVibes, montserrat, Props, BotanicalEleganceTheme
 
-### Community 39 - "GoldenArchTheme.tsx"
-Cohesion: 0.33
-Nodes (5): cormorant, GoldenArchTheme(), lato, Props, GoldenArchTheme
+### Community 39 - "client.ts"
+Cohesion: 0.15
+Nodes (9): DeleteAccountSection(), ElegantBlushTheme(), Props, cormorant, GoldenArchTheme(), lato, Props, ElegantBlushTheme (+1 more)
 
 ### Community 40 - "TerracottaRustTheme.tsx"
 Cohesion: 0.33
@@ -302,6 +309,14 @@ Nodes (5): lora, playfair, Props, TerracottaRustTheme(), TerracottaRustTheme
 ### Community 48 - "MidnightSparkleTheme.tsx"
 Cohesion: 0.50
 Nodes (3): MidnightSparkleTheme(), Props, MidnightSparkleTheme
+
+### Community 86 - "RusticWoodlandTheme.tsx"
+Cohesion: 0.33
+Nodes (5): lora, playfair, Props, RusticWoodlandTheme(), RusticWoodlandTheme
+
+### Community 87 - "MinimalistTheme.tsx"
+Cohesion: 0.50
+Nodes (3): MinimalistTheme(), Props, MinimalistTheme
 
 ### Community 89 - "ModernMonochromeTheme.tsx"
 Cohesion: 0.33
@@ -312,24 +327,24 @@ Cohesion: 0.33
 Nodes (5): lato, OceanBreezeTheme(), playfair, Props, OceanBreezeTheme
 
 ## Knowledge Gaps
-- **300 isolated node(s):** `$schema`, `.opencode/plugins/graphify.js`, `name`, `baseURL`, `apiKey` (+295 more)
+- **310 isolated node(s):** `$schema`, `.opencode/plugins/graphify.js`, `name`, `baseURL`, `apiKey` (+305 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **43 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `createClient()` connect `createClient` to `createClient`, `index.ts`, `EtherealWatercolorTheme.tsx`, `utils.ts`, `CosmicStarlightTheme.tsx`, `JavaneseBatikTheme.tsx`, `baru/page.tsx`, `client.ts`, `Pagination.tsx`, `MagazineCoverTheme.tsx`, `BalineseHarmonyTheme.tsx`, `registry.tsx`, `RoyalGoldTheme.tsx`, `BotanicalEleganceTheme.tsx`, `GoldenArchTheme.tsx`, `TerracottaRustTheme.tsx`, `MidnightSparkleTheme.tsx`, `ModernMonochromeTheme.tsx`, `OceanBreezeTheme.tsx`?**
-  _High betweenness centrality (0.096) - this node is a cross-community bridge._
+- **Why does `createClient()` connect `createClient` to `createClient`, `index.ts`, `EtherealWatercolorTheme.tsx`, `HeritageGununganTheme.tsx`, `utils.ts`, `EditorialGalleryTheme.tsx`, `JavaneseBatikTheme.tsx`, `EtherealSnowTheme.tsx`, `GeometricAbstractTheme.tsx`, `MagazineCoverTheme.tsx`, `BalineseHarmonyTheme.tsx`, `registry.tsx`, `RoyalGoldTheme.tsx`, `LineArtBotanicalTheme.tsx`, `BotanicalEleganceTheme.tsx`, `client.ts`, `TerracottaRustTheme.tsx`, `MidnightSparkleTheme.tsx`, `RusticWoodlandTheme.tsx`, `MinimalistTheme.tsx`, `ModernMonochromeTheme.tsx`, `OceanBreezeTheme.tsx`?**
+  _High betweenness centrality (0.105) - this node is a cross-community bridge._
 - **Why does `createClient()` connect `createClient` to `utils.ts`, `app/page.tsx`?**
   _High betweenness centrality (0.034) - this node is a cross-community bridge._
-- **Why does `dependencies` connect `dependencies` to `devDependencies`, `class-variance-authority`, `csv-parse`, `date-fns`, `exceljs`, `framer-motion`, `@hookform/resolvers`, `lucide-react`, `midtrans-client`, `next`, `next-themes`, `papaparse`, `qrcode`, `@radix-ui/react-accordion`, `@radix-ui/react-progress`, `@radix-ui/react-tabs`, `@radix-ui/react-toast`, `react`, `react-dom`, `react-hook-form`, `react-hot-toast`, `recharts`, `resend`, `sharp`, `sonner`, `@supabase/ssr`, `@supabase/supabase-js`, `tailwind-merge`, `@types/papaparse`, `@types/qrcode`, `zod`?**
-  _High betweenness centrality (0.016) - this node is a cross-community bridge._
+- **Why does `dependencies` connect `dependencies` to `devDependencies`, `csv-parse`, `date-fns`, `exceljs`, `framer-motion`, `@hookform/resolvers`, `lucide-react`, `midtrans-client`, `next`, `next-themes`, `papaparse`, `qrcode`, `@radix-ui/react-accordion`, `@radix-ui/react-progress`, `@radix-ui/react-tabs`, `@radix-ui/react-toast`, `react`, `react-dom`, `react-hook-form`, `react-hot-toast`, `recharts`, `resend`, `sharp`, `sonner`, `@supabase/ssr`, `@supabase/supabase-js`, `tailwind-merge`, `@types/papaparse`, `@types/qrcode`, `zod`, `clsx`?**
+  _High betweenness centrality (0.015) - this node is a cross-community bridge._
 - **Are the 5 inferred relationships involving `NikahLink Platform` (e.g. with `Inveet.id` and `Link Undangan`) actually correct?**
   _`NikahLink Platform` has 5 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `$schema`, `.opencode/plugins/graphify.js`, `name` to the rest of the system?**
-  _300 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _310 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `createClient` be split into smaller, more focused modules?**
   _Cohesion score 0.061952861952861954 - nodes in this community are weakly interconnected._
 - **Should `index.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.07881773399014778 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05507246376811594 - nodes in this community are weakly interconnected._
