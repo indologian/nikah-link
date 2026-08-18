@@ -856,7 +856,7 @@ export default function NewInvitationPage() {
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {themesList.map((theme) => {
-                  const isSelected = formData.theme_slug === theme.id;
+                  const isSelected = formData.theme_slug === theme.slug;
                   return (
                     <div
                       key={theme.id}
