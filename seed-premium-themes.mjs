@@ -275,6 +275,51 @@ async function main() {
         accent: "#2A1515"
       },
       sort_order: 18
+    },
+    {
+      name: "Botanical Elegance",
+      slug: "botanical-elegance",
+      category: "floral",
+      thumbnail_url: "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=600&auto=format&fit=crop",
+      is_premium: true,
+      is_active: true,
+      colors: {
+        background: "#FDFDF9",
+        text: "#5A6351",       
+        primary: "#869578",
+        accent: "#E2D2CA"
+      },
+      sort_order: 19
+    },
+    {
+      name: "Golden Arch",
+      slug: "golden-arch",
+      category: "elegan",
+      thumbnail_url: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=600&auto=format&fit=crop",
+      is_premium: true,
+      is_active: true,
+      colors: {
+        background: "#F5F4F0",
+        text: "#1E1E1E",       
+        primary: "#D4AF37",
+        accent: "#1E1E1E"
+      },
+      sort_order: 20
+    },
+    {
+      name: "Terracotta Rust",
+      slug: "terracotta-rust",
+      category: "elegan",
+      thumbnail_url: "https://images.unsplash.com/photo-1505932794465-147d1f1b2c97?q=80&w=600&auto=format&fit=crop",
+      is_premium: true,
+      is_active: true,
+      colors: {
+        background: "#F7F3EE",
+        text: "#4A3B32",       
+        primary: "#C87963",
+        accent: "#A65E49"
+      },
+      sort_order: 21
     }
   ];
   

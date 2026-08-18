@@ -89,6 +89,18 @@ const HeritageGununganTheme = dynamic(() => import('@/components/themes/Heritage
   loading: () => <div className="min-h-screen flex items-center justify-center bg-[#1F1010]"><div className="w-8 h-8 border-4 border-[#D4AF37]/30 border-t-[#D4AF37] rounded-full animate-spin"></div></div>
 });
 
+const BotanicalEleganceTheme = dynamic(() => import('@/components/themes/BotanicalEleganceTheme'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center bg-[#FDFDF9]"><div className="w-8 h-8 border-4 border-[#869578]/30 border-t-[#869578] rounded-full animate-spin"></div></div>
+});
+
+const GoldenArchTheme = dynamic(() => import('@/components/themes/GoldenArchTheme'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center bg-[#1E1E1E]"><div className="w-8 h-8 border-4 border-[#D4AF37]/30 border-t-[#D4AF37] rounded-full animate-spin"></div></div>
+});
+
+const TerracottaRustTheme = dynamic(() => import('@/components/themes/TerracottaRustTheme'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center bg-[#F7F3EE]"><div className="w-8 h-8 border-4 border-[#C87963]/30 border-t-[#C87963] rounded-full animate-spin"></div></div>
+});
+
 // A fallback component if a theme is not found
 const FallbackTheme = ({ invitation }: { invitation: any }) => (
   <div className="min-h-screen flex items-center justify-center flex-col gap-4 p-8 text-center bg-white">
@@ -311,6 +323,42 @@ export const themesConfig: Record<string, ThemeConfig> = {
         label: "Kutipan",
         type: "textarea",
         placeholder: "Pahargyan Ageng..."
+      }
+    ]
+  },
+  "botanical-elegance": {
+    slug: "botanical-elegance",
+    component: BotanicalEleganceTheme,
+    fields: [
+      {
+        name: "quote",
+        label: "Kutipan",
+        type: "textarea",
+        placeholder: "Nature's blessing..."
+      }
+    ]
+  },
+  "golden-arch": {
+    slug: "golden-arch",
+    component: GoldenArchTheme,
+    fields: [
+      {
+        name: "quote",
+        label: "Kutipan",
+        type: "textarea",
+        placeholder: "A golden moment..."
+      }
+    ]
+  },
+  "terracotta-rust": {
+    slug: "terracotta-rust",
+    component: TerracottaRustTheme,
+    fields: [
+      {
+        name: "quote",
+        label: "Kutipan",
+        type: "textarea",
+        placeholder: "Earthy love..."
       }
     ]
   }
