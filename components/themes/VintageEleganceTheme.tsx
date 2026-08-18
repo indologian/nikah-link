@@ -150,6 +150,8 @@ export default function VintageEleganceTheme({
     accent: "#C1A57B"
   };
 
+  const musicUrl = invitation.music_url || "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
+
   // Formatter helpers
   const formatDate = (dateStr: string) => {
     if (!dateStr) return "";
@@ -183,8 +185,8 @@ export default function VintageEleganceTheme({
       {/* Background Texture/Overlay */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] mix-blend-multiply z-0"></div>
 
-      {invitation.music_url && (
-        <audio ref={audioRef} src={invitation.music_url} loop />
+      {musicUrl && (
+        <audio ref={audioRef} src={musicUrl} loop />
       )}
 
       {/* COVER / WELCOME SCREEN */}
@@ -245,7 +247,7 @@ export default function VintageEleganceTheme({
         <div className="relative z-10">
           
           {/* Floating Audio Button */}
-          {invitation.music_url && (
+          {musicUrl && (
             <button 
               onClick={toggleAudio}
               className="fixed bottom-6 right-6 w-12 h-12 rounded-full flex items-center justify-center z-50 shadow-lg text-white transition-transform hover:scale-110"

@@ -131,6 +131,8 @@ export default function RoyalBotanicalTheme({
     accent: "#FCD34D" // lighter gold
   };
 
+  const musicUrl = invitation.music_url || "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
+
   // Formatter helpers
   const formatDate = (dateStr: string) => {
     if (!dateStr) return "";
@@ -170,8 +172,8 @@ export default function RoyalBotanicalTheme({
       {/* Botanical Overlay - A subtle texture or noise */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.05] bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-overlay z-0"></div>
 
-      {invitation.music_url && (
-        <audio ref={audioRef} src={invitation.music_url} loop />
+      {musicUrl && (
+        <audio ref={audioRef} src={musicUrl} loop />
       )}
 
       {/* Floating Particles Animation */}
@@ -256,7 +258,7 @@ export default function RoyalBotanicalTheme({
         <div className="relative z-10">
           
           {/* Floating Audio Button */}
-          {invitation.music_url && (
+          {musicUrl && (
             <button 
               onClick={toggleAudio}
               className="fixed bottom-6 right-6 w-12 h-12 rounded-full flex items-center justify-center z-50 shadow-lg text-white transition-transform hover:scale-110"
