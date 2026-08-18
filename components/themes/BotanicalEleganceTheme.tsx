@@ -464,7 +464,7 @@ export default function BotanicalEleganceTheme({
                   className="absolute z-30 w-48 h-64 bg-white p-2 shadow-2xl rotate-3 rounded-sm border border-gray-100"
                 >
                   <div className="w-full h-full bg-[#E2D2CA]/40 overflow-hidden relative">
-                    {invitation.cover_image_url && <Image src={invitation.cover_image_url} alt="Gallery 1" fill className="object-cover" />}
+                    {(customData?.gallery_1 || invitation.cover_image_url) && <Image src={customData?.gallery_1 || invitation.cover_image_url} alt="Gallery 1" fill className="object-cover" />}
                   </div>
                 </motion.div>
                 
@@ -477,7 +477,7 @@ export default function BotanicalEleganceTheme({
                   className="absolute z-20 w-40 h-56 bg-white p-2 shadow-xl -translate-x-20 rounded-sm border border-gray-100"
                 >
                   <div className="w-full h-full bg-[#869578]/40 overflow-hidden relative">
-                     {invitation.cover_image_url && <Image src={invitation.cover_image_url} alt="Gallery 2" fill className="object-cover opacity-80" />}
+                     {(customData?.gallery_2 || invitation.cover_image_url) && <Image src={customData?.gallery_2 || invitation.cover_image_url} alt="Gallery 2" fill className="object-cover opacity-80" />}
                   </div>
                 </motion.div>
 
@@ -490,7 +490,7 @@ export default function BotanicalEleganceTheme({
                   className="absolute z-10 w-40 h-56 bg-white p-2 shadow-xl translate-x-20 rounded-sm border border-gray-100"
                 >
                   <div className="w-full h-full bg-[#E2D2CA]/60 overflow-hidden relative">
-                     {invitation.cover_image_url && <Image src={invitation.cover_image_url} alt="Gallery 3" fill className="object-cover opacity-60 mix-blend-multiply" />}
+                     {(customData?.gallery_3 || invitation.cover_image_url) && <Image src={customData?.gallery_3 || invitation.cover_image_url} alt="Gallery 3" fill className="object-cover opacity-60 mix-blend-multiply" />}
                   </div>
                 </motion.div>
               </motion.div>

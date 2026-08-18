@@ -77,3 +77,17 @@ Based on a detailed inspection of the Viding.co template catalog, there is a cle
     Premium templates often use licensed or highly stylized display fonts tailored to the specific theme's vibe (e.g., specific script fonts for "Love Letter" or elegant serifs for "Indian Grandeur"). Standard templates lean towards widely available, clean Google Fonts (sans-serifs) that ensure readability but lack a highly customized feel.
 *   **Feature Gating (Package Tiers):**
     Premium themes are restricted to higher-tier paid packages (e.g., "Paket Royal", "Buku Tamu Digital", and "Gold"). This indicates that advanced interactive features—such as integrated digital guestbooks, custom background music, and premium RSVP flows—are often coupled with these premium designs, whereas standard themes offer a more streamlined, basic set of features.
+
+## 8. Specific Analysis: Indoinvite Reference (Template 79)
+Based on an analysis of high-end templates from competitors like Indoinvite, the following techniques should be integrated into our next batches (Batch 7+):
+
+*   **Sophisticated Photo Slides & Layouts:** 
+    *   **Splide.js / Swiper.js Integrations:** Photos are no longer static. They use continuous sliders or cover-flow effects where central images scale up (using `scale-105`) while side images fade slightly (`opacity-50`). 
+    *   **Justified Masonry:** Utilizing libraries like `justifiedGallery` to perfectly align uneven photo dimensions into a clean, seamless grid without whitespace gaps.
+*   **AOS (Animate On Scroll) & Micro-Interactions:** 
+    *   Heavy reliance on declarative animation libraries (`AOS`, `animate.css`) triggering fade-ins, slide-ups, and zoom-ins natively as elements enter the viewport.
+    *   We should leverage `framer-motion` `whileInView` with `viewport={{ once: true, margin: "-100px" }}` to replicate and exceed these scroll-linked entrance animations.
+*   **Advanced SVG Framing & 3D Elements:**
+    *   **SVG Masking (`mask-image`):** Moving beyond basic CSS border-radius, photos are framed using intricate SVG paths (e.g., arches, keyholes, teardrops, or floral borders). This creates an organic, custom look. 
+    *   **3D Perspective & Depth:** Combining SVG framing with CSS 3D transforms. For example, a photo framed by a golden SVG arch can have a slight `rotateY(5deg) scale(1.05)` when hovered or scrolled into view, creating a shadow depth layer beneath it.
+    *   **Animated SVG Accents:** Vector assets like corner florals or separator flourishes can use `stroke-dasharray` animations to "draw" themselves onto the screen, adding a premium interactive feel compared to static PNGs.

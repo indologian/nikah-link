@@ -108,12 +108,12 @@ export default function EditorialGalleryTheme({
   
   // Dummy gallery data for layout testing
   const galleryImages = [
-    invitation.cover_image_url || "https://images.unsplash.com/photo-1606800052052-a08af7148866",
-    invitation.groom_image_url || "https://images.unsplash.com/photo-1544005313-94ddf0286df2",
-    invitation.bride_image_url || "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d",
+    customData?.gallery_1 || invitation.cover_image_url || "https://images.unsplash.com/photo-1606800052052-a08af7148866",
+    customData?.gallery_2 || invitation.groom_photo_url || "https://images.unsplash.com/photo-1544005313-94ddf0286df2",
+    customData?.gallery_3 || invitation.bride_photo_url || "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d",
     "https://images.unsplash.com/photo-1518895949257-7621c3c786d7",
     "https://images.unsplash.com/photo-1505932794465-147d1f1b2c97"
-  ];
+  ].filter(Boolean) as string[];
 
   const handleOpenInvitation = () => {
     setIsOpen(true);

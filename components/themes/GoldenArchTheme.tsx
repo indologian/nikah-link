@@ -477,8 +477,8 @@ export default function GoldenArchTheme({
                   viewport={{ once: true }}
                   className="absolute z-30 w-56 h-72 p-2 bg-white shadow-2xl border border-[#D4AF37]/20"
                 >
-                  <div className="w-full h-full bg-[#1E1E1E] overflow-hidden relative">
-                    {invitation.cover_image_url && <Image src={invitation.cover_image_url} alt="Gallery 1" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-700" />}
+                  <div className="w-full h-full bg-[#DFD3C3] overflow-hidden relative">
+                    {(customData?.gallery_1 || invitation.cover_image_url) && <Image src={customData?.gallery_1 || invitation.cover_image_url} alt="Gallery 1" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-700" />}
                   </div>
                 </motion.div>
                 
@@ -490,8 +490,8 @@ export default function GoldenArchTheme({
                   transition={{ delay: 0.2 }}
                   className="absolute z-20 w-44 h-64 p-2 bg-white shadow-xl -translate-x-24 -translate-y-8 border border-[#E0DED5]"
                 >
-                  <div className="w-full h-full bg-[#D4AF37]/20 overflow-hidden relative">
-                     {invitation.cover_image_url && <Image src={invitation.cover_image_url} alt="Gallery 2" fill className="object-cover sepia opacity-80 hover:opacity-100 transition-opacity" />}
+                  <div className="w-full h-full bg-[#C7B7A3]/30 overflow-hidden relative rounded-bl-[40px]">
+                     {(customData?.gallery_2 || invitation.cover_image_url) && <Image src={customData?.gallery_2 || invitation.cover_image_url} alt="Gallery 2" fill className="object-cover sepia opacity-80 hover:opacity-100 transition-opacity" />}
                   </div>
                 </motion.div>
 
@@ -503,8 +503,8 @@ export default function GoldenArchTheme({
                   transition={{ delay: 0.4 }}
                   className="absolute z-10 w-44 h-64 p-2 bg-white shadow-xl translate-x-24 translate-y-8 border border-[#E0DED5]"
                 >
-                  <div className="w-full h-full bg-[#1E1E1E]/80 overflow-hidden relative">
-                     {invitation.cover_image_url && <Image src={invitation.cover_image_url} alt="Gallery 3" fill className="object-cover opacity-60 mix-blend-overlay hover:mix-blend-normal hover:opacity-100 transition-all" />}
+                  <div className="w-full h-full bg-[#A5947B]/30 overflow-hidden relative rounded-br-[40px]">
+                     {(customData?.gallery_3 || invitation.cover_image_url) && <Image src={customData?.gallery_3 || invitation.cover_image_url} alt="Gallery 3" fill className="object-cover opacity-60 mix-blend-overlay hover:mix-blend-normal hover:opacity-100 transition-all" />}
                   </div>
                 </motion.div>
               </motion.div>

@@ -494,7 +494,7 @@ export default function TerracottaRustTheme({
                   className="absolute z-30 w-52 h-64 bg-white p-3 shadow-2xl rotate-2"
                 >
                   <div className="w-full h-full bg-[#EADCCC] overflow-hidden relative">
-                    {invitation.cover_image_url && <Image src={invitation.cover_image_url} alt="Gallery 1" fill className="object-cover sepia-[0.2]" />}
+                    {(customData?.gallery_1 || invitation.cover_image_url) && <Image src={customData?.gallery_1 || invitation.cover_image_url} alt="Gallery 1" fill className="object-cover sepia-[0.2]" />}
                   </div>
                 </motion.div>
                 
@@ -507,7 +507,7 @@ export default function TerracottaRustTheme({
                   className="absolute z-20 w-40 h-52 bg-white p-3 shadow-xl -translate-x-24"
                 >
                   <div className="w-full h-full bg-[#C87963]/30 overflow-hidden relative">
-                     {invitation.cover_image_url && <Image src={invitation.cover_image_url} alt="Gallery 2" fill className="object-cover" />}
+                     {(customData?.gallery_2 || invitation.cover_image_url) && <Image src={customData?.gallery_2 || invitation.cover_image_url} alt="Gallery 2" fill className="object-cover" />}
                   </div>
                 </motion.div>
 
@@ -520,7 +520,7 @@ export default function TerracottaRustTheme({
                   className="absolute z-10 w-40 h-52 bg-white p-3 shadow-xl translate-x-24"
                 >
                   <div className="w-full h-full bg-[#A65E49]/30 overflow-hidden relative">
-                     {invitation.cover_image_url && <Image src={invitation.cover_image_url} alt="Gallery 3" fill className="object-cover" />}
+                     {(customData?.gallery_3 || invitation.cover_image_url) && <Image src={customData?.gallery_3 || invitation.cover_image_url} alt="Gallery 3" fill className="object-cover" />}
                   </div>
                 </motion.div>
               </motion.div>

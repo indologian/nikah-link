@@ -78,8 +78,8 @@ export default function GeometricAbstractTheme({
 
   const weddingDateStr = invitation.reception_date || invitation.akad_date || "2026-12-31";
   const coverImg = invitation.cover_image_url || "https://images.unsplash.com/photo-1511285560929-80b456fea0bc";
-  const groomImg = invitation.groom_image_url || "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d";
-  const brideImg = invitation.bride_image_url || "https://images.unsplash.com/photo-1544005313-94ddf0286df2";
+  const groomImg = invitation.groom_photo_url || "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d";
+  const brideImg = invitation.bride_photo_url || "https://images.unsplash.com/photo-1544005313-94ddf0286df2";
 
   const handleOpenInvitation = () => {
     setIsOpen(true);

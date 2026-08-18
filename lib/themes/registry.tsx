@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 
-export type FieldType = 'text' | 'textarea' | 'url' | 'boolean' | 'date';
+export type FieldType = 'text' | 'textarea' | 'url' | 'boolean' | 'date' | 'image';
 
 export interface ThemeField {
   name: string;
@@ -342,36 +342,30 @@ export const themesConfig: Record<string, ThemeConfig> = {
     slug: "botanical-elegance",
     component: BotanicalEleganceTheme,
     fields: [
-      {
-        name: "quote",
-        label: "Kutipan",
-        type: "textarea",
-        placeholder: "Nature's blessing..."
-      }
+      { name: "quote", label: "Kutipan Pernikahan", type: "textarea", placeholder: "Dan di antara tanda-tanda..." },
+      { name: "gallery_1", label: "Foto Galeri 1", type: "image" },
+      { name: "gallery_2", label: "Foto Galeri 2", type: "image" },
+      { name: "gallery_3", label: "Foto Galeri 3", type: "image" }
     ]
   },
   "golden-arch": {
     slug: "golden-arch",
     component: GoldenArchTheme,
     fields: [
-      {
-        name: "quote",
-        label: "Kutipan",
-        type: "textarea",
-        placeholder: "A golden moment..."
-      }
+      { name: "quote", label: "Kutipan", type: "textarea", placeholder: "Dan di antara tanda-tanda..." },
+      { name: "gallery_1", label: "Foto Galeri 1", type: "image" },
+      { name: "gallery_2", label: "Foto Galeri 2", type: "image" },
+      { name: "gallery_3", label: "Foto Galeri 3", type: "image" }
     ]
   },
   "terracotta-rust": {
     slug: "terracotta-rust",
     component: TerracottaRustTheme,
     fields: [
-      {
-        name: "quote",
-        label: "Kutipan",
-        type: "textarea",
-        placeholder: "Earthy love..."
-      }
+      { name: "quote", label: "Kutipan", type: "textarea", placeholder: "Dan di antara tanda-tanda..." },
+      { name: "gallery_1", label: "Foto Galeri 1", type: "image" },
+      { name: "gallery_2", label: "Foto Galeri 2", type: "image" },
+      { name: "gallery_3", label: "Foto Galeri 3", type: "image" }
     ]
   },
   "ethereal-snow": {
@@ -402,12 +396,10 @@ export const themesConfig: Record<string, ThemeConfig> = {
     slug: "editorial-gallery",
     component: EditorialGalleryTheme,
     fields: [
-      {
-        name: "quote",
-        label: "Kutipan",
-        type: "textarea",
-        placeholder: "A visual story..."
-      }
+      { name: "quote", label: "Kutipan Utama", type: "textarea", placeholder: "Dan di antara tanda-tanda..." },
+      { name: "gallery_1", label: "Foto Galeri 1", type: "image" },
+      { name: "gallery_2", label: "Foto Galeri 2", type: "image" },
+      { name: "gallery_3", label: "Foto Galeri 3", type: "image" }
     ]
   }
 };
