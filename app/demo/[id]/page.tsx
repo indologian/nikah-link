@@ -7,7 +7,8 @@ export const metadata = {
   description: "Preview tema undangan digital NikahLink.",
 };
 
-export default async function DemoThemePage({ params }: { params: { id: string } }) {
+export default async function DemoThemePage(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const supabase = await createClient();
   
   // Fetch theme from database
