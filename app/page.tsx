@@ -38,6 +38,7 @@ export default async function HomePage() {
   const { data: themes } = await supabase
     .from("themes")
     .select("*")
+    .eq("is_active", true)
     .order("created_at", { ascending: false });
 
   const config = { ...defaultConfig, ...(settings?.config || {}) };

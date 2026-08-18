@@ -15,6 +15,7 @@ export default async function TemaPage() {
   const { data: themes } = await supabase
     .from("themes")
     .select("*")
+    .eq("is_active", true)
     .order("created_at", { ascending: false });
 
   return (
