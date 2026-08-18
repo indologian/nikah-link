@@ -524,7 +524,7 @@ export default function NewInvitationPage() {
                   onClick={() => idx <= currentStep && setCurrentStep(idx)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-none text-xs font-bold transition-all ${
                     isActive
-                      ? " text-white "
+                      ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900"
                       : isDone
                       ? "bg-slate-100 dark:bg-slate-800 dark:bg-slate-900 dark:bg-slate-50/20 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-900 dark:border-white/30"
                       : "bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-slate-50 border border-slate-200 dark:border-slate-800"
