@@ -75,8 +75,8 @@ export default function RegisterPage() {
         {/* Left: Editorial Benefits (Hidden on mobile) */}
         <div className="hidden lg:flex flex-col justify-center py-8 pr-8 border-r border-slate-200 dark:border-slate-800">
           <Link href="/" className="inline-flex items-center gap-2 mb-12 group w-fit">
-            <div className="w-10 h-10 rounded-full bg-[var(--accent-rosegold)] flex items-center justify-center transition-colors hover:bg-[var(--accent-rosegold-hover)]">
-              <Heart className="w-5 h-5 text-white fill-white" strokeWidth={0} />
+            <div className="w-10 h-10 rounded-full bg-slate-900 dark:bg-white flex items-center justify-center transition-colors hover:bg-slate-800 dark:hover:bg-slate-200">
+              <Heart className="w-5 h-5 text-white dark:text-slate-900 fill-current" strokeWidth={0} />
             </div>
             <span className="font-playfair text-3xl font-bold text-[var(--text-primary)] dark:text-white tracking-tight">NikahLink</span>
           </Link>
@@ -116,8 +116,8 @@ export default function RegisterPage() {
             {/* Mobile Logo */}
             <div className="lg:hidden flex justify-center mb-8">
                <Link href="/" className="inline-flex items-center gap-2 group">
-                <div className="w-10 h-10 rounded-full bg-[var(--accent-rosegold)] flex items-center justify-center transition-colors">
-                  <Heart className="w-5 h-5 text-white fill-white" strokeWidth={0} />
+                <div className="w-10 h-10 rounded-full bg-slate-900 dark:bg-white flex items-center justify-center transition-colors">
+                  <Heart className="w-5 h-5 text-white dark:text-slate-900 fill-current" strokeWidth={0} />
                 </div>
                 <span className="font-playfair text-2xl font-bold text-[var(--text-primary)] dark:text-white tracking-tight">NikahLink</span>
               </Link>
@@ -199,7 +199,7 @@ export default function RegisterPage() {
                   <button
                     type="submit"
                     disabled={loading || googleLoading}
-                    className="w-full py-3.5 mt-4 rounded-xl bg-[var(--accent-rosegold)] text-white font-semibold text-sm transition-colors hover:bg-[var(--accent-rosegold-hover)] flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="w-full py-3.5 mt-4 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold text-sm transition-colors hover:bg-slate-800 dark:hover:bg-slate-200 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                   >
                     {loading ? (
                       <>
