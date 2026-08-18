@@ -1,0 +1,19 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugins": [".opencode/plugins/graphify.js"],
+  "provider": {
+    "openai": {
+      "name": "OmniRoute",
+      "options": {
+        "baseURL": "http://localhost:20128/v1",
+        "apiKey": "sk-7676b0ce24043e23-b0cf02-43e5920d"
+      },
+      "models": {
+        "auto": { "name": "auto" },
+        "auto/coding": { "name": "auto/coding" },
+        "auto/fast": { "name": "auto/fast" },
+        "auto/cheap": { "name": "auto/cheap" }
+      }
+    }
+  }
+}

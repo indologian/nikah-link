@@ -1,126 +1,119 @@
 # Graph Report - undangan-pernikahan  (2026-08-18)
 
 ## Corpus Check
-- 119 files · ~70,329 words
+- 19 files · ~82,279 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 609 nodes · 857 edges · 95 communities (38 shown, 57 thin omitted)
-- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 3 edges (avg confidence: 0.8)
+- 645 nodes · 935 edges · 86 communities (43 shown, 43 thin omitted)
+- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 16 edges (avg confidence: 0.77)
 - Token cost: 0 input · 0 output
 
 ## Community Hubs (Navigation)
-- Community 0
-- Community 1
-- Community 2
-- Community 3
-- Community 4
-- Community 5
-- Community 6
-- Community 7
-- Community 8
-- Community 9
-- Community 10
-- Community 11
-- Community 12
-- Community 13
-- Community 14
-- Community 15
-- Community 16
-- Community 17
-- Community 18
-- Community 19
-- Community 20
-- Community 21
-- Community 22
-- Community 23
-- Community 24
-- Community 25
-- Community 26
-- Community 27
-- Community 28
-- Community 29
-- Community 30
-- Community 31
-- Community 32
-- Community 33
-- Community 34
-- Community 35
-- Community 36
-- Community 37
-- Community 38
-- Community 39
-- Community 40
-- Community 41
-- Community 44
-- Community 45
-- Community 46
-- Community 47
-- Community 48
-- Community 49
-- Community 50
-- Community 51
-- Community 52
-- Community 53
-- Community 54
-- Community 55
-- Community 56
-- Community 57
-- Community 58
-- Community 59
-- Community 60
-- Community 61
-- Community 62
-- Community 63
-- Community 64
-- Community 65
-- Community 66
-- Community 67
-- Community 68
-- Community 69
-- Community 70
-- Community 71
-- Community 72
-- Community 73
-- Community 74
-- Community 75
-- Community 76
-- Community 77
-- Community 78
-- Community 79
-- Community 80
-- Community 81
-- Community 83
-- Community 84
-- Community 85
-- Community 86
-- Community 87
-- Community 88
-- Community 89
-- Community 90
-- Community 91
-- Community 92
-- Community 94
+- API Routes & Admin
+- Admin Dashboard & Themes
+- Implementation Plans
+- OpenCode Configuration
+- TypeScript References
+- Package Dependencies
+- Landing Page
+- Admin Invitations & Leads
+- Auth & Database Schema
+- Admin Settings & Auth
+- Vendor Preview & Utils
+- Pricing & Theme Pages
+- Traditional Indonesian Themes
+- Invitation Builder
+- Admin Layout & Auth
+- AI Agent Configuration
+- Graphify Skill Docs
+- Root Layout & Typography
+- Graphify Extraction Docs
+- Radix UI & CVA
+- Vendor Page & Navigation
+- Extraction Spec
+- Magazine Cover Theme
+- Pricing Section
+- Balinese Harmony Theme
+- Line Art Botanical Theme
+- Royal Gold Theme
+- Query Script
+- Reset Themes Script
+- Check Themes Script
+- Seed Themes Script
+- Graph Query Concepts
+- Update & Merge Concepts
+- Export Concepts
+- Supabase Middleware
+- Refactor Admin Script
+- Elegant Blush Theme
+- Midnight Sparkle Theme
+- Royal Botanical Theme
+- Serein White Theme
+- Vintage Elegance Theme
+- Fix Buttons Script
+- Refactor Script
+- Admin Dashboard
+- Payment Webhook
+- Graphify Plugin
+- clsx
+- csv-parse
+- date-fns
+- ESLint Config
+- ExcelJS
+- Framer Motion
+- Hookform Resolvers
+- Lucide React
+- Midtrans Client
+- Next.js
+- Next Config
+- Next Themes
+- PapaParse
+- QRCode
+- Radix Accordion
+- Radix Progress
+- Radix Tabs
+- Radix Toast
+- React
+- React DOM
+- React Hook Form
+- React Hot Toast
+- Recharts
+- Resend
+- Sharp
+- Sonner
+- Supabase SSR
+- Supabase JS
+- Tailwind Merge
+- Types PapaParse
+- Types QRCode
+- Zod
+- PostCSS Config
+- Cross-Repo Merge
+- File SVG
+- Globe SVG
+- Window SVG
+- Project README
 
 ## God Nodes (most connected - your core abstractions)
 1. `createClient()` - 55 edges
 2. `createClient()` - 40 edges
-3. `cn()` - 16 edges
-4. `compilerOptions` - 16 edges
-5. `A. Marketing Website (Landing Page)` - 14 edges
-6. `💍 NikahLink — Platform Undangan Pernikahan Digital Premium` - 13 edges
+3. `NikahLink Platform` - 29 edges
+4. `Graphify Skill (Main)` - 23 edges
+5. `cn()` - 16 edges
+6. `compilerOptions` - 16 edges
 7. `invitations` - 11 edges
 8. `getThemeConfig()` - 10 edges
-9. `B. Dashboard (Setelah Login)` - 7 edges
+9. `Extraction Spec` - 8 edges
 10. `Navbar()` - 7 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Next.js` --semantically_similar_to--> `Next.js 14`  [INFERRED] [semantically similar]
-  AGENTS.md → implementation.md
+- `Next.js Logo SVG` --references--> `Tech Stack`  [INFERRED]
+  public/next.svg → implementation.md
+- `Vercel Logo SVG` --references--> `Tech Stack`  [INFERRED]
+  public/vercel.svg → implementation.md
 - `LeadsPage()` --calls--> `createClient()`  [EXTRACTED]
   app/admin/leads/page.tsx → lib/supabase/server.ts
-- `LoginPage()` --calls--> `createClient()`  [EXTRACTED]
-  app/masuk/page.tsx → lib/supabase/client.ts
 - `HomePage()` --calls--> `createClient()`  [EXTRACTED]
   app/page.tsx → lib/supabase/server.ts
 - `TemaPage()` --calls--> `createClient()`  [EXTRACTED]
@@ -130,166 +123,198 @@
 - None detected.
 
 ## Hyperedges (group relationships)
-- **Sakura Bloom Visual Components** — public_images_themes_sakura_bloom_gradient_bg, public_images_themes_sakura_bloom_gradient_glow, public_images_themes_sakura_bloom_text [INFERRED 0.85]
-- **NikahLink Competitors** — implementation_wevitation, implementation_link_undangan, implementation_our_wedding_link, implementation_webnikah, implementation_inveet_id [INFERRED 0.95]
+- **Extraction Pipeline (Step 3)** — detection_concept, ast_extraction_concept, semantic_extraction_concept, extraction_merge_concept, extraction_cache_concept, transcription_concept [EXTRACTED 1.00]
+- **Graph Outputs** — html_visualization_concept, graph_report_concept, wiki_export_concept, neo4j_export_concept, falkordb_export_concept, mcp_server_concept [EXTRACTED 1.00]
+- **Query System** — claude_skills_graphify_references_query_expansion_concept, bfs_traversal_concept, path_finding_concept, explain_concept [EXTRACTED 1.00]
+- **Initial Theme Set (8 previewed themes)** — implementation_theme_sakura_bloom, implementation_theme_midnight_luxe, implementation_theme_javanese_heritage, implementation_theme_minimalist_clean, implementation_theme_tropical_garden, implementation_theme_golden_arch, implementation_theme_rustic_charm, implementation_theme_royal_blue [EXTRACTED 1.00]
+- **Theme Concept to Preview SVG Pairing** — implementation_theme_sakura_bloom, public_images_themes_sakura_bloom_svg, implementation_theme_midnight_luxe, public_images_themes_midnight_luxe_svg, implementation_theme_javanese_heritage, public_images_themes_javanese_heritage_svg, implementation_theme_minimalist_clean, public_images_themes_minimalist_clean_svg, implementation_theme_tropical_garden, public_images_themes_tropical_garden_svg, implementation_theme_golden_arch, public_images_themes_golden_arch_svg, implementation_theme_rustic_charm, public_images_themes_rustic_charm_svg, implementation_theme_royal_blue, public_images_themes_royal_blue_svg [EXTRACTED 1.00]
+- **Core Platform Features** — implementation_invitation_builder, implementation_rsvp_feature, implementation_kado_cashless, implementation_analytics_feature, implementation_guest_management, implementation_marketplace_vendor [INFERRED 0.85]
 
-## Communities (95 total, 57 thin omitted)
+## Communities (86 total, 43 thin omitted)
 
-### Community 0 - "Community 0"
-Cohesion: 0.05
-Nodes (32): InvitationsClient(), dynamic, Lead, LeadsClient(), LeadsPage(), metadata, dynamic, ThemesClient() (+24 more)
-
-### Community 1 - "Community 1"
+### Community 0 - "API Routes & Admin"
 Cohesion: 0.07
-Nodes (31): metadata, SettingsPage(), SECTION_NAMES, SettingsClient(), SettingsClientProps, DELETE(), GET(), AnalyticsPage() (+23 more)
+Nodes (30): submitLead(), metadata, SettingsPage(), DELETE(), PLAN_PRICES, POST(), GET(), AnalyticsPage() (+22 more)
 
-### Community 2 - "Community 2"
-Cohesion: 0.09
-Nodes (22): DashboardClient(), Props, QUICK_ACTIONS, DEFAULT_FORM_DATA, NewInvitationPage(), STEPS, STEPS, MyInvitationsPage() (+14 more)
+### Community 1 - "Admin Dashboard & Themes"
+Cohesion: 0.05
+Nodes (34): dynamic, ThemesClient(), DashboardClient(), Props, QUICK_ACTIONS, GuestManagementPage(), MyInvitationsPage(), AlertModal() (+26 more)
 
-### Community 3 - "Community 3"
+### Community 2 - "Implementation Plans"
 Cohesion: 0.06
-Nodes (30): 1. Wevitation (wevitation.com), 2. Link Undangan (linkundangan.com), 3. Our Wedding Link (our-wedding.link), 4. WebNikah (webnikah.com), 5. Inveet.id (inveet.id), 📊 Analisis Website Kompetitor, 🏗️ Arsitektur & Teknologi, Build Check (+22 more)
+Nodes (41): Analytics Feature, Competitor Analysis, Database Schema (Supabase), Design System, Guest Management Feature, NikahLink Implementation Plan, Inveet.id, Invitation Builder Feature (+33 more)
 
-### Community 4 - "Community 4"
+### Community 3 - "OpenCode Configuration"
+Cohesion: 0.05
+Nodes (35): name, name, name, name, .opencode/plugins/graphify.js, auto, auto/cheap, auto/coding (+27 more)
+
+### Community 4 - "TypeScript References"
 Cohesion: 0.07
 Nodes (28): dom, dom.iterable, esnext, **/*.mts, .next/dev/types/**/*.ts, next-env.d.ts, .next/types/**/*.ts, node_modules (+20 more)
 
-### Community 5 - "Community 5"
+### Community 5 - "Package Dependencies"
 Cohesion: 0.08
 Nodes (25): eslint, eslint-config-next, devDependencies, eslint, eslint-config-next, tailwindcss, @tailwindcss/postcss, @types/node (+17 more)
 
-### Community 6 - "Community 6"
-Cohesion: 0.08
-Nodes (25): 10. Testimoni, 11. Blog / Inspirasi Nikah, 12. FAQ, 13. Footer, 1. Navbar, 2. Hero Section, 3. Value Proposition (Kenapa NikahLink?), 4. Demo Carousel Tema (+17 more)
+### Community 6 - "Landing Page"
+Cohesion: 0.11
+Nodes (15): HomePage(), ECO_STATS, EcoImpact(), FAQS, FaqSection(), FEATURES, FeaturesSection(), HeroSection() (+7 more)
 
-### Community 7 - "Community 7"
+### Community 7 - "Admin Invitations & Leads"
+Cohesion: 0.12
+Nodes (11): InvitationsClient(), dynamic, Lead, LeadsClient(), LeadsPage(), metadata, dynamic, UsersClient() (+3 more)
+
+### Community 8 - "Auth & Database Schema"
 Cohesion: 0.22
 Nodes (18): auth, auth.users, blog_posts, gallery, gift_accounts, gift_transactions, guests, handle_new_user() (+10 more)
 
-### Community 8 - "Community 8"
-Cohesion: 0.13
-Nodes (14): MidnightSparkleTheme(), Props, MinimalistTheme(), Props, Props, SereinWhiteTheme(), FieldType, MidnightSparkleTheme (+6 more)
+### Community 9 - "Admin Settings & Auth"
+Cohesion: 0.18
+Nodes (12): SECTION_NAMES, SettingsClient(), SettingsClientProps, BENEFITS, RegisterPage(), DeleteButton(), MinimalistTheme(), Props (+4 more)
 
-### Community 9 - "Community 9"
-Cohesion: 0.20
-Nodes (9): LoginPage(), AdminSidebar(), NAV_ITEMS, NAV_ITEMS, Sidebar(), DEFAULT_NAV_ITEMS, Navbar(), ThemeToggle() (+1 more)
+### Community 10 - "Vendor Preview & Utils"
+Cohesion: 0.14
+Nodes (6): FEATURED_VENDORS, VENDOR_CATEGORIES, VendorPreview(), formatRupiah, SUPABASE_ANON_KEY, SUPABASE_URL
 
-### Community 10 - "Community 10"
+### Community 11 - "Pricing & Theme Pages"
+Cohesion: 0.17
+Nodes (9): Window, metadata, TemaPage(), Footer(), DEFAULT_CATEGORIES, ThemeCarousel(), ThemeProps, IS_PRODUCTION (+1 more)
+
+### Community 12 - "Traditional Indonesian Themes"
 Cohesion: 0.15
-Nodes (11): HomePage(), ECO_STATS, EcoImpact(), FAQS, FaqSection(), FEATURES, FeaturesSection(), HowItWorks() (+3 more)
+Nodes (12): greatVibes, JavaneseBatikTheme(), Props, ptSerif, Props, WayangClassicTheme(), FieldType, JavaneseBatikTheme (+4 more)
 
-### Community 11 - "Community 11"
-Cohesion: 0.16
-Nodes (11): PLAN_PRICES, POST(), Window, Plan, PlanFeature, PLANS, PricingSection(), PricingSectionProps (+3 more)
+### Community 13 - "Invitation Builder"
+Cohesion: 0.23
+Nodes (9): DEFAULT_FORM_DATA, NewInvitationPage(), STEPS, EditInvitationPage(), STEPS, LocationAutocomplete(), TimeRangePicker(), FallbackTheme() (+1 more)
 
-### Community 12 - "Community 12"
-Cohesion: 0.19
-Nodes (11): BENEFITS, RegisterPage(), Props, RoyalBotanicalTheme(), Props, VintageEleganceTheme(), Props, WayangClassicTheme() (+3 more)
+### Community 14 - "Admin Layout & Auth"
+Cohesion: 0.21
+Nodes (6): LoginPage(), AdminSidebar(), NAV_ITEMS, NAV_ITEMS, Sidebar(), ThemeToggle()
 
-### Community 14 - "Community 14"
+### Community 15 - "AI Agent Configuration"
+Cohesion: 0.20
+Nodes (11): Claude CLAUDE.md (root), Claude CLAUDE.md Integration, Hooks Reference, Design Philosophy, GitHub Copilot Instructions, Graphify Pipeline, Hallmark Skill, Hook Install (+3 more)
+
+### Community 16 - "Graphify Skill Docs"
+Cohesion: 0.24
+Nodes (11): Claude Project Config, Graphify Skill (Main), Community Detection, Community Labeling, Cost Tracking, Extraction Cache, God Nodes, GRAPH_REPORT.md (+3 more)
+
+### Community 17 - "Root Layout & Typography"
 Cohesion: 0.22
 Nodes (7): cormorant, greatVibes, jakarta, metadata, playfair, viewport, ThemeProvider()
 
-### Community 15 - "Community 15"
-Cohesion: 0.22
-Nodes (9): Next.js, Inveet.id, Link Undangan, Next.js 14, NikahLink, Our Wedding Link, Supabase, WebNikah (+1 more)
+### Community 18 - "Graphify Extraction Docs"
+Cohesion: 0.31
+Nodes (9): AST Extraction, Add and Watch Reference, Transcribe Reference, File Detection, Extraction Merge, URL Ingestion, Semantic Extraction, Video/Audio Transcription (+1 more)
 
-### Community 16 - "Community 16"
-Cohesion: 0.28
-Nodes (6): metadata, TemaPage(), Footer(), DEFAULT_CATEGORIES, ThemeCarousel(), ThemeProps
-
-### Community 17 - "Community 17"
-Cohesion: 0.28
-Nodes (7): CATEGORIES, SAMPLE_VENDORS, VendorPage(), FEATURED_VENDORS, VENDOR_CATEGORIES, VendorPreview(), formatRupiah
-
-### Community 18 - "Community 18"
+### Community 19 - "Radix UI & CVA"
 Cohesion: 0.22
 Nodes (9): class-variance-authority, dependencies, class-variance-authority, @radix-ui/react-dialog, @radix-ui/react-dropdown-menu, xlsx, @radix-ui/react-dialog, @radix-ui/react-dropdown-menu (+1 more)
 
-### Community 19 - "Community 19"
-Cohesion: 0.25
-Nodes (7): Design System, Development Rules, Project Instructions, Stack, This is NOT the Next.js you know, UI Rules, Workflow
+### Community 20 - "Vendor Page & Navigation"
+Cohesion: 0.39
+Nodes (6): CATEGORIES, SAMPLE_VENDORS, VendorPage(), DEFAULT_NAV_ITEMS, Navbar(), cn()
 
-### Community 20 - "Community 20"
+### Community 21 - "Extraction Spec"
+Cohesion: 0.25
+Nodes (8): Extraction Spec, Confidence Rubric, Extraction Subagent Prompt, Frontmatter Schema, Hyperedges, Node ID Format, Semantic Similarity Edges, Structural Extraction
+
+### Community 22 - "Magazine Cover Theme"
 Cohesion: 0.29
 Nodes (6): lora, MagazineCoverTheme(), montserrat, oswald, Props, MagazineCoverTheme
 
-### Community 21 - "Community 21"
+### Community 23 - "Pricing Section"
+Cohesion: 0.33
+Nodes (5): Plan, PlanFeature, PLANS, PricingSection(), PricingSectionProps
+
+### Community 24 - "Balinese Harmony Theme"
 Cohesion: 0.33
 Nodes (5): BalineseHarmonyTheme(), cormorant, playfair, Props, BalineseHarmonyTheme
 
-### Community 22 - "Community 22"
-Cohesion: 0.33
-Nodes (5): greatVibes, JavaneseBatikTheme(), Props, ptSerif, JavaneseBatikTheme
-
-### Community 23 - "Community 23"
+### Community 25 - "Line Art Botanical Theme"
 Cohesion: 0.33
 Nodes (5): italiana, lato, LineArtBotanicalTheme(), Props, LineArtBotanicalTheme
 
-### Community 24 - "Community 24"
+### Community 26 - "Royal Gold Theme"
 Cohesion: 0.33
 Nodes (5): cinzel, montserrat, Props, RoyalGoldTheme(), RoyalGoldTheme
 
-### Community 25 - "Community 25"
+### Community 27 - "Query Script"
 Cohesion: 0.33
 Nodes (4): envFile, envPath, envs, supabase
 
-### Community 26 - "Community 26"
+### Community 28 - "Reset Themes Script"
 Cohesion: 0.33
 Nodes (4): envFile, envPath, envs, supabase
 
-### Community 27 - "Community 27"
+### Community 29 - "Check Themes Script"
 Cohesion: 0.33
 Nodes (4): envFile, envPath, envs, supabase
 
-### Community 28 - "Community 28"
+### Community 30 - "Seed Themes Script"
 Cohesion: 0.33
 Nodes (4): envFile, envPath, envs, supabase
 
-### Community 29 - "Community 29"
+### Community 31 - "Graph Query Concepts"
+Cohesion: 0.50
+Nodes (5): BFS Traversal, Query Expansion, Query Reference, Explain Node, Path Finding
+
+### Community 32 - "Update & Merge Concepts"
+Cohesion: 0.50
+Nodes (5): Build Merge, Update Reference, Cluster Only, Incremental Update, Manifest
+
+### Community 33 - "Export Concepts"
+Cohesion: 0.50
+Nodes (5): Exports Reference, FalkorDB Export, MCP Server, Neo4j Export, Wiki Export
+
+### Community 34 - "Supabase Middleware"
 Cohesion: 0.60
 Nodes (3): updateSession(), config, proxy()
 
-### Community 30 - "Community 30"
+### Community 35 - "Refactor Admin Script"
 Cohesion: 0.50
 Nodes (4): fs, path, refactorAdmin(), walkDir()
 
-### Community 33 - "Community 33"
+### Community 36 - "Elegant Blush Theme"
 Cohesion: 0.50
 Nodes (3): ElegantBlushTheme(), Props, ElegantBlushTheme
 
-### Community 35 - "Community 35"
+### Community 37 - "Midnight Sparkle Theme"
 Cohesion: 0.50
-Nodes (4): Linear Gradient Background (#bg), Radial Gradient Glow (#glow), Typography 'Sakura Bloom', Sakura Bloom Theme Image
+Nodes (3): MidnightSparkleTheme(), Props, MidnightSparkleTheme
 
-### Community 36 - "Community 36"
+### Community 38 - "Royal Botanical Theme"
 Cohesion: 0.50
-Nodes (3): Deploy on Vercel, Getting Started, Learn More
+Nodes (3): Props, RoyalBotanicalTheme(), RoyalBotanicalTheme
 
-### Community 41 - "Community 41"
-Cohesion: 1.00
-Nodes (3): Royal Blue Theme Graphic, Royal Blue, Wedding Theme
+### Community 39 - "Serein White Theme"
+Cohesion: 0.50
+Nodes (3): Props, SereinWhiteTheme(), SereinWhiteTheme
+
+### Community 40 - "Vintage Elegance Theme"
+Cohesion: 0.50
+Nodes (3): Props, VintageEleganceTheme(), VintageEleganceTheme
 
 ## Knowledge Gaps
-- **283 isolated node(s):** `Design System`, `Development Rules`, `Stack`, `This is NOT the Next.js you know`, `UI Rules` (+278 more)
+- **262 isolated node(s):** `GiftAccount`, `GiftClientProps`, `Invitation`, `Plan`, `Props` (+257 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **57 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **43 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `createClient()` connect `Community 12` to `Community 0`, `Community 1`, `Community 2`, `Community 33`, `Community 8`, `Community 9`, `Community 20`, `Community 21`, `Community 22`, `Community 23`, `Community 24`?**
-  _High betweenness centrality (0.083) - this node is a cross-community bridge._
-- **Why does `createClient()` connect `Community 1` to `Community 0`, `Community 2`, `Community 10`, `Community 11`, `Community 16`, `Community 31`?**
-  _High betweenness centrality (0.040) - this node is a cross-community bridge._
-- **Why does `dependencies` connect `Community 18` to `Community 5`, `Community 44`, `Community 45`, `Community 46`, `Community 48`, `Community 49`, `Community 50`, `Community 51`, `Community 52`, `Community 53`, `Community 55`, `Community 56`, `Community 57`, `Community 58`, `Community 59`, `Community 60`, `Community 61`, `Community 62`, `Community 63`, `Community 64`, `Community 65`, `Community 66`, `Community 67`, `Community 68`, `Community 69`, `Community 70`, `Community 71`, `Community 72`, `Community 73`, `Community 74`, `Community 75`?**
-  _High betweenness centrality (0.022) - this node is a cross-community bridge._
-- **What connects `Design System`, `Development Rules`, `Stack` to the rest of the system?**
-  _283 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.05061224489795919 - nodes in this community are weakly interconnected._
-- **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.07092198581560284 - nodes in this community are weakly interconnected._
-- **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.09206349206349207 - nodes in this community are weakly interconnected._
+- **Why does `createClient()` connect `Admin Settings & Auth` to `API Routes & Admin`, `Admin Dashboard & Themes`, `Elegant Blush Theme`, `Midnight Sparkle Theme`, `Royal Botanical Theme`, `Admin Invitations & Leads`, `Serein White Theme`, `Vintage Elegance Theme`, `Traditional Indonesian Themes`, `Invitation Builder`, `Admin Layout & Auth`, `Vendor Page & Navigation`, `Magazine Cover Theme`, `Balinese Harmony Theme`, `Line Art Botanical Theme`, `Royal Gold Theme`?**
+  _High betweenness centrality (0.074) - this node is a cross-community bridge._
+- **Why does `createClient()` connect `API Routes & Admin` to `Admin Dashboard & Themes`, `Pricing & Theme Pages`, `Landing Page`, `Admin Invitations & Leads`?**
+  _High betweenness centrality (0.036) - this node is a cross-community bridge._
+- **Why does `dependencies` connect `Radix UI & CVA` to `Package Dependencies`, `clsx`, `csv-parse`, `date-fns`, `ExcelJS`, `Framer Motion`, `Hookform Resolvers`, `Lucide React`, `Midtrans Client`, `Next.js`, `Next Themes`, `PapaParse`, `QRCode`, `Radix Accordion`, `Radix Progress`, `Radix Tabs`, `Radix Toast`, `React`, `React DOM`, `React Hook Form`, `React Hot Toast`, `Recharts`, `Resend`, `Sharp`, `Sonner`, `Supabase SSR`, `Supabase JS`, `Tailwind Merge`, `Types PapaParse`, `Types QRCode`, `Zod`?**
+  _High betweenness centrality (0.019) - this node is a cross-community bridge._
+- **Are the 5 inferred relationships involving `NikahLink Platform` (e.g. with `Inveet.id` and `Link Undangan`) actually correct?**
+  _`NikahLink Platform` has 5 INFERRED edges - model-reasoned connections that need verification._
+- **What connects `GiftAccount`, `GiftClientProps`, `Invitation` to the rest of the system?**
+  _262 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `API Routes & Admin` be split into smaller, more focused modules?**
+  _Cohesion score 0.07142857142857142 - nodes in this community are weakly interconnected._
+- **Should `Admin Dashboard & Themes` be split into smaller, more focused modules?**
+  _Cohesion score 0.05357142857142857 - nodes in this community are weakly interconnected._
