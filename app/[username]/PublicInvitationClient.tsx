@@ -159,6 +159,19 @@ export default function PublicInvitationClient({
     setSubmittingRsvp(true);
     const supabase = createClient();
 
+    if (isFreePlan) {
+      const { count } = await supabase
+        .from("guests")
+        .select("*", { count: "exact", head: true })
+        .eq("invitation_id", invitation.id);
+
+      if (count !== null && count >= 50) {
+        alert("Mohon maaf, kuota tamu undangan telah mencapai batas maksimal (50 tamu).");
+        setSubmittingRsvp(false);
+        return;
+      }
+    }
+
     await supabase.from("guests").insert({
       invitation_id: invitation.id,
       name: wishName.trim() || guestName || "Tamu Undangan",

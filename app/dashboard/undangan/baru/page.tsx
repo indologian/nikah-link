@@ -442,6 +442,14 @@ export default function NewInvitationPage() {
       localStorage.removeItem("nikahlink_new_invitation");
       localStorage.removeItem("nikahlink_new_invitation_step");
 
+      // Set has_used_free_trial = true if user is on free plan
+      if (userPlan === "free") {
+        await supabase
+          .from("profiles")
+          .update({ has_used_free_trial: true })
+          .eq("user_id", user.id);
+      }
+
       router.push(`/dashboard/undangan?success=created`);
     } catch (err: any) {
       setError(err.message || "Gagal menyimpan undangan. Coba lagi.");

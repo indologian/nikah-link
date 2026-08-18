@@ -3,8 +3,8 @@ import { createClient } from "@/lib/supabase/server";
 import { createMidtransTransaction } from "@/lib/midtrans";
 
 const PLAN_PRICES: Record<string, { amount: number; name: string }> = {
-  premium: { amount: 79000, name: "NikahLink Paket Premium (Aktif Selamanya)" },
-  pro: { amount: 149000, name: "NikahLink Paket Pro VIP (Aktif Selamanya)" },
+  premium: { amount: 99000, name: "NikahLink Paket Premium (Aktif Selamanya)" },
+  pro: { amount: 299000, name: "NikahLink Paket Pro VIP (Aktif Selamanya)" },
 };
 
 export async function POST(request: Request) {
