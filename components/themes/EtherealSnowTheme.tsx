@@ -94,10 +94,16 @@ export default function EtherealSnowTheme({
   
   // Cross-fade slider images (mocked from cover if only 1 image exists, normally would use gallery_images array)
   const sliderImages = [
-    invitation.cover_image_url || "https://images.unsplash.com/photo-1518895949257-7621c3c786d7",
-    invitation.cover_image_url || "https://images.unsplash.com/photo-1549465220-1a8b9238cd48",
-    invitation.cover_image_url || "https://images.unsplash.com/photo-1505932794465-147d1f1b2c97"
-  ];
+    customData?.gallery_1,
+    customData?.gallery_2,
+    customData?.gallery_3,
+  ].filter(Boolean);
+
+  if (sliderImages.length === 0) {
+    if (invitation.cover_image_url) sliderImages.push(invitation.cover_image_url);
+    if (invitation.groom_photo_url) sliderImages.push(invitation.groom_photo_url);
+    if (invitation.bride_photo_url) sliderImages.push(invitation.bride_photo_url);
+  }
 
   useEffect(() => {
     if (!isOpen) return;

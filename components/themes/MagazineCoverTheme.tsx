@@ -129,7 +129,17 @@ export default function MagazineCoverTheme({
   // Safe fallbacks for data
   const photos = invitation.photos || [];
   const heroPhoto = photos.length > 0 ? photos[0] : "https://images.unsplash.com/photo-1532712938736-98c5411961a8?q=80&w=2000&auto=format&fit=crop"; // Fashion editorial
-  const galleryPhotos = photos.slice(1);
+  const galleryPhotos = [
+    customData?.gallery_1,
+    customData?.gallery_2,
+    customData?.gallery_3,
+  ].filter(Boolean);
+
+  if (galleryPhotos.length === 0) {
+    if (invitation.cover_image_url) galleryPhotos.push(invitation.cover_image_url);
+    if (invitation.groom_photo_url) galleryPhotos.push(invitation.groom_photo_url);
+    if (invitation.bride_photo_url) galleryPhotos.push(invitation.bride_photo_url);
+  }
   const themeColors = invitation.theme_colors || {
     background: "#FFFFFF",
     text: "#000000",       

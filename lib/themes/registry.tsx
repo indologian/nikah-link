@@ -143,7 +143,10 @@ export const themesConfig: Record<string, ThemeConfig> = {
         label: "Kutipan Pernikahan",
         type: "textarea",
         placeholder: "Dan di antara tanda-tanda kekuasaan-Nya..."
-      }
+      },
+      { name: "gallery_1", label: "Foto Galeri 1", type: "image" },
+      { name: "gallery_2", label: "Foto Galeri 2", type: "image" },
+      { name: "gallery_3", label: "Foto Galeri 3", type: "image" }
     ]
   },
   "royal-botanical": {
@@ -155,7 +158,10 @@ export const themesConfig: Record<string, ThemeConfig> = {
         label: "Kutipan Pernikahan",
         type: "textarea",
         placeholder: "Dan di antara tanda-tanda kekuasaan-Nya..."
-      }
+      },
+      { name: "gallery_1", label: "Foto Galeri 1", type: "image" },
+      { name: "gallery_2", label: "Foto Galeri 2", type: "image" },
+      { name: "gallery_3", label: "Foto Galeri 3", type: "image" }
     ]
   },
   "wayang-classic": {
@@ -167,7 +173,10 @@ export const themesConfig: Record<string, ThemeConfig> = {
         label: "Kutipan",
         type: "textarea",
         placeholder: "Maha Suci Allah yang telah menciptakan..."
-      }
+      },
+      { name: "gallery_1", label: "Foto Galeri 1", type: "image" },
+      { name: "gallery_2", label: "Foto Galeri 2", type: "image" },
+      { name: "gallery_3", label: "Foto Galeri 3", type: "image" }
     ]
   },
   "elegant-blush": {
@@ -179,7 +188,10 @@ export const themesConfig: Record<string, ThemeConfig> = {
         label: "Kutipan",
         type: "textarea",
         placeholder: "To love and to be loved is to feel the sun from both sides."
-      }
+      },
+      { name: "gallery_1", label: "Foto Galeri 1", type: "image" },
+      { name: "gallery_2", label: "Foto Galeri 2", type: "image" },
+      { name: "gallery_3", label: "Foto Galeri 3", type: "image" }
     ]
   },
   "midnight-sparkle": {
@@ -191,7 +203,10 @@ export const themesConfig: Record<string, ThemeConfig> = {
         label: "Kutipan",
         type: "textarea",
         placeholder: "You are the stars in my dark night."
-      }
+      },
+      { name: "gallery_1", label: "Foto Galeri 1", type: "image" },
+      { name: "gallery_2", label: "Foto Galeri 2", type: "image" },
+      { name: "gallery_3", label: "Foto Galeri 3", type: "image" }
     ]
   },
   "serein-white": {
@@ -203,7 +218,10 @@ export const themesConfig: Record<string, ThemeConfig> = {
         label: "Kutipan",
         type: "textarea",
         placeholder: "To love and be loved..."
-      }
+      },
+      { name: "gallery_1", label: "Foto Galeri 1", type: "image" },
+      { name: "gallery_2", label: "Foto Galeri 2", type: "image" },
+      { name: "gallery_3", label: "Foto Galeri 3", type: "image" }
     ]
   },
   "balinese-harmony": {
@@ -215,7 +233,10 @@ export const themesConfig: Record<string, ThemeConfig> = {
         label: "Kutipan",
         type: "textarea",
         placeholder: "Om Swastyastu..."
-      }
+      },
+      { name: "gallery_1", label: "Foto Galeri 1", type: "image" },
+      { name: "gallery_2", label: "Foto Galeri 2", type: "image" },
+      { name: "gallery_3", label: "Foto Galeri 3", type: "image" }
     ]
   },
   "magazine-cover": {
@@ -227,7 +248,10 @@ export const themesConfig: Record<string, ThemeConfig> = {
         label: "Kutipan",
         type: "textarea",
         placeholder: "A modern romance..."
-      }
+      },
+      { name: "gallery_1", label: "Foto Galeri 1", type: "image" },
+      { name: "gallery_2", label: "Foto Galeri 2", type: "image" },
+      { name: "gallery_3", label: "Foto Galeri 3", type: "image" }
     ]
   },
   "javanese-batik": {
@@ -239,7 +263,10 @@ export const themesConfig: Record<string, ThemeConfig> = {
         label: "Kutipan",
         type: "textarea",
         placeholder: "Tresno jalaran soko kulino..."
-      }
+      },
+      { name: "gallery_1", label: "Foto Galeri 1", type: "image" },
+      { name: "gallery_2", label: "Foto Galeri 2", type: "image" },
+      { name: "gallery_3", label: "Foto Galeri 3", type: "image" }
     ]
   },
   "line-art-botanical": {
@@ -251,7 +278,10 @@ export const themesConfig: Record<string, ThemeConfig> = {
         label: "Kutipan",
         type: "textarea",
         placeholder: "Growing together in love..."
-      }
+      },
+      { name: "gallery_1", label: "Foto Galeri 1", type: "image" },
+      { name: "gallery_2", label: "Foto Galeri 2", type: "image" },
+      { name: "gallery_3", label: "Foto Galeri 3", type: "image" }
     ]
   },
   "royal-gold": {
@@ -263,7 +293,10 @@ export const themesConfig: Record<string, ThemeConfig> = {
         label: "Kutipan",
         type: "textarea",
         placeholder: "A lifetime of luxury and love..."
-      }
+      },
+      { name: "gallery_1", label: "Foto Galeri 1", type: "image" },
+      { name: "gallery_2", label: "Foto Galeri 2", type: "image" },
+      { name: "gallery_3", label: "Foto Galeri 3", type: "image" }
     ]
   },
   "ocean-breeze": {
@@ -377,7 +410,10 @@ export const themesConfig: Record<string, ThemeConfig> = {
         label: "Kutipan",
         type: "textarea",
         placeholder: "Winter romance..."
-      }
+      },
+      { name: "gallery_1", label: "Foto Galeri 1", type: "image" },
+      { name: "gallery_2", label: "Foto Galeri 2", type: "image" },
+      { name: "gallery_3", label: "Foto Galeri 3", type: "image" }
     ]
   },
   "geometric-abstract": {
