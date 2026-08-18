@@ -27,7 +27,8 @@ Before implementing UI, consult the relevant Hallmark references.
 4. Keep components modular.
 5. Use TypeScript.
 6. Keep responsive behavior in mind.
-7. Test the implementation after making changes.
+7. Test the implementation after making changes (npm run build).
+8. push to github
 
 ## UI Rules
 
