@@ -1,19 +1,16 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  allowedDevOrigins: [
-    "192.168.1.7",
-    "192.168.1.7:3000",
-    "192.168.1.7:3001",
-    "localhost:3000",
-    "*.loca.lt"
-  ],
+  // Hanya origin yang benar-benar dipakai tim selama dev (tunneling, preview).
+  // localhost & 127.0.0.1 sudah diizinkan secara default oleh Next.js,
+  // jadi tidak perlu didaftarkan di sini.
+  allowedDevOrigins: ["*.loca.lt"],
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "vyjqubgkkpapsovnrnab.supabase.co",
-        port: "",
+        // Izinkan gambar dari Storage project Supabase mana pun (multi-tenant).
+        hostname: "*.supabase.co",
         pathname: "/storage/v1/object/public/**",
       },
       {
