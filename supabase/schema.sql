@@ -22,22 +22,48 @@ CREATE TABLE profiles (
 );
 
 -- Auto-create profile on user signup
-CREATE OR REPLACE FUNCTION handle_new_user()
-RETURNS TRIGGER AS $$
+
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
 BEGIN
-  INSERT INTO profiles (user_id, name, avatar_url)
+  INSERT INTO public.profiles (
+    user_id,
+    name,
+    avatar_url
+  )
   VALUES (
     NEW.id,
     NEW.raw_user_meta_data->>'name',
     NEW.raw_user_meta_data->>'avatar_url'
   );
+
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$;
+
+-- Jangan izinkan anon/authenticated memanggil function ini
+-- melalui Supabase RPC.
+REVOKE ALL
+ON FUNCTION public.handle_new_user()
+FROM PUBLIC;
+
+REVOKE ALL
+ON FUNCTION public.handle_new_user()
+FROM anon;
+
+REVOKE ALL
+ON FUNCTION public.handle_new_user()
+FROM authenticated;
+
 
 CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
-  FOR EACH ROW EXECUTE FUNCTION handle_new_user();
+  FOR EACH ROW
+  EXECUTE FUNCTION public.handle_new_user();
 
 -- ============================================================
 -- THEMES TABLE
@@ -323,66 +349,367 @@ ALTER TABLE gift_transactions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE invitation_views ENABLE ROW LEVEL SECURITY;
 ALTER TABLE vendors ENABLE ROW LEVEL SECURITY;
 ALTER TABLE subscriptions ENABLE ROW LEVEL SECURITY;
-
--- Themes: public read
 ALTER TABLE themes ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Themes are publicly readable" ON themes FOR SELECT USING (is_active = TRUE);
-
--- Blog posts: public read
 ALTER TABLE blog_posts ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Published posts are public" ON blog_posts FOR SELECT USING (published_at IS NOT NULL AND published_at <= NOW());
 
--- Profiles policies
-CREATE POLICY "Users can view own profile" ON profiles FOR SELECT USING (auth.uid() = user_id);
-CREATE POLICY "Users can update own profile" ON profiles FOR UPDATE USING (auth.uid() = user_id);
 
--- Invitations policies
-CREATE POLICY "Users can CRUD own invitations" ON invitations FOR ALL USING (auth.uid() = user_id);
-CREATE POLICY "Published invitations are public" ON invitations FOR SELECT USING (is_published = TRUE);
+-- ============================================================
+-- THEMES
+-- ============================================================
 
--- Guests policies
-CREATE POLICY "Invitation owners manage guests" ON guests FOR ALL
-  USING (invitation_id IN (SELECT id FROM invitations WHERE user_id = auth.uid()));
-CREATE POLICY "Anyone can read guests with token" ON guests FOR SELECT
-  USING (TRUE);
+CREATE POLICY "Themes are publicly readable"
+ON themes
+FOR SELECT
+TO anon, authenticated
+USING (
+  is_active = TRUE
+);
 
--- Wishes policies
-CREATE POLICY "Invitation owners manage wishes" ON wishes FOR ALL
-  USING (invitation_id IN (SELECT id FROM invitations WHERE user_id = auth.uid()));
-CREATE POLICY "Anyone can insert wishes to published invitations" ON wishes FOR INSERT
-  WITH CHECK (invitation_id IN (SELECT id FROM invitations WHERE is_published = TRUE));
-CREATE POLICY "Wishes are publicly readable" ON wishes FOR SELECT USING (is_approved = TRUE);
 
--- Gallery policies
-CREATE POLICY "Invitation owners manage gallery" ON gallery FOR ALL
-  USING (invitation_id IN (SELECT id FROM invitations WHERE user_id = auth.uid()));
-CREATE POLICY "Gallery is public for published invitations" ON gallery FOR SELECT
-  USING (invitation_id IN (SELECT id FROM invitations WHERE is_published = TRUE));
+-- ============================================================
+-- BLOG POSTS
+-- ============================================================
 
--- Gift accounts policies
-CREATE POLICY "Invitation owners manage gift accounts" ON gift_accounts FOR ALL
-  USING (invitation_id IN (SELECT id FROM invitations WHERE user_id = auth.uid()));
-CREATE POLICY "Gift accounts public for published invitations" ON gift_accounts FOR SELECT
-  USING (invitation_id IN (SELECT id FROM invitations WHERE is_published = TRUE));
+CREATE POLICY "Published posts are public"
+ON blog_posts
+FOR SELECT
+TO anon, authenticated
+USING (
+  published_at IS NOT NULL
+  AND published_at <= NOW()
+);
 
--- Gift transactions
-CREATE POLICY "Invitation owners view gift transactions" ON gift_transactions FOR SELECT
-  USING (invitation_id IN (SELECT id FROM invitations WHERE user_id = auth.uid()));
-CREATE POLICY "Anyone can insert gift transactions" ON gift_transactions FOR INSERT
-  WITH CHECK (invitation_id IN (SELECT id FROM invitations WHERE is_published = TRUE));
 
--- Invitation views
-CREATE POLICY "Anyone can insert views" ON invitation_views FOR INSERT WITH CHECK (TRUE);
-CREATE POLICY "Owners can view analytics" ON invitation_views FOR SELECT
-  USING (invitation_id IN (SELECT id FROM invitations WHERE user_id = auth.uid()));
+-- ============================================================
+-- PROFILES
+-- ============================================================
 
--- Vendors: public read
-CREATE POLICY "Vendors are publicly readable" ON vendors FOR SELECT USING (is_active = TRUE);
-CREATE POLICY "Vendors can manage own profile" ON vendors FOR ALL USING (auth.uid() = user_id);
+CREATE POLICY "Users can view own profile"
+ON profiles
+FOR SELECT
+TO authenticated
+USING (
+  auth.uid() = user_id
+);
 
--- Subscriptions
-CREATE POLICY "Users can view own subscriptions" ON subscriptions FOR SELECT USING (auth.uid() = user_id);
-CREATE POLICY "Users can create subscriptions" ON subscriptions FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "Users can update own profile"
+ON profiles
+FOR UPDATE
+TO authenticated
+USING (
+  auth.uid() = user_id
+)
+WITH CHECK (
+  auth.uid() = user_id
+);
+
+
+-- ============================================================
+-- INVITATIONS
+-- ============================================================
+
+CREATE POLICY "Users can CRUD own invitations"
+ON invitations
+FOR ALL
+TO authenticated
+USING (
+  auth.uid() = user_id
+)
+WITH CHECK (
+  auth.uid() = user_id
+);
+
+CREATE POLICY "Published invitations are public"
+ON invitations
+FOR SELECT
+TO anon, authenticated
+USING (
+  is_published = TRUE
+);
+
+
+-- ============================================================
+-- GUESTS
+-- ============================================================
+-- Tidak ada public SELECT.
+-- Data guests mengandung PII.
+--
+-- Public RSVP ditangani oleh:
+-- /api/public/rsvp
+--
+-- Server menggunakan SERVICE_ROLE.
+-- ============================================================
+
+CREATE POLICY "Authenticated owners can view their guests"
+ON guests
+FOR SELECT
+TO authenticated
+USING (
+  EXISTS (
+    SELECT 1
+    FROM invitations i
+    WHERE i.id = guests.invitation_id
+      AND i.user_id = auth.uid()
+  )
+);
+
+CREATE POLICY "Authenticated owners can create their guests"
+ON guests
+FOR INSERT
+TO authenticated
+WITH CHECK (
+  EXISTS (
+    SELECT 1
+    FROM invitations i
+    WHERE i.id = guests.invitation_id
+      AND i.user_id = auth.uid()
+  )
+);
+
+CREATE POLICY "Authenticated owners can update their guests"
+ON guests
+FOR UPDATE
+TO authenticated
+USING (
+  EXISTS (
+    SELECT 1
+    FROM invitations i
+    WHERE i.id = guests.invitation_id
+      AND i.user_id = auth.uid()
+  )
+)
+WITH CHECK (
+  EXISTS (
+    SELECT 1
+    FROM invitations i
+    WHERE i.id = guests.invitation_id
+      AND i.user_id = auth.uid()
+  )
+);
+
+CREATE POLICY "Authenticated owners can delete their guests"
+ON guests
+FOR DELETE
+TO authenticated
+USING (
+  EXISTS (
+    SELECT 1
+    FROM invitations i
+    WHERE i.id = guests.invitation_id
+      AND i.user_id = auth.uid()
+  )
+);
+
+
+-- ============================================================
+-- WISHES
+-- ============================================================
+-- Public INSERT tidak diizinkan melalui Data API.
+-- Public wishes diproses oleh:
+-- /api/public/wishes
+-- ============================================================
+
+CREATE POLICY "Invitation owners can manage their wishes"
+ON wishes
+FOR ALL
+TO authenticated
+USING (
+  EXISTS (
+    SELECT 1
+    FROM invitations i
+    WHERE i.id = wishes.invitation_id
+      AND i.user_id = auth.uid()
+  )
+)
+WITH CHECK (
+  EXISTS (
+    SELECT 1
+    FROM invitations i
+    WHERE i.id = wishes.invitation_id
+      AND i.user_id = auth.uid()
+  )
+);
+
+CREATE POLICY "Public can read approved wishes on published invitations"
+ON wishes
+FOR SELECT
+TO anon, authenticated
+USING (
+  is_approved = TRUE
+  AND EXISTS (
+    SELECT 1
+    FROM invitations i
+    WHERE i.id = wishes.invitation_id
+      AND i.is_published = TRUE
+  )
+);
+
+
+-- ============================================================
+-- GALLERY
+-- ============================================================
+
+CREATE POLICY "Invitation owners manage gallery"
+ON gallery
+FOR ALL
+TO authenticated
+USING (
+  EXISTS (
+    SELECT 1
+    FROM invitations i
+    WHERE i.id = gallery.invitation_id
+      AND i.user_id = auth.uid()
+  )
+)
+WITH CHECK (
+  EXISTS (
+    SELECT 1
+    FROM invitations i
+    WHERE i.id = gallery.invitation_id
+      AND i.user_id = auth.uid()
+  )
+);
+
+CREATE POLICY "Gallery is public for published invitations"
+ON gallery
+FOR SELECT
+TO anon, authenticated
+USING (
+  EXISTS (
+    SELECT 1
+    FROM invitations i
+    WHERE i.id = gallery.invitation_id
+      AND i.is_published = TRUE
+  )
+);
+
+
+-- ============================================================
+-- GIFT ACCOUNTS
+-- ============================================================
+
+CREATE POLICY "Invitation owners manage gift accounts"
+ON gift_accounts
+FOR ALL
+TO authenticated
+USING (
+  EXISTS (
+    SELECT 1
+    FROM invitations i
+    WHERE i.id = gift_accounts.invitation_id
+      AND i.user_id = auth.uid()
+  )
+)
+WITH CHECK (
+  EXISTS (
+    SELECT 1
+    FROM invitations i
+    WHERE i.id = gift_accounts.invitation_id
+      AND i.user_id = auth.uid()
+  )
+);
+
+CREATE POLICY "Gift accounts public for published invitations"
+ON gift_accounts
+FOR SELECT
+TO anon, authenticated
+USING (
+  EXISTS (
+    SELECT 1
+    FROM invitations i
+    WHERE i.id = gift_accounts.invitation_id
+      AND i.is_published = TRUE
+  )
+);
+
+
+-- ============================================================
+-- GIFT TRANSACTIONS
+-- ============================================================
+-- Public INSERT sengaja tidak diberikan.
+-- ============================================================
+
+CREATE POLICY "Invitation owners view gift transactions"
+ON gift_transactions
+FOR SELECT
+TO authenticated
+USING (
+  EXISTS (
+    SELECT 1
+    FROM invitations i
+    WHERE i.id = gift_transactions.invitation_id
+      AND i.user_id = auth.uid()
+  )
+);
+
+
+-- ============================================================
+-- INVITATION VIEWS
+-- ============================================================
+-- Public INSERT sengaja tidak diberikan.
+-- Tracking harus melalui server/API.
+-- ============================================================
+
+CREATE POLICY "Owners can view analytics"
+ON invitation_views
+FOR SELECT
+TO authenticated
+USING (
+  EXISTS (
+    SELECT 1
+    FROM invitations i
+    WHERE i.id = invitation_views.invitation_id
+      AND i.user_id = auth.uid()
+  )
+);
+
+
+-- ============================================================
+-- VENDORS
+-- ============================================================
+
+CREATE POLICY "Vendors are publicly readable"
+ON vendors
+FOR SELECT
+TO anon, authenticated
+USING (
+  is_active = TRUE
+);
+
+CREATE POLICY "Vendors can manage own profile"
+ON vendors
+FOR ALL
+TO authenticated
+USING (
+  auth.uid() = user_id
+)
+WITH CHECK (
+  auth.uid() = user_id
+);
+
+
+-- ============================================================
+-- SUBSCRIPTIONS
+-- ============================================================
+-- Client:
+-- SELECT own subscription = allowed
+-- INSERT = DENIED
+-- UPDATE = DENIED
+-- DELETE = DENIED
+--
+-- Server payment API menggunakan SERVICE_ROLE.
+-- ============================================================
+
+CREATE POLICY "Users can view own subscriptions"
+ON subscriptions
+FOR SELECT
+TO authenticated
+USING (
+  auth.uid() = user_id
+);
+
+
+
 
 -- ============================================================
 -- STORAGE BUCKETS
@@ -400,7 +727,9 @@ CREATE POLICY "Users can create subscriptions" ON subscriptions FOR INSERT WITH 
 -- ============================================================
 
 -- Invitation with stats
-CREATE OR REPLACE VIEW invitation_stats AS
+CREATE OR REPLACE VIEW invitation_stats
+WITH (security_invoker = true)
+AS
 SELECT
   i.id,
   i.user_id,
@@ -417,13 +746,18 @@ SELECT
   COUNT(DISTINCT v.id) AS total_views,
   i.created_at
 FROM invitations i
-LEFT JOIN guests g ON g.invitation_id = i.id
-LEFT JOIN wishes w ON w.invitation_id = i.id
-LEFT JOIN invitation_views v ON v.invitation_id = i.id
+LEFT JOIN guests g
+  ON g.invitation_id = i.id
+LEFT JOIN wishes w
+  ON w.invitation_id = i.id
+LEFT JOIN invitation_views v
+  ON v.invitation_id = i.id
 GROUP BY i.id;
+
 -- ============================================================
 -- LEADS TABLE
 -- ============================================================
+
 CREATE TABLE leads (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   email TEXT NOT NULL,
@@ -433,5 +767,19 @@ CREATE TABLE leads (
 );
 
 ALTER TABLE leads ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Anyone can insert leads" ON leads FOR INSERT WITH CHECK (TRUE);
-CREATE POLICY "Only authenticated admins can view leads" ON leads FOR SELECT USING (auth.role() = 'authenticated');
+
+CREATE POLICY "Anyone can insert leads"
+ON leads
+FOR INSERT
+TO anon, authenticated
+WITH CHECK (
+  TRUE
+);
+
+CREATE POLICY "Only authenticated admins can view leads"
+ON leads
+FOR SELECT
+TO authenticated
+USING (
+  is_super_admin()
+);
