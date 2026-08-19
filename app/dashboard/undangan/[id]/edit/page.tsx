@@ -65,7 +65,7 @@ export default function EditInvitationPage() {
     reception_maps_url: "",
 
     // Theme & Media
-    theme_slug: "sakura-bloom",
+    theme_slug: "minimalis",
     music_url: "",
     cover_image_url: "",
     custom_message: "",
@@ -154,7 +154,7 @@ export default function EditInvitationPage() {
           reception_venue: data.reception_venue || "",
           reception_address: data.reception_address || "",
           reception_maps_url: data.reception_maps_url || "",
-          theme_slug: data.themes?.slug || "sakura-bloom",
+          theme_slug: data.themes?.slug || "minimalis",
           music_url: data.music_url || "",
           cover_image_url: data.cover_image_url || "",
           custom_message: data.custom_message || "",

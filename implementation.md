@@ -579,62 +579,19 @@ Membangun landing page yang memukau dan sistem auth.
 38. `app/(dashboard)/kado/page.tsx`
 
 ### Phase 4: Public Invitation Pages
-39. `app/[username]/page.tsx` — undangan viewer
-40. `components/invitation/` — semua komponen tema undangan
-41. Minimal 3 tema fully functional
+- pp/[username]/page.tsx — undangan viewer
+- components/themes/* — 24 tema selesai (mendukung custom gallery, layout masonry, animasi GSAP/AOS)
 
 ### Phase 5: Supabase Setup
-- Membuat semua tabel di Supabase
-- Row Level Security (RLS) policies
-- Storage buckets (photos, audio, avatars)
-- API routes (app/api/)
+- ✅ Tabel invitations (termasuk custom_data untuk foto)
+- ✅ Storage buckets (images)
+- ✅ API routes (app/api/)
 
 ---
 
-## ✅ Verification Plan
-
-### Build Check
-```bash
-npm run build
-```
-
-### Manual Verification
-1. Landing page tampil sempurna di desktop & mobile
-2. Animasi berjalan smooth
-3. Form register/login berfungsi
-4. Dashboard dapat diakses setelah login
-5. Undangan publik dapat dibuka tanpa login
-6. Upload gambar ke Supabase Storage berfungsi
-7. RSVP form menyimpan data ke database
-8. Ucapan tamu tersimpan dan tampil real-time
-
----
-
-## ❓ Open Questions
-
-> [!IMPORTANT]
-> **Nama Branding:** Apakah nama "NikahLink" sesuai atau ada preferensi lain?
-setuju
-
-> [!IMPORTANT]  
-> **Midtrans Payment:** Apakah perlu mengintegrasikan payment gateway (Midtrans) untuk pembelian paket premium sekarang, atau dikosongkan dulu?
-hubungkan dengan midtrans
-
-> [!IMPORTANT]
-> **Supabase Project:** Apakah sudah ada project Supabase yang dibuat, atau perlu setup dari awal? (Dibutuhkan: Supabase URL + anon key)
-id project: vyjqubgkkpapsovnrnab
-
-anon key : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ5anF1Ymdra3BhcHNvdm5ybmFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY1NDMxNjMsImV4cCI6MjEwMjExOTE2M30.bfNcva8np1PBnhqiw5Nq87WE13KvTBpwW7DkgEFUoXs
-> [!NOTE]
-> **Jumlah Tema Awal:** Apakah cukup dengan 3 tema yang benar-benar functional (dengan full animasi), ataukah perlu lebih banyak?
-lebih banyak
-
-> [!NOTE]
-> **WhatsApp Notification:** Apakah perlu integrasi WA Business API sekarang, atau cukup dengan share link manual dulu?
-share link manual
-
-> [!NOTE]
-> **Marketplace Vendor:** Apakah marketplace vendor perlu dibangun sekarang (fase 1), atau bisa dikerjakan di fase berikutnya?
-fase berikutnya
-
-
+## ✅ Status Proyek Saat Ini
+1. Landing page, Dashboard, Admin selesai.
+2. Form builder (baru/edit) selesai, field mandatory tidak bisa dilanjutkan jika kosong.
+3. Midtrans payment sudah terhubung.
+4. 24 Tema selesai dengan validasi gallery gambar.
+5. Setup database (Supabase) sudah berjalan.

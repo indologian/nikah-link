@@ -50,7 +50,7 @@ const DEFAULT_FORM_DATA = {
   reception_maps_url: "",
 
   // Theme & Media
-  theme_slug: "sakura-bloom",
+  theme_slug: "minimalis",
   music_url: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-wedding-115207.mp3",
   cover_image_url: "",
   custom_message: "Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada pernikahan kami.",
@@ -916,7 +916,7 @@ export default function NewInvitationPage() {
                     <div
                       key={theme.id}
                       onClick={() => {
-                        if (theme.premium && userPlan === "free") {
+                        if (theme.is_premium && userPlan === "free") {
                           setUpsellConfig({
                             isOpen: true,
                             title: "Tema Premium Terkunci",
