@@ -97,8 +97,9 @@ export async function POST(request: Request) {
       redirect_url: midtransRes.redirect_url,
       order_id: orderId,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Payment Token Error:", error);
-    return NextResponse.json({ error: error.message || "Gagal membuat transaksi" }, { status: 500 });
+    const message = error instanceof Error ? error.message : "Gagal membuat transaksi";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

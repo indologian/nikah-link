@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:query-themes": "node scripts/query-themes.mjs",
+    "db:reset-themes": "node scripts/reset-themes.mjs",
+    "db:seed-premium-themes": "node scripts/seed-premium-themes.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.7.1",
