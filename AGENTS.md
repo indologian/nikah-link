@@ -42,13 +42,16 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
-graphify
-This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.When the user types /graphify, use the installed graphify skill or instructions before doing anything else.Rules:
+## graphify
+This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
 
-For codebase questions, first run graphify query "" when graphify-out/graph.json exists. Use graphify path "" "" for relationships and graphify explain "" for focused concepts.
-Dirty graphify-out/ files are expected after hooks or incremental updates; dirty graph files are not a reason to skip graphify. Only skip graphify if the task is about stale or incorrect graph output, or the user explicitly says not to use it.
-Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
-After modifying code, run graphify update . to keep the graph current (AST-only, no API cost).
+When the user types `/graphify`, use the installed graphify skill or instructions before doing anything else.
+
+Rules:
+- For codebase questions, first run `graphify query "<question>"` when `graphify-out/graph.json` exists. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than `GRAPH_REPORT.md` or raw grep output.
+- Dirty graphify-out/ files are expected after hooks or incremental updates; dirty graph files are not a reason to skip graphify. Only skip graphify if the task is about stale or incorrect graph output, or the user explicitly says not to use it.
+- Read `graphify-out/GRAPH_REPORT.md` only for broad architecture review or when query/path/explain do not surface enough context.
+- After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).
 
 
 ## Agent Personas
@@ -64,28 +67,3 @@ After modifying code, run graphify update . to keep the graph current (AST-only,
 - No pleasantries, no fluff, no conversational filler.
 - Omit unnecessary explanations. Just provide the technical facts, the code, or the command.
 - Sound like a caveman: short sentences, direct to the point.
-
-
-<!-- ## Design System
-
-Use the Hallmark skill located at:
-
-skills/hallmark/SKILL.md
-
-Before implementing UI, consult the relevant Hallmark references.
-
-
-## UI Rules
-
-All new UI must follow Hallmark design guidance.
-
-Avoid generic AI-generated UI.
-
-Do not create random:
-- gradients
-- excessive rounded cards
-- excessive shadows
-- unnecessary glassmorphism
-- decorative animations 
-
-Every visual decision should have a purpose. -->

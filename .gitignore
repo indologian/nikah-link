@@ -35,16 +35,7 @@ next-env.d.ts
 nul
 
 # === graphify artefacts (auto-generated, do not commit) ===
-# Hanya GRAPH_REPORT.md yang di-commit untuk navigasi arsitektur
 /graphify-out/cache/
-/graphify-out/*.json
-/graphify-out/*.html
-/graphify-out/.graphify_*
-/graphify-out/20??-??-??/
-# Jika ingin fully ignore graphify-out, uncomment baris berikut:
-# /graphify-out/
-# !/graphify-out/GRAPH_REPORT.md/graphify-out/cache/
-# === graphify artefacts (auto-generated, do not commit) ===
 /graphify-out/*.json
 /graphify-out/*.html
 /graphify-out/.graphify_*
