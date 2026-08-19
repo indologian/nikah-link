@@ -58,18 +58,31 @@ CREATE TABLE themes (
 
 -- Insert initial themes
 INSERT INTO themes (name, slug, category, is_premium, sort_order) VALUES
-  ('Sakura Bloom', 'sakura-bloom', 'floral', false, 1),
-  ('Midnight Luxe', 'midnight-luxe', 'dark', true, 2),
-  ('Javanese Heritage', 'javanese-heritage', 'budaya', true, 3),
-  ('Minimalist Clean', 'minimalist-clean', 'minimalis', false, 4),
-  ('Tropical Garden', 'tropical-garden', 'floral', false, 5),
-  ('Golden Arch', 'golden-arch', 'elegan', true, 6),
-  ('Rustic Charm', 'rustic-charm', 'minimalis', false, 7),
-  ('Royal Blue', 'royal-blue', 'elegan', true, 8),
-  ('Sundanese Craft', 'sundanese-craft', 'budaya', true, 9),
-  ('Film Grain', 'film-grain', 'minimalis', true, 10),
-  ('Pastel Dream', 'pastel-dream', 'floral', false, 11),
-  ('Dark Botanical', 'dark-botanical', 'dark', false, 12);
+('Minimalist Clean', 'minimalis', 'minimalis', false, 1),
+('Vintage Elegance', 'vintage-elegance', 'minimalis', true, 2),
+('Royal Botanical', 'royal-botanical', 'floral', true, 3),
+('Wayang Classic', 'wayang-classic', 'budaya', true, 4),
+('Elegant Blush', 'elegant-blush', 'elegan', true, 5),
+('Midnight Sparkle', 'midnight-sparkle', 'dark', true, 6),
+('Serein White', 'serein-white', 'minimalis', true, 7),
+('Balinese Harmony', 'balinese-harmony', 'budaya', true, 8),
+('Magazine Cover', 'magazine-cover', 'elegan', true, 9),
+('Javanese Batik', 'javanese-batik', 'budaya', true, 10),
+('Line Art Botanical', 'line-art-botanical', 'floral', true, 11),
+('Royal Gold', 'royal-gold', 'elegan', true, 12),
+('Ocean Breeze', 'ocean-breeze', 'minimalis', true, 13),
+('Rustic Woodland', 'rustic-woodland', 'floral', true, 14),
+('Modern Monochrome', 'modern-monochrome', 'dark', true, 15),
+('Cosmic Starlight', 'cosmic-starlight', 'dark', true, 16),
+('Ethereal Watercolor', 'ethereal-watercolor', 'elegan', true, 17),
+('Heritage Gunungan', 'heritage-gunungan', 'budaya', true, 18),
+('Botanical Elegance', 'botanical-elegance', 'floral', true, 19),
+('Golden Arch', 'golden-arch', 'elegan', true, 20),
+('Terracotta Rust', 'terracotta-rust', 'elegan', true, 21),
+('Ethereal Snow', 'ethereal-snow', 'elegan', true, 22),
+('Geometric Abstract', 'geometric-abstract', 'elegan', true, 23),
+('Editorial Gallery', 'editorial-gallery', 'elegan', true, 24)
+ON CONFLICT (slug) DO NOTHING;
 
 -- ============================================================
 -- INVITATIONS TABLE

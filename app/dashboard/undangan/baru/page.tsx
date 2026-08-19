@@ -34,7 +34,7 @@ const DEFAULT_FORM_DATA = {
   bride_photo_url: "",
   groom_photo_url: "",
   love_story: "",
-  
+
   // Akad
   akad_date: "",
   akad_time: "",
@@ -85,7 +85,7 @@ export default function NewInvitationPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [uploading, setUploading] = useState<{ [key: string]: boolean }>({});
-  
+
   const [isCheckingLimit, setIsCheckingLimit] = useState(true);
   const [isLimitReached, setIsLimitReached] = useState(false);
   const [slugStatus, setSlugStatus] = useState<"idle" | "checking" | "available" | "taken">("idle");
@@ -163,7 +163,7 @@ export default function NewInvitationPage() {
         // Check if limit is exceeded or free trial is already used
         const limits = { free: 1, premium: 1, pro: 2 };
         const planLimit = limits[plan as "free" | "premium" | "pro"] || 1;
-        
+
         if (plan === "free" && hasUsedTrial) {
           setIsLimitReached(true);
           setUpsellConfig({
@@ -173,13 +173,13 @@ export default function NewInvitationPage() {
             planNeeded: "premium"
           });
         } else if (plan === "premium" && planExpiresAt && planExpiresAt < new Date()) {
-           setIsLimitReached(true);
-           setUpsellConfig({
-             isOpen: true,
-             title: "Paket Premium Kedaluwarsa",
-             description: "Masa aktif paket Premium kamu (3 bulan) telah habis. Silakan perpanjang atau tingkatkan paketmu untuk membuat undangan baru.",
-             planNeeded: "premium"
-           });
+          setIsLimitReached(true);
+          setUpsellConfig({
+            isOpen: true,
+            title: "Paket Premium Kedaluwarsa",
+            description: "Masa aktif paket Premium kamu (3 bulan) telah habis. Silakan perpanjang atau tingkatkan paketmu untuk membuat undangan baru.",
+            planNeeded: "premium"
+          });
         } else if (count !== null && count >= planLimit) {
           setIsLimitReached(true);
           setUpsellConfig({
@@ -232,7 +232,7 @@ export default function NewInvitationPage() {
         return;
       }
       const file = e.target.files[0];
-      
+
       // Validasi Ukuran File (Maksimal 1 MB = 1048576 bytes)
       if (file.size > 1048576) {
         setError("Ukuran file terlalu besar! Maksimal 1 MB.");
@@ -241,7 +241,7 @@ export default function NewInvitationPage() {
 
       // Validasi Tipe File
       const allowedTypes = [
-        "image/jpeg", "image/png", "image/gif", "image/webp", 
+        "image/jpeg", "image/png", "image/gif", "image/webp",
         "image/svg+xml", "image/bmp", "image/tiff", "image/x-icon", "image/avif"
       ];
       if (!allowedTypes.includes(file.type)) {
@@ -281,8 +281,13 @@ export default function NewInvitationPage() {
       const file = e.target.files?.[0];
       if (!file) return;
 
+      if (file.size > 1048576) {
+        setError("Ukuran file terlalu besar! Maksimal 1 MB.");
+        return;
+      }
+
       const allowedTypes = [
-        "image/jpeg", "image/png", "image/gif", "image/webp", 
+        "image/jpeg", "image/png", "image/gif", "image/webp",
         "image/svg+xml", "image/bmp", "image/tiff", "image/x-icon", "image/avif"
       ];
       if (!allowedTypes.includes(file.type)) {
@@ -324,7 +329,7 @@ export default function NewInvitationPage() {
         return;
       }
       const file = e.target.files[0];
-      
+
       // Validasi Ukuran File Audio (Maksimal 5 MB = 5242880 bytes)
       if (file.size > 5242880) {
         setError("Ukuran file musik terlalu besar! Maksimal 5 MB.");
@@ -439,7 +444,7 @@ export default function NewInvitationPage() {
         .select("id")
         .eq("slug", formData.theme_slug)
         .single();
-      
+
       const themeId = themeData?.id || null;
 
       // Save invitation
@@ -527,7 +532,7 @@ export default function NewInvitationPage() {
   if (isLimitReached) {
     return (
       <div className="space-y-6 min-h-[60vh]">
-        <UpsellModal 
+        <UpsellModal
           isOpen={upsellConfig.isOpen}
           onClose={() => {
             setUpsellConfig(prev => ({ ...prev, isOpen: false }));
@@ -543,7 +548,7 @@ export default function NewInvitationPage() {
 
   return (
     <div className="space-y-6">
-      <UpsellModal 
+      <UpsellModal
         isOpen={upsellConfig.isOpen}
         onClose={() => {
           setUpsellConfig(prev => ({ ...prev, isOpen: false }));
@@ -576,13 +581,12 @@ export default function NewInvitationPage() {
               <div key={step.id} className="flex items-center gap-2">
                 <button
                   onClick={() => idx <= currentStep && setCurrentStep(idx)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-none text-xs font-bold transition-all ${
-                    isActive
-                      ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900"
-                      : isDone
+                  className={`flex items-center gap-2 px-4 py-2 rounded-none text-xs font-bold transition-all ${isActive
+                    ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900"
+                    : isDone
                       ? "bg-slate-100 dark:bg-slate-800 dark:bg-slate-900 dark:bg-slate-50/20 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-900 dark:border-white/30"
                       : "bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:bg-slate-50 border border-slate-200 dark:border-slate-800"
-                  }`}
+                    }`}
                 >
                   {isDone ? <Check className="w-3.5 h-3.5" /> : <Icon className="w-3.5 h-3.5" />}
                   <span>{step.label}</span>
@@ -623,20 +627,19 @@ export default function NewInvitationPage() {
                 <label className="block text-xs font-bold text-slate-700 dark:text-slate-400 mb-2">
                   URL Undangan Impian Kamu <span className="text-slate-900 dark:text-white">*</span>
                 </label>
-                <div className={`flex items-center rounded-none bg-slate-50 border overflow-hidden transition-colors ${
-                  slugStatus === "taken" 
-                    ? "border-rose-400 focus-within:border-rose-500" 
-                    : slugStatus === "available"
+                <div className={`flex items-center rounded-none bg-slate-50 border overflow-hidden transition-colors ${slugStatus === "taken"
+                  ? "border-rose-400 focus-within:border-rose-500"
+                  : slugStatus === "available"
                     ? "border-emerald-400 focus-within:border-emerald-500"
                     : "border-slate-200 dark:border-slate-700 focus-within:border-slate-900 dark:border-white"
-                }`}>
+                  }`}>
                   <span className="px-4 py-3 bg-slate-100 text-slate-500 dark:text-slate-400 text-xs sm:text-sm font-mono border-r border-slate-200 dark:border-slate-700">
                     nikahlink.com/
                   </span>
                   <input
                     type="text"
                     value={formData.username}
-                    onChange={(e) => setFormData(prev => ({...prev, username: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "")}))}
+                    onChange={(e) => setFormData(prev => ({ ...prev, username: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "") }))}
                     placeholder="romeo-juliet"
                     required
                     disabled={userPlan === "free"}
@@ -926,24 +929,27 @@ export default function NewInvitationPage() {
                           return;
                         }
                         handleChange("theme_slug", theme.slug);
+                        setFormData(prev => ({ ...prev, custom_data: {} }));
                       }}
-                      className={`relative overflow-hidden rounded-none cursor-pointer border-2 transition-all group ${
-                        isSelected ? "border-slate-900 dark:border-white  scale-[1.02]" : "border-slate-100 dark:border-slate-800 hover:border-rose-200 dark:hover:border-rose-900/50"
-                      }`}
+                      className={`relative overflow-hidden rounded-none cursor-pointer border-2 transition-all group ${isSelected ? "border-slate-900 dark:border-white  scale-[1.02]" : "border-slate-100 dark:border-slate-800 hover:border-rose-200 dark:hover:border-rose-900/50"
+                        }`}
                     >
                       <div className="aspect-[3/4] relative">
                         {theme.thumbnail_url ? (
                           <img src={theme.thumbnail_url} alt={theme.name} className="w-full h-full object-cover" />
                         ) : (
-                          <div className={`w-full h-full ${theme.colors?.primary ? `bg-[${theme.colors.primary}]` : 'bg-slate-200 dark:bg-slate-800'}`} />
+                          <div
+                            className="w-full h-full bg-slate-200 dark:bg-slate-800"
+                            style={theme.colors?.primary ? { backgroundColor: theme.colors.primary } : {}}
+                          />
                         )}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                        
+
                         <div className="absolute bottom-3 left-3 right-3">
                           <h3 className="text-white font-bold text-sm truncate">{theme.name}</h3>
                           <p className="text-white/80 text-[10px] uppercase tracking-wider">{theme.category}</p>
                         </div>
-                        
+
                         {theme.is_premium && (
                           <span className="absolute top-2 right-2 text-[10px] bg-slate-100 dark:bg-slate-800 dark:bg-slate-900 dark:bg-slate-50/20 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-900 dark:border-white/30 px-2 py-0.5 rounded-none font-bold">
                             PREMIUM
@@ -959,7 +965,7 @@ export default function NewInvitationPage() {
                   );
                 })}
               </div>
-              
+
               {/* DYNAMIC FIELDS FROM THEME CONFIG */}
               {(() => {
                 const selectedThemeConfig = getThemeConfig(formData.theme_slug);
@@ -980,9 +986,9 @@ export default function NewInvitationPage() {
                             <textarea
                               rows={3}
                               value={(formData.custom_data || {})[field.name] || ""}
-                              onChange={(e) => setFormData(prev => ({ 
-                                ...prev, 
-                                custom_data: { ...(prev.custom_data || {}), [field.name]: e.target.value } 
+                              onChange={(e) => setFormData(prev => ({
+                                ...prev,
+                                custom_data: { ...(prev.custom_data || {}), [field.name]: e.target.value }
                               }))}
                               placeholder={field.placeholder || ""}
                               className="w-full px-4 py-2.5 rounded-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:border-white"
@@ -990,14 +996,14 @@ export default function NewInvitationPage() {
                           ) : field.type === 'boolean' ? (
                             <label className="flex items-center gap-3 cursor-pointer mt-2 group">
                               <div className={`w-4 h-4 border flex items-center justify-center transition-colors ${(formData.custom_data || {})[field.name] ? 'border-slate-900 bg-slate-900 dark:border-white dark:bg-white' : 'border-slate-300 dark:border-slate-600'}`}>
-                                 {(formData.custom_data || {})[field.name] && <Check className="w-3 h-3 text-white dark:text-slate-900" />}
+                                {(formData.custom_data || {})[field.name] && <Check className="w-3 h-3 text-white dark:text-slate-900" />}
                               </div>
                               <input
                                 type="checkbox"
                                 checked={(formData.custom_data || {})[field.name] || false}
-                                onChange={(e) => setFormData(prev => ({ 
-                                  ...prev, 
-                                  custom_data: { ...(prev.custom_data || {}), [field.name]: e.target.checked } 
+                                onChange={(e) => setFormData(prev => ({
+                                  ...prev,
+                                  custom_data: { ...(prev.custom_data || {}), [field.name]: e.target.checked }
                                 }))}
                                 className="hidden"
                               />
@@ -1025,9 +1031,9 @@ export default function NewInvitationPage() {
                             <input
                               type={field.type === 'url' ? 'url' : field.type === 'date' ? 'date' : 'text'}
                               value={(formData.custom_data || {})[field.name] || ""}
-                              onChange={(e) => setFormData(prev => ({ 
-                                ...prev, 
-                                custom_data: { ...(prev.custom_data || {}), [field.name]: e.target.value } 
+                              onChange={(e) => setFormData(prev => ({
+                                ...prev,
+                                custom_data: { ...(prev.custom_data || {}), [field.name]: e.target.value }
                               }))}
                               placeholder={field.placeholder || ""}
                               className="w-full px-4 py-2.5 rounded-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:border-white"
