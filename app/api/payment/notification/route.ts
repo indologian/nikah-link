@@ -35,7 +35,12 @@ function verifyMidtransSignature(
   }
 }
 
-type SubStatus = "pending" | "success" | "failed" | "cancelled";
+type SubStatus =
+  | "pending"
+  | "success"
+  | "failed"
+  | "cancelled"
+  | "expired";
 
 function mapStatus(
   transactionStatus: string,
@@ -53,11 +58,15 @@ function mapStatus(
   if (
     transactionStatus === "cancel" ||
     transactionStatus === "deny" ||
-    transactionStatus === "expire" ||
     transactionStatus === "failure"
   ) {
     return "failed";
   }
+
+  if (transactionStatus === "expire") {
+    return "expired";
+  }
+
   return "pending";
 }
 
@@ -143,13 +152,57 @@ export async function POST(request: Request) {
       String(status_code)
     );
 
-    // 6. Atomic State Transition (Bug Fix #2)
-    // Jangan proses jika status lokal sudah success (kecuali jika ada update metadata)
-    if (sub.status === "success" && mappedStatus !== "success") {
+
+    // ------------------------------------------------------------
+    // 6. Validasi state subscription
+    // ------------------------------------------------------------
+
+    // Subscription terminal tidak boleh hidup kembali.
+    // Contoh:
+    // cancelled -> success = DENIED
+    // failed    -> success = DENIED
+    // expired   -> success = DENIED
+    if (
+      sub.status === "cancelled" ||
+      sub.status === "failed" ||
+      sub.status === "expired"
+    ) {
       console.log(
-        `[Midtrans Webhook] Order ${order_id} sudah success, abaikan status ${mappedStatus}.`
+        `[Midtrans Webhook] Order ${order_id} memiliki status terminal ${sub.status}. Abaikan webhook.`
       );
-      return NextResponse.json({ status: "ok", message: "Already success" });
+
+      return NextResponse.json({
+        status: "ok",
+        message: "Terminal subscription ignored",
+      });
+    }
+
+    // Subscription sudah berhasil sebelumnya.
+    // Webhook duplicate dianggap sukses agar Midtrans tidak retry.
+    if (sub.status === "success") {
+      console.log(
+        `[Midtrans Webhook] Order ${order_id} sudah success. Abaikan duplicate webhook.`
+      );
+
+      return NextResponse.json({
+        status: "ok",
+        message: "Already success",
+      });
+    }
+
+    // ------------------------------------------------------------
+    // 7. Hanya subscription pending yang boleh diproses
+    // ------------------------------------------------------------
+
+    if (sub.status !== "pending") {
+      console.log(
+        `[Midtrans Webhook] Order ${order_id} memiliki status tidak dikenali: ${sub.status}.`
+      );
+
+      return NextResponse.json({
+        status: "ok",
+        message: "Subscription state ignored",
+      });
     }
 
     if (mappedStatus === "success") {
@@ -174,9 +227,9 @@ export async function POST(request: Request) {
           expires_at: planExpiresAt,
         })
         .eq("id", sub.id)
-        .neq("status", "success") // Kunci idempotency di level database
+        .eq("status", "pending")
         .select()
-        .single();
+        .maybeSingle();
 
       if (updateSubError) {
         console.error(
