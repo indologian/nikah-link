@@ -9,7 +9,6 @@ import {
   Share2, Camera, Compass
 } from "lucide-react";
 import Image from "next/image";
-import { createClient } from "@/lib/supabase/client";
 
 interface Props {
   invitation: any;
@@ -108,7 +107,7 @@ export default function MinimalistTheme({
   const handleOpenInvitation = () => {
     setIsOpen(true);
     if (audioRef.current) {
-      audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+      audioRef.current.play().then(() => setIsPlaying(true)).catch(() => { });
     }
   };
 
@@ -135,57 +134,79 @@ export default function MinimalistTheme({
   // Submit Wish
   const handleSendWish = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!wishText.trim()) return;
 
     setSendingWish(true);
-    const supabase = createClient();
-    const { data } = await supabase
-      .from("wishes")
-      .insert({
-        invitation_id: invitation.id,
-        guest_name: wishName.trim() || "Anonim",
-        message: wishText.trim(),
-        is_approved: true,
-      })
-      .select()
-      .single();
 
-    if (data) {
-      setWishes([data, ...wishes]);
+    try {
+      const response = await fetch("/api/public/wishes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          invitationId: invitation.id,
+          guestName: wishName.trim() || "Anonim",
+          message: wishText.trim(),
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        alert(result.error || "Gagal mengirim ucapan.");
+        return;
+      }
+
+      if (result.data) {
+        setWishes((current) => [result.data, ...current]);
+      }
+
       setWishText("");
+    } catch (error) {
+      console.error("Wish submit error:", error);
+      alert("Gagal mengirim ucapan. Silakan coba lagi.");
+    } finally {
+      setSendingWish(false);
     }
-    setSendingWish(false);
   };
 
   // Submit RSVP
   const handleRsvpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     setSubmittingRsvp(true);
-    const supabase = createClient();
 
-    if (isFreePlan) {
-      const { count } = await supabase
-        .from("guests")
-        .select("*", { count: "exact", head: true })
-        .eq("invitation_id", invitation.id);
+    try {
+      const response = await fetch("/api/public/rsvp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          invitationId: invitation.id,
+          name: wishName.trim() || guestName || "Tamu Undangan",
+          status: rsvpStatus,
+          guestCount: rsvpCount,
+          notes: rsvpNotes,
+        }),
+      });
 
-      if (count !== null && count >= 50) {
-        alert("Mohon maaf, kuota tamu undangan telah mencapai batas maksimal (50 tamu).");
-        setSubmittingRsvp(false);
+      const result = await response.json();
+
+      if (!response.ok) {
+        alert(result.error || "Gagal mengirim RSVP.");
         return;
       }
+
+      setRsvpSuccess(true);
+    } catch (error) {
+      console.error("RSVP submit error:", error);
+      alert("Gagal mengirim RSVP. Silakan coba lagi.");
+    } finally {
+      setSubmittingRsvp(false);
     }
-
-    await supabase.from("guests").insert({
-      invitation_id: invitation.id,
-      name: wishName.trim() || guestName || "Tamu Undangan",
-      rsvp_status: rsvpStatus,
-      guest_count: rsvpCount,
-      notes: rsvpNotes,
-    });
-
-    setSubmittingRsvp(false);
-    setRsvpSuccess(true);
   };
 
   if (isExpired) {
@@ -209,7 +230,7 @@ export default function MinimalistTheme({
 
   return (
     <div className="min-h-screen bg-[#0d0914] text-white selection:bg-rose-gold-500 selection:text-white font-sans relative overflow-x-hidden">
-      
+
       {/* Free Plan Floating Banner */}
       {isFreePlan && (
         <div className="fixed top-0 left-0 right-0 z-[9999] bg-rose-gold-500/90 backdrop-blur-md border-b border-rose-gold-400/30 px-4 py-2 pt-[max(8px,env(safe-area-inset-top))] flex items-center justify-center gap-2 text-xs sm:text-sm text-white font-medium shadow-lg">
@@ -225,7 +246,7 @@ export default function MinimalistTheme({
 
       {/* Floating Audio Button */}
       {musicUrl && (
-        <button 
+        <button
           onClick={toggleAudio}
           className="fixed bottom-6 right-6 w-12 h-12 bg-white rounded-full flex items-center justify-center z-50 shadow-lg text-slate-700 transition-transform hover:scale-110 border border-slate-100"
         >
@@ -486,22 +507,20 @@ export default function MinimalistTheme({
                       <button
                         type="button"
                         onClick={() => setRsvpStatus("hadir")}
-                        className={`py-2.5 rounded-xl text-xs font-semibold border transition-all ${
-                          rsvpStatus === "hadir"
-                            ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/40"
-                            : "bg-white/5 text-white/50 border-white/10"
-                        }`}
+                        className={`py-2.5 rounded-xl text-xs font-semibold border transition-all ${rsvpStatus === "hadir"
+                          ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/40"
+                          : "bg-white/5 text-white/50 border-white/10"
+                          }`}
                       >
                         ✓ Saya Akan Hadir
                       </button>
                       <button
                         type="button"
                         onClick={() => setRsvpStatus("tidak_hadir")}
-                        className={`py-2.5 rounded-xl text-xs font-semibold border transition-all ${
-                          rsvpStatus === "tidak_hadir"
-                            ? "bg-rose-500/20 text-rose-400 border-rose-500/40"
-                            : "bg-white/5 text-white/50 border-white/10"
-                        }`}
+                        className={`py-2.5 rounded-xl text-xs font-semibold border transition-all ${rsvpStatus === "tidak_hadir"
+                          ? "bg-rose-500/20 text-rose-400 border-rose-500/40"
+                          : "bg-white/5 text-white/50 border-white/10"
+                          }`}
                       >
                         ✕ Maaf, Belum Bisa Hadir
                       </button>

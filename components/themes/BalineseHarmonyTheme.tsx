@@ -7,7 +7,6 @@ import {
   Gift, Copy, CheckCircle2
 } from "lucide-react";
 import Image from "next/image";
-import { createClient } from "@/lib/supabase/client";
 
 // Import Google Fonts
 import { Cormorant_Garamond, Playfair_Display } from "next/font/google";
@@ -60,7 +59,7 @@ export default function BalineseHarmonyTheme({
   const handleOpenInvitation = () => {
     setIsOpen(true);
     if (audioRef.current) {
-      audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+      audioRef.current.play().then(() => setIsPlaying(true)).catch(() => { });
     }
   };
 
@@ -83,46 +82,78 @@ export default function BalineseHarmonyTheme({
 
   const handleSendWish = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!wishText.trim()) return;
 
     setSendingWish(true);
-    const supabase = createClient();
-    const { data } = await supabase
-      .from("wishes")
-      .insert({
-        invitation_id: invitation.id,
-        guest_name: wishName.trim() || "Anonim",
-        message: wishText.trim(),
-        is_approved: true,
-      })
-      .select()
-      .single();
 
-    if (data) {
-      setWishes([data, ...wishes]);
+    try {
+      const response = await fetch("/api/public/wishes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          invitationId: invitation.id,
+          guestName: wishName.trim() || "Anonim",
+          message: wishText.trim(),
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        alert(result.error || "Gagal mengirim ucapan.");
+        return;
+      }
+
+      if (result.data) {
+        setWishes((current) => [result.data, ...current]);
+      }
+
       setWishText("");
+    } catch (error) {
+      console.error("Wish submit error:", error);
+      alert("Gagal mengirim ucapan. Silakan coba lagi.");
+    } finally {
+      setSendingWish(false);
     }
-    setSendingWish(false);
   };
 
   const handleRsvpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     setSubmittingRsvp(true);
-    const supabase = createClient();
-    const { error } = await supabase
-      .from("guests")
-      .upsert({
-        invitation_id: invitation.id,
-        name: wishName.trim() || guestName || "Anonim",
-        status: rsvpStatus,
-        headcount: rsvpStatus === "hadir" ? rsvpCount : 0,
-        notes: rsvpNotes.trim(),
+
+    try {
+      const response = await fetch("/api/public/rsvp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          invitationId: invitation.id,
+          name: wishName.trim() || guestName || "Anonim",
+          status: rsvpStatus,
+          guestCount: rsvpStatus === "hadir" ? rsvpCount : 0,
+          notes: rsvpNotes.trim(),
+        }),
       });
-    
-    if (!error) {
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        alert(result.error || "Gagal mengirim RSVP.");
+        return;
+      }
+
       setRsvpSuccess(true);
+    } catch (error) {
+      console.error("RSVP submit error:", error);
+      alert("Gagal mengirim RSVP. Silakan coba lagi.");
+    } finally {
+      setSubmittingRsvp(false);
     }
-    setSubmittingRsvp(false);
   };
 
   // Safe fallbacks for data
@@ -141,12 +172,12 @@ export default function BalineseHarmonyTheme({
   }
   const themeColors = invitation.theme_colors || {
     background: "#F4F4F0",
-    text: "#4B4642",       
-    primary: "#D4AF37",    
-    accent: "#8B7355"      
+    text: "#4B4642",
+    primary: "#D4AF37",
+    accent: "#8B7355"
   };
 
-  const musicUrl = invitation.music_url || "https://cdn.pixabay.com/download/audio/2022/10/26/audio_1ab7ec6a0f.mp3"; 
+  const musicUrl = invitation.music_url || "https://cdn.pixabay.com/download/audio/2022/10/26/audio_1ab7ec6a0f.mp3";
 
   // Formatter helpers
   const formatDate = (dateStr: string) => {
@@ -155,7 +186,7 @@ export default function BalineseHarmonyTheme({
       weekday: "long", day: "numeric", month: "long", year: "numeric"
     });
   };
-  
+
   const formatTime = (dateStr: string) => {
     if (!dateStr) return "";
     return new Date(dateStr).toLocaleTimeString("id-ID", {
@@ -174,7 +205,7 @@ export default function BalineseHarmonyTheme({
   };
 
   return (
-    <div 
+    <div
       className={`min-h-screen relative overflow-x-hidden ${cormorant.className}`}
       style={{ backgroundColor: themeColors.background, color: themeColors.text }}
     >
@@ -183,7 +214,7 @@ export default function BalineseHarmonyTheme({
       )}
 
       {/* Decorative Top Pattern (Simulated Balinese edge) */}
-      <div 
+      <div
         className="fixed top-0 left-0 w-full h-4 z-40 bg-[url('/img/balinese-border.png')] bg-repeat-x opacity-20"
         style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0V0zm10 17L3 10l7-7 7 7-7 7z' fill='%23D4AF37' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E")` }}
       ></div>
@@ -191,14 +222,14 @@ export default function BalineseHarmonyTheme({
       {/* COVER / WELCOME SCREEN */}
       <AnimatePresence>
         {!isOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 1.05 }}
             transition={{ duration: 1, ease: "easeInOut" }}
             className="fixed inset-0 z-50 flex flex-col items-center justify-center p-6 overflow-hidden"
             style={{ backgroundColor: themeColors.background }}
           >
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.2 }}
@@ -206,23 +237,23 @@ export default function BalineseHarmonyTheme({
               style={{ borderColor: themeColors.primary }}
             >
               <h3 className="text-sm tracking-[0.3em] uppercase text-gray-500 mb-8 mt-12">Pawiwahan</h3>
-              
+
               <div className="w-40 h-40 rounded-full overflow-hidden mb-8 relative border-4" style={{ borderColor: themeColors.primary }}>
                 <Image src={heroPhoto} alt="Cover" fill className="object-cover" priority />
               </div>
-              
+
               <h1 className={`text-4xl md:text-5xl font-bold text-center mb-6 ${playfair.className}`} style={{ color: themeColors.accent }}>
-                {invitation.bride_nickname} <br/><span className="text-2xl font-normal text-gray-400">&</span><br/> {invitation.groom_nickname}
+                {invitation.bride_nickname} <br /><span className="text-2xl font-normal text-gray-400">&</span><br /> {invitation.groom_nickname}
               </h1>
-              
+
               <div className="w-16 h-px bg-gray-300 my-6"></div>
-              
+
               <div className="py-2">
                 <p className="text-xs uppercase tracking-widest text-gray-500 mb-2">Pecalang & Tamu Kehormatan</p>
                 <p className="text-xl font-medium" style={{ color: themeColors.text }}>{guestName}</p>
               </div>
 
-              <button 
+              <button
                 onClick={handleOpenInvitation}
                 className="mt-8 px-8 py-3 rounded-full text-sm uppercase tracking-widest transition-all shadow-md text-white font-medium hover:opacity-90"
                 style={{ backgroundColor: themeColors.accent }}
@@ -237,10 +268,10 @@ export default function BalineseHarmonyTheme({
       {/* MAIN CONTENT */}
       {isOpen && (
         <div className="relative z-10">
-          
+
           {/* Floating Audio Button */}
           {musicUrl && (
-            <button 
+            <button
               onClick={toggleAudio}
               className="fixed bottom-6 right-6 w-12 h-12 flex items-center justify-center z-50 transition-transform hover:scale-105 shadow-lg rounded-full text-white"
               style={{ backgroundColor: themeColors.accent }}
@@ -253,13 +284,13 @@ export default function BalineseHarmonyTheme({
           <section className="relative min-h-[100svh] flex flex-col items-center justify-center p-6 text-center">
             {/* Background Texture image */}
             <div className="absolute inset-0 z-0 opacity-10">
-               <Image src="https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?q=80&w=2000&auto=format&fit=crop" alt="Bali Pattern" fill className="object-cover" />
+              <Image src="https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?q=80&w=2000&auto=format&fit=crop" alt="Bali Pattern" fill className="object-cover" />
             </div>
 
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={scaleUp} className="relative z-10 w-full max-w-lg bg-white/80 backdrop-blur-sm p-10 shadow-2xl rounded-tr-[100px] rounded-bl-[100px] border" style={{ borderColor: `${themeColors.primary}50` }}>
               <div className="w-16 h-16 mx-auto mb-6 opacity-60">
-                 {/* Om Swastiastu SVG Icon Placeholder */}
-                 <svg viewBox="0 0 24 24" fill="none" stroke={themeColors.accent} strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                {/* Om Swastiastu SVG Icon Placeholder */}
+                <svg viewBox="0 0 24 24" fill="none" stroke={themeColors.accent} strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>
               </div>
               <p className="tracking-[0.3em] uppercase text-sm mb-6 font-medium" style={{ color: themeColors.accent }}>Om Swastyastu</p>
               <h1 className={`text-5xl md:text-6xl font-bold mb-6 leading-tight ${playfair.className}`}>
@@ -284,41 +315,41 @@ export default function BalineseHarmonyTheme({
 
           {/* PROFILE SECTION */}
           <section className="py-24 px-6 relative">
-             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="max-w-4xl mx-auto">
-                <div className="text-center mb-16">
-                  <h2 className={`text-4xl font-bold mb-4 ${playfair.className}`} style={{ color: themeColors.accent }}>Sang Pengantin</h2>
-                  <div className="w-24 h-1 mx-auto" style={{ backgroundColor: themeColors.primary }}></div>
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="max-w-4xl mx-auto">
+              <div className="text-center mb-16">
+                <h2 className={`text-4xl font-bold mb-4 ${playfair.className}`} style={{ color: themeColors.accent }}>Sang Pengantin</h2>
+                <div className="w-24 h-1 mx-auto" style={{ backgroundColor: themeColors.primary }}></div>
+              </div>
+
+              <div className="flex flex-col md:flex-row gap-12 items-center">
+
+                {/* Bride */}
+                <div className="flex-1 text-center md:text-right">
+                  <div className="w-32 h-32 md:hidden mx-auto rounded-full overflow-hidden mb-6 border-4 shadow-lg" style={{ borderColor: themeColors.primary }}>
+                    <Image src={heroPhoto} alt="Bride" fill className="object-cover" />
+                  </div>
+                  <h3 className={`text-3xl font-bold mb-4 ${playfair.className}`}>{invitation.bride_name}</h3>
+                  <p className="text-sm text-gray-500 mb-2 font-sans uppercase tracking-widest">Putri dari</p>
+                  <p className="text-lg font-medium">{invitation.bride_parents}</p>
                 </div>
-                
-                <div className="flex flex-col md:flex-row gap-12 items-center">
-                  
-                  {/* Bride */}
-                  <div className="flex-1 text-center md:text-right">
-                    <div className="w-32 h-32 md:hidden mx-auto rounded-full overflow-hidden mb-6 border-4 shadow-lg" style={{ borderColor: themeColors.primary }}>
-                       <Image src={heroPhoto} alt="Bride" fill className="object-cover" />
-                    </div>
-                    <h3 className={`text-3xl font-bold mb-4 ${playfair.className}`}>{invitation.bride_name}</h3>
-                    <p className="text-sm text-gray-500 mb-2 font-sans uppercase tracking-widest">Putri dari</p>
-                    <p className="text-lg font-medium">{invitation.bride_parents}</p>
-                  </div>
 
-                  {/* Center Ornament */}
-                  <div className="hidden md:flex flex-col items-center justify-center w-48 h-64 rounded-full overflow-hidden border-8 shadow-2xl relative" style={{ borderColor: themeColors.primary }}>
-                     <Image src={heroPhoto} alt="Couple" fill className="object-cover" />
-                  </div>
-
-                  {/* Groom */}
-                  <div className="flex-1 text-center md:text-left">
-                    <div className="w-32 h-32 md:hidden mx-auto rounded-full overflow-hidden mb-6 border-4 shadow-lg" style={{ borderColor: themeColors.primary }}>
-                       <Image src={heroPhoto} alt="Groom" fill className="object-cover" />
-                    </div>
-                    <h3 className={`text-3xl font-bold mb-4 ${playfair.className}`}>{invitation.groom_name}</h3>
-                    <p className="text-sm text-gray-500 mb-2 font-sans uppercase tracking-widest">Putra dari</p>
-                    <p className="text-lg font-medium">{invitation.groom_parents}</p>
-                  </div>
-
+                {/* Center Ornament */}
+                <div className="hidden md:flex flex-col items-center justify-center w-48 h-64 rounded-full overflow-hidden border-8 shadow-2xl relative" style={{ borderColor: themeColors.primary }}>
+                  <Image src={heroPhoto} alt="Couple" fill className="object-cover" />
                 </div>
-             </motion.div>
+
+                {/* Groom */}
+                <div className="flex-1 text-center md:text-left">
+                  <div className="w-32 h-32 md:hidden mx-auto rounded-full overflow-hidden mb-6 border-4 shadow-lg" style={{ borderColor: themeColors.primary }}>
+                    <Image src={heroPhoto} alt="Groom" fill className="object-cover" />
+                  </div>
+                  <h3 className={`text-3xl font-bold mb-4 ${playfair.className}`}>{invitation.groom_name}</h3>
+                  <p className="text-sm text-gray-500 mb-2 font-sans uppercase tracking-widest">Putra dari</p>
+                  <p className="text-lg font-medium">{invitation.groom_parents}</p>
+                </div>
+
+              </div>
+            </motion.div>
           </section>
 
           {/* EVENT DETAILS */}
@@ -333,7 +364,7 @@ export default function BalineseHarmonyTheme({
                 {/* Akad / Pawiwahan */}
                 <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="bg-white p-10 rounded-2xl shadow-xl border-t-8" style={{ borderColor: themeColors.primary }}>
                   <h3 className={`text-3xl font-bold mb-6 ${playfair.className}`}>Pawiwahan</h3>
-                  
+
                   <div className="space-y-4 font-sans mb-8">
                     <div className="text-lg font-medium text-gray-800">{formatDate(invitation.akad_date)}</div>
                     <div className="text-md text-gray-600">{formatTime(invitation.akad_date)}</div>
@@ -342,7 +373,7 @@ export default function BalineseHarmonyTheme({
                       <div className="text-sm text-gray-500">{invitation.akad_address}</div>
                     </div>
                   </div>
-                  
+
                   {invitation.akad_maps_url && (
                     <a href={invitation.akad_maps_url} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-white font-medium text-sm transition-opacity hover:opacity-90 w-full" style={{ backgroundColor: themeColors.accent }}>
                       <MapPin size={16} /> Lihat Peta Lokasi
@@ -353,7 +384,7 @@ export default function BalineseHarmonyTheme({
                 {/* Reception / Resepsi */}
                 <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="bg-white p-10 rounded-2xl shadow-xl border-t-8" style={{ borderColor: themeColors.primary }}>
                   <h3 className={`text-3xl font-bold mb-6 ${playfair.className}`}>Resepsi</h3>
-                  
+
                   <div className="space-y-4 font-sans mb-8">
                     <div className="text-lg font-medium text-gray-800">{formatDate(invitation.reception_date || invitation.akad_date)}</div>
                     <div className="text-md text-gray-600">{formatTime(invitation.reception_date || invitation.akad_date)}</div>
@@ -362,7 +393,7 @@ export default function BalineseHarmonyTheme({
                       <div className="text-sm text-gray-500">{invitation.reception_address || invitation.akad_address}</div>
                     </div>
                   </div>
-                  
+
                   {(invitation.reception_maps_url || invitation.akad_maps_url) && (
                     <a href={invitation.reception_maps_url || invitation.akad_maps_url} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-white font-medium text-sm transition-opacity hover:opacity-90 w-full" style={{ backgroundColor: themeColors.accent }}>
                       <MapPin size={16} /> Lihat Peta Lokasi
@@ -380,21 +411,21 @@ export default function BalineseHarmonyTheme({
                 <h2 className={`text-4xl font-bold mb-4 ${playfair.className}`} style={{ color: themeColors.accent }}>Galeri Memori</h2>
                 <div className="w-24 h-1 mx-auto" style={{ backgroundColor: themeColors.primary }}></div>
               </motion.div>
-              
+
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {galleryPhotos.map((photo: string, idx: number) => (
-                  <motion.div 
-                    key={idx} 
+                  <motion.div
+                    key={idx}
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: (idx % 4) * 0.1 }}
                     className={`relative w-full overflow-hidden rounded-xl shadow-md ${idx === 0 || idx === 3 ? "col-span-2 row-span-2 aspect-square" : "aspect-[3/4]"}`}
                   >
-                    <Image 
-                      src={photo} 
-                      alt={`Gallery ${idx+1}`} 
-                      fill 
+                    <Image
+                      src={photo}
+                      alt={`Gallery ${idx + 1}`}
+                      fill
                       className="object-cover hover:scale-110 transition-transform duration-700"
                     />
                   </motion.div>
@@ -413,11 +444,11 @@ export default function BalineseHarmonyTheme({
               </motion.div>
 
               <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 font-sans border" style={{ borderColor: `${themeColors.primary}30` }}>
-                
+
                 {/* RSVP Form */}
                 <div className="mb-16 border-b border-gray-100 pb-16">
                   <h3 className={`text-2xl font-bold mb-8 ${playfair.className}`} style={{ color: themeColors.accent }}>Konfirmasi Kehadiran</h3>
-                  
+
                   {rsvpSuccess ? (
                     <div className="p-6 rounded-xl text-center bg-green-50 text-green-800 border border-green-200">
                       <CheckCircle2 size={32} className="mx-auto mb-2 text-green-600" />
@@ -427,8 +458,8 @@ export default function BalineseHarmonyTheme({
                     <form onSubmit={handleRsvpSubmit} className="space-y-6">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
-                        <input 
-                          type="text" 
+                        <input
+                          type="text"
                           value={wishName}
                           onChange={(e) => setWishName(e.target.value)}
                           required
@@ -436,11 +467,11 @@ export default function BalineseHarmonyTheme({
                           style={{ "--tw-ring-color": themeColors.primary } as React.CSSProperties}
                         />
                       </div>
-                      
+
                       <div className="grid grid-cols-2 gap-4">
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-2">Kehadiran</label>
-                          <select 
+                          <select
                             value={rsvpStatus}
                             onChange={(e) => setRsvpStatus(e.target.value as any)}
                             className="w-full p-4 rounded-xl border border-gray-200 outline-none focus:ring-2 bg-gray-50"
@@ -453,7 +484,7 @@ export default function BalineseHarmonyTheme({
 
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-2">Jumlah Tamu</label>
-                          <select 
+                          <select
                             value={rsvpCount}
                             onChange={(e) => setRsvpCount(Number(e.target.value))}
                             disabled={rsvpStatus === "tidak_hadir"}
@@ -466,8 +497,8 @@ export default function BalineseHarmonyTheme({
                         </div>
                       </div>
 
-                      <button 
-                        type="submit" 
+                      <button
+                        type="submit"
                         disabled={submittingRsvp}
                         className="w-full py-4 rounded-xl text-white font-medium hover:opacity-90 transition-opacity mt-4 shadow-lg"
                         style={{ backgroundColor: themeColors.accent }}
@@ -481,9 +512,9 @@ export default function BalineseHarmonyTheme({
                 {/* Wishes / Guestbook */}
                 <div>
                   <h3 className={`text-2xl font-bold mb-8 ${playfair.className}`} style={{ color: themeColors.accent }}>Buku Tamu</h3>
-                  
+
                   <form onSubmit={handleSendWish} className="mb-10 space-y-4">
-                    <textarea 
+                    <textarea
                       value={wishText}
                       onChange={(e) => setWishText(e.target.value)}
                       required
@@ -492,8 +523,8 @@ export default function BalineseHarmonyTheme({
                       style={{ "--tw-ring-color": themeColors.primary } as React.CSSProperties}
                       placeholder="Tuliskan doa dan harapan untuk pengantin..."
                     />
-                    <button 
-                      type="submit" 
+                    <button
+                      type="submit"
                       disabled={sendingWish}
                       className="px-8 py-3 rounded-full text-white font-medium text-sm transition-colors shadow-md"
                       style={{ backgroundColor: themeColors.accent }}
@@ -527,20 +558,20 @@ export default function BalineseHarmonyTheme({
                 <Gift size={40} className="mx-auto mb-6" style={{ color: themeColors.accent }} />
                 <h2 className={`text-3xl font-bold mb-4 ${playfair.className}`} style={{ color: themeColors.accent }}>Tanda Kasih</h2>
                 <p className="text-gray-600 font-sans mb-10">Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Dan jika memberi adalah ungkapan tanda kasih Anda, Anda dapat memberi kado secara less cash.</p>
-                
+
                 <div className="space-y-6 font-sans">
                   {giftAccounts.map((account: any) => (
                     <div key={account.id} className="bg-gray-50 p-6 rounded-2xl border border-gray-200">
                       <div className="text-sm font-bold text-gray-500 mb-1">{account.bank_name}</div>
                       <div className="text-2xl font-bold tracking-widest text-gray-800 mb-1">{account.account_number}</div>
                       <div className="text-md text-gray-600 mb-4">a.n. {account.account_name}</div>
-                      
-                      <button 
+
+                      <button
                         onClick={() => handleCopy(account.account_number, account.id)}
                         className="inline-flex items-center gap-2 px-6 py-2 rounded-full text-sm font-medium transition-colors text-white"
                         style={{ backgroundColor: copiedBank === account.id ? "#10B981" : themeColors.accent }}
                       >
-                        {copiedBank === account.id ? <><CheckCircle2 size={16}/> Tersalin</> : <><Copy size={16}/> Salin No. Rekening</>}
+                        {copiedBank === account.id ? <><CheckCircle2 size={16} /> Tersalin</> : <><Copy size={16} /> Salin No. Rekening</>}
                       </button>
                     </div>
                   ))}

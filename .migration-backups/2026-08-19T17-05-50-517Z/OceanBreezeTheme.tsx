@@ -7,6 +7,7 @@ import {
   Gift, Copy, CheckCircle2, Music
 } from "lucide-react";
 import Image from "next/image";
+import { createClient } from "@/lib/supabase/client";
 import { format, parseISO } from "date-fns";
 import { id } from "date-fns/locale";
 
@@ -82,80 +83,46 @@ export default function OceanBreezeTheme({
   };
 
   const handleSendWish = async (e: React.FormEvent) => {
-  e.preventDefault();
+    e.preventDefault();
+    if (!wishText.trim()) return;
 
-  if (!wishText.trim()) return;
-
-  setSendingWish(true);
-
-  try {
-    const response = await fetch("/api/public/wishes", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        invitationId: invitation.id,
-        guestName: wishName.trim() || "Anonim",
+    setSendingWish(true);
+    const supabase = createClient();
+    const { data } = await supabase
+      .from("wishes")
+      .insert({
+        invitation_id: invitation.id,
+        guest_name: wishName.trim() || "Anonim",
         message: wishText.trim(),
-      }),
-    });
+        is_approved: true,
+      })
+      .select()
+      .single();
 
-    const result = await response.json();
-
-    if (!response.ok) {
-      alert(result.error || "Gagal mengirim ucapan.");
-      return;
+    if (data) {
+      setWishes([data, ...wishes]);
+      setWishText("");
     }
-
-    if (result.data) {
-      setWishes((current) => [result.data, ...current]);
-    }
-
-    setWishText("");
-  } catch (error) {
-    console.error("Wish submit error:", error);
-    alert("Gagal mengirim ucapan. Silakan coba lagi.");
-  } finally {
     setSendingWish(false);
-  }
-};;
+  };
 
   const handleRsvpSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-
-  setSubmittingRsvp(true);
-
-  try {
-    const response = await fetch("/api/public/rsvp", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        invitationId: invitation.id,
-        name: wishName.trim() || guestName || "Tamu Undangan",
-        status: rsvpStatus,
-        guestCount: rsvpStatus === "hadir" ? rsvpCount : 0,
-        notes: rsvpNotes.trim(),
-      }),
+    e.preventDefault();
+    setSubmittingRsvp(true);
+    const supabase = createClient();
+    const { error } = await supabase.from("guests").insert({
+      invitation_id: invitation.id,
+      name: wishName || guestName,
+      rsvp_status: rsvpStatus,
+      session: "all",
+      notes: rsvpNotes,
+      phone: "",
     });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-      alert(result.error || "Gagal mengirim RSVP.");
-      return;
+    if (!error) {
+      setRsvpSuccess(true);
     }
-
-    setRsvpSuccess(true);
-  } catch (error) {
-    console.error("RSVP submit error:", error);
-    alert("Gagal mengirim RSVP. Silakan coba lagi.");
-  } finally {
     setSubmittingRsvp(false);
-  }
-};;
+  };
 
   const bgGradient = "bg-gradient-to-br from-[#0B2545] to-[#134074]";
   const goldText = "text-[#DDA15E]";
