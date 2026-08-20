@@ -64,6 +64,12 @@ export default async function PublicInvitationPage({ params, searchParams }: Pro
       show_gift: true,
       show_gallery: true,
       show_wishes: true,
+      theme_colors: {
+        primary: "#0F172A",
+        secondary: "#FFFFFF",
+        accent: "#000000",
+        background: "#FFFFFF",
+      },
       custom_data: {},
     };
 
@@ -99,10 +105,15 @@ export default async function PublicInvitationPage({ params, searchParams }: Pro
   if (themeConfig.slug === "fallback") notFound();
 
   const ThemeUI = themeConfig.component;
+  const themeColors = invitation.themes?.colors || null;
+  const renderInvitation = {
+    ...invitation,
+    theme_colors: themeColors || invitation.theme_colors || undefined,
+  };
 
   return (
     <ThemeUI
-      invitation={invitation}
+      invitation={renderInvitation}
       guestName={guestNameFromUrl || "Tamu Undangan"}
       initialWishes={wishes || []}
       giftAccounts={gifts || []}
