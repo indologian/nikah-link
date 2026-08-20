@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
 import { ThemeRenderer } from "@/components/themes/ThemeRenderer";
+import { getThemeConfig } from "@/lib/themes/registry";
 import { resolveRuntimeTheme } from "@/lib/themes/runtime";
 import { isValidThemeRenderer } from "@/lib/themes/config";
 import { buildThemePreviewCustomData, buildThemePreviewInvitation } from "@/lib/themes/preview";
+import { getAdminPreviewTheme } from "@/services/themes/theme.query";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -13,42 +14,14 @@ interface Props {
 export default async function AdminThemePreviewPage({ params, searchParams }: Props) {
   const { slug } = await params;
   const { version } = await searchParams;
-  const normalizedSlug = slug.trim().toLowerCase();
-  const supabase = await createClient();
+  const result = await getAdminPreviewTheme(slug, version || null);
+  if (!result) notFound();
 
-  const { data: theme } = await supabase
-    .from("themes")
-    .select("id, name, slug, component_key, colors, is_active")
-    .eq("slug", normalizedSlug)
-    .single();
-  if (!theme) notFound();
-
-  let themeVersionQuery = supabase
-    .from("theme_versions")
-    .select("*")
-    .eq("theme_id", theme.id);
-
-  if (version) {
-    themeVersionQuery = themeVersionQuery.eq("id", version);
-  } else {
-    themeVersionQuery = themeVersionQuery
-      .eq("is_published", true)
-      .eq("lifecycle_status", "published")
-      .order("version", { ascending: false })
-      .limit(1);
-  }
-
-  const { data: themeVersion } = await themeVersionQuery.maybeSingle();
-  if (!themeVersion) notFound();
-
-  // Historical/archived versions remain previewable when explicitly requested.
-  // Without an explicit version, only the current published version of an active
-  // catalog theme is a valid default preview.
-  if (!theme.is_active && !version) notFound();
-
+  const { theme, version: themeVersion } = result;
   const runtimeTheme = resolveRuntimeTheme(theme, themeVersion);
   if (!isValidThemeRenderer(runtimeTheme.componentKey)) notFound();
 
+  const registeredTheme = getThemeConfig(runtimeTheme.componentKey);
   const customData = buildThemePreviewCustomData(runtimeTheme.fields);
   const invitation = {
     ...buildThemePreviewInvitation(runtimeTheme.colors, customData, "admin-theme-preview"),
@@ -62,7 +35,7 @@ export default async function AdminThemePreviewPage({ params, searchParams }: Pr
         <a href="/admin/themes" className="text-xs font-medium underline underline-offset-2">Kembali</a>
       </div>
       <ThemeRenderer
-        component={runtimeTheme.component}
+        component={registeredTheme.component}
         invitation={invitation}
         themeColors={runtimeTheme.colors}
         guestName="Tamu Preview"
