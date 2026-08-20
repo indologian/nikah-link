@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { ThemeRenderer } from "@/components/themes/ThemeRenderer";
-import { getThemeConfig } from "@/lib/themes/registry";
+import { getThemeConfig } from "@/components/themes/registry";
 import { resolveRuntimeTheme } from "@/lib/themes/runtime";
 import { isValidThemeRenderer } from "@/lib/themes/config";
 import { getPublishedInvitationByUsername } from "@/services/themes/theme.query";
