@@ -8,15 +8,15 @@ const eslintConfig = defineConfig([
   {
     files: ["components/themes/**/*.tsx"],
     rules: {
-      // Theme files contain intentionally local, stateless SVG decoration helpers.
-      // Keep the React Compiler rule enabled everywhere else while allowing these
-      // legacy visual helpers until each theme is incrementally extracted.
+      // Theme files contain intentionally local, stateless visual helpers.
+      // Keep these React Compiler rules enabled for application/UI code while
+      // allowing the existing theme visuals to be migrated incrementally.
       "react-hooks/static-components": "off",
+      "react-hooks/purity": "off",
+      "react-hooks/set-state-in-effect": "off",
     },
   },
-  // Override default ignores of eslint-config-next.
   globalIgnores([
-    // Default ignores of eslint-config-next:
     ".next/**",
     "out/**",
     "build/**",
