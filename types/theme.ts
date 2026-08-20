@@ -99,8 +99,5 @@ export interface RuntimeTheme extends ThemeDefinition {
   versionId: string | null;
   version: number | null;
   config: unknown;
-  fields_schema?: unknown;
-  colors?: ThemeColors;
-  config: unknown;
   assets: unknown;
 }
