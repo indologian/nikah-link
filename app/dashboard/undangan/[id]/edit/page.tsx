@@ -448,7 +448,6 @@ export default function EditInvitationPage() {
 
           theme_id: themeId,
           theme_version_id: themeVersionId,
-          theme_version_id: themeVersionId,
           music_url: formData.music_url || null,
           cover_image_url: formData.cover_image_url || null,
           custom_message: formData.custom_message,
