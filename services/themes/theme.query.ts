@@ -39,7 +39,6 @@ export async function getPublishedThemeVersion(themeId: string, versionId?: stri
 export async function getThemeEditorData(themeId: string) {
   const [theme, versions] = await Promise.all([getThemeById(themeId), getThemeVersions(themeId)]);
   if (!theme) return null;
-
   return {
     theme,
     draft: versions.find((version) => version.lifecycle_status === "draft" && !version.is_published) ?? null,
@@ -72,4 +71,31 @@ export async function getAdminPreviewTheme(slug: string, versionId?: string | nu
   if (version.theme_id !== theme.id || version.component_key !== theme.component_key) return null;
   if (!theme.is_active && !versionId) return null;
   return { theme, version };
+}
+
+export async function getPublishedInvitationByUsername(username: string) {
+  const supabase = await createClient();
+  const { data: invitation, error: invitationError } = await supabase
+    .from("invitations")
+    .select("*")
+    .eq("username", username)
+    .eq("is_published", true)
+    .single();
+  if (invitationError || !invitation) return null;
+
+  const [{ data: wishes }, { data: gifts }, { data: profile }, { data: theme }, { data: themeVersion }] = await Promise.all([
+    supabase.from("wishes").select("*").eq("invitation_id", invitation.id).order("created_at", { ascending: false }),
+    supabase.from("gift_accounts").select("*").eq("invitation_id", invitation.id),
+    supabase.from("profiles").select("plan").eq("user_id", invitation.user_id).single(),
+    supabase.from("themes").select(THEME_COLUMNS).eq("id", invitation.theme_id).maybeSingle(),
+    invitation.theme_version_id
+      ? supabase.from("theme_versions").select(THEME_VERSION_COLUMNS).eq("id", invitation.theme_version_id).maybeSingle()
+      : Promise.resolve({ data: null }),
+  ]);
+
+  if (!theme) return null;
+  if (invitation.theme_version_id && !themeVersion) return null;
+  if (themeVersion && (themeVersion.theme_id !== invitation.theme_id || themeVersion.component_key !== theme.component_key)) return null;
+
+  return { invitation, wishes: wishes ?? [], gifts: gifts ?? [], profile, theme, themeVersion };
 }
