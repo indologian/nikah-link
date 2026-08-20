@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getThemeConfig } from "@/lib/themes/registry";
+import { ThemeRenderer } from "@/components/themes/ThemeRenderer";
 
 export const metadata = {
   title: "Demo Tema | NikahLink",
@@ -24,14 +25,21 @@ export default async function DemoThemePage(props: { params: Promise<{ id: strin
 
   if (!theme) notFound();
 
-  const themeConfig = getThemeConfig(theme.component_key);
+  const { data: themeVersion } = await supabase
+    .from("theme_versions")
+    .select("*")
+    .eq("theme_id", theme.id)
+    .eq("is_published", true)
+    .order("version", { ascending: false })
+    .limit(1)
+    .maybeSingle();
 
-  if (themeConfig.slug !== theme.component_key) {
-    notFound();
-  }
+  const rendererKey = themeVersion?.component_key || theme.component_key || theme.slug;
+  const themeConfig = getThemeConfig(rendererKey);
 
-  const ThemeComponent = themeConfig.component;
+  if (themeConfig.slug !== rendererKey) notFound();
 
+  const themeColors = themeVersion?.colors ?? theme.colors ?? null;
   const dummyInvitation = {
     id: "demo-invitation-123",
     username: "romeo-juliet",
@@ -59,7 +67,8 @@ export default async function DemoThemePage(props: { params: Promise<{ id: strin
     show_gallery: true,
     show_wishes: true,
     created_at: new Date().toISOString(),
-    theme_colors: theme.colors || undefined,
+    theme_colors: themeColors || undefined,
+    theme_version: themeVersion,
     custom_data: themeConfig.fields.reduce((acc, field) => {
       acc[field.name] = field.type === "image"
         ? "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=800&auto=format&fit=crop"
@@ -73,15 +82,19 @@ export default async function DemoThemePage(props: { params: Promise<{ id: strin
       <div className="sticky top-0 z-[100] flex items-center justify-between gap-3 bg-blue-50 px-4 py-2 text-blue-800 dark:bg-blue-950 dark:text-blue-200">
         <Link href="/tema" className="text-xs font-semibold hover:underline">← Kembali ke Tema</Link>
         <div className="flex items-center gap-3">
-          <span className="hidden text-xs font-medium sm:inline">Demo: {theme.name}</span>
+          <span className="hidden text-xs font-medium sm:inline">Demo: {theme.name}{themeVersion?.version ? ` v${themeVersion.version}` : ""}</span>
           <Link href={`/daftar?tema=${encodeURIComponent(theme.slug)}`} className="rounded-md bg-blue-700 px-3 py-1.5 text-xs font-bold text-white transition-colors hover:bg-blue-800 dark:bg-blue-200 dark:text-blue-950 dark:hover:bg-white">
             Gunakan Tema
           </Link>
         </div>
       </div>
 
-      <ThemeComponent
+      <ThemeRenderer
+        component={themeConfig.component}
         invitation={dummyInvitation}
+        themeKey={rendererKey}
+        themeColors={themeColors}
+        themeVersion={themeVersion}
         guestName="Tamu Demo"
         initialWishes={[]}
         giftAccounts={[]}
