@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Script from "next/script";
+import { useRouter } from "next/navigation";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import PricingSection from "@/components/landing/PricingSection";
@@ -9,13 +10,34 @@ import { MIDTRANS_SNAP_URL } from "@/lib/midtrans-client";
 import { Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 
+type MidtransResultHandler = () => void;
+
+type MidtransSnap = {
+  pay: (
+    token: string,
+    callbacks: {
+      onSuccess: MidtransResultHandler;
+      onPending: MidtransResultHandler;
+      onError: MidtransResultHandler;
+      onClose: MidtransResultHandler;
+    },
+  ) => void;
+};
+
 declare global {
   interface Window {
-    snap: any;
+    snap?: MidtransSnap;
   }
 }
 
+type PaymentTokenResponse = {
+  token?: string;
+  redirect_url?: string;
+  error?: string;
+};
+
 export default function PricingPage() {
+  const router = useRouter();
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
   const [message, setMessage] = useState("");
 
@@ -30,11 +52,11 @@ export default function PricingPage() {
         body: JSON.stringify({ plan }),
       });
 
-      const data = await res.json();
+      const data = (await res.json()) as PaymentTokenResponse;
 
       if (!res.ok || !data.token) {
         if (res.status === 401) {
-          window.location.href = "/masuk?redirect=/harga";
+          router.push("/masuk?redirect=/harga");
           return;
         }
         throw new Error(data.error || "Gagal memproses pembayaran.");
@@ -42,27 +64,29 @@ export default function PricingPage() {
 
       if (window.snap) {
         window.snap.pay(data.token, {
-          onSuccess: function () {
+          onSuccess: () => {
             setMessage("Pembayaran Berhasil! Akun kamu kini telah aktif.");
             setLoadingPlan(null);
           },
-          onPending: function () {
+          onPending: () => {
             setMessage("Menunggu pembayaran. Silakan selesaikan transaksi.");
             setLoadingPlan(null);
           },
-          onError: function () {
+          onError: () => {
             setMessage("Pembayaran gagal. Silakan coba lagi.");
             setLoadingPlan(null);
           },
-          onClose: function () {
+          onClose: () => {
             setLoadingPlan(null);
           },
         });
+      } else if (data.redirect_url) {
+        window.location.assign(data.redirect_url);
       } else {
-        window.location.href = data.redirect_url;
+        throw new Error("Token pembayaran tidak tersedia.");
       }
-    } catch (err: any) {
-      setMessage(err.message || "Terjadi kesalahan.");
+    } catch (err: unknown) {
+      setMessage(err instanceof Error ? err.message : "Terjadi kesalahan.");
       setLoadingPlan(null);
     }
   };
