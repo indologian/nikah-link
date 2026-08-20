@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import UpsellModal from "@/components/dashboard/UpsellModal";
-import { getThemeConfig } from "@/lib/themes/registry";
+import { resolveInvitationThemeFields } from "@/lib/themes/invitation-theme";
 
 const STEPS = [
   { id: "theme", label: "Tema", icon: Sparkles },
@@ -99,10 +99,11 @@ export default function EditInvitationPage() {
   });
 
   const [themesList, setThemesList] = useState<any[]>([]);
+  const [themeVersionId, setThemeVersionId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchThemes = async () => {
-      const { data } = await supabase.from("themes").select("*").eq("is_active", true).order("created_at", { ascending: false });
+      const { data } = await supabase.from("themes").select("*, theme_versions(*)").eq("is_active", true).order("created_at", { ascending: false });
       if (data) setThemesList(data);
     };
     fetchThemes();
@@ -350,9 +351,13 @@ export default function EditInvitationPage() {
 
   const handleNext = () => {
     if (STEPS[currentStep].id === "theme") {
-      const selectedThemeConfig = getThemeConfig(formData.theme_slug);
-      if (selectedThemeConfig.fields && selectedThemeConfig.fields.length > 0) {
-        for (const field of selectedThemeConfig.fields) {
+      const selectedTheme = themesList.find((theme) => theme.slug === formData.theme_slug);
+      const selectedVersion = selectedTheme?.theme_versions
+        ?.filter((version: any) => version.lifecycle_status === "published" || version.is_published)
+        ?.sort((a: any, b: any) => (b.version ?? 0) - (a.version ?? 0))[0];
+      const selectedFields = resolveInvitationThemeFields(selectedVersion ?? selectedTheme ?? null);
+      if (selectedFields.length > 0) {
+        for (const field of selectedFields) {
           if (!formData.custom_data || !formData.custom_data[field.name]) {
             setError(`Mohon isi field "${field.label}" pada pengaturan khusus tema.`);
             return;
@@ -441,6 +446,8 @@ export default function EditInvitationPage() {
           reception_maps_url: formData.reception_maps_url || null,
 
           theme_id: themeId,
+          theme_version_id: themeVersionId,
+          theme_version_id: themeVersionId,
           music_url: formData.music_url || null,
           cover_image_url: formData.cover_image_url || null,
           custom_message: formData.custom_message,
@@ -755,6 +762,10 @@ export default function EditInvitationPage() {
                           return;
                         }
                         handleChange("theme_slug", theme.slug);
+                        const nextVersion = theme.theme_versions
+                          ?.filter((version: any) => version.lifecycle_status === "published" || version.is_published)
+                          ?.sort((a: any, b: any) => (b.version ?? 0) - (a.version ?? 0))[0];
+                        setThemeVersionId(nextVersion?.id ?? null);
                         setFormData(prev => ({ ...prev, custom_data: {} }));
                       }}
                       className={`relative overflow-hidden rounded-none cursor-pointer border-2 transition-all group ${isSelected ? "border-slate-900 dark:border-white scale-[1.02]" : "border-slate-100 dark:border-slate-800 hover:border-rose-200 dark:hover:border-rose-900/50"
@@ -793,8 +804,12 @@ export default function EditInvitationPage() {
                 })}
               </div>
               {(() => {
-                const selectedThemeConfig = getThemeConfig(formData.theme_slug);
-                if (!selectedThemeConfig.fields || selectedThemeConfig.fields.length === 0) return null;
+                const selectedTheme = themesList.find((theme) => theme.slug === formData.theme_slug);
+                const selectedVersion = selectedTheme?.theme_versions
+                  ?.filter((version: any) => version.lifecycle_status === "published" || version.is_published)
+                  ?.sort((a: any, b: any) => (b.version ?? 0) - (a.version ?? 0))[0];
+                const selectedFields = resolveInvitationThemeFields(selectedVersion ?? selectedTheme ?? null);
+                if (selectedFields.length === 0) return null;
 
                 return (
                   <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 space-y-4">
@@ -802,7 +817,7 @@ export default function EditInvitationPage() {
                       <Settings className="w-4 h-4" /> Pengaturan Khusus Tema Ini
                     </h3>
                     <div className="grid md:grid-cols-2 gap-4">
-                      {selectedThemeConfig.fields.map((field) => (
+                      {selectedFields.map((field) => (
                         <div key={field.name} className={field.type === 'textarea' ? 'md:col-span-2' : ''}>
                           <label className="block text-xs font-bold text-slate-700 dark:text-slate-400 mb-1">
                             {field.label}
