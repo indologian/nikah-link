@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ThemeRenderer } from "@/components/themes/ThemeRenderer";
 import { getThemeConfig } from "@/components/themes/registry";
@@ -32,7 +33,7 @@ export default async function PublicThemeDemoPage({ params, searchParams }: Prop
     <div className="min-h-screen">
       <div className="sticky top-0 z-[100] flex items-center justify-between bg-slate-900 px-4 py-2 text-white">
         <div className="text-xs font-semibold">Demo Tema: {theme.name} v{themeVersion.version}</div>
-        <a href="/" className="text-xs font-medium underline underline-offset-2">NikahLink</a>
+        <Link href="/" className="text-xs font-medium underline underline-offset-2">NikahLink</Link>
       </div>
       <ThemeRenderer
         component={registeredTheme.component}
