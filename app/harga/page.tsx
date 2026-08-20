@@ -5,7 +5,7 @@ import Script from "next/script";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import PricingSection from "@/components/landing/PricingSection";
-import { SNAP_URL } from "@/lib/midtrans";
+import { MIDTRANS_SNAP_URL } from "@/lib/midtrans-client";
 import { Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -40,7 +40,6 @@ export default function PricingPage() {
         throw new Error(data.error || "Gagal memproses pembayaran.");
       }
 
-      // Trigger Midtrans Snap Popup
       if (window.snap) {
         window.snap.pay(data.token, {
           onSuccess: function () {
@@ -60,7 +59,6 @@ export default function PricingPage() {
           },
         });
       } else {
-        // Fallback to redirect URL
         window.location.href = data.redirect_url;
       }
     } catch (err: any) {
@@ -71,9 +69,8 @@ export default function PricingPage() {
 
   return (
     <main className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50 flex flex-col w-full">
-      {/* Midtrans Snap JS Script */}
       <Script
-        src={SNAP_URL}
+        src={MIDTRANS_SNAP_URL}
         data-client-key={process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY}
         strategy="lazyOnload"
       />
