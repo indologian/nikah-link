@@ -24,11 +24,10 @@ export default function TimeRangePicker({
   value: string;
   onChange: (val: string) => void;
 }) {
-  const initial = useRef(parseTimeValue(value)).current;
-  const [startTime, setStartTime] = useState(initial.startTime);
-  const [endTime, setEndTime] = useState(initial.endTime);
-  const [isSelesai, setIsSelesai] = useState(initial.isSelesai);
-  const [timezone, setTimezone] = useState(initial.timezone);
+  const [startTime, setStartTime] = useState(() => parseTimeValue(value).startTime);
+  const [endTime, setEndTime] = useState(() => parseTimeValue(value).endTime);
+  const [isSelesai, setIsSelesai] = useState(() => parseTimeValue(value).isSelesai);
+  const [timezone, setTimezone] = useState(() => parseTimeValue(value).timezone);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const hasInitialized = useRef(Boolean(value));
