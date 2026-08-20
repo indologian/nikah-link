@@ -1,4 +1,4 @@
-import { getThemeConfig } from "@/lib/themes/registry";
+import { getThemeConfig } from "./registry";
 
 type ThemeLike = {
   slug?: string | null;
@@ -23,7 +23,7 @@ export type ResolvedTheme = {
 export function resolveThemeConfig(theme?: ThemeLike | string | null): ResolvedTheme {
   const requestedKey =
     typeof theme === "string"
-      ? theme.trim()
+      ? theme.trim() || FALLBACK_THEME_KEY
       : theme?.component_key?.trim() || theme?.slug?.trim() || FALLBACK_THEME_KEY;
 
   const config = getThemeConfig(requestedKey);
