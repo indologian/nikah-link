@@ -184,10 +184,10 @@ export default function VintageEleganceTheme({
     if (invitation.bride_photo_url) galleryPhotos.push(invitation.bride_photo_url);
   }
   const themeColors = invitation.theme_colors || {
-    background: "#F9F6F0",
-    text: "#4A4036",
-    primary: "#8B7355",
-    accent: "#C1A57B"
+    background: "var(--theme-background)",
+    text: "var(--theme-text)",
+    primary: "var(--theme-primary)",
+    accent: "var(--theme-accent)"
   };
 
   const musicUrl = invitation.music_url || "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";

@@ -184,10 +184,10 @@ export default function WayangClassicTheme({
     if (invitation.bride_photo_url) galleryPhotos.push(invitation.bride_photo_url);
   }
   const themeColors = invitation.theme_colors || {
-    background: "#2A1B14", // Dark earthy brown
-    text: "#F5E6D3",       // Soft cream/gold
-    primary: "#D4AF37",    // Gold
-    accent: "#8B4513"      // Saddle brown / dark gold
+    background: "var(--theme-background)", // Dark earthy brown
+    text: "var(--theme-text)",       // Soft cream/gold
+    primary: "var(--theme-primary)",    // Gold
+    accent: "var(--theme-accent)"      // Saddle brown / dark gold
   };
 
   const musicUrl = invitation.music_url || "https://cdn.pixabay.com/download/audio/2022/11/22/audio_d1718ab41b.mp3"; 

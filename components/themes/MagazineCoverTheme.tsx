@@ -171,10 +171,10 @@ export default function MagazineCoverTheme({
     if (invitation.bride_photo_url) galleryPhotos.push(invitation.bride_photo_url);
   }
   const themeColors = invitation.theme_colors || {
-    background: "#FFFFFF",
-    text: "#000000",       
-    primary: "#000000",    
-    accent: "#E5E5E5"      
+    background: "var(--theme-background)",
+    text: "var(--theme-primary)",       
+    primary: "var(--theme-primary)",    
+    accent: "var(--theme-accent)"      
   };
 
   const musicUrl = invitation.music_url || "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3"; 
@@ -348,7 +348,7 @@ export default function MagazineCoverTheme({
           </section>
 
           {/* EVENT SCHEDULE (EDITORIAL LAYOUT) */}
-          <section className="py-32 px-6 bg-[#f4f4f4]">
+          <section className="py-32 px-6 bg-[var(--theme-background)]">
             <div className="max-w-7xl mx-auto">
                <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={slideUp} className="mb-20 text-center">
                  <p className={`text-sm uppercase tracking-widest font-bold mb-4 ${oswald.className}`}>02 / The Itinerary</p>
@@ -456,7 +456,7 @@ export default function MagazineCoverTheme({
 
           {/* DIGITAL WALLET / GIFT */}
           {invitation.show_gifts && giftAccounts.length > 0 && (
-            <section className="py-24 px-6 bg-[#f4f4f4]">
+            <section className="py-24 px-6 bg-[var(--theme-background)]">
               <div className="max-w-4xl mx-auto bg-white p-12 border-2 border-black relative">
                 {/* Decorative corners */}
                 <div className="absolute top-0 left-0 w-4 h-4 border-t-4 border-l-4 border-black -translate-x-1 -translate-y-1"></div>

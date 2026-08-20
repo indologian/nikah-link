@@ -286,6 +286,12 @@ export default function NewInvitationPage() {
     return () => clearTimeout(timeoutId);
   }, [formData.username, supabase]);
 
+  const getUserStoragePath = async (fileName: string) => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("Sesi login tidak ditemukan.");
+    return `users/${user.id}/${fileName}`;
+  };
+
   const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
     try {
       if (!e.target.files || e.target.files.length === 0) {
@@ -311,7 +317,7 @@ export default function NewInvitationPage() {
 
       const fileExt = file.name.split('.').pop();
       const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
-      const filePath = `uploads/${fileName}`;
+      const filePath = await getUserStoragePath(`uploads/${fileName}`);
 
       setUploading(prev => ({ ...prev, [field]: true }));
       setError("");
@@ -357,7 +363,7 @@ export default function NewInvitationPage() {
 
       const fileExt = file.name.split('.').pop();
       const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
-      const filePath = `uploads/${fileName}`;
+      const filePath = await getUserStoragePath(`uploads/${fileName}`);
 
       setUploading(prev => ({ ...prev, [field]: true }));
       setError("");
@@ -405,7 +411,7 @@ export default function NewInvitationPage() {
 
       const fileExt = file.name.split('.').pop();
       const fileName = `audio-${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
-      const filePath = `uploads/${fileName}`;
+      const filePath = await getUserStoragePath(`uploads/${fileName}`);
 
       setUploading(prev => ({ ...prev, [field]: true }));
       setError("");
@@ -414,7 +420,7 @@ export default function NewInvitationPage() {
         .from('invitations')
         .upload(filePath, file, {
           contentType: file.type || "audio/mpeg",
-          upsert: true
+          upsert: false
         });
 
       if (uploadError) {

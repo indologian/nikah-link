@@ -185,10 +185,10 @@ export default function MidnightSparkleTheme({
     if (invitation.bride_photo_url) galleryPhotos.push(invitation.bride_photo_url);
   }
   const themeColors = invitation.theme_colors || {
-    background: "#0B132B", // Very dark navy blue
-    text: "#FFFFFF",       
-    primary: "#FFD700",    // Gold
-    accent: "#1C2541"      // Slightly lighter dark blue
+    background: "var(--theme-background)", // Very dark navy blue
+    text: "var(--theme-text)",       
+    primary: "var(--theme-primary)",    // Gold
+    accent: "var(--theme-accent)"      // Slightly lighter dark blue
   };
 
   const musicUrl = invitation.music_url || "https://cdn.pixabay.com/download/audio/2022/11/22/audio_d1718ab41b.mp3"; 
@@ -541,8 +541,8 @@ export default function MidnightSparkleTheme({
                         className="w-full p-4 bg-transparent border-b outline-none transition-colors focus:border-yellow-500"
                         style={{ borderColor: `${themeColors.primary}50` }}
                       >
-                        <option value="hadir" className="bg-[#0B132B]">Joyfully Accept</option>
-                        <option value="tidak_hadir" className="bg-[#0B132B]">Regretfully Decline</option>
+                        <option value="hadir" className="bg-[var(--theme-background)]">Joyfully Accept</option>
+                        <option value="tidak_hadir" className="bg-[var(--theme-background)]">Regretfully Decline</option>
                       </select>
                     </div>
 
@@ -554,8 +554,8 @@ export default function MidnightSparkleTheme({
                           className="w-full p-4 bg-transparent border-b outline-none transition-colors focus:border-yellow-500"
                           style={{ borderColor: `${themeColors.primary}50` }}
                         >
-                          <option value="1" className="bg-[#0B132B]">1 Person</option>
-                          <option value="2" className="bg-[#0B132B]">2 Persons</option>
+                          <option value="1" className="bg-[var(--theme-background)]">1 Person</option>
+                          <option value="2" className="bg-[var(--theme-background)]">2 Persons</option>
                         </select>
                       </div>
                     )}

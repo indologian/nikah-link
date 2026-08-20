@@ -165,10 +165,10 @@ export default function RoyalBotanicalTheme({
     if (invitation.bride_photo_url) galleryPhotos.push(invitation.bride_photo_url);
   }
   const themeColors = invitation.theme_colors || {
-    background: "#064E3B", // deep green
-    text: "#F3F4F6", // light gray
-    primary: "#D4AF37", // gold
-    accent: "#FCD34D" // lighter gold
+    background: "var(--theme-background)", // deep green
+    text: "var(--theme-text)", // light gray
+    primary: "var(--theme-primary)", // gold
+    accent: "var(--theme-accent)" // lighter gold
   };
 
   const musicUrl = invitation.music_url || "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";

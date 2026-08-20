@@ -184,10 +184,10 @@ export default function SereinWhiteTheme({
     if (invitation.bride_photo_url) galleryPhotos.push(invitation.bride_photo_url);
   }
   const themeColors = invitation.theme_colors || {
-    background: "#FFFFFF",
-    text: "#111827",       
-    primary: "#9CA3AF",    // Gray-400
-    accent: "#F3F4F6"      // Gray-100
+    background: "var(--theme-background)",
+    text: "var(--theme-text)",       
+    primary: "var(--theme-primary)",    // Gray-400
+    accent: "var(--theme-background)"      // Gray-100
   };
 
   const musicUrl = invitation.music_url || "https://cdn.pixabay.com/download/audio/2022/01/21/audio_31743c58be.mp3"; 

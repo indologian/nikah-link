@@ -157,7 +157,7 @@ export default function ModernMonochromeTheme({
 };;
 
   return (
-    <div className={`min-h-screen text-[#111111] bg-white overflow-hidden ${montserrat.className}`}>
+    <div className={`min-h-screen text-[var(--theme-background)] bg-white overflow-hidden ${montserrat.className}`}>
       
       {/* Audio Element */}
       {invitation.music_url && (
@@ -189,18 +189,18 @@ export default function ModernMonochromeTheme({
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
-            className={`fixed inset-0 z-50 flex items-center justify-center bg-[#111111] text-white`}
+            className={`fixed inset-0 z-50 flex items-center justify-center bg-[var(--theme-background)] text-white`}
           >
             {/* Split Screen Animation Divs */}
             <motion.div
                exit={{ y: "-100%" }}
                transition={{ duration: 1.5, ease: [0.77, 0, 0.17, 1] }}
-               className="absolute top-0 left-0 w-full h-1/2 bg-[#111111] border-b border-white/10 z-20"
+               className="absolute top-0 left-0 w-full h-1/2 bg-[var(--theme-background)] border-b border-white/10 z-20"
             />
             <motion.div
                exit={{ y: "100%" }}
                transition={{ duration: 1.5, ease: [0.77, 0, 0.17, 1] }}
-               className="absolute bottom-0 left-0 w-full h-1/2 bg-[#111111] border-t border-white/10 z-20"
+               className="absolute bottom-0 left-0 w-full h-1/2 bg-[var(--theme-background)] border-t border-white/10 z-20"
             />
             
             <div className="relative z-30 flex flex-col items-center text-center w-full max-w-md px-8">
@@ -254,17 +254,17 @@ export default function ModernMonochromeTheme({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5, delay: 0.5 }}
-            className={`w-full max-w-md mx-auto bg-[#F9F9F9] relative shadow-2xl`}
+            className={`w-full max-w-md mx-auto bg-[var(--theme-primary)] relative shadow-2xl`}
           >
             
             {/* HERO SECTION */}
-            <section className="relative h-[90vh] flex flex-col justify-end p-8 bg-[#111111] text-white">
+            <section className="relative h-[90vh] flex flex-col justify-end p-8 bg-[var(--theme-background)] text-white">
               {invitation.cover_image_url && (
                 <div className="absolute inset-0 grayscale opacity-60 mix-blend-screen">
                   <Image src={invitation.cover_image_url} alt="Cover" fill className="object-cover" />
                 </div>
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-[#111111]/50 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-[var(--theme-background)] via-[rgba(var(--theme-background-rgb),0.5)] to-transparent"></div>
               
               <motion.div 
                 initial={{ opacity: 0, y: 30 }}
@@ -305,7 +305,7 @@ export default function ModernMonochromeTheme({
                   initial={{ opacity: 0, scale: 0.95 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
-                  className="col-span-2 bg-[#111111] text-white p-6 relative overflow-hidden"
+                  className="col-span-2 bg-[var(--theme-background)] text-white p-6 relative overflow-hidden"
                 >
                    <h4 className="uppercase text-[10px] tracking-[0.2em] font-bold text-white/50 mb-4">01. Akad Nikah</h4>
                    <div className="mb-6">
@@ -339,7 +339,7 @@ export default function ModernMonochromeTheme({
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.1 }}
-                  className="col-span-2 bg-[#F1F1F1] text-[#111111] p-6 relative overflow-hidden"
+                  className="col-span-2 bg-[var(--theme-primary)] text-[var(--theme-background)] p-6 relative overflow-hidden"
                 >
                    <h4 className="uppercase text-[10px] tracking-[0.2em] font-bold text-black/50 mb-4">02. Resepsi</h4>
                    <div className="mb-6">
@@ -361,7 +361,7 @@ export default function ModernMonochromeTheme({
                       </div>
                    </div>
                    {invitation.reception_maps_url && (
-                    <a href={invitation.reception_maps_url} target="_blank" rel="noopener noreferrer" className="mt-6 flex items-center justify-between w-full bg-[#111111] text-white px-4 py-3 uppercase text-[10px] font-bold tracking-widest hover:bg-neutral-800 transition-colors">
+                    <a href={invitation.reception_maps_url} target="_blank" rel="noopener noreferrer" className="mt-6 flex items-center justify-between w-full bg-[var(--theme-background)] text-white px-4 py-3 uppercase text-[10px] font-bold tracking-widest hover:bg-neutral-800 transition-colors">
                       Open Map <MapPin className="w-3 h-3" />
                     </a>
                   )}
@@ -371,7 +371,7 @@ export default function ModernMonochromeTheme({
 
             {/* GIFT REGISTRY */}
             {(giftAccounts && giftAccounts.length > 0) && (
-              <section className={`py-20 px-6 bg-[#111111] text-white relative`}>
+              <section className={`py-20 px-6 bg-[var(--theme-background)] text-white relative`}>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -422,7 +422,7 @@ export default function ModernMonochromeTheme({
             )}
 
             {/* RSVP & WISHES */}
-            <section className="py-20 px-6 bg-[#F9F9F9]">
+            <section className="py-20 px-6 bg-[var(--theme-primary)]">
               <div className="mb-12">
                 <h3 className="text-4xl font-black uppercase tracking-tighter mb-4">RSVP &<br/>Wishes</h3>
                 <div className="w-12 h-1 bg-black mb-6"></div>
@@ -502,7 +502,7 @@ export default function ModernMonochromeTheme({
                   rows={4}
                   value={wishText}
                   onChange={(e) => setWishText(e.target.value)}
-                  className="w-full bg-[#F9F9F9] text-sm border border-black/10 p-4 placeholder:text-black/30 focus:outline-none focus:border-black resize-none"
+                  className="w-full bg-[var(--theme-primary)] text-sm border border-black/10 p-4 placeholder:text-black/30 focus:outline-none focus:border-black resize-none"
                   placeholder="Write a message..."
                   required
                 />
@@ -539,7 +539,7 @@ export default function ModernMonochromeTheme({
             </section>
 
             {/* FOOTER */}
-            <footer className="py-20 text-center px-6 bg-[#111111] text-white">
+            <footer className="py-20 text-center px-6 bg-[var(--theme-background)] text-white">
               <p className="uppercase tracking-[0.4em] text-[10px] font-bold text-white/50 mb-8">End of Invitation</p>
               <h2 className="text-4xl font-black uppercase tracking-tighter mb-4">
                 {invitation.groom_name?.split(" ")[0]} & {invitation.bride_name?.split(" ")[0]}

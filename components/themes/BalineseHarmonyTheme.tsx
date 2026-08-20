@@ -171,10 +171,10 @@ export default function BalineseHarmonyTheme({
     if (invitation.bride_photo_url) galleryPhotos.push(invitation.bride_photo_url);
   }
   const themeColors = invitation.theme_colors || {
-    background: "#F4F4F0",
-    text: "#4B4642",
-    primary: "#D4AF37",
-    accent: "#8B7355"
+    background: "var(--theme-background)",
+    text: "var(--theme-text)",
+    primary: "var(--theme-primary)",
+    accent: "var(--theme-accent)"
   };
 
   const musicUrl = invitation.music_url || "https://cdn.pixabay.com/download/audio/2022/10/26/audio_1ab7ec6a0f.mp3";
@@ -569,7 +569,7 @@ export default function BalineseHarmonyTheme({
                       <button
                         onClick={() => handleCopy(account.account_number, account.id)}
                         className="inline-flex items-center gap-2 px-6 py-2 rounded-full text-sm font-medium transition-colors text-white"
-                        style={{ backgroundColor: copiedBank === account.id ? "#10B981" : themeColors.accent }}
+                        style={{ backgroundColor: copiedBank === account.id ? "var(--theme-text)" : themeColors.accent }}
                       >
                         {copiedBank === account.id ? <><CheckCircle2 size={16} /> Tersalin</> : <><Copy size={16} /> Salin No. Rekening</>}
                       </button>
@@ -581,7 +581,7 @@ export default function BalineseHarmonyTheme({
           )}
 
           {/* FOOTER */}
-          <footer className="py-16 text-center bg-[#4B4642] text-white">
+          <footer className="py-16 text-center bg-[var(--theme-text)] text-white">
             <h2 className={`text-3xl mb-4 ${playfair.className}`}>
               {invitation.bride_nickname} & {invitation.groom_nickname}
             </h2>

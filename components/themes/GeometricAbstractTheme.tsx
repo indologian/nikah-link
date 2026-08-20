@@ -38,11 +38,11 @@ const SvgPolygonMaskImage = ({ src, alt, shape }: { src: string, alt: string, sh
     <div className="relative w-full h-full filter drop-shadow-[0_15px_30px_rgba(183,110,121,0.3)]">
        {/* CSS drop-shadow works perfectly around clip-paths */}
        <div 
-         className="w-full h-full relative overflow-hidden bg-[#B76E79]/20"
+         className="w-full h-full relative overflow-hidden bg-[rgba(var(--theme-primary-rgb),0.2)]"
          style={{ clipPath: clipPathData }}
        >
          <Image src={src} alt={alt} fill className="object-cover" />
-         <div className="absolute inset-0 bg-[#000000]/20 mix-blend-overlay"></div>
+         <div className="absolute inset-0 bg-[rgba(var(--theme-background-rgb),0.2)] mix-blend-overlay"></div>
        </div>
     </div>
   );
@@ -181,14 +181,14 @@ export default function GeometricAbstractTheme({
 };;
 
   return (
-    <div ref={containerRef} className={`min-h-screen bg-[#0F0F0F] text-[#E0E0E0] overflow-hidden relative selection:bg-[#B76E79] selection:text-white`}>
+    <div ref={containerRef} className={`min-h-screen bg-[var(--theme-background)] text-[var(--theme-text)] overflow-hidden relative selection:bg-[var(--theme-primary)] selection:text-white`}>
       {invitation.music_url && <audio ref={audioRef} loop src={invitation.music_url} />}
 
       {/* Background Decor */}
       <div className="fixed inset-0 pointer-events-none opacity-20">
-         <div className="absolute top-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full border border-[#B76E79]"></div>
-         <div className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] rounded-full border border-[#B76E79]"></div>
-         <div className="absolute top-[40%] left-[20%] w-[20vw] h-[20vw] rotate-45 border border-[#B76E79]"></div>
+         <div className="absolute top-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full border border-[var(--theme-primary)]"></div>
+         <div className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] rounded-full border border-[var(--theme-primary)]"></div>
+         <div className="absolute top-[40%] left-[20%] w-[20vw] h-[20vw] rotate-45 border border-[var(--theme-primary)]"></div>
       </div>
 
       <AnimatePresence>
@@ -198,7 +198,7 @@ export default function GeometricAbstractTheme({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0 }}
             onClick={toggleAudio}
-            className="fixed bottom-6 right-6 z-50 p-4 bg-[#B76E79] text-white rounded-none rotate-45 shadow-[0_0_15px_rgba(183,110,121,0.5)] hover:scale-110 transition-transform"
+            className="fixed bottom-6 right-6 z-50 p-4 bg-[var(--theme-primary)] text-white rounded-none rotate-45 shadow-[0_0_15px_rgba(183,110,121,0.5)] hover:scale-110 transition-transform"
           >
             <motion.div animate={{ rotate: isPlaying ? 360 : 0 }} transition={{ duration: 4, repeat: Infinity, ease: "linear" }} className="-rotate-45">
               <Music className="w-4 h-4" />
@@ -212,12 +212,12 @@ export default function GeometricAbstractTheme({
           /* PRELOADER COVER (Geometric Split) */
           <motion.div
             key="cover"
-            className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-[#0F0F0F]"
+            className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-[var(--theme-background)]"
           >
             <motion.div 
               exit={{ scale: 20, opacity: 0 }} 
               transition={{ duration: 1.5, ease: "easeInOut" }} 
-              className="absolute inset-0 border-[50px] border-[#1a1a1a] pointer-events-none z-10"
+              className="absolute inset-0 border-[50px] border-[var(--theme-accent)] pointer-events-none z-10"
             />
             
             <motion.div
@@ -225,8 +225,8 @@ export default function GeometricAbstractTheme({
               transition={{ duration: 1 }}
               className="relative z-30 flex flex-col items-center text-center p-8 w-full max-w-sm"
             >
-              <div className="w-32 h-32 mb-8 rotate-45 border border-[#B76E79] flex items-center justify-center overflow-hidden">
-                <div className="-rotate-45 font-bold text-3xl text-[#B76E79] flex gap-2">
+              <div className="w-32 h-32 mb-8 rotate-45 border border-[var(--theme-primary)] flex items-center justify-center overflow-hidden">
+                <div className="-rotate-45 font-bold text-3xl text-[var(--theme-primary)] flex gap-2">
                    <span>{invitation.groom_name?.charAt(0)}</span>
                    <span className="opacity-50">+</span>
                    <span>{invitation.bride_name?.charAt(0)}</span>
@@ -240,14 +240,14 @@ export default function GeometricAbstractTheme({
                 {invitation.bride_name?.split(" ")[0]}
               </h1>
 
-              <div className="w-full mb-12 border-l-2 border-[#B76E79] pl-4 text-left">
+              <div className="w-full mb-12 border-l-2 border-[var(--theme-primary)] pl-4 text-left">
                 <p className={`text-[9px] tracking-[0.3em] uppercase text-[#888] mb-1 ${inter.className}`}>Kepada Yth.</p>
                 <p className={`text-lg font-bold text-white uppercase tracking-wider ${inter.className}`}>{guestName}</p>
               </div>
 
               <button
                 onClick={handleOpenInvitation}
-                className={`group relative overflow-hidden bg-transparent border border-[#B76E79] text-[#B76E79] hover:bg-[#B76E79] hover:text-white px-12 py-4 uppercase text-[10px] tracking-[0.4em] font-bold transition-all duration-500 ${inter.className}`}
+                className={`group relative overflow-hidden bg-transparent border border-[var(--theme-primary)] text-[var(--theme-primary)] hover:bg-[var(--theme-primary)] hover:text-white px-12 py-4 uppercase text-[10px] tracking-[0.4em] font-bold transition-all duration-500 ${inter.className}`}
               >
                 Buka Undangan
               </button>
@@ -260,7 +260,7 @@ export default function GeometricAbstractTheme({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5, delay: 0.5 }}
-            className="w-full max-w-md mx-auto relative z-10 bg-[#0F0F0F] min-h-screen shadow-2xl"
+            className="w-full max-w-md mx-auto relative z-10 bg-[var(--theme-background)] min-h-screen shadow-2xl"
           >
             {/* HERO SECTION */}
             <section className="relative min-h-screen flex flex-col items-center justify-center p-8 text-center overflow-hidden">
@@ -280,11 +280,11 @@ export default function GeometricAbstractTheme({
                 transition={{ duration: 1.5, delay: 1.5 }}
                 className="relative z-10 w-full flex flex-col items-center"
               >
-                <h4 className={`text-[9px] tracking-[0.4em] uppercase text-[#B76E79] mb-4 ${inter.className} font-bold`}>The Wedding Of</h4>
+                <h4 className={`text-[9px] tracking-[0.4em] uppercase text-[var(--theme-primary)] mb-4 ${inter.className} font-bold`}>The Wedding Of</h4>
                 <h2 className={`text-5xl mb-2 ${playfair.className} font-bold text-white uppercase tracking-widest`}>
                   {invitation.groom_name}
                 </h2>
-                <h2 className={`text-xl text-[#B76E79] my-1 ${playfair.className} italic`}>&</h2>
+                <h2 className={`text-xl text-[var(--theme-primary)] my-1 ${playfair.className} italic`}>&</h2>
                 <h2 className={`text-5xl mb-8 ${playfair.className} font-bold text-white uppercase tracking-widest`}>
                   {invitation.bride_name}
                 </h2>
@@ -312,7 +312,7 @@ export default function GeometricAbstractTheme({
                   </motion.div>
 
                   <div className="w-full flex justify-center">
-                     <span className={`text-5xl text-[#B76E79] ${playfair.className} italic`}>&</span>
+                     <span className={`text-5xl text-[var(--theme-primary)] ${playfair.className} italic`}>&</span>
                   </div>
 
                   <motion.div
@@ -331,9 +331,9 @@ export default function GeometricAbstractTheme({
             </section>
 
             {/* EVENT DETAILS */}
-            <section className="py-24 px-6 relative z-10 border-t border-[#1a1a1a]">
+            <section className="py-24 px-6 relative z-10 border-t border-[var(--theme-accent)]">
               <div className="text-center mb-16 relative z-10">
-                <Compass className="w-8 h-8 text-[#B76E79] mx-auto mb-6" />
+                <Compass className="w-8 h-8 text-[var(--theme-primary)] mx-auto mb-6" />
                 <h3 className={`text-4xl mb-2 ${playfair.className} font-bold text-white uppercase tracking-widest`}>Acara</h3>
               </div>
 
@@ -343,22 +343,22 @@ export default function GeometricAbstractTheme({
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
-                  className="bg-[#151515] p-8 border border-[#333] relative overflow-hidden group"
+                  className="bg-[var(--theme-accent)] p-8 border border-[#333] relative overflow-hidden group"
                 >
-                  <div className="absolute top-0 right-0 w-16 h-16 bg-[#B76E79]/10 rotate-45 transform translate-x-8 -translate-y-8 transition-transform group-hover:scale-150"></div>
+                  <div className="absolute top-0 right-0 w-16 h-16 bg-[rgba(var(--theme-primary-rgb),0.1)] rotate-45 transform translate-x-8 -translate-y-8 transition-transform group-hover:scale-150"></div>
                   
                   <h4 className={`text-2xl font-bold text-white mb-6 uppercase tracking-widest ${playfair.className}`}>Akad Nikah</h4>
                   
-                  <div className={`space-y-4 text-sm text-[#E0E0E0] mb-8 ${inter.className} font-light`}>
+                  <div className={`space-y-4 text-sm text-[var(--theme-text)] mb-8 ${inter.className} font-light`}>
                     <div className="flex gap-4 items-start">
-                      <Calendar className="w-4 h-4 text-[#B76E79] shrink-0 mt-0.5" />
+                      <Calendar className="w-4 h-4 text-[var(--theme-primary)] shrink-0 mt-0.5" />
                       <div>
                         <p className="font-bold text-white uppercase tracking-wider text-[11px]">{invitation.akad_date && format(parseISO(invitation.akad_date), "EEEE, dd MMMM yyyy", { locale: id })}</p>
                         <p className="text-[#888] text-xs mt-1">{invitation.akad_time || "08:00 WIB"}</p>
                       </div>
                     </div>
                     <div className="flex gap-4 items-start">
-                      <MapPin className="w-4 h-4 text-[#B76E79] shrink-0 mt-0.5" />
+                      <MapPin className="w-4 h-4 text-[var(--theme-primary)] shrink-0 mt-0.5" />
                       <div>
                         <p className="font-bold text-white uppercase tracking-wider text-[11px]">{invitation.akad_venue || "Lokasi Akad"}</p>
                         <p className="text-[#888] mt-1 text-xs leading-relaxed">{invitation.akad_address}</p>
@@ -368,7 +368,7 @@ export default function GeometricAbstractTheme({
 
                   <div className={`flex flex-col gap-3 ${inter.className}`}>
                     {invitation.akad_maps_url && (
-                      <a href={invitation.akad_maps_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-[#B76E79] text-white py-3 uppercase text-[9px] font-bold tracking-[0.3em] hover:bg-white hover:text-black transition-colors">
+                      <a href={invitation.akad_maps_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-[var(--theme-primary)] text-white py-3 uppercase text-[9px] font-bold tracking-[0.3em] hover:bg-white hover:text-black transition-colors">
                          Buka Peta Lokasi
                       </a>
                     )}
@@ -380,22 +380,22 @@ export default function GeometricAbstractTheme({
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
-                  className="bg-[#151515] p-8 border border-[#333] relative overflow-hidden group"
+                  className="bg-[var(--theme-accent)] p-8 border border-[#333] relative overflow-hidden group"
                 >
-                  <div className="absolute top-0 left-0 w-16 h-16 bg-[#B76E79]/10 rotate-45 transform -translate-x-8 -translate-y-8 transition-transform group-hover:scale-150"></div>
+                  <div className="absolute top-0 left-0 w-16 h-16 bg-[rgba(var(--theme-primary-rgb),0.1)] rotate-45 transform -translate-x-8 -translate-y-8 transition-transform group-hover:scale-150"></div>
                   
                   <h4 className={`text-2xl font-bold text-white mb-6 uppercase tracking-widest ${playfair.className} text-right`}>Resepsi</h4>
                   
-                  <div className={`space-y-4 text-sm text-[#E0E0E0] mb-8 ${inter.className} font-light text-right`}>
+                  <div className={`space-y-4 text-sm text-[var(--theme-text)] mb-8 ${inter.className} font-light text-right`}>
                     <div className="flex gap-4 items-start justify-end flex-row-reverse">
-                      <Calendar className="w-4 h-4 text-[#B76E79] shrink-0 mt-0.5" />
+                      <Calendar className="w-4 h-4 text-[var(--theme-primary)] shrink-0 mt-0.5" />
                       <div>
                         <p className="font-bold text-white uppercase tracking-wider text-[11px]">{invitation.reception_date && format(parseISO(invitation.reception_date), "EEEE, dd MMMM yyyy", { locale: id })}</p>
                         <p className="text-[#888] text-xs mt-1">{invitation.reception_time || "11:00 WIB"}</p>
                       </div>
                     </div>
                     <div className="flex gap-4 items-start justify-end flex-row-reverse">
-                      <MapPin className="w-4 h-4 text-[#B76E79] shrink-0 mt-0.5" />
+                      <MapPin className="w-4 h-4 text-[var(--theme-primary)] shrink-0 mt-0.5" />
                       <div>
                         <p className="font-bold text-white uppercase tracking-wider text-[11px]">{invitation.reception_venue || "Lokasi Resepsi"}</p>
                         <p className="text-[#888] mt-1 text-xs leading-relaxed">{invitation.reception_address}</p>
@@ -405,7 +405,7 @@ export default function GeometricAbstractTheme({
 
                   <div className={`flex flex-col gap-3 ${inter.className}`}>
                     {invitation.reception_maps_url && (
-                      <a href={invitation.reception_maps_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-[#B76E79] text-white py-3 uppercase text-[9px] font-bold tracking-[0.3em] hover:bg-white hover:text-black transition-colors">
+                      <a href={invitation.reception_maps_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-[var(--theme-primary)] text-white py-3 uppercase text-[9px] font-bold tracking-[0.3em] hover:bg-white hover:text-black transition-colors">
                          Buka Peta Lokasi
                       </a>
                     )}
@@ -415,7 +415,7 @@ export default function GeometricAbstractTheme({
             </section>
 
             {/* RSVP & WISHES */}
-            <section className="py-24 px-6 relative z-10 bg-[#151515]">
+            <section className="py-24 px-6 relative z-10 bg-[var(--theme-accent)]">
               <div className="text-center mb-12 relative z-10">
                 <h3 className={`text-4xl mb-2 ${playfair.className} font-bold text-white uppercase tracking-widest`}>Kehadiran</h3>
               </div>
@@ -428,7 +428,7 @@ export default function GeometricAbstractTheme({
                   onSubmit={handleRsvpSubmit}
                   className={`border border-[#333] p-8 mb-16 relative overflow-hidden ${inter.className}`}
                 >
-                  <div className="absolute inset-0 bg-[#0F0F0F] clip-path-polygon-[0_0,_100%_0,_100%_100%,_0_90%] -z-10"></div>
+                  <div className="absolute inset-0 bg-[var(--theme-background)] clip-path-polygon-[0_0,_100%_0,_100%_100%,_0_90%] -z-10"></div>
                   <div className="space-y-6">
                     <div>
                       <input
@@ -436,7 +436,7 @@ export default function GeometricAbstractTheme({
                         value={wishName}
                         onChange={(e) => setWishName(e.target.value)}
                         placeholder="NAMA LENGKAP"
-                        className="w-full bg-transparent border-b border-[#333] py-4 text-xs text-white placeholder:text-[#555] uppercase tracking-widest focus:outline-none focus:border-[#B76E79] transition-colors"
+                        className="w-full bg-transparent border-b border-[#333] py-4 text-xs text-white placeholder:text-[#555] uppercase tracking-widest focus:outline-none focus:border-[var(--theme-primary)] transition-colors"
                         required
                       />
                     </div>
@@ -444,7 +444,7 @@ export default function GeometricAbstractTheme({
                       <select
                         value={rsvpStatus}
                         onChange={(e: any) => setRsvpStatus(e.target.value)}
-                        className="w-full bg-transparent border-b border-[#333] py-4 text-xs text-white uppercase tracking-widest focus:outline-none focus:border-[#B76E79] transition-colors appearance-none"
+                        className="w-full bg-transparent border-b border-[#333] py-4 text-xs text-white uppercase tracking-widest focus:outline-none focus:border-[var(--theme-primary)] transition-colors appearance-none"
                       >
                         <option value="hadir" className="bg-[#111]">AKAN HADIR</option>
                         <option value="tidak_hadir" className="bg-[#111]">TIDAK HADIR</option>
@@ -453,15 +453,15 @@ export default function GeometricAbstractTheme({
                     <button
                       disabled={submittingRsvp}
                       type="submit"
-                      className="w-full bg-[#B76E79] text-white py-4 uppercase tracking-[0.3em] text-[10px] font-bold hover:bg-white hover:text-black transition-colors disabled:opacity-70 mt-4"
+                      className="w-full bg-[var(--theme-primary)] text-white py-4 uppercase tracking-[0.3em] text-[10px] font-bold hover:bg-white hover:text-black transition-colors disabled:opacity-70 mt-4"
                     >
                       {submittingRsvp ? "MENGIRIM..." : "KIRIM RSVP"}
                     </button>
                   </div>
                 </motion.form>
               ) : (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-[#151515] border border-[#333] p-10 text-center mb-16">
-                  <Check className="w-12 h-12 text-[#B76E79] mx-auto mb-4" />
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-[var(--theme-accent)] border border-[#333] p-10 text-center mb-16">
+                  <Check className="w-12 h-12 text-[var(--theme-primary)] mx-auto mb-4" />
                   <h4 className={`text-xl font-bold text-white mb-2 uppercase tracking-widest ${playfair.className}`}>Terima Kasih</h4>
                   <p className={`text-[#888] text-xs uppercase tracking-wider ${inter.className}`}>Konfirmasi diterima.</p>
                 </motion.div>
@@ -476,7 +476,7 @@ export default function GeometricAbstractTheme({
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 onSubmit={handleSendWish}
-                className={`mb-10 border border-[#333] p-2 bg-[#151515] ${inter.className}`}
+                className={`mb-10 border border-[#333] p-2 bg-[var(--theme-accent)] ${inter.className}`}
               >
                 <textarea
                   rows={3}
@@ -487,11 +487,11 @@ export default function GeometricAbstractTheme({
                   required
                 />
                 <div className="flex justify-between items-center px-4 py-2 border-t border-[#333]">
-                  <span className="text-[9px] uppercase tracking-[0.3em] text-[#B76E79] font-bold">{wishName || "TAMU"}</span>
+                  <span className="text-[9px] uppercase tracking-[0.3em] text-[var(--theme-primary)] font-bold">{wishName || "TAMU"}</span>
                   <button
                     type="submit"
                     disabled={sendingWish || !wishText.trim()}
-                    className="bg-[#B76E79] text-white p-3 hover:bg-white hover:text-black transition-colors disabled:opacity-50"
+                    className="bg-[var(--theme-primary)] text-white p-3 hover:bg-white hover:text-black transition-colors disabled:opacity-50"
                   >
                     <Send className="w-4 h-4" />
                   </button>
@@ -506,13 +506,13 @@ export default function GeometricAbstractTheme({
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="bg-[#111] p-6 border-l-2 border-[#B76E79]"
+                    className="bg-[#111] p-6 border-l-2 border-[var(--theme-primary)]"
                   >
                     <p className={`text-sm text-white leading-relaxed mb-4 ${playfair.className} italic`}>
                       "{wish.message}"
                     </p>
                     <div className={`flex items-center justify-between ${inter.className}`}>
-                      <p className="font-bold text-[9px] text-[#B76E79] uppercase tracking-[0.2em]">{wish.guest_name}</p>
+                      <p className="font-bold text-[9px] text-[var(--theme-primary)] uppercase tracking-[0.2em]">{wish.guest_name}</p>
                       <span className="text-[9px] text-[#555] tracking-wider">{format(new Date(wish.created_at), "dd MMM yy", { locale: id })}</span>
                     </div>
                   </motion.div>
@@ -521,13 +521,13 @@ export default function GeometricAbstractTheme({
             </section>
 
             {/* FOOTER */}
-            <footer className="py-24 text-center px-6 bg-[#0F0F0F] text-[#888] relative z-10 border-t border-[#333]">
+            <footer className="py-24 text-center px-6 bg-[var(--theme-background)] text-[#888] relative z-10 border-t border-[#333]">
               <h2 className={`text-3xl mb-6 ${playfair.className} font-bold text-white uppercase tracking-widest`}>
                 {invitation.groom_name?.split(" ")[0]} & {invitation.bride_name?.split(" ")[0]}
               </h2>
               <div className={`text-[9px] tracking-[0.4em] uppercase flex flex-col items-center gap-2 font-bold ${inter.className}`}>
                 <span>BUILT BY</span>
-                <a href="https://nikahlink.com" className="text-[#B76E79] hover:text-white transition-colors">NIKAHLINK</a>
+                <a href="https://nikahlink.com" className="text-[var(--theme-primary)] hover:text-white transition-colors">NIKAHLINK</a>
               </div>
             </footer>
           </motion.div>

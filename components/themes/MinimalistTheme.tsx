@@ -211,7 +211,7 @@ export default function MinimalistTheme({
 
   if (isExpired) {
     return (
-      <div className="min-h-screen bg-[#0d0914] flex items-center justify-center p-6 text-center">
+      <div className="min-h-screen bg-[var(--theme-text)] flex items-center justify-center p-6 text-center">
         <div className="max-w-md w-full glass-dark rounded-3xl p-8 border border-white/10 shadow-2xl">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-rose-gold-500/20 mb-6 border border-rose-gold-500/30">
             <Clock className="w-8 h-8 text-rose-gold-400" />
@@ -229,7 +229,7 @@ export default function MinimalistTheme({
   }
 
   return (
-    <div className="min-h-screen bg-[#0d0914] text-white selection:bg-rose-gold-500 selection:text-white font-sans relative overflow-x-hidden">
+    <div className="min-h-screen bg-[var(--theme-text)] text-white selection:bg-rose-gold-500 selection:text-white font-sans relative overflow-x-hidden">
 
       {/* Free Plan Floating Banner */}
       {isFreePlan && (
@@ -264,7 +264,7 @@ export default function MinimalistTheme({
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, y: -100 }}
             transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="fixed inset-0 z-50 flex flex-col items-center justify-center p-6 bg-gradient-to-b from-[#180e29] via-[#0d0914] to-[#1a1226] text-center"
+            className="fixed inset-0 z-50 flex flex-col items-center justify-center p-6 bg-gradient-to-b from-[var(--theme-text)] via-[var(--theme-text)] to-[var(--theme-text)] text-center"
           >
             {/* Ambient glows */}
             <div className="absolute w-96 h-96 rounded-full bg-rose-gold-500/10 blur-[120px] pointer-events-none" />

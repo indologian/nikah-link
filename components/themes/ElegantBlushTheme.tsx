@@ -184,10 +184,10 @@ export default function ElegantBlushTheme({
     if (invitation.bride_photo_url) galleryPhotos.push(invitation.bride_photo_url);
   }
   const themeColors = invitation.theme_colors || {
-    background: "#FFF5F5", // Very soft blush pink
-    text: "#4A4A4A",       // Dark gray
-    primary: "#B76E79",    // Rose gold / blush
-    accent: "#E8D8D8"      // Soft pinkish gray for borders
+    background: "var(--theme-background)", // Very soft blush pink
+    text: "var(--theme-text)",       // Dark gray
+    primary: "var(--theme-primary)",    // Rose gold / blush
+    accent: "var(--theme-accent)"      // Soft pinkish gray for borders
   };
 
   const musicUrl = invitation.music_url || "https://cdn.pixabay.com/download/audio/2022/10/25/audio_24a2f8c5c7.mp3"; 
@@ -463,7 +463,7 @@ export default function ElegantBlushTheme({
                         onClick={() => handleCopy(account.account_number, account.id)}
                         className="px-6 py-2 rounded-full transition-colors flex items-center gap-2 text-xs uppercase tracking-widest font-bold"
                         style={{ 
-                          backgroundColor: copiedBank === account.id ? "#10B981" : themeColors.background, 
+                          backgroundColor: copiedBank === account.id ? "var(--theme-text)" : themeColors.background, 
                           color: copiedBank === account.id ? "white" : themeColors.primary,
                         }}
                       >

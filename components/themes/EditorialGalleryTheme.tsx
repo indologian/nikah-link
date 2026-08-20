@@ -215,7 +215,7 @@ export default function EditorialGalleryTheme({
 };;
 
   return (
-    <div ref={containerRef} className={`min-h-screen bg-[#F5F5F5] text-[#111] overflow-hidden relative selection:bg-black selection:text-white`}>
+    <div ref={containerRef} className={`min-h-screen bg-[var(--theme-background)] text-[#111] overflow-hidden relative selection:bg-black selection:text-white`}>
       {invitation.music_url && <audio ref={audioRef} loop src={invitation.music_url} />}
 
       <AnimatePresence>
@@ -245,13 +245,13 @@ export default function EditorialGalleryTheme({
             <motion.div 
               exit={{ x: "-100%" }} 
               transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }} 
-              className="absolute top-0 bottom-0 left-0 w-1/2 bg-[#F5F5F5] pointer-events-none origin-left"
+              className="absolute top-0 bottom-0 left-0 w-1/2 bg-[var(--theme-background)] pointer-events-none origin-left"
             />
             {/* Right Panel */}
             <motion.div 
               exit={{ x: "100%" }} 
               transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }} 
-              className="absolute top-0 bottom-0 right-0 w-1/2 bg-[#F5F5F5] pointer-events-none origin-right"
+              className="absolute top-0 bottom-0 right-0 w-1/2 bg-[var(--theme-background)] pointer-events-none origin-right"
             />
             
             <motion.div
@@ -288,7 +288,7 @@ export default function EditorialGalleryTheme({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5, delay: 0.5 }}
-            className="w-full mx-auto relative z-10 bg-[#F5F5F5] min-h-screen"
+            className="w-full mx-auto relative z-10 bg-[var(--theme-background)] min-h-screen"
           >
             {/* HERO SECTION */}
             <section className="relative min-h-[90vh] flex flex-col justify-between p-8 overflow-hidden bg-black text-white">
@@ -348,7 +348,7 @@ export default function EditorialGalleryTheme({
             </section>
 
             {/* EVENT DETAILS */}
-            <section className="py-24 px-4 md:px-8 relative z-10 bg-[#F5F5F5]">
+            <section className="py-24 px-4 md:px-8 relative z-10 bg-[var(--theme-background)]">
               <div className="mb-16 border-b-4 border-black pb-4">
                 <h3 className={`text-5xl md:text-7xl ${anton.className} uppercase tracking-tighter text-black`}>The Event</h3>
                 <p className={`text-xs font-bold uppercase tracking-[0.3em] text-[#555] mt-2 ${roboto.className}`}>Schedule & Location</p>
@@ -439,7 +439,7 @@ export default function EditorialGalleryTheme({
                               type="text"
                               value={wishName}
                               onChange={(e) => setWishName(e.target.value)}
-                              className="w-full bg-transparent border-b-2 border-black py-4 text-xl font-bold uppercase tracking-wider focus:outline-none focus:border-[#B76E79] transition-colors"
+                              className="w-full bg-transparent border-b-2 border-black py-4 text-xl font-bold uppercase tracking-wider focus:outline-none focus:border-[var(--theme-accent)] transition-colors"
                               required
                            />
                         </div>
@@ -448,7 +448,7 @@ export default function EditorialGalleryTheme({
                            <select
                               value={rsvpStatus}
                               onChange={(e: any) => setRsvpStatus(e.target.value)}
-                              className="w-full bg-transparent border-b-2 border-black py-4 text-xl font-bold uppercase tracking-wider focus:outline-none focus:border-[#B76E79] transition-colors appearance-none"
+                              className="w-full bg-transparent border-b-2 border-black py-4 text-xl font-bold uppercase tracking-wider focus:outline-none focus:border-[var(--theme-accent)] transition-colors appearance-none"
                            >
                               <option value="hadir">Yes, I will attend</option>
                               <option value="tidak_hadir">No, I can't make it</option>

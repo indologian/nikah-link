@@ -165,10 +165,10 @@ export default function JavaneseBatikTheme({
     if (invitation.bride_photo_url) galleryPhotos.push(invitation.bride_photo_url);
   }
   const themeColors = invitation.theme_colors || {
-    background: "#FDFBF7",
-    text: "#3E2723",       
-    primary: "#B48B3D",    // Muted Gold
-    accent: "#5D4037"      // Brown
+    background: "var(--theme-background)",
+    text: "var(--theme-text)",       
+    primary: "var(--theme-primary)",    // Muted Gold
+    accent: "var(--theme-accent)"      // Brown
   };
 
   const musicUrl = invitation.music_url || "https://cdn.pixabay.com/download/audio/2022/10/26/audio_1ab7ec6a0f.mp3"; 
@@ -241,7 +241,7 @@ export default function JavaneseBatikTheme({
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, y: "-100%" }}
             transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 z-50 flex flex-col items-center justify-center p-6 overflow-hidden bg-[#FDFBF7]"
+            className="fixed inset-0 z-50 flex flex-col items-center justify-center p-6 overflow-hidden bg-[var(--theme-background)]"
             style={{ backgroundImage: `url("${batikPatternSVG}")` }}
           >
             <motion.div 
@@ -372,7 +372,7 @@ export default function JavaneseBatikTheme({
 
               <div className="grid md:grid-cols-2 gap-16">
                 {/* Akad */}
-                <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="bg-[#FDFBF7] p-10 shadow-lg border relative">
+                <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="bg-[var(--theme-background)] p-10 shadow-lg border relative">
                   <div className="absolute top-0 left-0 w-full h-1" style={{ backgroundColor: themeColors.primary }}></div>
                   <h3 className="text-2xl font-bold mb-6 uppercase tracking-[0.2em]" style={{ color: themeColors.accent }}>Akad Nikah</h3>
                   
@@ -393,7 +393,7 @@ export default function JavaneseBatikTheme({
                 </motion.div>
 
                 {/* Reception */}
-                <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="bg-[#FDFBF7] p-10 shadow-lg border relative">
+                <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="bg-[var(--theme-background)] p-10 shadow-lg border relative">
                   <div className="absolute top-0 left-0 w-full h-1" style={{ backgroundColor: themeColors.primary }}></div>
                   <h3 className="text-2xl font-bold mb-6 uppercase tracking-[0.2em]" style={{ color: themeColors.accent }}>Resepsi</h3>
                   
@@ -469,7 +469,7 @@ export default function JavaneseBatikTheme({
               <div className="grid md:grid-cols-2 gap-16">
                 
                 {/* RSVP Form */}
-                <div className="bg-[#FDFBF7] p-8 border border-amber-200/50 shadow-inner">
+                <div className="bg-[var(--theme-background)] p-8 border border-amber-200/50 shadow-inner">
                   <h3 className="text-xl font-bold mb-8 uppercase tracking-[0.2em] text-center" style={{ color: themeColors.accent }}>Konfirmasi Kehadiran</h3>
                   
                   {rsvpSuccess ? (
@@ -569,7 +569,7 @@ export default function JavaneseBatikTheme({
           </section>
 
           {/* FOOTER */}
-          <footer className="py-16 text-center text-white relative bg-[#3E2723] overflow-hidden">
+          <footer className="py-16 text-center text-white relative bg-[var(--theme-text)] overflow-hidden">
              {/* Background Batik for Footer */}
              <div 
                className="absolute inset-0 opacity-10"

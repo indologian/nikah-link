@@ -243,7 +243,7 @@ export default function EtherealSnowTheme({
   };
 
   return (
-    <div ref={containerRef} className={`min-h-screen bg-[#1C2541] text-[#E5E7EB] overflow-hidden relative selection:bg-[#C0C0C0] selection:text-[#1C2541]`}>
+    <div ref={containerRef} className={`min-h-screen bg-[var(--theme-background)] text-[var(--theme-text)] overflow-hidden relative selection:bg-[var(--theme-primary)] selection:text-[var(--theme-background)]`}>
       
       {invitation.music_url && <audio ref={audioRef} loop src={invitation.music_url} />}
 
@@ -271,19 +271,19 @@ export default function EtherealSnowTheme({
           /* PRELOADER COVER (Split Screen) */
           <motion.div
             key="cover"
-            className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-[#1C2541]"
+            className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-[var(--theme-background)]"
           >
             {/* Top Door */}
             <motion.div 
               exit={{ y: "-100%" }} 
               transition={{ duration: 1.5, ease: [0.65, 0, 0.35, 1] }} 
-              className="absolute top-0 left-0 right-0 h-1/2 bg-[#0B132B] pointer-events-none origin-top border-b border-white/10"
+              className="absolute top-0 left-0 right-0 h-1/2 bg-[var(--theme-accent)] pointer-events-none origin-top border-b border-white/10"
             />
             {/* Bottom Door */}
             <motion.div 
               exit={{ y: "100%" }} 
               transition={{ duration: 1.5, ease: [0.65, 0, 0.35, 1] }} 
-              className="absolute bottom-0 left-0 right-0 h-1/2 bg-[#0B132B] pointer-events-none origin-bottom border-t border-white/10"
+              className="absolute bottom-0 left-0 right-0 h-1/2 bg-[var(--theme-accent)] pointer-events-none origin-bottom border-t border-white/10"
             />
             
             <motion.div
@@ -291,26 +291,26 @@ export default function EtherealSnowTheme({
               transition={{ duration: 1 }}
               className="relative z-30 flex flex-col items-center text-center p-8 w-full"
             >
-              <Snowflake className="w-8 h-8 text-[#C0C0C0] mb-8 animate-[spin_10s_linear_infinite]" />
+              <Snowflake className="w-8 h-8 text-[var(--theme-primary)] mb-8 animate-[spin_10s_linear_infinite]" />
               
               <h1 className={`text-4xl md:text-5xl text-white mb-2 ${cormorant.className} italic font-bold tracking-wider`}>
                 {invitation.groom_name?.split(" ")[0]}
               </h1>
-              <span className={`text-xl text-[#C0C0C0] my-2 ${cormorant.className}`}>&</span>
+              <span className={`text-xl text-[var(--theme-primary)] my-2 ${cormorant.className}`}>&</span>
               <h1 className={`text-4xl md:text-5xl text-white mb-10 ${cormorant.className} italic font-bold tracking-wider`}>
                 {invitation.bride_name?.split(" ")[0]}
               </h1>
 
               <div className="w-full max-w-[250px] mb-12">
-                <p className={`text-[10px] tracking-[0.2em] uppercase text-[#C0C0C0] mb-2 ${montserrat.className}`}>Untuk Yth.</p>
-                <div className="border-b border-[#C0C0C0]/30 pb-3">
+                <p className={`text-[10px] tracking-[0.2em] uppercase text-[var(--theme-primary)] mb-2 ${montserrat.className}`}>Untuk Yth.</p>
+                <div className="border-b border-[rgba(var(--theme-primary-rgb),0.3)] pb-3">
                   <p className={`text-lg font-medium text-white ${montserrat.className}`}>{guestName}</p>
                 </div>
               </div>
 
               <button
                 onClick={handleOpenInvitation}
-                className={`group relative overflow-hidden bg-transparent border border-[#C0C0C0] text-[#C0C0C0] hover:bg-[#C0C0C0] hover:text-[#1C2541] px-10 py-3 rounded-full uppercase text-[10px] tracking-[0.3em] font-medium transition-all duration-500 ${montserrat.className}`}
+                className={`group relative overflow-hidden bg-transparent border border-[var(--theme-primary)] text-[var(--theme-primary)] hover:bg-[var(--theme-primary)] hover:text-[var(--theme-background)] px-10 py-3 rounded-full uppercase text-[10px] tracking-[0.3em] font-medium transition-all duration-500 ${montserrat.className}`}
               >
                 Buka Undangan
               </button>
@@ -323,7 +323,7 @@ export default function EtherealSnowTheme({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5, delay: 0.5 }}
-            className="w-full max-w-md mx-auto relative z-10 bg-[#0B132B]/50 backdrop-blur-sm min-h-screen border-x border-white/10 shadow-2xl"
+            className="w-full max-w-md mx-auto relative z-10 bg-[rgba(var(--theme-accent-rgb),0.5)] backdrop-blur-sm min-h-screen border-x border-white/10 shadow-2xl"
           >
             {/* HERO CROSS-FADE SLIDER */}
             <section className="relative min-h-[90vh] flex flex-col items-center justify-end p-8 text-center overflow-hidden rounded-b-[40px]">
@@ -338,7 +338,7 @@ export default function EtherealSnowTheme({
                     className="absolute inset-0"
                   >
                     <Image src={src} alt="Prewedding" fill className="object-cover opacity-50" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B] via-[#0B132B]/60 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--theme-accent)] via-[rgba(var(--theme-accent-rgb),0.6)] to-transparent"></div>
                   </motion.div>
                 ))}
               </div>
@@ -349,18 +349,18 @@ export default function EtherealSnowTheme({
                 transition={{ duration: 1.5, delay: 1 }}
                 className="relative z-10 w-full flex flex-col items-center mb-10"
               >
-                <h4 className={`text-[10px] tracking-[0.5em] uppercase text-[#C0C0C0] mb-6 ${montserrat.className}`}>The Wedding Of</h4>
+                <h4 className={`text-[10px] tracking-[0.5em] uppercase text-[var(--theme-primary)] mb-6 ${montserrat.className}`}>The Wedding Of</h4>
                 <h2 className={`text-5xl font-bold mb-1 ${cormorant.className} italic text-white drop-shadow-lg`}>
                   {invitation.groom_name}
                 </h2>
-                <h2 className={`text-3xl text-[#C0C0C0] my-1 ${cormorant.className}`}>&</h2>
+                <h2 className={`text-3xl text-[var(--theme-primary)] my-1 ${cormorant.className}`}>&</h2>
                 <h2 className={`text-5xl font-bold mb-8 ${cormorant.className} italic text-white drop-shadow-lg`}>
                   {invitation.bride_name}
                 </h2>
                 
-                <div className="w-[1px] h-16 bg-gradient-to-b from-[#C0C0C0] to-transparent mb-6"></div>
+                <div className="w-[1px] h-16 bg-gradient-to-b from-[var(--theme-primary)] to-transparent mb-6"></div>
 
-                <p className={`text-xs tracking-widest uppercase text-[#C0C0C0] ${montserrat.className}`}>
+                <p className={`text-xs tracking-widest uppercase text-[var(--theme-primary)] ${montserrat.className}`}>
                   {weddingDateStr && format(parseISO(weddingDateStr), "dd MMMM yyyy", { locale: id })}
                 </p>
               </motion.div>
@@ -369,9 +369,9 @@ export default function EtherealSnowTheme({
             {/* EVENT DETAILS */}
             <section className="py-24 px-6 relative">
               <div className="text-center mb-16 relative z-10">
-                <Snowflake className="w-6 h-6 text-[#C0C0C0] mx-auto mb-4 opacity-50" />
+                <Snowflake className="w-6 h-6 text-[var(--theme-primary)] mx-auto mb-4 opacity-50" />
                 <h3 className={`text-3xl mb-2 ${cormorant.className} italic text-white font-bold`}>Momen Sakral</h3>
-                <p className={`text-[9px] tracking-[0.4em] text-[#C0C0C0] uppercase ${montserrat.className}`}>Informasi Acara</p>
+                <p className={`text-[9px] tracking-[0.4em] text-[var(--theme-primary)] uppercase ${montserrat.className}`}>Informasi Acara</p>
               </div>
 
               <div className="space-y-12 relative z-10">
@@ -387,26 +387,26 @@ export default function EtherealSnowTheme({
                   </div>
                   <h4 className={`text-2xl font-bold text-white mb-6 ${cormorant.className} italic`}>Akad Nikah</h4>
                   
-                  <div className={`space-y-4 text-sm text-[#E5E7EB] mb-8 ${montserrat.className} font-light`}>
+                  <div className={`space-y-4 text-sm text-[var(--theme-text)] mb-8 ${montserrat.className} font-light`}>
                     <div className="flex gap-4">
-                      <Calendar className="w-4 h-4 text-[#C0C0C0] shrink-0 mt-0.5" />
+                      <Calendar className="w-4 h-4 text-[var(--theme-primary)] shrink-0 mt-0.5" />
                       <div>
                         <p className="font-medium text-white">{invitation.akad_date && format(parseISO(invitation.akad_date), "EEEE, dd MMMM yyyy", { locale: id })}</p>
-                        <p className="text-[#C0C0C0] text-xs mt-1">{invitation.akad_time || "08:00 WIB"}</p>
+                        <p className="text-[var(--theme-primary)] text-xs mt-1">{invitation.akad_time || "08:00 WIB"}</p>
                       </div>
                     </div>
                     <div className="flex gap-4">
-                      <MapPin className="w-4 h-4 text-[#C0C0C0] shrink-0 mt-0.5" />
+                      <MapPin className="w-4 h-4 text-[var(--theme-primary)] shrink-0 mt-0.5" />
                       <div>
                         <p className="font-medium text-white">{invitation.akad_venue || "Lokasi Akad"}</p>
-                        <p className="text-[#C0C0C0] mt-1 text-xs leading-relaxed">{invitation.akad_address}</p>
+                        <p className="text-[var(--theme-primary)] mt-1 text-xs leading-relaxed">{invitation.akad_address}</p>
                       </div>
                     </div>
                   </div>
 
                   <div className={`flex flex-col gap-3 ${montserrat.className}`}>
                     {invitation.akad_maps_url && (
-                      <a href={invitation.akad_maps_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-white text-[#1C2541] py-3 uppercase text-[9px] font-bold tracking-[0.2em] hover:bg-[#C0C0C0] transition-colors rounded-full">
+                      <a href={invitation.akad_maps_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-white text-[var(--theme-background)] py-3 uppercase text-[9px] font-bold tracking-[0.2em] hover:bg-[var(--theme-primary)] transition-colors rounded-full">
                          Buka Peta Lokasi
                       </a>
                     )}
@@ -428,26 +428,26 @@ export default function EtherealSnowTheme({
                   </div>
                   <h4 className={`text-2xl font-bold text-white mb-6 ${cormorant.className} italic`}>Resepsi</h4>
                   
-                  <div className={`space-y-4 text-sm text-[#E5E7EB] mb-8 ${montserrat.className} font-light`}>
+                  <div className={`space-y-4 text-sm text-[var(--theme-text)] mb-8 ${montserrat.className} font-light`}>
                     <div className="flex gap-4">
-                      <Calendar className="w-4 h-4 text-[#C0C0C0] shrink-0 mt-0.5" />
+                      <Calendar className="w-4 h-4 text-[var(--theme-primary)] shrink-0 mt-0.5" />
                       <div>
                         <p className="font-medium text-white">{invitation.reception_date && format(parseISO(invitation.reception_date), "EEEE, dd MMMM yyyy", { locale: id })}</p>
-                        <p className="text-[#C0C0C0] text-xs mt-1">{invitation.reception_time || "11:00 WIB"}</p>
+                        <p className="text-[var(--theme-primary)] text-xs mt-1">{invitation.reception_time || "11:00 WIB"}</p>
                       </div>
                     </div>
                     <div className="flex gap-4">
-                      <MapPin className="w-4 h-4 text-[#C0C0C0] shrink-0 mt-0.5" />
+                      <MapPin className="w-4 h-4 text-[var(--theme-primary)] shrink-0 mt-0.5" />
                       <div>
                         <p className="font-medium text-white">{invitation.reception_venue || "Lokasi Resepsi"}</p>
-                        <p className="text-[#C0C0C0] mt-1 text-xs leading-relaxed">{invitation.reception_address}</p>
+                        <p className="text-[var(--theme-primary)] mt-1 text-xs leading-relaxed">{invitation.reception_address}</p>
                       </div>
                     </div>
                   </div>
 
                   <div className={`flex flex-col gap-3 ${montserrat.className}`}>
                     {invitation.reception_maps_url && (
-                      <a href={invitation.reception_maps_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-[#C0C0C0] text-[#1C2541] py-3 uppercase text-[9px] font-bold tracking-[0.2em] hover:bg-white transition-colors rounded-full">
+                      <a href={invitation.reception_maps_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-[var(--theme-primary)] text-[var(--theme-background)] py-3 uppercase text-[9px] font-bold tracking-[0.2em] hover:bg-white transition-colors rounded-full">
                          Buka Peta Lokasi
                       </a>
                     )}
@@ -463,7 +463,7 @@ export default function EtherealSnowTheme({
             {(giftAccounts && giftAccounts.length > 0) && (
               <section className="py-24 px-6 relative z-10 border-t border-white/10">
                 <div className="text-center mb-12">
-                  <Gift className="w-6 h-6 text-[#C0C0C0] mx-auto mb-4 opacity-80" />
+                  <Gift className="w-6 h-6 text-[var(--theme-primary)] mx-auto mb-4 opacity-80" />
                   <h3 className={`text-3xl mb-2 ${cormorant.className} italic font-bold text-white`}>Tanda Kasih</h3>
                 </div>
 
@@ -475,15 +475,15 @@ export default function EtherealSnowTheme({
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ delay: idx * 0.1 }}
-                      className="bg-[#1C2541]/80 backdrop-blur-md p-8 border border-white/10 text-center rounded-3xl relative overflow-hidden"
+                      className="bg-[rgba(var(--theme-background-rgb),0.8)] backdrop-blur-md p-8 border border-white/10 text-center rounded-3xl relative overflow-hidden"
                     >
-                      <p className={`text-[10px] uppercase tracking-[0.3em] font-medium mb-4 text-[#C0C0C0] ${montserrat.className}`}>{account.bank_name}</p>
+                      <p className={`text-[10px] uppercase tracking-[0.3em] font-medium mb-4 text-[var(--theme-primary)] ${montserrat.className}`}>{account.bank_name}</p>
                       <p className={`text-2xl tracking-widest mb-2 text-white font-bold ${montserrat.className}`}>{account.account_number}</p>
-                      <p className={`text-sm text-[#C0C0C0] mb-8 font-light ${montserrat.className}`}>A.N {account.account_name}</p>
+                      <p className={`text-sm text-[var(--theme-primary)] mb-8 font-light ${montserrat.className}`}>A.N {account.account_name}</p>
                       
                       <button
                         onClick={() => handleCopy(account.account_number, account.id)}
-                        className={`w-full flex items-center justify-center gap-2 bg-transparent text-white py-3 uppercase text-[9px] font-bold tracking-[0.2em] border border-[#C0C0C0]/50 hover:bg-[#C0C0C0] hover:text-[#1C2541] transition-colors rounded-full ${montserrat.className}`}
+                        className={`w-full flex items-center justify-center gap-2 bg-transparent text-white py-3 uppercase text-[9px] font-bold tracking-[0.2em] border border-[rgba(var(--theme-primary-rgb),0.5)] hover:bg-[var(--theme-primary)] hover:text-[var(--theme-background)] transition-colors rounded-full ${montserrat.className}`}
                       >
                         {copiedBank === account.id ? (
                           <>
@@ -504,7 +504,7 @@ export default function EtherealSnowTheme({
             )}
 
             {/* RSVP & WISHES */}
-            <section className="py-24 px-6 relative z-10 bg-gradient-to-t from-[#0B132B] to-transparent">
+            <section className="py-24 px-6 relative z-10 bg-gradient-to-t from-[var(--theme-accent)] to-transparent">
               <div className="text-center mb-12 relative z-10">
                 <h3 className={`text-3xl mb-2 ${cormorant.className} italic font-bold text-white`}>Kehadiran & Ucapan</h3>
               </div>
@@ -525,7 +525,7 @@ export default function EtherealSnowTheme({
                         value={wishName}
                         onChange={(e) => setWishName(e.target.value)}
                         placeholder="Nama Lengkap"
-                        className="w-full bg-[#1C2541]/50 border border-white/20 py-4 px-5 text-xs text-white placeholder:text-white/40 focus:outline-none focus:border-[#C0C0C0] transition-colors rounded-2xl"
+                        className="w-full bg-[rgba(var(--theme-background-rgb),0.5)] border border-white/20 py-4 px-5 text-xs text-white placeholder:text-white/40 focus:outline-none focus:border-[var(--theme-primary)] transition-colors rounded-2xl"
                         required
                       />
                     </div>
@@ -533,7 +533,7 @@ export default function EtherealSnowTheme({
                       <select
                         value={rsvpStatus}
                         onChange={(e: any) => setRsvpStatus(e.target.value)}
-                        className="w-full bg-[#1C2541]/50 border border-white/20 py-4 px-5 text-xs text-white focus:outline-none focus:border-[#C0C0C0] transition-colors rounded-2xl appearance-none"
+                        className="w-full bg-[rgba(var(--theme-background-rgb),0.5)] border border-white/20 py-4 px-5 text-xs text-white focus:outline-none focus:border-[var(--theme-primary)] transition-colors rounded-2xl appearance-none"
                       >
                         <option value="hadir">Akan Hadir</option>
                         <option value="tidak_hadir">Maaf, Tidak Bisa Hadir</option>
@@ -544,7 +544,7 @@ export default function EtherealSnowTheme({
                           <select
                             value={rsvpCount}
                             onChange={(e: any) => setRsvpCount(Number(e.target.value))}
-                            className="w-full bg-[#1C2541]/50 border border-white/20 py-4 px-5 text-xs text-white focus:outline-none focus:border-[#C0C0C0] transition-colors rounded-2xl appearance-none"
+                            className="w-full bg-[rgba(var(--theme-background-rgb),0.5)] border border-white/20 py-4 px-5 text-xs text-white focus:outline-none focus:border-[var(--theme-primary)] transition-colors rounded-2xl appearance-none"
                           >
                             <option value={1}>1 Orang</option>
                             <option value={2}>2 Orang</option>
@@ -554,7 +554,7 @@ export default function EtherealSnowTheme({
                     <button
                       disabled={submittingRsvp}
                       type="submit"
-                      className="w-full bg-white text-[#1C2541] py-4 uppercase tracking-[0.2em] text-[10px] font-bold hover:bg-[#C0C0C0] transition-colors disabled:opacity-70 mt-4 rounded-full"
+                      className="w-full bg-white text-[var(--theme-background)] py-4 uppercase tracking-[0.2em] text-[10px] font-bold hover:bg-[var(--theme-primary)] transition-colors disabled:opacity-70 mt-4 rounded-full"
                     >
                       {submittingRsvp ? "Mengirim..." : "Kirim RSVP"}
                     </button>
@@ -562,9 +562,9 @@ export default function EtherealSnowTheme({
                 </motion.form>
               ) : (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white/5 backdrop-blur-md p-10 text-center border border-white/10 mb-16 rounded-3xl">
-                  <Check className="w-12 h-12 text-[#C0C0C0] mx-auto mb-4" />
+                  <Check className="w-12 h-12 text-[var(--theme-primary)] mx-auto mb-4" />
                   <h4 className={`text-xl font-bold text-white mb-2 ${montserrat.className}`}>Terima Kasih</h4>
-                  <p className={`text-[#C0C0C0] text-sm ${montserrat.className}`}>Konfirmasi Anda telah diterima.</p>
+                  <p className={`text-[var(--theme-primary)] text-sm ${montserrat.className}`}>Konfirmasi Anda telah diterima.</p>
                 </motion.div>
               )}
 
@@ -585,11 +585,11 @@ export default function EtherealSnowTheme({
                   required
                 />
                 <div className="flex justify-between items-center px-4 py-2 border-t border-white/10">
-                  <span className="text-[10px] uppercase tracking-widest text-[#C0C0C0] font-medium">{wishName || "Tamu"}</span>
+                  <span className="text-[10px] uppercase tracking-widest text-[var(--theme-primary)] font-medium">{wishName || "Tamu"}</span>
                   <button
                     type="submit"
                     disabled={sendingWish || !wishText.trim()}
-                    className="bg-white text-[#1C2541] p-3 hover:bg-[#C0C0C0] transition-colors disabled:opacity-50 rounded-full"
+                    className="bg-white text-[var(--theme-background)] p-3 hover:bg-[var(--theme-primary)] transition-colors disabled:opacity-50 rounded-full"
                   >
                     <Send className="w-4 h-4" />
                   </button>
@@ -610,7 +610,7 @@ export default function EtherealSnowTheme({
                       "{wish.message}"
                     </p>
                     <div className={`flex items-center justify-between ${montserrat.className}`}>
-                      <p className="font-bold text-[9px] text-[#C0C0C0] uppercase tracking-[0.2em]">{wish.guest_name}</p>
+                      <p className="font-bold text-[9px] text-[var(--theme-primary)] uppercase tracking-[0.2em]">{wish.guest_name}</p>
                       <span className="text-[9px] text-white/40">{format(new Date(wish.created_at), "dd MMM yy", { locale: id })}</span>
                     </div>
                   </motion.div>
@@ -619,7 +619,7 @@ export default function EtherealSnowTheme({
             </section>
 
             {/* FOOTER */}
-            <footer className="py-24 text-center px-6 bg-[#0B132B] text-white relative z-10 rounded-t-[40px] border-t border-white/10">
+            <footer className="py-24 text-center px-6 bg-[var(--theme-accent)] text-white relative z-10 rounded-t-[40px] border-t border-white/10">
               <h2 className={`text-4xl mb-6 ${cormorant.className} italic font-bold text-white`}>
                 {invitation.groom_name?.split(" ")[0]} & {invitation.bride_name?.split(" ")[0]}
               </h2>

@@ -165,10 +165,10 @@ export default function LineArtBotanicalTheme({
     if (invitation.bride_photo_url) galleryPhotos.push(invitation.bride_photo_url);
   }
   const themeColors = invitation.theme_colors || {
-    background: "#FAF9F6", // Off-white/Beige
-    text: "#2C3E2D",       // Dark Green
-    primary: "#6B8E23",    // Olive Drab
-    accent: "#E2C2B3"      // Soft Peach
+    background: "var(--theme-background)", // Off-white/Beige
+    text: "var(--theme-text)",       // Dark Green
+    primary: "var(--theme-primary)",    // Olive Drab
+    accent: "var(--theme-accent)"      // Soft Peach
   };
 
   const musicUrl = invitation.music_url || "https://cdn.pixabay.com/download/audio/2021/09/24/audio_33bc2ddfb3.mp3"; 
@@ -556,7 +556,7 @@ export default function LineArtBotanicalTheme({
           </section>
 
           {/* FOOTER */}
-          <footer className="py-20 text-center relative overflow-hidden bg-[#FAF9F6]">
+          <footer className="py-20 text-center relative overflow-hidden bg-[var(--theme-background)]">
              {/* Background Line Art for Footer */}
              <div className="absolute inset-0 flex justify-center items-center pointer-events-none opacity-20">
                <AbstractFaces />
