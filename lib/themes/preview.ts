@@ -1,5 +1,4 @@
-import type { ThemeField } from "@/lib/themes/registry";
-import type { ThemeColors } from "@/lib/themes/config";
+import type { ThemeField, ThemeColors } from "@/types/theme";
 
 export function buildThemePreviewCustomData(fields: ThemeField[]) {
   return Object.fromEntries(
@@ -8,7 +7,7 @@ export function buildThemePreviewCustomData(fields: ThemeField[]) {
       field.type === "image"
         ? "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=800&auto=format&fit=crop"
         : field.defaultValue ?? "",
-    ])
+    ]),
   );
 }
 
