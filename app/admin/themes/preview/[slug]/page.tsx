@@ -26,6 +26,7 @@ export default async function AdminThemePreviewPage({ params }: Props) {
     .select("*")
     .eq("theme_id", theme.id)
     .eq("is_published", true)
+    .eq("lifecycle_status", "published")
     .order("version", { ascending: false })
     .limit(1)
     .maybeSingle();
