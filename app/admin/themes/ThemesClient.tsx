@@ -3,20 +3,30 @@
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Theme } from "@/types";
+import { themesConfig } from "@/lib/themes/registry";
 import { Plus, Trash2, Edit2, Loader2, Image as ImageIcon, CheckCircle2 } from "lucide-react";
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const MAX_THUMBNAIL_SIZE = 2 * 1024 * 1024;
 
+const RENDERER_OPTIONS = Object.keys(themesConfig);
+
 const DEFAULT_FORM = {
   id: "",
   slug: "",
+  component_key: "minimalis",
   name: "",
   category: "minimalis",
   is_premium: false,
   colors_primary: "#0F172A",
 };
+
+const formatRendererLabel = (key: string) =>
+  key
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
 
 export default function ThemesClient({ initialThemes }: { initialThemes: Theme[] }) {
   const [themes, setThemes] = useState<Theme[]>(initialThemes);
@@ -38,6 +48,7 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
     setFormData({
       id: theme.id,
       slug: theme.slug,
+      component_key: theme.component_key || theme.slug,
       name: theme.name,
       category: theme.category,
       is_premium: theme.is_premium,
@@ -52,16 +63,20 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
   const validateForm = () => {
     const slug = formData.slug.trim().toLowerCase();
     const name = formData.name.trim();
+    const componentKey = formData.component_key.trim();
 
     if (!name) throw new Error("Nama tema wajib diisi.");
     if (!slug || !SLUG_PATTERN.test(slug)) {
       throw new Error("Slug hanya boleh berisi huruf kecil, angka, dan tanda hubung.");
     }
+    if (!componentKey || !themesConfig[componentKey]) {
+      throw new Error("Renderer tema tidak valid atau belum terdaftar di registry.");
+    }
     if (!/^#[0-9a-fA-F]{6}$/.test(formData.colors_primary)) {
       throw new Error("Warna utama harus berupa HEX valid, contoh #0F172A.");
     }
 
-    return { slug, name };
+    return { slug, name, componentKey };
   };
 
   const handleThumbnailChange = (file: File | null) => {
@@ -108,14 +123,10 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
     setIsSubmitting(true);
 
     try {
-      const { slug, name } = validateForm();
+      const { slug, name, componentKey } = validateForm();
 
       if (!isEditing && !thumbnailFile) {
         throw new Error("Pilih thumbnail tema terlebih dahulu.");
-      }
-
-      if (isEditing && formData.slug !== slug) {
-        throw new Error("Slug tema tidak dapat diubah setelah tema dibuat.");
       }
 
       let thumbnailUrl = "";
@@ -128,6 +139,7 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
       const themeData = {
         name,
         slug,
+        component_key: componentKey,
         category: formData.category,
         thumbnail_url: thumbnailUrl || null,
         is_premium: formData.is_premium,
@@ -149,7 +161,7 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
           .single();
 
         if (updateError) throw updateError;
-        setThemes(themes.map((theme) => (theme.id === isEditing ? updatedTheme as Theme : theme)));
+        setThemes((current) => current.map((theme) => (theme.id === isEditing ? updatedTheme as Theme : theme)));
       } else {
         const { data: createdTheme, error: insertError } = await supabase
           .from("themes")
@@ -158,7 +170,7 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
           .single();
 
         if (insertError) throw insertError;
-        setThemes([createdTheme as Theme, ...themes]);
+        setThemes((current) => [createdTheme as Theme, ...current]);
       }
 
       resetForm();
@@ -179,7 +191,8 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
       if (thumbnailUrl?.includes("/storage/v1/object/public/themes/")) {
         const filePath = thumbnailUrl.split("/storage/v1/object/public/themes/")[1];
         if (filePath) {
-          await supabase.storage.from("themes").remove([filePath]);
+          const { error: removeError } = await supabase.storage.from("themes").remove([filePath]);
+          if (removeError) console.warn("Gagal menghapus thumbnail:", removeError.message);
         }
       }
 
@@ -232,6 +245,20 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
                 className="w-full px-0 py-2 bg-transparent border-b border-slate-200 dark:border-slate-800 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-slate-900 dark:focus:border-slate-100 transition-colors rounded-none disabled:opacity-50"
                 placeholder="misal: rustic-gold"
               />
+            </div>
+
+            <div className="space-y-1">
+              <label className="block text-xs font-mono uppercase tracking-wider text-slate-500">Renderer Tema</label>
+              <select
+                value={formData.component_key}
+                onChange={(e) => setFormData({ ...formData, component_key: e.target.value })}
+                className="w-full px-0 py-2 bg-transparent border-b border-slate-200 dark:border-slate-800 text-sm text-slate-900 dark:text-slate-200 focus:outline-none focus:border-slate-900 dark:focus:border-slate-100 transition-colors rounded-none"
+              >
+                {RENDERER_OPTIONS.map((key) => (
+                  <option key={key} value={key}>{formatRendererLabel(key)}</option>
+                ))}
+              </select>
+              <p className="text-[10px] text-slate-400 mt-1">Renderer harus sudah terdaftar di <code>lib/themes/registry.tsx</code>.</p>
             </div>
 
             <div className="space-y-1">
@@ -344,6 +371,7 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
               <div>
                 <h3 className="font-medium text-slate-900 dark:text-white text-sm tracking-tight">{theme.name}</h3>
                 <p className="text-xs text-slate-500 mt-0.5 font-mono">{theme.slug}</p>
+                <p className="text-xs text-slate-500 mt-0.5 font-mono">Renderer: {theme.component_key || "-"}</p>
                 <p className="text-xs text-slate-500 mt-0.5 uppercase tracking-wider">{theme.category}</p>
               </div>
               <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
