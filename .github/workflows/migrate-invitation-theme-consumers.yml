@@ -1,0 +1,88 @@
+name: Migrate invitation theme consumers
+
+on:
+  push:
+    branches:
+      - feat/theme-token-migration
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/theme-token-migration
+          fetch-depth: 0
+
+      - name: Patch create/edit invitation consumers
+        shell: python
+        run: |
+          from pathlib import Path
+
+          files = [
+              Path('app/dashboard/undangan/baru/page.tsx'),
+              Path('app/dashboard/undangan/[id]/edit/page.tsx'),
+          ]
+
+          for path in files:
+              text = path.read_text(encoding='utf-8')
+              text = text.replace(
+                  'import { getThemeConfig } from "@/lib/themes/registry";',
+                  'import { resolveInvitationThemeFields } from "@/lib/themes/invitation-theme";'
+              )
+              text = text.replace(
+                  'import { getThemeConfig } from "@/lib/themes/registry";',
+                  'import { resolveInvitationThemeFields } from "@/lib/themes/invitation-theme";'
+              )
+
+              if 'const [themeVersionId, setThemeVersionId] = useState<string | null>(null);' not in text:
+                  marker = '  const [themesList, setThemesList] = useState<any[]>([]);'
+                  text = text.replace(marker, marker + '\n  const [themeVersionId, setThemeVersionId] = useState<string | null>(null);')
+
+              # Expand theme list queries to include published versions.
+              text = text.replace(
+                  '.from("themes").select("*").eq("is_active", true)',
+                  '.from("themes").select("*, theme_versions(*)").eq("is_active", true)'
+              )
+
+              # Replace synchronous registry validation with selected snapshot fields.
+              text = text.replace(
+                  'const selectedThemeConfig = getThemeConfig(formData.theme_slug);\n      if (selectedThemeConfig.fields && selectedThemeConfig.fields.length > 0) {\n        for (const field of selectedThemeConfig.fields) {',
+                  'const selectedTheme = themesList.find((theme) => theme.slug === formData.theme_slug);\n      const selectedVersion = selectedTheme?.theme_versions\n        ?.filter((version: any) => version.lifecycle_status === "published" || version.is_published)\n        ?.sort((a: any, b: any) => (b.version ?? 0) - (a.version ?? 0))[0];\n      const selectedFields = resolveInvitationThemeFields(selectedVersion ?? selectedTheme ?? null);\n      if (selectedFields.length > 0) {\n        for (const field of selectedFields) {'
+              )
+
+              # Reset and pin version when a theme card is selected.
+              old = 'handleChange("theme_slug", theme.slug);\n                        setFormData(prev => ({ ...prev, custom_data: {} }));'
+              new = 'handleChange("theme_slug", theme.slug);\n                        const nextVersion = theme.theme_versions\n                          ?.filter((version: any) => version.lifecycle_status === "published" || version.is_published)\n                          ?.sort((a: any, b: any) => (b.version ?? 0) - (a.version ?? 0))[0];\n                        setThemeVersionId(nextVersion?.id ?? null);\n                        setFormData(prev => ({ ...prev, custom_data: {} }));'
+              text = text.replace(old, new)
+
+              # Dynamic fields block.
+              old = 'const selectedThemeConfig = getThemeConfig(formData.theme_slug);\n                if (!selectedThemeConfig.fields || selectedThemeConfig.fields.length === 0) return null;'
+              new = 'const selectedTheme = themesList.find((theme) => theme.slug === formData.theme_slug);\n                const selectedVersion = selectedTheme?.theme_versions\n                  ?.filter((version: any) => version.lifecycle_status === "published" || version.is_published)\n                  ?.sort((a: any, b: any) => (b.version ?? 0) - (a.version ?? 0))[0];\n                const selectedFields = resolveInvitationThemeFields(selectedVersion ?? selectedTheme ?? null);\n                if (selectedFields.length === 0) return null;'
+              text = text.replace(old, new)
+              text = text.replace('selectedThemeConfig.fields.map((field) => (', 'selectedFields.map((field) => (')
+
+              # Explicitly pin the selected version on create/update payloads.
+              text = text.replace('          theme_id: themeId,\n', '          theme_id: themeId,\n          theme_version_id: themeVersionId,\n')
+              text = text.replace('          theme_id: themeId,\n', '          theme_id: themeId,\n          theme_version_id: themeVersionId,\n', 1)
+
+              path.write_text(text, encoding='utf-8')
+
+          # Remove the temporary workflow after patching.
+          Path('.github/workflows/migrate-invitation-theme-consumers.yml').unlink()
+      
+      - name: Commit migration
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- 'app/dashboard/undangan/baru/page.tsx' 'app/dashboard/undangan/[id]/edit/page.tsx' '.github/workflows/migrate-invitation-theme-consumers.yml'
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "feat(themes): make invitation create and edit version-aware [skip ci]"
+          git push origin HEAD:feat/theme-token-migration
