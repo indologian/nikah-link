@@ -62,6 +62,8 @@ function notSupported(table: string, operation: string): never {
 }
 
 export function createInvitationEditorBackend() {
+  const uploadedUrls = new Map<string, string>();
+
   return {
     auth: {
       async getUser() {
@@ -163,10 +165,11 @@ export function createInvitationEditorBackend() {
             formData.append("file", file);
             formData.append("kind", file.type.startsWith("audio/") ? "audio" : "image");
             const publicUrl = await uploadInvitationAssetAction(formData);
+            uploadedUrls.set(`${bucket}:${path}`, publicUrl);
             return { data: { path, publicUrl }, error: null, options, bucket };
           },
           getPublicUrl(path: string) {
-            return { data: { publicUrl: publicStorageUrl(bucket, path) } };
+            return { data: { publicUrl: uploadedUrls.get(`${bucket}:${path}`) ?? publicStorageUrl(bucket, path) } };
           },
         };
       },
