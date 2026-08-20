@@ -6,10 +6,12 @@ import { isValidThemeRenderer } from "@/lib/themes/config";
 
 interface Props {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ version?: string }>;
 }
 
-export default async function AdminThemePreviewPage({ params }: Props) {
+export default async function AdminThemePreviewPage({ params, searchParams }: Props) {
   const { slug } = await params;
+  const { version } = await searchParams;
   const normalizedSlug = slug.trim().toLowerCase();
   const supabase = await createClient();
 
@@ -19,19 +21,26 @@ export default async function AdminThemePreviewPage({ params }: Props) {
     .eq("slug", normalizedSlug)
     .single();
 
-  if (!theme || !theme.is_active) notFound();
+  if (!theme) notFound();
 
-  const { data: themeVersion } = await supabase
+  let themeVersionQuery = supabase
     .from("theme_versions")
     .select("*")
-    .eq("theme_id", theme.id)
-    .eq("is_published", true)
-    .eq("lifecycle_status", "published")
-    .order("version", { ascending: false })
-    .limit(1)
-    .maybeSingle();
+    .eq("theme_id", theme.id);
 
+  if (version) {
+    themeVersionQuery = themeVersionQuery.eq("id", version);
+  } else {
+    themeVersionQuery = themeVersionQuery
+      .eq("is_published", true)
+      .eq("lifecycle_status", "published")
+      .order("version", { ascending: false })
+      .limit(1);
+  }
+
+  const { data: themeVersion } = await themeVersionQuery.maybeSingle();
   if (!themeVersion) notFound();
+  if (!theme.is_active && themeVersion.lifecycle_status === "published") notFound();
 
   const runtimeTheme = resolveRuntimeTheme(theme, themeVersion);
   if (!isValidThemeRenderer(runtimeTheme.componentKey)) notFound();
@@ -81,7 +90,7 @@ export default async function AdminThemePreviewPage({ params }: Props) {
   return (
     <div className="min-h-screen">
       <div className="sticky top-0 z-[100] flex items-center justify-between bg-slate-900 px-4 py-2 text-white">
-        <div className="text-xs font-semibold">Admin Preview: {theme.name} v{runtimeTheme.version}</div>
+        <div className="text-xs font-semibold">Admin Preview: {theme.name} v{runtimeTheme.version} · {themeVersion.lifecycle_status}</div>
         <a href="/admin/themes" className="text-xs font-medium underline underline-offset-2">Kembali</a>
       </div>
       <ThemeRenderer
