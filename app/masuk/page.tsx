@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { Eye, EyeOff, Heart, Loader2 } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -9,7 +9,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 const THEME_SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
-export default function LoginPage() {
+function LoginPageContent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -28,10 +28,16 @@ export default function LoginPage() {
     localStorage.setItem("nikahlink_pending_theme", requestedTheme);
     try {
       const current = JSON.parse(localStorage.getItem("nikahlink_new_invitation") || "{}");
-      localStorage.setItem("nikahlink_new_invitation", JSON.stringify({ ...current, theme_slug: requestedTheme }));
+      localStorage.setItem(
+        "nikahlink_new_invitation",
+        JSON.stringify({ ...current, theme_slug: requestedTheme })
+      );
       localStorage.removeItem("nikahlink_new_invitation_step");
     } catch {
-      localStorage.setItem("nikahlink_new_invitation", JSON.stringify({ theme_slug: requestedTheme }));
+      localStorage.setItem(
+        "nikahlink_new_invitation",
+        JSON.stringify({ theme_slug: requestedTheme })
+      );
     }
   }, [searchParams]);
 
@@ -98,5 +104,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[var(--bg-primary)]" />}>
+      <LoginPageContent />
+    </Suspense>
   );
 }
