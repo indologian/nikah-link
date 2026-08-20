@@ -105,6 +105,46 @@ export const RENDERER_TOKEN_DEFAULTS: Record<string, RendererTokenDefaults> = {
     accent: "#5D4037",
     surface: "#FFFFFF",
   },
+  "line-art-botanical": {
+    background: "#FAF9F6",
+    text: "#2C3E2D",
+    primary: "#6B8E23",
+    secondary: "#EEF1EA",
+    accent: "#E2C2B3",
+    surface: "#FFFFFF",
+  },
+  "ocean-breeze": {
+    background: "#0B2545",
+    text: "#FFFFFF",
+    primary: "#DDA15E",
+    secondary: "#134074",
+    accent: "#8DA9C4",
+    surface: "#EEF4ED",
+  },
+  "rustic-woodland": {
+    background: "#2A3B2C",
+    text: "#F5F0E6",
+    primary: "#C19A6B",
+    secondary: "#3E4F3F",
+    accent: "#D8B78A",
+    surface: "#344534",
+  },
+  "modern-monochrome": {
+    background: "#111111",
+    text: "#FFFFFF",
+    primary: "#000000",
+    secondary: "#E5E5E5",
+    accent: "#777777",
+    surface: "#FFFFFF",
+  },
+  "cosmic-starlight": {
+    background: "#050510",
+    text: "#FFFFFF",
+    primary: "#A0A0FF",
+    secondary: "#12122A",
+    accent: "#6C63FF",
+    surface: "#0B0B20",
+  },
 };
 
 function getRendererFallbackColors(rendererKey?: string | null): ThemeColors {
