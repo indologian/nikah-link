@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { ThemeRenderer } from "@/components/themes/ThemeRenderer";
 import { resolveRuntimeTheme } from "@/lib/themes/runtime";
+import { buildThemePreviewCustomData, buildThemePreviewInvitation } from "@/lib/themes/preview";
 
 export const metadata = {
   title: "Demo Tema | NikahLink",
@@ -12,7 +13,6 @@ export const metadata = {
 export default async function DemoThemePage(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const slug = params.id.trim().toLowerCase();
-
   if (!slug) notFound();
 
   const supabase = await createClient();
@@ -22,7 +22,6 @@ export default async function DemoThemePage(props: { params: Promise<{ id: strin
     .eq("slug", slug)
     .eq("is_active", true)
     .single();
-
   if (!theme) notFound();
 
   const { data: themeVersion } = await supabase
@@ -34,49 +33,13 @@ export default async function DemoThemePage(props: { params: Promise<{ id: strin
     .order("version", { ascending: false })
     .limit(1)
     .maybeSingle();
-
   if (!themeVersion) notFound();
 
   const runtimeTheme = resolveRuntimeTheme(theme, themeVersion);
-  const customData = Object.fromEntries(
-    runtimeTheme.fields.map((field) => [
-      field.name,
-      field.type === "image"
-        ? "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=800&auto=format&fit=crop"
-        : field.defaultValue ?? "",
-    ])
-  );
-
+  const customData = buildThemePreviewCustomData(runtimeTheme.fields);
   const dummyInvitation = {
-    id: "demo-invitation-123",
-    username: "romeo-juliet",
-    bride_name: "Juliet Capulet",
-    groom_name: "Romeo Montague",
-    bride_photo_url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop",
-    groom_photo_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop",
-    love_story: "Takdir mempertemukan kami di sebuah acara pada tahun 2021. Berawal dari sapaan singkat, percakapan mengalir hingga kami menyadari ada ketulusan yang saling melengkapi.",
-    akad_date: "2026-10-24",
-    akad_time: "08:00 WIB",
-    akad_venue: "Masjid Agung Kota",
-    akad_address: "Jl. Cinta Abadi No. 1",
-    akad_maps_url: "https://maps.google.com",
-    reception_date: "2026-10-24",
-    reception_time: "11:00 - 14:00 WIB",
-    reception_venue: "Gedung Serbaguna",
-    reception_address: "Jl. Cinta Abadi No. 2",
-    reception_maps_url: "https://maps.google.com",
-    music_url: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-wedding-115207.mp3",
-    cover_image_url: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop",
-    custom_message: "Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i.",
-    is_published: true,
-    show_rsvp: true,
-    show_gift: true,
-    show_gallery: true,
-    show_wishes: true,
-    created_at: new Date().toISOString(),
-    theme_colors: runtimeTheme.colors,
+    ...buildThemePreviewInvitation(runtimeTheme.colors, customData, "demo-invitation-123"),
     theme_version: themeVersion,
-    custom_data: customData,
   };
 
   return (
@@ -85,12 +48,9 @@ export default async function DemoThemePage(props: { params: Promise<{ id: strin
         <Link href="/tema" className="text-xs font-semibold hover:underline">← Kembali ke Tema</Link>
         <div className="flex items-center gap-3">
           <span className="hidden text-xs font-medium sm:inline">Demo: {theme.name} v{runtimeTheme.version}</span>
-          <Link href={`/daftar?tema=${encodeURIComponent(theme.slug)}`} className="rounded-md bg-blue-700 px-3 py-1.5 text-xs font-bold text-white transition-colors hover:bg-blue-800 dark:bg-blue-200 dark:text-blue-950 dark:hover:bg-white">
-            Gunakan Tema
-          </Link>
+          <Link href={`/daftar?tema=${encodeURIComponent(theme.slug)}`} className="rounded-md bg-blue-700 px-3 py-1.5 text-xs font-bold text-white transition-colors hover:bg-blue-800 dark:bg-blue-200 dark:text-blue-950 dark:hover:bg-white">Gunakan Tema</Link>
         </div>
       </div>
-
       <ThemeRenderer
         component={runtimeTheme.component}
         invitation={dummyInvitation}
@@ -100,7 +60,7 @@ export default async function DemoThemePage(props: { params: Promise<{ id: strin
         giftAccounts={[]}
         isFreePlan={false}
         expiresAt={null}
-        customData={dummyInvitation.custom_data}
+        customData={customData}
         themeConfig={runtimeTheme.config}
         themeAssets={runtimeTheme.assets}
         themeVersion={themeVersion}
