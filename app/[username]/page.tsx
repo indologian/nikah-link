@@ -11,7 +11,6 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { username } = await params;
   const supabase = await createClient();
-
   const { data: inv } = await supabase
     .from("invitations")
     .select("bride_name, groom_name, cover_image_url")
@@ -99,8 +98,10 @@ export default async function PublicInvitationPage({ params, searchParams }: Pro
 
   if (themeConfig.slug === "fallback") notFound();
 
+  const ThemeUI = themeConfig.component;
+
   return (
-    <themeConfig.component
+    <ThemeUI
       invitation={invitation}
       guestName={guestNameFromUrl || "Tamu Undangan"}
       initialWishes={wishes || []}
