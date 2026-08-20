@@ -211,7 +211,7 @@ export default function MinimalistTheme({
 
   if (isExpired) {
     return (
-      <div className="min-h-screen bg-[#0d0914] flex items-center justify-center p-6 text-center">
+      <div className="min-h-screen bg-[var(--theme-background)] flex items-center justify-center p-6 text-center">
         <div className="max-w-md w-full glass-dark rounded-3xl p-8 border border-white/10 shadow-2xl">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-rose-gold-500/20 mb-6 border border-rose-gold-500/30">
             <Clock className="w-8 h-8 text-rose-gold-400" />
@@ -229,7 +229,7 @@ export default function MinimalistTheme({
   }
 
   return (
-    <div className="min-h-screen bg-[#0d0914] text-white selection:bg-rose-gold-500 selection:text-white font-sans relative overflow-x-hidden">
+    <div className="min-h-screen bg-[var(--theme-background)] text-white selection:bg-rose-gold-500 selection:text-white font-sans relative overflow-x-hidden">
 
       {/* Free Plan Floating Banner */}
       {isFreePlan && (

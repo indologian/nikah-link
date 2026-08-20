@@ -237,7 +237,7 @@ export default function GoldenArchTheme({
   );
 
   return (
-    <div ref={containerRef} className={`min-h-screen bg-[#F5F4F0] text-[#1E1E1E] overflow-hidden ${lato.className} relative selection:bg-[#D4AF37] selection:text-white`}>
+    <div ref={containerRef} className={`min-h-screen bg-[var(--theme-background)] text-[var(--theme-text)] overflow-hidden ${lato.className} relative selection:bg-[var(--theme-primary)] selection:text-white`}>
       
       {invitation.music_url && <audio ref={audioRef} loop src={invitation.music_url} />}
 
@@ -248,7 +248,7 @@ export default function GoldenArchTheme({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0 }}
             onClick={toggleAudio}
-            className="fixed bottom-6 right-6 z-50 p-4 bg-[#1E1E1E]/90 backdrop-blur-md rounded-full shadow-[0_5px_15px_rgba(212,175,55,0.3)] border border-[#D4AF37]/50 text-[#D4AF37] hover:bg-[#1E1E1E] transition-colors"
+            className="fixed bottom-6 right-6 z-50 p-4 bg-[var(--theme-text)]/90 backdrop-blur-md rounded-full shadow-[0_5px_15px_rgba(var(--theme-primary-rgb),0.3)] border border-[var(--theme-primary)]/50 text-[var(--theme-primary)] hover:bg-[var(--theme-text)] transition-colors"
           >
             <motion.div animate={{ rotate: isPlaying ? 360 : 0 }} transition={{ duration: 4, repeat: Infinity, ease: "linear" }}>
               <Music className="w-5 h-5" />
@@ -264,10 +264,10 @@ export default function GoldenArchTheme({
             key="cover"
             exit={{ opacity: 0, scale: 1.1 }}
             transition={{ duration: 1.5, ease: [0.7, 0, 0.3, 1] }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-[#1E1E1E] overflow-hidden"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--theme-text)] overflow-hidden"
           >
             {/* The Huge Drawing Arch */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40 text-[#D4AF37]">
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40 text-[var(--theme-primary)]">
               <ArchDrawSVG className="w-full h-[150%] max-w-2xl" delay={0.2} isOpen={!isOpen} />
             </div>
             
@@ -277,25 +277,25 @@ export default function GoldenArchTheme({
               transition={{ duration: 1.5, delay: 2.5 }}
               className="relative z-30 flex flex-col items-center text-center p-8 max-w-sm w-full"
             >
-              <Sparkles className="w-8 h-8 text-[#D4AF37] mb-6" />
-              <p className="text-[9px] tracking-[0.4em] uppercase text-[#D4AF37] mb-6 font-bold">The Wedding Celebration</p>
+              <Sparkles className="w-8 h-8 text-[var(--theme-primary)] mb-6" />
+              <p className="text-[9px] tracking-[0.4em] uppercase text-[var(--theme-primary)] mb-6 font-bold">The Wedding Celebration</p>
               
               <h1 className={`text-5xl md:text-6xl text-white mb-2 ${cormorant.className} italic`}>
                 {invitation.groom_name?.split(" ")[0]}
               </h1>
-              <span className={`text-xl text-[#D4AF37] my-2 ${lato.className}`}>&amp;</span>
+              <span className={`text-xl text-[var(--theme-primary)] my-2 ${lato.className}`}>&amp;</span>
               <h1 className={`text-5xl md:text-6xl text-white mb-10 ${cormorant.className} italic`}>
                 {invitation.bride_name?.split(" ")[0]}
               </h1>
 
-              <div className="bg-[#D4AF37]/10 border border-[#D4AF37]/30 px-8 py-6 backdrop-blur-sm mb-8 w-full max-w-[250px] mx-auto rounded-sm">
-                <p className="text-[8px] tracking-[0.3em] uppercase text-[#D4AF37] mb-2 opacity-80">Dear</p>
+              <div className="bg-[var(--theme-primary)]/10 border border-[var(--theme-primary)]/30 px-8 py-6 backdrop-blur-sm mb-8 w-full max-w-[250px] mx-auto rounded-sm">
+                <p className="text-[8px] tracking-[0.3em] uppercase text-[var(--theme-primary)] mb-2 opacity-80">Dear</p>
                 <p className="text-lg text-white font-medium tracking-wide">{guestName}</p>
               </div>
 
               <button
                 onClick={handleOpenInvitation}
-                className="group relative overflow-hidden bg-transparent border border-[#D4AF37] text-[#D4AF37] px-10 py-3 rounded-sm uppercase text-[10px] tracking-[0.3em] font-bold transition-all hover:bg-[#D4AF37] hover:text-[#1E1E1E] shadow-[0_0_20px_rgba(212,175,55,0.1)] hover:shadow-[0_0_30px_rgba(212,175,55,0.3)]"
+                className="group relative overflow-hidden bg-transparent border border-[var(--theme-primary)] text-[var(--theme-primary)] px-10 py-3 rounded-sm uppercase text-[10px] tracking-[0.3em] font-bold transition-all hover:bg-[var(--theme-primary)] hover:text-[var(--theme-text)] shadow-[0_0_20px_rgba(var(--theme-primary-rgb),0.1)] hover:shadow-[0_0_30px_rgba(var(--theme-primary-rgb),0.3)]"
               >
                 Open Invitation
               </button>
@@ -308,7 +308,7 @@ export default function GoldenArchTheme({
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, ease: "easeOut" }}
-            className="w-full max-w-lg mx-auto relative z-10 bg-[#F5F4F0] min-h-screen border-x border-[#E0DED5] shadow-2xl"
+            className="w-full max-w-lg mx-auto relative z-10 bg-[var(--theme-background)] min-h-screen border-x border-[var(--theme-secondary)] shadow-2xl"
           >
             {/* Background Parallax Arch */}
             <motion.div style={{ y: yArchBg }} className="absolute inset-0 z-0 pointer-events-none opacity-[0.03] overflow-hidden flex justify-center">
@@ -328,51 +328,51 @@ export default function GoldenArchTheme({
                 className="w-full flex flex-col items-center"
               >
                 {/* Arch Image Mask */}
-                <div className="w-56 h-80 mx-auto mb-10 relative overflow-hidden border-[10px] border-[#F5F4F0] shadow-2xl" style={{ borderTopLeftRadius: "50% 30%", borderTopRightRadius: "50% 30%" }}>
-                   <div className="absolute inset-0 border border-[#D4AF37]/30 z-20 pointer-events-none rounded-t-[10rem]"></div>
+                <div className="w-56 h-80 mx-auto mb-10 relative overflow-hidden border-[10px] border-[var(--theme-background)] shadow-2xl" style={{ borderTopLeftRadius: "50% 30%", borderTopRightRadius: "50% 30%" }}>
+                   <div className="absolute inset-0 border border-[var(--theme-primary)]/30 z-20 pointer-events-none rounded-t-[10rem]"></div>
                    {invitation.cover_image_url ? (
                       <Image src={invitation.cover_image_url} alt="Cover" fill className="object-cover sepia-[0.3]" />
                    ) : (
-                      <div className="w-full h-full bg-[#1E1E1E]"></div>
+                      <div className="w-full h-full bg-[var(--theme-text)]"></div>
                    )}
                 </div>
                 
-                <h4 className={`text-[10px] tracking-[0.4em] uppercase text-[#D4AF37] mb-6 font-bold`}>We Are Getting Married</h4>
-                <h2 className={`text-5xl md:text-6xl text-[#1E1E1E] mb-2 ${cormorant.className} italic`}>
+                <h4 className={`text-[10px] tracking-[0.4em] uppercase text-[var(--theme-primary)] mb-6 font-bold`}>We Are Getting Married</h4>
+                <h2 className={`text-5xl md:text-6xl text-[var(--theme-text)] mb-2 ${cormorant.className} italic`}>
                   {invitation.groom_name}
                 </h2>
-                <div className="w-8 h-[1px] bg-[#D4AF37] mx-auto my-4"></div>
-                <h2 className={`text-5xl md:text-6xl text-[#1E1E1E] mb-8 ${cormorant.className} italic`}>
+                <div className="w-8 h-[1px] bg-[var(--theme-primary)] mx-auto my-4"></div>
+                <h2 className={`text-5xl md:text-6xl text-[var(--theme-text)] mb-8 ${cormorant.className} italic`}>
                   {invitation.bride_name}
                 </h2>
                 
-                <p className="text-[10px] tracking-[0.2em] uppercase text-[#1E1E1E]/60 font-bold">
+                <p className="text-[10px] tracking-[0.2em] uppercase text-[var(--theme-text)]/60 font-bold">
                   {weddingDateStr && format(parseISO(weddingDateStr), "dd . MM . yyyy", { locale: id })}
                 </p>
               </motion.div>
             </section>
 
             {/* QUOTE SECTION */}
-            <section className="py-24 px-10 text-center relative z-10 bg-[#1E1E1E] text-white">
-              <Sparkles className="w-6 h-6 text-[#D4AF37] mx-auto mb-8" />
+            <section className="py-24 px-10 text-center relative z-10 bg-[var(--theme-text)] text-white">
+              <Sparkles className="w-6 h-6 text-[var(--theme-primary)] mx-auto mb-8" />
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 1.5 }}
               >
-                <p className={`text-2xl leading-relaxed text-[#F5F4F0] italic ${cormorant.className}`}>
+                <p className={`text-2xl leading-relaxed text-[var(--theme-background)] italic ${cormorant.className}`}>
                   "I have found the one whom my soul loves."
                 </p>
-                <p className="mt-8 text-[9px] tracking-[0.3em] text-[#D4AF37] uppercase font-bold">Song of Solomon 3:4</p>
+                <p className="mt-8 text-[9px] tracking-[0.3em] text-[var(--theme-primary)] uppercase font-bold">Song of Solomon 3:4</p>
               </motion.div>
             </section>
 
             {/* EVENT DETAILS */}
             <section className="py-24 px-6 relative z-10">
               <div className="text-center mb-20">
-                <h3 className={`text-4xl mb-4 ${cormorant.className} italic text-[#1E1E1E]`}>Event Details</h3>
-                <div className="w-16 h-[1px] bg-[#D4AF37] mx-auto"></div>
+                <h3 className={`text-4xl mb-4 ${cormorant.className} italic text-[var(--theme-text)]`}>Event Details</h3>
+                <div className="w-16 h-[1px] bg-[var(--theme-primary)] mx-auto"></div>
               </div>
 
               <div className="space-y-12">
@@ -381,30 +381,30 @@ export default function GoldenArchTheme({
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
-                  className="relative p-8 border border-[#D4AF37]/30 text-center bg-white shadow-lg"
+                  className="relative p-8 border border-[var(--theme-primary)]/30 text-center bg-white shadow-lg"
                 >
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#F5F4F0] px-4 text-[10px] tracking-[0.3em] font-bold text-[#D4AF37] uppercase">Holy Matrimony</div>
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[var(--theme-background)] px-4 text-[10px] tracking-[0.3em] font-bold text-[var(--theme-primary)] uppercase">Holy Matrimony</div>
                   
-                  <h4 className={`text-3xl text-[#1E1E1E] mb-6 mt-4 ${cormorant.className} italic`}>Akad Nikah</h4>
+                  <h4 className={`text-3xl text-[var(--theme-text)] mb-6 mt-4 ${cormorant.className} italic`}>Akad Nikah</h4>
                   
-                  <div className="space-y-4 text-xs tracking-widest text-[#1E1E1E]/80 mb-10 uppercase">
+                  <div className="space-y-4 text-xs tracking-widest text-[var(--theme-text)]/80 mb-10 uppercase">
                     <div>
-                      <p className="font-bold text-[#1E1E1E] mb-1">{invitation.akad_date && format(parseISO(invitation.akad_date), "EEEE, dd MMMM yyyy", { locale: id })}</p>
+                      <p className="font-bold text-[var(--theme-text)] mb-1">{invitation.akad_date && format(parseISO(invitation.akad_date), "EEEE, dd MMMM yyyy", { locale: id })}</p>
                       <p>{invitation.akad_time || "08:00 WIB"}</p>
                     </div>
-                    <div className="pt-4 border-t border-[#E0DED5]/50 w-2/3 mx-auto">
-                      <p className="font-bold text-[#1E1E1E] mb-1">{invitation.akad_venue || "Lokasi Akad"}</p>
+                    <div className="pt-4 border-t border-[var(--theme-secondary)]/50 w-2/3 mx-auto">
+                      <p className="font-bold text-[var(--theme-text)] mb-1">{invitation.akad_venue || "Lokasi Akad"}</p>
                       <p className="normal-case tracking-normal">{invitation.akad_address}</p>
                     </div>
                   </div>
 
                   <div className="flex flex-col gap-3 max-w-[250px] mx-auto">
                     {invitation.akad_maps_url && (
-                      <a href={invitation.akad_maps_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center bg-[#1E1E1E] text-[#D4AF37] py-3 text-[9px] font-bold tracking-[0.2em] uppercase hover:bg-[#D4AF37] hover:text-[#1E1E1E] transition-colors border border-[#1E1E1E]">
+                      <a href={invitation.akad_maps_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center bg-[var(--theme-text)] text-[var(--theme-primary)] py-3 text-[9px] font-bold tracking-[0.2em] uppercase hover:bg-[var(--theme-primary)] hover:text-[var(--theme-text)] transition-colors border border-[var(--theme-text)]">
                          Open Maps
                       </a>
                     )}
-                    <a href={generateGCalLink(invitation.akad_date || "2026-12-31", invitation.akad_time || "08:00", "Akad Nikah", invitation.akad_address || "")} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center bg-transparent border border-[#1E1E1E]/20 text-[#1E1E1E] py-3 text-[9px] font-bold tracking-[0.2em] uppercase hover:bg-[#1E1E1E]/5 transition-colors">
+                    <a href={generateGCalLink(invitation.akad_date || "2026-12-31", invitation.akad_time || "08:00", "Akad Nikah", invitation.akad_address || "")} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center bg-transparent border border-[var(--theme-text)]/20 text-[var(--theme-text)] py-3 text-[9px] font-bold tracking-[0.2em] uppercase hover:bg-[var(--theme-text)]/5 transition-colors">
                        Save to Calendar
                     </a>
                   </div>
@@ -415,30 +415,30 @@ export default function GoldenArchTheme({
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
-                  className="relative p-8 border border-[#D4AF37]/30 text-center bg-white shadow-lg"
+                  className="relative p-8 border border-[var(--theme-primary)]/30 text-center bg-white shadow-lg"
                 >
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#F5F4F0] px-4 text-[10px] tracking-[0.3em] font-bold text-[#D4AF37] uppercase">Wedding Reception</div>
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[var(--theme-background)] px-4 text-[10px] tracking-[0.3em] font-bold text-[var(--theme-primary)] uppercase">Wedding Reception</div>
                   
-                  <h4 className={`text-3xl text-[#1E1E1E] mb-6 mt-4 ${cormorant.className} italic`}>Resepsi</h4>
+                  <h4 className={`text-3xl text-[var(--theme-text)] mb-6 mt-4 ${cormorant.className} italic`}>Resepsi</h4>
                   
-                  <div className="space-y-4 text-xs tracking-widest text-[#1E1E1E]/80 mb-10 uppercase">
+                  <div className="space-y-4 text-xs tracking-widest text-[var(--theme-text)]/80 mb-10 uppercase">
                     <div>
-                      <p className="font-bold text-[#1E1E1E] mb-1">{invitation.reception_date && format(parseISO(invitation.reception_date), "EEEE, dd MMMM yyyy", { locale: id })}</p>
+                      <p className="font-bold text-[var(--theme-text)] mb-1">{invitation.reception_date && format(parseISO(invitation.reception_date), "EEEE, dd MMMM yyyy", { locale: id })}</p>
                       <p>{invitation.reception_time || "11:00 WIB"}</p>
                     </div>
-                    <div className="pt-4 border-t border-[#E0DED5]/50 w-2/3 mx-auto">
-                      <p className="font-bold text-[#1E1E1E] mb-1">{invitation.reception_venue || "Lokasi Resepsi"}</p>
+                    <div className="pt-4 border-t border-[var(--theme-secondary)]/50 w-2/3 mx-auto">
+                      <p className="font-bold text-[var(--theme-text)] mb-1">{invitation.reception_venue || "Lokasi Resepsi"}</p>
                       <p className="normal-case tracking-normal">{invitation.reception_address}</p>
                     </div>
                   </div>
 
                   <div className="flex flex-col gap-3 max-w-[250px] mx-auto">
                     {invitation.reception_maps_url && (
-                      <a href={invitation.reception_maps_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center bg-[#1E1E1E] text-[#D4AF37] py-3 text-[9px] font-bold tracking-[0.2em] uppercase hover:bg-[#D4AF37] hover:text-[#1E1E1E] transition-colors border border-[#1E1E1E]">
+                      <a href={invitation.reception_maps_url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center bg-[var(--theme-text)] text-[var(--theme-primary)] py-3 text-[9px] font-bold tracking-[0.2em] uppercase hover:bg-[var(--theme-primary)] hover:text-[var(--theme-text)] transition-colors border border-[var(--theme-text)]">
                          Open Maps
                       </a>
                     )}
-                    <a href={generateGCalLink(invitation.reception_date || "2026-12-31", invitation.reception_time || "11:00", "Resepsi", invitation.reception_address || "")} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center bg-transparent border border-[#1E1E1E]/20 text-[#1E1E1E] py-3 text-[9px] font-bold tracking-[0.2em] uppercase hover:bg-[#1E1E1E]/5 transition-colors">
+                    <a href={generateGCalLink(invitation.reception_date || "2026-12-31", invitation.reception_time || "11:00", "Resepsi", invitation.reception_address || "")} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center bg-transparent border border-[var(--theme-text)]/20 text-[var(--theme-text)] py-3 text-[9px] font-bold tracking-[0.2em] uppercase hover:bg-[var(--theme-text)]/5 transition-colors">
                        Save to Calendar
                     </a>
                   </div>
@@ -447,7 +447,7 @@ export default function GoldenArchTheme({
             </section>
 
             {/* LIVE COUNTDOWN & AR FILTER CTA */}
-            <section className="py-24 px-6 bg-[#1E1E1E] text-center relative overflow-hidden">
+            <section className="py-24 px-6 bg-[var(--theme-text)] text-center relative overflow-hidden">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -456,7 +456,7 @@ export default function GoldenArchTheme({
                 className="relative z-10"
               >
                 <h3 className={`text-4xl mb-4 ${cormorant.className} italic text-white`}>Counting Down</h3>
-                <div className="w-12 h-[1px] bg-[#D4AF37] mx-auto mb-12"></div>
+                <div className="w-12 h-[1px] bg-[var(--theme-primary)] mx-auto mb-12"></div>
                 
                 <div className="flex justify-center gap-6 mb-16">
                   {[
@@ -466,7 +466,7 @@ export default function GoldenArchTheme({
                     { label: "Sec", value: timeLeft.seconds },
                   ].map((item, idx) => (
                     <div key={idx} className="flex flex-col items-center">
-                      <div className={`text-4xl text-[#D4AF37] mb-2 ${cormorant.className} italic font-bold`}>
+                      <div className={`text-4xl text-[var(--theme-primary)] mb-2 ${cormorant.className} italic font-bold`}>
                         {item.value.toString().padStart(2, "0")}
                       </div>
                       <span className="text-[9px] uppercase tracking-[0.2em] text-white/50">{item.label}</span>
@@ -474,16 +474,16 @@ export default function GoldenArchTheme({
                   ))}
                 </div>
 
-                <div className="border border-[#D4AF37]/30 p-8 mx-auto max-w-xs relative bg-white/5 backdrop-blur-sm">
-                  <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-[#D4AF37]"></div>
-                  <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-[#D4AF37]"></div>
-                  <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-[#D4AF37]"></div>
-                  <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-[#D4AF37]"></div>
+                <div className="border border-[var(--theme-primary)]/30 p-8 mx-auto max-w-xs relative bg-white/5 backdrop-blur-sm">
+                  <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-[var(--theme-primary)]"></div>
+                  <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-[var(--theme-primary)]"></div>
+                  <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-[var(--theme-primary)]"></div>
+                  <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-[var(--theme-primary)]"></div>
                   
-                  <Camera className="w-6 h-6 mx-auto text-[#D4AF37] mb-4" />
+                  <Camera className="w-6 h-6 mx-auto text-[var(--theme-primary)] mb-4" />
                   <p className="text-xs tracking-widest uppercase font-bold text-white mb-2">AR Filter</p>
                   <p className="text-[10px] text-white/60 mb-6 leading-relaxed">Share your moments with our exclusive Instagram filter.</p>
-                  <button className="bg-transparent border border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#1E1E1E] transition-colors px-6 py-3 text-[9px] font-bold uppercase tracking-[0.2em] w-full">
+                  <button className="bg-transparent border border-[var(--theme-primary)] text-[var(--theme-primary)] hover:bg-[var(--theme-primary)] hover:text-[var(--theme-text)] transition-colors px-6 py-3 text-[9px] font-bold uppercase tracking-[0.2em] w-full">
                     Try Filter
                   </button>
                 </div>
@@ -491,10 +491,10 @@ export default function GoldenArchTheme({
             </section>
 
             {/* FLOATING 3D PHOTO GALLERY */}
-            <section className="py-24 px-6 bg-[#F5F4F0] overflow-hidden relative z-10">
+            <section className="py-24 px-6 bg-[var(--theme-background)] overflow-hidden relative z-10">
               <div className="text-center mb-20">
-                <h3 className={`text-4xl mb-4 ${cormorant.className} italic text-[#1E1E1E]`}>Gallery</h3>
-                <div className="w-16 h-[1px] bg-[#D4AF37] mx-auto"></div>
+                <h3 className={`text-4xl mb-4 ${cormorant.className} italic text-[var(--theme-text)]`}>Gallery</h3>
+                <div className="w-16 h-[1px] bg-[var(--theme-primary)] mx-auto"></div>
               </div>
 
               {/* 3D Interactive Container */}
@@ -509,7 +509,7 @@ export default function GoldenArchTheme({
                   initial={{ opacity: 0, scale: 0.8 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
-                  className="absolute z-30 w-56 h-72 p-2 bg-white shadow-2xl border border-[#D4AF37]/20"
+                  className="absolute z-30 w-56 h-72 p-2 bg-white shadow-2xl border border-[var(--theme-primary)]/20"
                 >
                   <div className="w-full h-full bg-[#DFD3C3] overflow-hidden relative">
                     {(customData?.gallery_1 || invitation.cover_image_url) && <Image src={customData?.gallery_1 || invitation.cover_image_url} alt="Gallery 1" fill className="object-cover grayscale hover:grayscale-0 transition-all duration-700" />}
@@ -522,7 +522,7 @@ export default function GoldenArchTheme({
                   whileInView={{ opacity: 1, x: -100, rotateY: 15 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 }}
-                  className="absolute z-20 w-44 h-64 p-2 bg-white shadow-xl -translate-x-24 -translate-y-8 border border-[#E0DED5]"
+                  className="absolute z-20 w-44 h-64 p-2 bg-white shadow-xl -translate-x-24 -translate-y-8 border border-[var(--theme-secondary)]"
                 >
                   <div className="w-full h-full bg-[#C7B7A3]/30 overflow-hidden relative rounded-bl-[40px]">
                      {(customData?.gallery_2 || invitation.cover_image_url) && <Image src={customData?.gallery_2 || invitation.cover_image_url} alt="Gallery 2" fill className="object-cover sepia opacity-80 hover:opacity-100 transition-opacity" />}
@@ -535,7 +535,7 @@ export default function GoldenArchTheme({
                   whileInView={{ opacity: 1, x: 100, rotateY: -15 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.4 }}
-                  className="absolute z-10 w-44 h-64 p-2 bg-white shadow-xl translate-x-24 translate-y-8 border border-[#E0DED5]"
+                  className="absolute z-10 w-44 h-64 p-2 bg-white shadow-xl translate-x-24 translate-y-8 border border-[var(--theme-secondary)]"
                 >
                   <div className="w-full h-full bg-[#A5947B]/30 overflow-hidden relative rounded-br-[40px]">
                      {(customData?.gallery_3 || invitation.cover_image_url) && <Image src={customData?.gallery_3 || invitation.cover_image_url} alt="Gallery 3" fill className="object-cover opacity-60 mix-blend-overlay hover:mix-blend-normal hover:opacity-100 transition-all" />}
@@ -546,11 +546,11 @@ export default function GoldenArchTheme({
 
             {/* GIFT REGISTRY */}
             {(giftAccounts && giftAccounts.length > 0) && (
-              <section className="py-24 px-6 bg-white relative z-10 border-y border-[#E0DED5]">
+              <section className="py-24 px-6 bg-white relative z-10 border-y border-[var(--theme-secondary)]">
                 <div className="text-center mb-16">
-                  <Gift className="w-6 h-6 text-[#D4AF37] mx-auto mb-6" />
-                  <h3 className={`text-4xl mb-4 ${cormorant.className} italic text-[#1E1E1E]`}>Wedding Gift</h3>
-                  <div className="w-16 h-[1px] bg-[#D4AF37] mx-auto"></div>
+                  <Gift className="w-6 h-6 text-[var(--theme-primary)] mx-auto mb-6" />
+                  <h3 className={`text-4xl mb-4 ${cormorant.className} italic text-[var(--theme-text)]`}>Wedding Gift</h3>
+                  <div className="w-16 h-[1px] bg-[var(--theme-primary)] mx-auto"></div>
                 </div>
 
                 <div className="space-y-8 max-w-sm mx-auto">
@@ -561,20 +561,20 @@ export default function GoldenArchTheme({
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: idx * 0.1 }}
-                      className="border border-[#D4AF37]/30 p-8 text-center relative group hover:border-[#D4AF37] transition-colors"
+                      className="border border-[var(--theme-primary)]/30 p-8 text-center relative group hover:border-[var(--theme-primary)] transition-colors"
                     >
-                      <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#D4AF37]"></div>
-                      <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#D4AF37]"></div>
-                      <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#D4AF37]"></div>
-                      <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#D4AF37]"></div>
+                      <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[var(--theme-primary)]"></div>
+                      <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[var(--theme-primary)]"></div>
+                      <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[var(--theme-primary)]"></div>
+                      <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[var(--theme-primary)]"></div>
 
-                      <p className="text-[9px] uppercase tracking-[0.3em] font-bold mb-4 text-[#1E1E1E]/60">{account.bank_name}</p>
-                      <p className={`text-2xl tracking-widest mb-3 text-[#1E1E1E] font-medium ${cormorant.className} italic`}>{account.account_number}</p>
-                      <p className="text-xs text-[#1E1E1E]/80 mb-8 uppercase tracking-widest">A.N {account.account_name}</p>
+                      <p className="text-[9px] uppercase tracking-[0.3em] font-bold mb-4 text-[var(--theme-text)]/60">{account.bank_name}</p>
+                      <p className={`text-2xl tracking-widest mb-3 text-[var(--theme-text)] font-medium ${cormorant.className} italic`}>{account.account_number}</p>
+                      <p className="text-xs text-[var(--theme-text)]/80 mb-8 uppercase tracking-widest">A.N {account.account_name}</p>
                       
                       <button
                         onClick={() => handleCopy(account.account_number, account.id)}
-                        className="flex items-center justify-center gap-2 bg-[#1E1E1E] text-[#D4AF37] py-3 text-[9px] font-bold tracking-[0.2em] uppercase hover:bg-[#D4AF37] hover:text-[#1E1E1E] transition-colors w-full"
+                        className="flex items-center justify-center gap-2 bg-[var(--theme-text)] text-[var(--theme-primary)] py-3 text-[9px] font-bold tracking-[0.2em] uppercase hover:bg-[var(--theme-primary)] hover:text-[var(--theme-text)] transition-colors w-full"
                       >
                         {copiedBank === account.id ? (
                           <>
@@ -595,10 +595,10 @@ export default function GoldenArchTheme({
             )}
 
             {/* RSVP & WISHES */}
-            <section className="py-24 px-6 bg-[#F5F4F0] relative z-10">
+            <section className="py-24 px-6 bg-[var(--theme-background)] relative z-10">
               <div className="text-center mb-16">
-                <h3 className={`text-4xl mb-4 ${cormorant.className} italic text-[#1E1E1E]`}>RSVP & Wishes</h3>
-                <div className="w-16 h-[1px] bg-[#D4AF37] mx-auto"></div>
+                <h3 className={`text-4xl mb-4 ${cormorant.className} italic text-[var(--theme-text)]`}>RSVP & Wishes</h3>
+                <div className="w-16 h-[1px] bg-[var(--theme-primary)] mx-auto"></div>
               </div>
 
               {/* RSVP Form */}
@@ -608,7 +608,7 @@ export default function GoldenArchTheme({
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   onSubmit={handleRsvpSubmit}
-                  className="bg-white p-8 border border-[#E0DED5] shadow-lg mb-16 max-w-sm mx-auto"
+                  className="bg-white p-8 border border-[var(--theme-secondary)] shadow-lg mb-16 max-w-sm mx-auto"
                 >
                   <div className="space-y-6">
                     <div>
@@ -617,7 +617,7 @@ export default function GoldenArchTheme({
                         value={wishName}
                         onChange={(e) => setWishName(e.target.value)}
                         placeholder="Full Name"
-                        className="w-full bg-transparent border-b border-[#E0DED5] py-3 text-xs tracking-widest text-[#1E1E1E] focus:outline-none focus:border-[#D4AF37] transition-colors uppercase placeholder:normal-case placeholder:tracking-normal"
+                        className="w-full bg-transparent border-b border-[var(--theme-secondary)] py-3 text-xs tracking-widest text-[var(--theme-text)] focus:outline-none focus:border-[var(--theme-primary)] transition-colors uppercase placeholder:normal-case placeholder:tracking-normal"
                         required
                       />
                     </div>
@@ -625,7 +625,7 @@ export default function GoldenArchTheme({
                       <select
                         value={rsvpStatus}
                         onChange={(e: any) => setRsvpStatus(e.target.value)}
-                        className="w-full bg-transparent border-b border-[#E0DED5] py-3 text-xs tracking-widest text-[#1E1E1E] focus:outline-none focus:border-[#D4AF37] transition-colors uppercase"
+                        className="w-full bg-transparent border-b border-[var(--theme-secondary)] py-3 text-xs tracking-widest text-[var(--theme-text)] focus:outline-none focus:border-[var(--theme-primary)] transition-colors uppercase"
                       >
                         <option value="hadir">Will Attend</option>
                         <option value="tidak_hadir">Cannot Attend</option>
@@ -636,7 +636,7 @@ export default function GoldenArchTheme({
                           <select
                             value={rsvpCount}
                             onChange={(e: any) => setRsvpCount(Number(e.target.value))}
-                            className="w-full bg-transparent border-b border-[#E0DED5] py-3 text-xs tracking-widest text-[#1E1E1E] focus:outline-none focus:border-[#D4AF37] transition-colors uppercase"
+                            className="w-full bg-transparent border-b border-[var(--theme-secondary)] py-3 text-xs tracking-widest text-[var(--theme-text)] focus:outline-none focus:border-[var(--theme-primary)] transition-colors uppercase"
                           >
                             <option value={1}>1 Person</option>
                             <option value={2}>2 Persons</option>
@@ -646,17 +646,17 @@ export default function GoldenArchTheme({
                     <button
                       disabled={submittingRsvp}
                       type="submit"
-                      className="w-full bg-[#1E1E1E] text-[#D4AF37] py-4 uppercase tracking-[0.2em] text-[9px] font-bold hover:bg-[#D4AF37] hover:text-[#1E1E1E] transition-colors disabled:opacity-70 mt-6"
+                      className="w-full bg-[var(--theme-text)] text-[var(--theme-primary)] py-4 uppercase tracking-[0.2em] text-[9px] font-bold hover:bg-[var(--theme-primary)] hover:text-[var(--theme-text)] transition-colors disabled:opacity-70 mt-6"
                     >
                       {submittingRsvp ? "Sending..." : "Send RSVP"}
                     </button>
                   </div>
                 </motion.form>
               ) : (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white p-10 text-center border border-[#E0DED5] shadow-lg mb-16 max-w-sm mx-auto">
-                  <Check className="w-8 h-8 text-[#D4AF37] mx-auto mb-4" />
-                  <h4 className={`text-2xl text-[#1E1E1E] mb-2 ${cormorant.className} italic`}>Thank You</h4>
-                  <p className="text-[#1E1E1E]/60 text-xs tracking-widest uppercase">Your confirmation has been received.</p>
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="bg-white p-10 text-center border border-[var(--theme-secondary)] shadow-lg mb-16 max-w-sm mx-auto">
+                  <Check className="w-8 h-8 text-[var(--theme-primary)] mx-auto mb-4" />
+                  <h4 className={`text-2xl text-[var(--theme-text)] mb-2 ${cormorant.className} italic`}>Thank You</h4>
+                  <p className="text-[var(--theme-text)]/60 text-xs tracking-widest uppercase">Your confirmation has been received.</p>
                 </motion.div>
               )}
 
@@ -666,22 +666,22 @@ export default function GoldenArchTheme({
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 onSubmit={handleSendWish}
-                className="mb-10 bg-white border border-[#E0DED5] shadow-sm max-w-md mx-auto"
+                className="mb-10 bg-white border border-[var(--theme-secondary)] shadow-sm max-w-md mx-auto"
               >
                 <textarea
                   rows={4}
                   value={wishText}
                   onChange={(e) => setWishText(e.target.value)}
-                  className="w-full bg-transparent text-sm p-6 text-[#1E1E1E] focus:outline-none resize-none placeholder:text-[#1E1E1E]/30"
+                  className="w-full bg-transparent text-sm p-6 text-[var(--theme-text)] focus:outline-none resize-none placeholder:text-[var(--theme-text)]/30"
                   placeholder="Write your wishes here..."
                   required
                 />
-                <div className="flex justify-between items-center px-6 pb-4 border-t border-[#E0DED5]/50 pt-4 bg-[#F5F4F0]/50">
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-[#1E1E1E] font-bold">{wishName || "Guest"}</span>
+                <div className="flex justify-between items-center px-6 pb-4 border-t border-[var(--theme-secondary)]/50 pt-4 bg-[var(--theme-background)]/50">
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--theme-text)] font-bold">{wishName || "Guest"}</span>
                   <button
                     type="submit"
                     disabled={sendingWish || !wishText.trim()}
-                    className="bg-transparent text-[#D4AF37] p-2 hover:text-[#1E1E1E] transition-colors disabled:opacity-50 flex items-center gap-2 text-[9px] uppercase tracking-widest font-bold"
+                    className="bg-transparent text-[var(--theme-primary)] p-2 hover:text-[var(--theme-text)] transition-colors disabled:opacity-50 flex items-center gap-2 text-[9px] uppercase tracking-widest font-bold"
                   >
                     <span>Send</span>
                     <Send className="w-3 h-3" />
@@ -697,13 +697,13 @@ export default function GoldenArchTheme({
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="bg-white p-6 border border-[#E0DED5] shadow-sm"
+                    className="bg-white p-6 border border-[var(--theme-secondary)] shadow-sm"
                   >
-                    <div className="flex items-center justify-between mb-4 pb-4 border-b border-[#E0DED5]/50">
-                      <p className="font-bold text-[10px] tracking-[0.2em] uppercase text-[#1E1E1E]">{wish.guest_name}</p>
-                      <span className="text-[9px] tracking-widest text-[#1E1E1E]/40 uppercase">{format(new Date(wish.created_at), "dd.MM.yy", { locale: id })}</span>
+                    <div className="flex items-center justify-between mb-4 pb-4 border-b border-[var(--theme-secondary)]/50">
+                      <p className="font-bold text-[10px] tracking-[0.2em] uppercase text-[var(--theme-text)]">{wish.guest_name}</p>
+                      <span className="text-[9px] tracking-widest text-[var(--theme-text)]/40 uppercase">{format(new Date(wish.created_at), "dd.MM.yy", { locale: id })}</span>
                     </div>
-                    <p className={`text-sm text-[#1E1E1E]/80 leading-loose italic ${cormorant.className}`}>
+                    <p className={`text-sm text-[var(--theme-text)]/80 leading-loose italic ${cormorant.className}`}>
                       "{wish.message}"
                     </p>
                   </motion.div>
@@ -712,15 +712,15 @@ export default function GoldenArchTheme({
             </section>
 
             {/* FOOTER */}
-            <footer className="py-24 text-center px-6 bg-[#1E1E1E] text-white relative z-10">
-              <Sparkles className="w-6 h-6 text-[#D4AF37] mx-auto mb-8" />
-              <h2 className={`text-3xl mb-8 ${cormorant.className} italic text-[#F5F4F0]`}>
+            <footer className="py-24 text-center px-6 bg-[var(--theme-text)] text-white relative z-10">
+              <Sparkles className="w-6 h-6 text-[var(--theme-primary)] mx-auto mb-8" />
+              <h2 className={`text-3xl mb-8 ${cormorant.className} italic text-[var(--theme-background)]`}>
                 {invitation.groom_name?.split(" ")[0]} & {invitation.bride_name?.split(" ")[0]}
               </h2>
-              <div className="w-8 h-[1px] bg-[#D4AF37] mx-auto mb-8"></div>
+              <div className="w-8 h-[1px] bg-[var(--theme-primary)] mx-auto mb-8"></div>
               <div className="text-[8px] tracking-[0.3em] text-white/50 uppercase flex flex-col items-center gap-2">
                 <span>Created with love by</span>
-                <a href="https://nikahlink.com" className="text-[#D4AF37] hover:text-white transition-colors font-bold">NikahLink</a>
+                <a href="https://nikahlink.com" className="text-[var(--theme-primary)] hover:text-white transition-colors font-bold">NikahLink</a>
               </div>
             </footer>
           </motion.div>

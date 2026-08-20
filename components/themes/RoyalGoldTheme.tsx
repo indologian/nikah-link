@@ -375,7 +375,7 @@ export default function RoyalGoldTheme({
 
               <div className="grid md:grid-cols-2 gap-12">
                 {/* Akad */}
-                <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="bg-[#0B101D] p-10 border relative overflow-hidden" style={{ borderColor: themeColors.primary }}>
+                <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="bg-[var(--theme-surface)] p-10 border relative overflow-hidden" style={{ borderColor: themeColors.primary }}>
                   <OrnateCorner className="absolute top-0 left-0 w-12 h-12 opacity-50" />
                   <OrnateCorner className="absolute bottom-0 right-0 w-12 h-12 transform scale-[-1] opacity-50" />
                   
@@ -397,7 +397,7 @@ export default function RoyalGoldTheme({
                 </motion.div>
 
                 {/* Reception */}
-                <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="bg-[#0B101D] p-10 border relative overflow-hidden" style={{ borderColor: themeColors.primary }}>
+                <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="bg-[var(--theme-surface)] p-10 border relative overflow-hidden" style={{ borderColor: themeColors.primary }}>
                   <OrnateCorner className="absolute top-0 left-0 w-12 h-12 opacity-50" />
                   <OrnateCorner className="absolute bottom-0 right-0 w-12 h-12 transform scale-[-1] opacity-50" />
                   
@@ -457,7 +457,7 @@ export default function RoyalGoldTheme({
           )}
 
           {/* RSVP & WISHES */}
-          <section className="py-24 px-6 mt-16 bg-[#0B101D] border-t border-b" style={{ borderColor: themeColors.primary }}>
+          <section className="py-24 px-6 mt-16 bg-[var(--theme-surface)] border-t border-b" style={{ borderColor: themeColors.primary }}>
             <div className="max-w-5xl mx-auto">
               <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn} className="text-center mb-16">
                 <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${cinzel.className}`} style={{ color: themeColors.primary }}>RSVP & Guestbook</h2>
@@ -496,7 +496,7 @@ export default function RoyalGoldTheme({
                         <select 
                           value={rsvpStatus}
                           onChange={(e) => setRsvpStatus(e.target.value as any)}
-                          className="w-full p-4 border bg-[#0B101D] outline-none focus:border-white text-white appearance-none"
+                          className="w-full p-4 border bg-[var(--theme-surface)] outline-none focus:border-white text-white appearance-none"
                           style={{ borderColor: `${themeColors.primary}60` }}
                         >
                           <option value="hadir">Joyfully Accept</option>
@@ -510,7 +510,7 @@ export default function RoyalGoldTheme({
                           <select 
                             value={rsvpCount}
                             onChange={(e) => setRsvpCount(Number(e.target.value))}
-                            className="w-full p-4 border bg-[#0B101D] outline-none focus:border-white text-white appearance-none"
+                            className="w-full p-4 border bg-[var(--theme-surface)] outline-none focus:border-white text-white appearance-none"
                             style={{ borderColor: `${themeColors.primary}60` }}
                           >
                             <option value="1">1 Seat</option>
