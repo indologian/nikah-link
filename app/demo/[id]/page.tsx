@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { getThemeConfig } from "@/lib/themes/registry";
+import { ThemeRenderer } from "@/components/themes/ThemeRenderer";
+import { resolveRuntimeTheme } from "@/lib/themes/runtime";
 
 export const metadata = {
   title: "Demo Tema | NikahLink",
@@ -24,13 +25,26 @@ export default async function DemoThemePage(props: { params: Promise<{ id: strin
 
   if (!theme) notFound();
 
-  const themeConfig = getThemeConfig(theme.component_key);
+  const { data: themeVersion } = await supabase
+    .from("theme_versions")
+    .select("*")
+    .eq("theme_id", theme.id)
+    .eq("is_published", true)
+    .order("version", { ascending: false })
+    .limit(1)
+    .maybeSingle();
 
-  if (themeConfig.slug !== theme.component_key) {
-    notFound();
-  }
+  if (!themeVersion) notFound();
 
-  const ThemeComponent = themeConfig.component;
+  const runtimeTheme = resolveRuntimeTheme(theme, themeVersion);
+  const customData = Object.fromEntries(
+    runtimeTheme.fields.map((field) => [
+      field.name,
+      field.type === "image"
+        ? "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=800&auto=format&fit=crop"
+        : field.defaultValue ?? "",
+    ])
+  );
 
   const dummyInvitation = {
     id: "demo-invitation-123",
@@ -59,13 +73,9 @@ export default async function DemoThemePage(props: { params: Promise<{ id: strin
     show_gallery: true,
     show_wishes: true,
     created_at: new Date().toISOString(),
-    theme_colors: theme.colors || undefined,
-    custom_data: themeConfig.fields.reduce((acc, field) => {
-      acc[field.name] = field.type === "image"
-        ? "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=800&auto=format&fit=crop"
-        : field.defaultValue ?? "";
-      return acc;
-    }, {} as Record<string, any>),
+    theme_colors: runtimeTheme.colors,
+    theme_version: themeVersion,
+    custom_data: customData,
   };
 
   return (
@@ -73,21 +83,26 @@ export default async function DemoThemePage(props: { params: Promise<{ id: strin
       <div className="sticky top-0 z-[100] flex items-center justify-between gap-3 bg-blue-50 px-4 py-2 text-blue-800 dark:bg-blue-950 dark:text-blue-200">
         <Link href="/tema" className="text-xs font-semibold hover:underline">← Kembali ke Tema</Link>
         <div className="flex items-center gap-3">
-          <span className="hidden text-xs font-medium sm:inline">Demo: {theme.name}</span>
+          <span className="hidden text-xs font-medium sm:inline">Demo: {theme.name} v{runtimeTheme.version}</span>
           <Link href={`/daftar?tema=${encodeURIComponent(theme.slug)}`} className="rounded-md bg-blue-700 px-3 py-1.5 text-xs font-bold text-white transition-colors hover:bg-blue-800 dark:bg-blue-200 dark:text-blue-950 dark:hover:bg-white">
             Gunakan Tema
           </Link>
         </div>
       </div>
 
-      <ThemeComponent
+      <ThemeRenderer
+        component={runtimeTheme.component}
         invitation={dummyInvitation}
+        themeColors={runtimeTheme.colors}
         guestName="Tamu Demo"
         initialWishes={[]}
         giftAccounts={[]}
         isFreePlan={false}
         expiresAt={null}
         customData={dummyInvitation.custom_data}
+        themeConfig={runtimeTheme.config}
+        themeAssets={runtimeTheme.assets}
+        themeVersion={themeVersion}
       />
     </main>
   );
