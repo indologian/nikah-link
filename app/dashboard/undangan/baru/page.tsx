@@ -452,6 +452,12 @@ export default function NewInvitationPage() {
 
       const themeId = themeData?.id || null;
 
+      const selectedTheme = themesList.find((theme) => theme.slug === formData.theme_slug);
+      const selectedVersion = selectedTheme?.theme_versions
+        ?.filter((version: any) => version.lifecycle_status === "published" || version.is_published)
+        ?.sort((a: any, b: any) => (b.version ?? 0) - (a.version ?? 0))[0];
+      const resolvedThemeVersionId = themeVersionId ?? selectedVersion?.id ?? null;
+
       // Save invitation
       const { data: newInv, error: insertError } = await supabase
         .from("invitations")
@@ -477,8 +483,7 @@ export default function NewInvitationPage() {
           reception_maps_url: formData.reception_maps_url || null,
 
           theme_id: themeId,
-          theme_version_id: themeVersionId,
-          theme_version_id: themeVersionId,
+          theme_version_id: resolvedThemeVersionId,
           music_url: formData.music_url || null,
           cover_image_url: formData.cover_image_url || null,
           custom_message: formData.custom_message,

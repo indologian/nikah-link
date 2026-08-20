@@ -138,6 +138,7 @@ export default function EditInvitationPage() {
         }
 
         setInitialUsername(data.username || "");
+        setThemeVersionId(data.theme_version_id || null);
         setFormData({
           username: data.username || "",
           bride_name: data.bride_name || "",
