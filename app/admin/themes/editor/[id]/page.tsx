@@ -1,6 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
-import ThemeEditorClient from "./ThemeEditorClient";
+import ThemeEditorVersionedClient from "./ThemeEditorVersionedClient";
 import type { Theme } from "@/types";
 
 export const dynamic = "force-dynamic";
@@ -29,5 +29,5 @@ export default async function ThemeEditorPage({ params }: Props) {
     theme = (data as Theme | null) ?? null;
   }
 
-  return <ThemeEditorClient theme={theme} />;
+  return <ThemeEditorVersionedClient theme={theme} />;
 }
