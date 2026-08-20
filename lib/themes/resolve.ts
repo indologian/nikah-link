@@ -1,5 +1,7 @@
+import { createElement, type ComponentType } from "react";
 import { getThemeConfig } from "./registry";
 import { normalizeThemeColors, type ThemeColors } from "./config";
+import { ThemeRenderer } from "@/components/themes/ThemeRenderer";
 
 type ThemeLike = {
   slug?: string | null;
@@ -30,6 +32,23 @@ export type ResolvedTheme = {
   usedFallback: boolean;
 };
 
+function withThemeTokens(
+  config: ReturnType<typeof getThemeConfig>,
+  version: ThemeVersionLike | null,
+  colors: ThemeColors,
+) {
+  const RawThemeComponent = config.component;
+  const component = ((props: any) =>
+    createElement(ThemeRenderer, {
+      component: RawThemeComponent as ComponentType<any>,
+      themeVersion: version,
+      themeColors: colors,
+      ...props,
+    })) as ComponentType<any>;
+
+  return { ...config, component };
+}
+
 /**
  * Resolve a theme from a DB theme record, an optional immutable theme version,
  * or a raw renderer key. A version's component_key is authoritative when
@@ -48,14 +67,15 @@ export function resolveThemeConfig(
         theme?.slug?.trim() ||
         FALLBACK_THEME_KEY;
 
-  const config = getThemeConfig(requestedKey);
+  const rawConfig = getThemeConfig(requestedKey);
   const colors = normalizeThemeColors(version?.colors ?? (typeof theme === "string" ? null : theme?.colors));
 
-  if (config.slug === "fallback") {
+  if (rawConfig.slug === "fallback") {
+    const fallbackConfig = getThemeConfig(FALLBACK_THEME_KEY);
     return {
       requestedKey,
       resolvedKey: FALLBACK_THEME_KEY,
-      config: getThemeConfig(FALLBACK_THEME_KEY),
+      config: withThemeTokens(fallbackConfig, version ?? null, colors),
       version: version ?? null,
       colors,
       usedFallback: true,
@@ -64,8 +84,8 @@ export function resolveThemeConfig(
 
   return {
     requestedKey,
-    resolvedKey: config.slug,
-    config,
+    resolvedKey: rawConfig.slug,
+    config: withThemeTokens(rawConfig, version ?? null, colors),
     version: version ?? null,
     colors,
     usedFallback: false,
