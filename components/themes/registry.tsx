@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import type { ComponentType } from "react";
 import { THEME_DEFINITIONS } from "@/lib/themes/definitions";
-import type { ThemeConfig as ThemeDefinition } from "@/types/theme";
+import type { ThemeDefinition } from "@/types/theme";
 
 type ThemeComponent = ComponentType<any>;
 
@@ -101,5 +101,3 @@ export function getThemeConfig(slug: string): ThemeConfig {
 export function hasThemeComponent(slug: string): boolean {
   return Boolean(COMPONENTS[slug.trim().toLowerCase()]);
 }
-
-export type { ThemeDefinition };
