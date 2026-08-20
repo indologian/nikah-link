@@ -65,3 +65,29 @@ export async function setThemeActive(themeId: string, isActive: boolean) {
   if (error) throw error;
   return data;
 }
+
+export async function uploadThemeThumbnail(file: File, themeSlug: string) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) throw new Error("Authentication required");
+  if (!file.type || !["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+    throw new Error("Thumbnail harus JPG, PNG, atau WEBP.");
+  }
+  if (file.size > 2 * 1024 * 1024) throw new Error("Ukuran thumbnail maksimal 2 MB.");
+
+  const extension = file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg";
+  const safeSlug = themeSlug.toLowerCase().replace(/[^a-z0-9-]/g, "-");
+  const path = `thumbnails/${safeSlug}-${crypto.randomUUID()}.${extension}`;
+
+  const { error } = await supabase.storage.from("themes").upload(path, file, {
+    cacheControl: "31536000",
+    contentType: file.type,
+    upsert: false,
+  });
+  if (error) throw error;
+
+  return supabase.storage.from("themes").getPublicUrl(path).data.publicUrl;
+}
