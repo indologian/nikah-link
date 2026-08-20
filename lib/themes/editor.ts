@@ -26,7 +26,20 @@ export type PublishedThemeEditor = {
   runtime: RuntimeTheme;
 };
 
-export async function getPublishedThemeForEditor(slug: string): Promise<PublishedThemeEditor | null> {
+function getInvitationIdFromEditPath(): string | null {
+  if (typeof window === "undefined") return null;
+
+  const match = window.location.pathname.match(
+    /^\/dashboard\/undangan\/([^/]+)\/edit\/?$/
+  );
+
+  return match?.[1] || null;
+}
+
+export async function getThemeForEditor(
+  slug: string,
+  versionId?: string | null
+): Promise<PublishedThemeEditor | null> {
   const normalizedSlug = slug.trim().toLowerCase();
   if (!normalizedSlug) return null;
 
@@ -39,15 +52,48 @@ export async function getPublishedThemeForEditor(slug: string): Promise<Publishe
 
   if (themeError || !theme) return null;
 
-  const { data: version, error: versionError } = await supabase
+  let pinnedVersionId = versionId || null;
+
+  // The existing invitation editor already calls this helper with only a slug.
+  // When running on an invitation edit route, resolve the exact version pinned
+  // to that invitation instead of silently switching to the latest published one.
+  if (!pinnedVersionId) {
+    const invitationId = getInvitationIdFromEditPath();
+
+    if (invitationId) {
+      const { data: invitation, error: invitationError } = await supabase
+        .from("invitations")
+        .select("theme_id, theme_version_id")
+        .eq("id", invitationId)
+        .maybeSingle();
+
+      if (invitationError || !invitation) return null;
+      if (invitation.theme_id !== theme.id) return null;
+      if (!invitation.theme_version_id) return null;
+
+      pinnedVersionId = invitation.theme_version_id;
+    }
+  }
+
+  let versionQuery = supabase
     .from("theme_versions")
     .select("id, theme_id, version, component_key, config, fields_schema, colors, assets, fields_schema_authoritative, is_published, lifecycle_status")
-    .eq("theme_id", theme.id)
-    .eq("is_published", true)
-    .eq("lifecycle_status", "published")
-    .order("version", { ascending: false })
-    .limit(1)
-    .maybeSingle();
+    .eq("theme_id", theme.id);
+
+  if (pinnedVersionId) {
+    // Existing invitations must edit the exact version they are pinned to,
+    // even when that version has since been archived.
+    versionQuery = versionQuery.eq("id", pinnedVersionId);
+  } else {
+    // New theme selection uses the latest published version.
+    versionQuery = versionQuery
+      .eq("is_published", true)
+      .eq("lifecycle_status", "published")
+      .order("version", { ascending: false })
+      .limit(1);
+  }
+
+  const { data: version, error: versionError } = await versionQuery.maybeSingle();
 
   if (versionError || !version || version.theme_id !== theme.id) return null;
   if (version.component_key !== theme.component_key) return null;
@@ -59,4 +105,8 @@ export async function getPublishedThemeForEditor(slug: string): Promise<Publishe
     version,
     runtime,
   };
+}
+
+export async function getPublishedThemeForEditor(slug: string): Promise<PublishedThemeEditor | null> {
+  return getThemeForEditor(slug);
 }
