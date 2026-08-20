@@ -31,6 +31,12 @@ type ThemeEditorOptions = {
   invitationId?: string | null;
 };
 
+function getLegacyInvitationIdFromPath(): string | null {
+  if (typeof window === "undefined") return null;
+  const match = window.location.pathname.match(/^\/dashboard\/undangan\/([^/]+)\/edit\/?$/);
+  return match?.[1] || null;
+}
+
 export async function getThemeForEditor(
   slug: string,
   options?: ThemeEditorOptions
@@ -48,18 +54,19 @@ export async function getThemeForEditor(
   if (themeError || !theme) return null;
 
   let pinnedVersionId = options?.versionId ?? null;
+  const invitationId = options?.invitationId ?? getLegacyInvitationIdFromPath();
 
-  // Existing invitations keep their exact pinned version while editing the
-  // same theme, even when that version has been archived.
-  if (!pinnedVersionId && options?.invitationId) {
+  // Existing invitations keep their pinned version while editing the same theme.
+  // The explicit invitationId option is preferred; the pathname fallback keeps
+  // older callers compatible until they are migrated to the explicit API.
+  if (!pinnedVersionId && invitationId) {
     const { data: invitation, error: invitationError } = await supabase
       .from("invitations")
       .select("theme_id, theme_version_id")
-      .eq("id", options.invitationId)
+      .eq("id", invitationId)
       .maybeSingle();
 
     if (invitationError || !invitation) return null;
-
     if (invitation.theme_id === theme.id) {
       if (!invitation.theme_version_id) return null;
       pinnedVersionId = invitation.theme_version_id;
@@ -68,9 +75,7 @@ export async function getThemeForEditor(
 
   let versionQuery = supabase
     .from("theme_versions")
-    .select(
-      "id, theme_id, version, component_key, config, fields_schema, colors, assets, fields_schema_authoritative, is_published, lifecycle_status"
-    )
+    .select("id, theme_id, version, component_key, config, fields_schema, colors, assets, fields_schema_authoritative, is_published, lifecycle_status")
     .eq("theme_id", theme.id);
 
   if (pinnedVersionId) {
@@ -84,7 +89,6 @@ export async function getThemeForEditor(
   }
 
   const { data: version, error: versionError } = await versionQuery.maybeSingle();
-
   if (versionError || !version || version.theme_id !== theme.id) return null;
   if (version.component_key !== theme.component_key) return null;
 
