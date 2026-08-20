@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { supabaseAdmin } from "@/lib/supabase/admin";
-import { createMidtransTransaction } from "@/lib/midtrans";
+import { createMidtransTransaction } from "@/services/billing/midtrans.service";
 import { randomUUID } from "crypto";
 
 const PLAN_PRICES = {
@@ -25,59 +25,33 @@ export async function POST(request: Request) {
   try {
     const supabase = await createClient();
 
-    // ------------------------------------------------------------
-    // 1. Authentication
-    // ------------------------------------------------------------
     const {
       data: { user },
     } = await supabase.auth.getUser();
 
     if (!user) {
-      return NextResponse.json(
-        { error: "Unauthorized" },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // ------------------------------------------------------------
-    // 2. Parse request body
-    // ------------------------------------------------------------
     let body: unknown;
-
     try {
       body = await request.json();
     } catch {
-      return NextResponse.json(
-        { error: "Payload tidak valid" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Payload tidak valid" }, { status: 400 });
     }
 
     if (!body || typeof body !== "object") {
-      return NextResponse.json(
-        { error: "Payload tidak valid" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Payload tidak valid" }, { status: 400 });
     }
 
     const payload = body as Record<string, unknown>;
-
     const plan = payload.plan;
     const invitationId = payload.invitationId;
 
-    // ------------------------------------------------------------
-    // 3. Validate plan
-    // ------------------------------------------------------------
     if (!isValidPlan(plan)) {
-      return NextResponse.json(
-        { error: "Plan tidak valid" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Plan tidak valid" }, { status: 400 });
     }
 
-    // ------------------------------------------------------------
-    // 4. Validate invitationId
-    // ------------------------------------------------------------
     let validatedInvitationId: string | null = null;
 
     if (invitationId !== undefined && invitationId !== null) {
@@ -96,9 +70,6 @@ export async function POST(request: Request) {
       validatedInvitationId = invitationId;
     }
 
-    // ------------------------------------------------------------
-    // 5. Load profile
-    // ------------------------------------------------------------
     const { data: profile, error: profileError } = await supabase
       .from("profiles")
       .select("plan, plan_expires_at")
@@ -107,16 +78,12 @@ export async function POST(request: Request) {
 
     if (profileError || !profile) {
       console.error("Profile lookup error:", profileError);
-
       return NextResponse.json(
         { error: "Gagal memeriksa paket akun" },
         { status: 500 }
       );
     }
 
-    // ------------------------------------------------------------
-    // 6. Determine effective plan
-    // ------------------------------------------------------------
     const PLAN_RANK: Record<string, number> = {
       free: 0,
       premium: 1,
@@ -125,12 +92,8 @@ export async function POST(request: Request) {
 
     let effectivePlan = profile.plan || "free";
 
-    if (
-      effectivePlan === "premium" &&
-      profile.plan_expires_at
-    ) {
+    if (effectivePlan === "premium" && profile.plan_expires_at) {
       const expiresAt = new Date(profile.plan_expires_at);
-
       if (expiresAt.getTime() <= Date.now()) {
         effectivePlan = "free";
       }
@@ -148,24 +111,16 @@ export async function POST(request: Request) {
       );
     }
 
-    // ------------------------------------------------------------
-    // 7. Validate invitation ownership
-    // ------------------------------------------------------------
     if (validatedInvitationId) {
-      const { data: invitation, error: invitationError } =
-        await supabase
-          .from("invitations")
-          .select("id")
-          .eq("id", validatedInvitationId)
-          .eq("user_id", user.id)
-          .maybeSingle();
+      const { data: invitation, error: invitationError } = await supabase
+        .from("invitations")
+        .select("id")
+        .eq("id", validatedInvitationId)
+        .eq("user_id", user.id)
+        .maybeSingle();
 
       if (invitationError) {
-        console.error(
-          "Invitation validation error:",
-          invitationError
-        );
-
+        console.error("Invitation validation error:", invitationError);
         return NextResponse.json(
           { error: "Gagal memvalidasi undangan" },
           { status: 500 }
@@ -174,18 +129,12 @@ export async function POST(request: Request) {
 
       if (!invitation) {
         return NextResponse.json(
-          {
-            error:
-              "Undangan tidak valid atau bukan milik Anda",
-          },
+          { error: "Undangan tidak valid atau bukan milik Anda" },
           { status: 403 }
         );
       }
     }
 
-    // ------------------------------------------------------------
-    // 8. Cancel ALL existing pending subscriptions
-    // ------------------------------------------------------------
     const { error: cancelPendingError } = await supabaseAdmin
       .from("subscriptions")
       .update({ status: "cancelled" })
@@ -193,36 +142,16 @@ export async function POST(request: Request) {
       .eq("status", "pending");
 
     if (cancelPendingError) {
-      console.error(
-        "Cancel pending subscriptions error:",
-        cancelPendingError
-      );
-
+      console.error("Cancel pending subscriptions error:", cancelPendingError);
       return NextResponse.json(
-        {
-          error:
-            "Gagal membatalkan transaksi pembayaran sebelumnya",
-        },
+        { error: "Gagal membatalkan transaksi pembayaran sebelumnya" },
         { status: 500 }
       );
     }
 
-    // ------------------------------------------------------------
-    // 9. Server-controlled price
-    // ------------------------------------------------------------
     const planInfo = PLAN_PRICES[plan];
-
-    // Client cannot control:
-    // - amount
-    // - product name
-    // - order_id
-    // - status
-    // - expiry
     const orderId = `NL-${randomUUID()}`;
 
-    // ------------------------------------------------------------
-    // 10. Create local subscription FIRST
-    // ------------------------------------------------------------
     const { error: dbError } = await supabaseAdmin
       .from("subscriptions")
       .insert({
@@ -235,13 +164,8 @@ export async function POST(request: Request) {
       });
 
     if (dbError) {
-      console.error(
-        "DB Insert Subscription Error:",
-        dbError
-      );
+      console.error("DB Insert Subscription Error:", dbError);
 
-      // Unique partial index protection:
-      // only one pending subscription per user.
       if (dbError.code === "23505") {
         return NextResponse.json(
           {
@@ -258,9 +182,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // ------------------------------------------------------------
-    // 11. Create Midtrans transaction
-    // ------------------------------------------------------------
     try {
       const midtransRes = await createMidtransTransaction({
         orderId,
@@ -288,25 +209,16 @@ export async function POST(request: Request) {
         order_id: orderId,
       });
     } catch (midtransError) {
-      console.error(
-        "Midtrans Transaction Error:",
-        midtransError
-      );
+      console.error("Midtrans Transaction Error:", midtransError);
 
-      // Local subscription exists, but Midtrans order creation failed.
       await supabaseAdmin
         .from("subscriptions")
-        .update({
-          status: "failed",
-        })
+        .update({ status: "failed" })
         .eq("midtrans_order_id", orderId)
         .eq("status", "pending");
 
       return NextResponse.json(
-        {
-          error:
-            "Gagal membuat transaksi di Midtrans",
-        },
+        { error: "Gagal membuat transaksi di Midtrans" },
         { status: 500 }
       );
     }
@@ -316,9 +228,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         error:
-          error instanceof Error
-            ? error.message
-            : "Gagal membuat transaksi",
+          error instanceof Error ? error.message : "Gagal membuat transaksi",
       },
       { status: 500 }
     );
