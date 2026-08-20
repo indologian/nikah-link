@@ -2,20 +2,22 @@ import type { Metadata } from "next";
 import Navbar from "@/components/landing/Navbar";
 import Footer from "@/components/landing/Footer";
 import ThemeCarousel from "@/components/landing/ThemeCarousel";
-
 import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
   title: "Katalog Tema Undangan Digital | NikahLink",
-  description: "Jelajahi 30+ pilihan tema undangan pernikahan digital modern, minimalis, floral, hingga adat Nusantara.",
+  description: "Jelajahi pilihan tema undangan pernikahan digital modern, minimalis, floral, hingga adat Nusantara.",
 };
+
+export const dynamic = "force-dynamic";
 
 export default async function TemaPage() {
   const supabase = await createClient();
   const { data: themes } = await supabase
     .from("themes")
-    .select("*")
+    .select("id, name, slug, component_key, category, thumbnail_url, colors, is_premium, is_active, sort_order, created_at")
     .eq("is_active", true)
+    .order("sort_order", { ascending: true })
     .order("created_at", { ascending: false });
 
   return (
