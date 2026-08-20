@@ -33,7 +33,7 @@ export default async function PublicInvitationPage({ params, searchParams }: Pro
 
   const { data: invitation } = await supabase
     .from("invitations")
-    .select("*, themes(*)")
+    .select("*, themes(*, theme_versions(*))")
     .eq("username", username)
     .single();
 
@@ -99,9 +99,13 @@ export default async function PublicInvitationPage({ params, searchParams }: Pro
   ]);
 
   const isFreePlan = profile?.plan !== "premium" && profile?.plan !== "pro";
-  const resolvedTheme = resolveThemeConfig(invitation.themes);
+  const themeVersion =
+    invitation.themes?.theme_versions?.find((version: any) => version.id === invitation.theme_version_id) ||
+    invitation.themes?.theme_versions?.find((version: any) => version.is_published) ||
+    null;
+  const resolvedTheme = resolveThemeConfig(invitation.themes, themeVersion);
   const ThemeUI = resolvedTheme.config.component;
-  const themeColors = invitation.themes?.colors || null;
+  const themeColors = themeVersion?.colors || invitation.themes?.colors || null;
   const renderInvitation = {
     ...invitation,
     theme_colors: themeColors || invitation.theme_colors || undefined,
