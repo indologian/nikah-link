@@ -1,12 +1,16 @@
 import type { ComponentType } from "react";
 import { buildThemeTokenStyle } from "@/lib/themes/tokens";
-import type { ThemeVersionLike } from "@/lib/themes/resolve";
 
- type ThemeRendererProps = {
+type ThemeRendererProps = {
   component: ComponentType<any>;
   invitation: any;
   themeColors?: unknown;
-  themeVersion?: ThemeVersionLike | null;
+  themeVersion?: {
+    id?: string | null;
+    version?: number | null;
+    colors?: Record<string, unknown> | null;
+    component_key?: string | null;
+  } | null;
   [key: string]: any;
 };
 
