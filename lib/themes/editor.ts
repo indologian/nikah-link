@@ -56,9 +56,9 @@ export async function getThemeForEditor(
   let pinnedVersionId = options?.versionId ?? null;
   const invitationId = options?.invitationId ?? getLegacyInvitationIdFromPath();
 
-  // Existing invitations keep their pinned version while editing the same theme.
-  // The explicit invitationId option is preferred; the pathname fallback keeps
-  // older callers compatible until they are migrated to the explicit API.
+  // When editing an existing invitation, the invitation owns the theme version
+  // that must be shown in the editor. Never silently fall back to the latest
+  // published version when the invitation points at a different theme.
   if (!pinnedVersionId && invitationId) {
     const { data: invitation, error: invitationError } = await supabase
       .from("invitations")
@@ -67,10 +67,9 @@ export async function getThemeForEditor(
       .maybeSingle();
 
     if (invitationError || !invitation) return null;
-    if (invitation.theme_id === theme.id) {
-      if (!invitation.theme_version_id) return null;
-      pinnedVersionId = invitation.theme_version_id;
-    }
+    if (invitation.theme_id !== theme.id) return null;
+    if (!invitation.theme_version_id) return null;
+    pinnedVersionId = invitation.theme_version_id;
   }
 
   let versionQuery = supabase
