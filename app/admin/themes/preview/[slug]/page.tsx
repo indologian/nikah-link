@@ -40,7 +40,11 @@ export default async function AdminThemePreviewPage({ params, searchParams }: Pr
 
   const { data: themeVersion } = await themeVersionQuery.maybeSingle();
   if (!themeVersion) notFound();
-  if (!theme.is_active && themeVersion.lifecycle_status === "published") notFound();
+
+  // Historical/archived versions remain previewable when explicitly requested.
+  // Without an explicit version, only the current published version of an active
+  // catalog theme is a valid default preview.
+  if (!theme.is_active && !version) notFound();
 
   const runtimeTheme = resolveRuntimeTheme(theme, themeVersion);
   if (!isValidThemeRenderer(runtimeTheme.componentKey)) notFound();
