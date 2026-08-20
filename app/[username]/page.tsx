@@ -1,6 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
-import { getThemeConfig } from "@/lib/themes/registry";
 import { resolveThemeConfig } from "@/lib/themes/resolve";
 import type { Metadata } from "next";
 
@@ -74,7 +73,7 @@ export default async function PublicInvitationPage({ params, searchParams }: Pro
       custom_data: {},
     };
 
-    const DemoTheme = getThemeConfig("minimalis").component;
+    const DemoTheme = resolveThemeConfig("minimalis").config.component;
     return (
       <DemoTheme
         invitation={demoInvitation as any}
@@ -100,10 +99,8 @@ export default async function PublicInvitationPage({ params, searchParams }: Pro
   ]);
 
   const isFreePlan = profile?.plan !== "premium" && profile?.plan !== "pro";
-  const componentKey = invitation.themes?.component_key || invitation.themes?.slug || "minimalis";
-  const { config: themeConfig } = resolveThemeConfig(componentKey);
-
-  const ThemeUI = themeConfig.component;
+  const resolvedTheme = resolveThemeConfig(invitation.themes);
+  const ThemeUI = resolvedTheme.config.component;
   const themeColors = invitation.themes?.colors || null;
   const renderInvitation = {
     ...invitation,
