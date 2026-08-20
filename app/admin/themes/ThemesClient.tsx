@@ -136,6 +136,10 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
         thumbnailUrl = themes.find((theme) => theme.id === isEditing)?.thumbnail_url || "";
       }
 
+      const existingTheme = isEditing
+        ? themes.find((theme) => theme.id === isEditing)
+        : null;
+
       const themeData = {
         name,
         slug,
@@ -143,12 +147,12 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
         category: formData.category,
         thumbnail_url: thumbnailUrl || null,
         is_premium: formData.is_premium,
-        is_active: true,
+        is_active: existingTheme?.is_active ?? true,
         colors: {
           primary: formData.colors_primary,
-          secondary: "#FFFFFF",
-          accent: "#000000",
-          background: "#FFFFFF",
+          secondary: existingTheme?.colors?.secondary || "#FFFFFF",
+          accent: existingTheme?.colors?.accent || "#000000",
+          background: existingTheme?.colors?.background || "#FFFFFF",
         },
       };
 
@@ -181,24 +185,38 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
     }
   };
 
-  const handleDelete = async (id: string, thumbnailUrl?: string | null) => {
-    if (!confirm("Yakin ingin menghapus tema ini?")) return;
+  const handleArchive = async (id: string) => {
+    if (!confirm("Nonaktifkan tema ini? Tema akan disembunyikan dari katalog publik, tetapi tetap aman untuk undangan yang sudah menggunakannya.")) return;
 
     try {
-      const { error: deleteError } = await supabase.from("themes").delete().eq("id", id);
-      if (deleteError) throw deleteError;
+      const { data: updatedTheme, error: updateError } = await supabase
+        .from("themes")
+        .update({ is_active: false })
+        .eq("id", id)
+        .select("*")
+        .single();
 
-      if (thumbnailUrl?.includes("/storage/v1/object/public/themes/")) {
-        const filePath = thumbnailUrl.split("/storage/v1/object/public/themes/")[1];
-        if (filePath) {
-          const { error: removeError } = await supabase.storage.from("themes").remove([filePath]);
-          if (removeError) console.warn("Gagal menghapus thumbnail:", removeError.message);
-        }
-      }
+      if (updateError) throw updateError;
 
-      setThemes((current) => current.filter((theme) => theme.id !== id));
+      setThemes((current) => current.map((theme) => (theme.id === id ? updatedTheme as Theme : theme)));
     } catch (err: any) {
-      alert("Gagal menghapus tema: " + (err.message || "Terjadi kesalahan."));
+      alert("Gagal menonaktifkan tema: " + (err.message || "Terjadi kesalahan."));
+    }
+  };
+
+  const handleRestore = async (id: string) => {
+    try {
+      const { data: updatedTheme, error: updateError } = await supabase
+        .from("themes")
+        .update({ is_active: true })
+        .eq("id", id)
+        .select("*")
+        .single();
+
+      if (updateError) throw updateError;
+      setThemes((current) => current.map((theme) => (theme.id === id ? updatedTheme as Theme : theme)));
+    } catch (err: any) {
+      alert("Gagal mengaktifkan tema: " + (err.message || "Terjadi kesalahan."));
     }
   };
 
@@ -352,7 +370,7 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
         {themes.map((theme) => (
-          <div key={theme.id} className="group relative">
+          <div key={theme.id} className={`group relative ${!theme.is_active ? "opacity-60" : ""}`}>
             <div className="aspect-[3/4] relative bg-slate-100 dark:bg-slate-900 mb-3 overflow-hidden border border-slate-200 dark:border-slate-800">
               {theme.thumbnail_url ? (
                 <img src={theme.thumbnail_url} alt={theme.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
@@ -364,6 +382,11 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
               {theme.is_premium && (
                 <div className="absolute top-3 left-3 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 text-[9px] font-mono px-2 py-1 uppercase tracking-widest shadow-sm">
                   Premium
+                </div>
+              )}
+              {!theme.is_active && (
+                <div className="absolute bottom-3 left-3 bg-slate-900 text-white text-[9px] font-mono px-2 py-1 uppercase tracking-widest">
+                  Nonaktif
                 </div>
               )}
             </div>
@@ -382,13 +405,23 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
                 >
                   <Edit2 className="w-4 h-4" />
                 </button>
-                <button
-                  onClick={() => handleDelete(theme.id, theme.thumbnail_url)}
-                  className="text-slate-400 hover:text-rose-600 transition-colors p-1"
-                  title="Hapus Tema"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
+                {theme.is_active ? (
+                  <button
+                    onClick={() => handleArchive(theme.id)}
+                    className="text-slate-400 hover:text-rose-600 transition-colors p-1"
+                    title="Nonaktifkan Tema"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => handleRestore(theme.id)}
+                    className="text-slate-400 hover:text-emerald-600 transition-colors p-1"
+                    title="Aktifkan Kembali"
+                  >
+                    <CheckCircle2 className="w-4 h-4" />
+                  </button>
+                )}
               </div>
             </div>
           </div>
