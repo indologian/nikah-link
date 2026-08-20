@@ -14,15 +14,19 @@ export default async function AdminThemePreviewPage({ params }: Props) {
 
   const { data: theme } = await supabase
     .from("themes")
-    .select("id, name, slug, component_key, colors, is_active")
+    .select("id, name, slug, component_key, colors, is_active, theme_versions(id, version, component_key, config, fields_schema, colors, assets, is_published)")
     .eq("slug", normalizedSlug)
     .single();
 
   if (!theme) notFound();
 
-  const resolvedTheme = resolveThemeConfig(theme);
+  const themeVersion =
+    theme.theme_versions?.filter((version: any) => version.is_published).sort((a: any, b: any) => b.version - a.version)[0] ||
+    theme.theme_versions?.sort((a: any, b: any) => b.version - a.version)[0] ||
+    null;
+  const resolvedTheme = resolveThemeConfig(theme, themeVersion);
   const ThemeComponent = resolvedTheme.config.component;
-  const themeColors = normalizeThemeColors(theme.colors);
+  const themeColors = normalizeThemeColors(themeVersion?.colors || theme.colors);
 
   const customData = Object.fromEntries(
     resolvedTheme.config.fields.map((field) => [
@@ -68,7 +72,7 @@ export default async function AdminThemePreviewPage({ params }: Props) {
   return (
     <div className="min-h-screen">
       <div className="sticky top-0 z-[100] flex items-center justify-between bg-slate-900 px-4 py-2 text-white">
-        <div className="text-xs font-semibold">Admin Preview: {theme.name}</div>
+        <div className="text-xs font-semibold">Admin Preview: {theme.name}{themeVersion ? ` v${themeVersion.version}` : ""}</div>
         <a href="/admin/themes" className="text-xs font-medium underline underline-offset-2">Kembali</a>
       </div>
       <ThemeComponent
