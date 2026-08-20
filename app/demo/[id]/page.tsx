@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { getThemeConfig } from "@/lib/themes/registry";
+import { resolveThemeConfig } from "@/lib/themes/resolve";
 
 export const metadata = {
   title: "Demo Tema | NikahLink",
@@ -24,13 +24,8 @@ export default async function DemoThemePage(props: { params: Promise<{ id: strin
 
   if (!theme) notFound();
 
-  const themeConfig = getThemeConfig(theme.component_key);
-
-  if (themeConfig.slug !== theme.component_key) {
-    notFound();
-  }
-
-  const ThemeComponent = themeConfig.component;
+  const resolvedTheme = resolveThemeConfig(theme);
+  const ThemeComponent = resolvedTheme.config.component;
 
   const dummyInvitation = {
     id: "demo-invitation-123",
@@ -60,7 +55,7 @@ export default async function DemoThemePage(props: { params: Promise<{ id: strin
     show_wishes: true,
     created_at: new Date().toISOString(),
     theme_colors: theme.colors || undefined,
-    custom_data: themeConfig.fields.reduce((acc, field) => {
+    custom_data: resolvedTheme.config.fields.reduce((acc, field) => {
       acc[field.name] = field.type === "image"
         ? "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=800&auto=format&fit=crop"
         : field.defaultValue ?? "";
