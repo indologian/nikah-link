@@ -505,6 +505,23 @@ export default function EditInvitationPage() {
   };
 
   const handleSubmit = async () => {
+    if (isResolvingTheme) {
+      setError("Tema masih dimuat. Silakan tunggu sampai selesai.");
+      return;
+    }
+
+    if (Object.values(uploading).some(Boolean)) {
+      setError(
+        "Masih ada file yang sedang diunggah. Silakan tunggu sampai selesai."
+      );
+      return;
+    }
+
+    if (slugStatus === "checking") {
+      setError("URL undangan masih diperiksa. Silakan tunggu sampai selesai.");
+      return;
+    }
+
     setIsUpdating(true);
     setShowConfirmModal(false);
     setError("");
@@ -536,13 +553,15 @@ export default function EditInvitationPage() {
       }
 
       // Resolve tema + published version terbaru
-      const selectedTheme = await getPublishedThemeForEditor(
-        formData.theme_slug
-      );
+      // Gunakan theme editor yang sudah di-resolve saat tema dipilih/dimuat.
+      // Jangan mengambil published version terbaru lagi saat save.
+      // RPC database akan mempertahankan theme_version_id yang sudah dipin
+      // apabila user tidak mengganti tema.
+      const selectedTheme = selectedThemeEditor;
 
-      if (!selectedTheme) {
+      if (!selectedTheme || selectedTheme.theme.slug !== formData.theme_slug) {
         throw new Error(
-          "Tema yang dipilih tidak memiliki published version yang valid."
+          "Tema yang dipilih belum siap atau published version-nya tidak valid."
         );
       }
 
