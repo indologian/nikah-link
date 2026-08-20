@@ -1,7 +1,5 @@
 import { normalizeThemeColors, type ThemeColors } from "@/lib/themes/config";
 
-export type ThemeTokenStyle = React.CSSProperties & Record<`--theme-${string}`, string>;
-
 type RendererTokenDefaults = Partial<ThemeColors> & {
   surface?: string;
 };
@@ -35,6 +33,30 @@ export const RENDERER_TOKEN_DEFAULTS: Record<string, RendererTokenDefaults> = {
     accent: "#F2D26D",
     surface: "#0B101D",
   },
+  "vintage-elegance": {
+    background: "#F9F6F0",
+    text: "#4A4036",
+    primary: "#8B7355",
+    secondary: "#E5DED2",
+    accent: "#C1A57B",
+    surface: "#FFFFFF",
+  },
+  "royal-botanical": {
+    background: "#064E3B",
+    text: "#F3F4F6",
+    primary: "#D4AF37",
+    secondary: "#14532D",
+    accent: "#FCD34D",
+    surface: "#0B3B2E",
+  },
+  "wayang-classic": {
+    background: "#2A1B14",
+    text: "#F5E6D3",
+    primary: "#D4AF37",
+    secondary: "#3A251B",
+    accent: "#8B4513",
+    surface: "#1F140F",
+  },
 };
 
 function getRendererFallbackColors(rendererKey?: string | null): ThemeColors {
@@ -60,7 +82,7 @@ function mergeThemeColors(input: unknown, rendererKey?: string | null): ThemeCol
 export function buildThemeTokenStyle(
   colors: unknown,
   rendererKey?: string | null,
-): ThemeTokenStyle {
+): React.CSSProperties & Record<`--theme-${string}`, string> {
   const normalized = mergeThemeColors(colors, rendererKey);
   const rendererDefaults = RENDERER_TOKEN_DEFAULTS[rendererKey || ""] ?? {};
   const surface = rendererDefaults.surface ?? normalized.background;
