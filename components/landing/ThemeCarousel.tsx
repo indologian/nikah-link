@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Eye, Sparkles } from "lucide-react";
+import { ArrowRight, Eye } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export interface ThemeProps {
@@ -15,8 +15,6 @@ export interface ThemeProps {
   thumbnail_url?: string;
   is_premium?: boolean;
 }
-
-const DEFAULT_CATEGORIES = ["Semua", "Minimalis", "Floral", "Elegan", "Budaya", "Dark"];
 
 export default function ThemeCarousel({ themes = [] }: { themes?: ThemeProps[] }) {
   const [activeCategory, setActiveCategory] = useState("Semua");
@@ -34,15 +32,13 @@ export default function ThemeCarousel({ themes = [] }: { themes?: ThemeProps[] }
   return (
     <section className="w-full pt-16 pb-20 bg-white dark:bg-slate-950 transition-colors border-b border-slate-200 dark:border-slate-800">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        {/* Editorial Heading */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
           <div className="max-w-2xl">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-medium tracking-tight text-slate-900 dark:text-white leading-[1.05] mb-4">
               Koleksi Tema Desain
             </h2>
             <p className="text-slate-500 text-lg">
-              30+ desain eksklusif yang dirancang dengan dedikasi untuk merayakan cerita Anda.
+              {themes.length} desain eksklusif yang dirancang dengan dedikasi untuk merayakan cerita Anda.
             </p>
           </div>
           <Link
@@ -71,10 +67,9 @@ export default function ThemeCarousel({ themes = [] }: { themes?: ThemeProps[] }
           ))}
         </div>
 
-        {/* Photographic Grid - Hairline borders */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-slate-200 dark:bg-slate-800 border border-slate-200 dark:border-slate-800">
           <AnimatePresence mode="popLayout">
-            {filtered.map((theme, i) => (
+            {filtered.map((theme) => (
               <motion.div
                 layout
                 initial={{ opacity: 0 }}
@@ -84,7 +79,6 @@ export default function ThemeCarousel({ themes = [] }: { themes?: ThemeProps[] }
                 key={theme.id}
                 className="group relative overflow-hidden aspect-[3/4] bg-white dark:bg-slate-950"
               >
-                {/* Real Visual Content using colors */}
                 <div
                   className="absolute inset-0 transition-transform duration-700 group-hover:scale-105 flex flex-col justify-center items-center text-center p-8"
                   style={{
@@ -113,7 +107,6 @@ export default function ThemeCarousel({ themes = [] }: { themes?: ThemeProps[] }
                   </p>
                 </div>
 
-                {/* Badges */}
                 {theme.is_premium && (
                   <div className="absolute top-4 left-4 z-20">
                     <span className="px-3 py-1 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md text-[10px] uppercase font-bold tracking-wider text-slate-900 dark:text-white border border-slate-200/50 dark:border-slate-800/50">
@@ -122,7 +115,6 @@ export default function ThemeCarousel({ themes = [] }: { themes?: ThemeProps[] }
                   </div>
                 )}
 
-                {/* Hover / Mobile Overlay */}
                 <div className="absolute inset-0 bg-black/60 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                   <div className="translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-300">
                     <h3 className="text-white font-medium tracking-tight mb-4">{theme.name}</h3>
@@ -149,7 +141,6 @@ export default function ThemeCarousel({ themes = [] }: { themes?: ThemeProps[] }
             ))}
           </AnimatePresence>
         </div>
-
       </div>
     </section>
   );
