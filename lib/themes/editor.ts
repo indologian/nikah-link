@@ -44,6 +44,39 @@ export async function getThemeForEditor(
   const normalizedSlug = slug.trim().toLowerCase();
   if (!normalizedSlug) return null;
 
+  const invitationId = options?.invitationId ?? getLegacyInvitationIdFromPath();
+
+  // Editor pages are client components. Resolve the published snapshot through
+  // a server endpoint so theme_versions cannot be hidden by browser-side RLS.
+  if (invitationId && typeof window !== "undefined") {
+    try {
+      const params = new URLSearchParams({
+        slug: normalizedSlug,
+        invitationId,
+      });
+      const response = await fetch(`/api/themes/editor?${params.toString()}`, {
+        method: "GET",
+        credentials: "same-origin",
+        cache: "no-store",
+      });
+
+      if (response.ok) {
+        const payload = (await response.json()) as {
+          theme: ThemeEditorRecord;
+          version: PublishedThemeEditor["version"];
+        };
+
+        return {
+          theme: payload.theme,
+          version: payload.version,
+          runtime: resolveRuntimeTheme(payload.theme, payload.version),
+        };
+      }
+    } catch (error) {
+      console.warn("[editor-theme] server resolver failed; using client fallback", error);
+    }
+  }
+
   const supabase = createClient();
   const { data: theme, error: themeError } = await supabase
     .from("themes")
@@ -54,7 +87,6 @@ export async function getThemeForEditor(
   if (themeError || !theme) return null;
 
   let pinnedVersionId = options?.versionId ?? null;
-  const invitationId = options?.invitationId ?? getLegacyInvitationIdFromPath();
 
   if (!pinnedVersionId && invitationId) {
     const { data: invitation, error: invitationError } = await supabase
@@ -92,7 +124,6 @@ export async function getThemeForEditor(
     }
   }
 
-  // Primary path: current published version for this exact theme.
   const { data: publishedVersions } = await supabase
     .from("theme_versions")
     .select(selectFields)
@@ -101,9 +132,6 @@ export async function getThemeForEditor(
     .order("version", { ascending: false })
     .limit(10);
 
-  // Some older databases may have a published flag without the newer lifecycle
-  // field being synchronized. We intentionally validate the component key in JS
-  // and accept the newest published version for this exact theme.
   const version =
     publishedVersions?.find(
       (candidate: NonNullable<typeof publishedVersions>[number]) =>
