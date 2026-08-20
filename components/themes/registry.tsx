@@ -1,9 +1,9 @@
 import dynamic from "next/dynamic";
 import type { ComponentType } from "react";
 import { THEME_DEFINITIONS } from "@/lib/themes/definitions";
-import type { ThemeDefinition } from "@/types/theme";
+import type { ThemeComponentProps, ThemeDefinition } from "@/types/theme";
 
-type ThemeComponent = ComponentType<any>;
+type ThemeComponent = ComponentType<ThemeComponentProps>;
 
 export interface ThemeConfig {
   slug: string;
@@ -85,7 +85,7 @@ export function getThemeConfig(slug: string): ThemeConfig {
   return {
     slug: normalized,
     fields: [],
-    component: ({ invitation }: { invitation?: any }) => (
+    component: ({ invitation }: ThemeComponentProps) => (
       <div className="flex min-h-screen items-center justify-center bg-white p-8 text-center">
         <div>
           <h1 className="text-2xl font-bold text-slate-800">Tema Tidak Ditemukan</h1>
