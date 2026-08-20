@@ -147,7 +147,11 @@ export function createInvitationEditorBackend() {
 
       if (table === "gift_accounts") {
         return {
-          select: () => new QueryChain(async () => ({ data: [], error: null })),
+          select: () => new QueryChain(async (filters) => {
+            const invitationId = String(filters.get("invitation_id") ?? "");
+            const result = await loadInvitationEditor(invitationId);
+            return { data: result?.gifts ?? [], error: null };
+          }),
           insert: async () => ({ data: null, error: null }),
           update: () => notSupported(table, "update"),
           delete: () => notSupported(table, "delete"),
