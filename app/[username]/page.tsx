@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import { getThemeConfig } from "@/lib/themes/registry";
+import { resolveThemeConfig } from "@/lib/themes/resolve";
 import type { Metadata } from "next";
 
 interface Props {
@@ -100,9 +101,7 @@ export default async function PublicInvitationPage({ params, searchParams }: Pro
 
   const isFreePlan = profile?.plan !== "premium" && profile?.plan !== "pro";
   const componentKey = invitation.themes?.component_key || invitation.themes?.slug || "minimalis";
-  const themeConfig = getThemeConfig(componentKey);
-
-  if (themeConfig.slug === "fallback") notFound();
+  const { config: themeConfig } = resolveThemeConfig(componentKey);
 
   const ThemeUI = themeConfig.component;
   const themeColors = invitation.themes?.colors || null;
