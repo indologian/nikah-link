@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { createThemeVersionDraft, publishThemeVersion, setThemeActive, updateThemeAndDraft } from "@/services/themes/theme.service";
-import { getThemeEditorData, getThemeBySlug } from "@/services/themes/theme.query";
+import { getThemeEditorData, getThemeBySlug, getThemeForEditor } from "@/services/themes/theme.query";
 
 const uuidSchema = z.string().uuid();
 const themeIdSchema = uuidSchema;
@@ -17,6 +17,17 @@ export async function loadThemeEditorBySlug(slug: string) {
   const theme = await getThemeBySlug(slug);
   if (!theme) return null;
   return getThemeEditorData(theme.id);
+}
+
+export async function loadThemeEditorContext(input: {
+  slug: string;
+  versionId?: string | null;
+  invitationId?: string | null;
+}) {
+  return getThemeForEditor(input.slug, {
+    versionId: input.versionId ? versionIdSchema.parse(input.versionId) : null,
+    invitationId: input.invitationId ? uuidSchema.parse(input.invitationId) : null,
+  });
 }
 
 export async function saveThemeDraft(input: {
