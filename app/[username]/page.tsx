@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import { getThemeConfig } from "@/lib/themes/registry";
+import { ThemeRenderer } from "@/components/themes/ThemeRenderer";
 import type { Metadata } from "next";
 
 interface Props {
@@ -75,8 +76,10 @@ export default async function PublicInvitationPage({ params, searchParams }: Pro
 
     const DemoTheme = getThemeConfig("minimalis").component;
     return (
-      <DemoTheme
+      <ThemeRenderer
+        component={DemoTheme}
         invitation={demoInvitation as any}
+        themeKey="minimalis"
         guestName={guestNameFromUrl || "Tamu Undangan"}
         initialWishes={[]}
         giftAccounts={[
@@ -99,21 +102,29 @@ export default async function PublicInvitationPage({ params, searchParams }: Pro
   ]);
 
   const isFreePlan = profile?.plan !== "premium" && profile?.plan !== "pro";
-  const componentKey = invitation.themes?.component_key || invitation.themes?.slug || "minimalis";
+  const { data: themeVersion } = invitation.theme_version_id
+    ? await supabase.from("theme_versions").select("*").eq("id", invitation.theme_version_id).maybeSingle()
+    : { data: null };
+
+  const componentKey = themeVersion?.component_key || invitation.themes?.component_key || invitation.themes?.slug || "minimalis";
   const themeConfig = getThemeConfig(componentKey);
 
   if (themeConfig.slug === "fallback") notFound();
 
-  const ThemeUI = themeConfig.component;
-  const themeColors = invitation.themes?.colors || null;
+  const themeColors = themeVersion?.colors ?? invitation.themes?.colors ?? invitation.theme_colors ?? null;
   const renderInvitation = {
     ...invitation,
-    theme_colors: themeColors || invitation.theme_colors || undefined,
+    theme_colors: themeColors,
+    theme_version: themeVersion,
   };
 
   return (
-    <ThemeUI
+    <ThemeRenderer
+      component={themeConfig.component}
       invitation={renderInvitation}
+      themeKey={componentKey}
+      themeColors={themeColors}
+      themeVersion={themeVersion}
       guestName={guestNameFromUrl || "Tamu Undangan"}
       initialWishes={wishes || []}
       giftAccounts={gifts || []}
