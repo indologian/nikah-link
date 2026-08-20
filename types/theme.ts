@@ -62,7 +62,7 @@ export interface ThemeInvitationData {
 }
 
 export interface ThemeComponentProps {
-  invitation?: ThemeInvitationData;
+  invitation: ThemeInvitationData;
   guestName?: string;
   initialWishes?: unknown[];
   giftAccounts?: unknown[];
