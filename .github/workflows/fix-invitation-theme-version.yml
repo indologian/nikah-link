@@ -1,0 +1,58 @@
+name: Fix invitation theme version pinning
+
+on:
+  push:
+    branches:
+      - feat/theme-token-migration
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/theme-token-migration
+          fetch-depth: 0
+
+      - name: Patch version pinning
+        shell: python
+        run: |
+          from pathlib import Path
+
+          create_path = Path('app/dashboard/undangan/baru/page.tsx')
+          text = create_path.read_text(encoding='utf-8')
+
+          text = text.replace(
+              '          theme_id: themeId,\n          theme_version_id: themeVersionId,\n          theme_version_id: themeVersionId,',
+              '          theme_id: themeId,\n          theme_version_id: resolvedThemeVersionId,'
+          )
+
+          marker = '      const themeId = themeData?.id || null;\n\n      // Save invitation'
+          replacement = '''      const themeId = themeData?.id || null;\n\n      const selectedTheme = themesList.find((theme) => theme.slug === formData.theme_slug);\n      const selectedVersion = selectedTheme?.theme_versions\n        ?.filter((version: any) => version.lifecycle_status === "published" || version.is_published)\n        ?.sort((a: any, b: any) => (b.version ?? 0) - (a.version ?? 0))[0];\n      const resolvedThemeVersionId = themeVersionId ?? selectedVersion?.id ?? null;\n\n      // Save invitation'''
+          text = text.replace(marker, replacement)
+          create_path.write_text(text, encoding='utf-8')
+
+          edit_path = Path('app/dashboard/undangan/[id]/edit/page.tsx')
+          text = edit_path.read_text(encoding='utf-8')
+
+          text = text.replace(
+              '        setInitialUsername(data.username || "");',
+              '        setInitialUsername(data.username || "");\n        setThemeVersionId(data.theme_version_id || null);'
+          )
+
+          edit_path.write_text(text, encoding='utf-8')
+
+          Path('.github/workflows/fix-invitation-theme-version.yml').unlink()
+
+      - name: Commit
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- 'app/dashboard/undangan/baru/page.tsx' 'app/dashboard/undangan/[id]/edit/page.tsx' '.github/workflows/fix-invitation-theme-version.yml'
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "fix(themes): pin invitation theme version consistently [skip ci]"
+          git push origin HEAD:feat/theme-token-migration
