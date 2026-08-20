@@ -17,14 +17,17 @@ export default async function DemoThemePage(props: { params: Promise<{ id: strin
   const supabase = await createClient();
   const { data: theme } = await supabase
     .from("themes")
-    .select("id, name, slug, component_key, colors, is_active")
+    .select("id, name, slug, component_key, colors, is_active, theme_versions(id, version, component_key, config, fields_schema, colors, assets, is_published)")
     .eq("slug", slug)
     .eq("is_active", true)
     .single();
 
   if (!theme) notFound();
 
-  const resolvedTheme = resolveThemeConfig(theme);
+  const themeVersion =
+    theme.theme_versions?.filter((version: any) => version.is_published).sort((a: any, b: any) => b.version - a.version)[0] ||
+    null;
+  const resolvedTheme = resolveThemeConfig(theme, themeVersion);
   const ThemeComponent = resolvedTheme.config.component;
 
   const dummyInvitation = {
@@ -54,7 +57,7 @@ export default async function DemoThemePage(props: { params: Promise<{ id: strin
     show_gallery: true,
     show_wishes: true,
     created_at: new Date().toISOString(),
-    theme_colors: theme.colors || undefined,
+    theme_colors: themeVersion?.colors || theme.colors || undefined,
     custom_data: resolvedTheme.config.fields.reduce((acc, field) => {
       acc[field.name] = field.type === "image"
         ? "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=800&auto=format&fit=crop"
