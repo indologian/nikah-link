@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Theme } from "@/types";
 import { themesConfig } from "@/lib/themes/registry";
-import { normalizeThemeColors, type ThemeColors } from "./theme-config";
+import { normalizeThemeColors, type ThemeColors } from "@/lib/themes/config";
 import {
   Plus,
   Trash2,
