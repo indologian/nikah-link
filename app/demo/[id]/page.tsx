@@ -25,11 +25,12 @@ export default async function DemoThemePage(props: { params: Promise<{ id: strin
   if (!theme) notFound();
 
   const themeConfig = getThemeConfig(theme.component_key);
-  const ThemeComponent = themeConfig.component;
 
-  if (themeConfig.slug === "fallback" || themeConfig.slug !== theme.component_key) {
+  if (themeConfig.slug !== theme.component_key) {
     notFound();
   }
+
+  const ThemeComponent = themeConfig.component;
 
   const dummyInvitation = {
     id: "demo-invitation-123",
