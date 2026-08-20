@@ -17,7 +17,7 @@ export default async function DemoThemePage(props: { params: Promise<{ id: strin
   const supabase = await createClient();
   const { data: theme } = await supabase
     .from("themes")
-    .select("id, name, slug, component_key, is_active")
+    .select("id, name, slug, component_key, colors, is_active")
     .eq("slug", slug)
     .eq("is_active", true)
     .single();
@@ -59,6 +59,7 @@ export default async function DemoThemePage(props: { params: Promise<{ id: strin
     show_gallery: true,
     show_wishes: true,
     created_at: new Date().toISOString(),
+    theme_colors: theme.colors || undefined,
     custom_data: themeConfig.fields.reduce((acc, field) => {
       acc[field.name] = field.type === "image"
         ? "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=800&auto=format&fit=crop"
