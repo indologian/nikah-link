@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { getThemeConfig } from "@/lib/themes/registry";
-import { normalizeThemeColors } from "@/lib/themes/config";
+import { ThemeRenderer } from "@/components/themes/ThemeRenderer";
+import { resolveRuntimeTheme } from "@/lib/themes/runtime";
+import { isValidThemeRenderer } from "@/lib/themes/config";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -20,15 +21,22 @@ export default async function AdminThemePreviewPage({ params }: Props) {
 
   if (!theme || !theme.is_active) notFound();
 
-  const rendererKey = theme.component_key || theme.slug;
-  const config = getThemeConfig(rendererKey);
-  if (config.slug !== rendererKey) notFound();
+  const { data: themeVersion } = await supabase
+    .from("theme_versions")
+    .select("*")
+    .eq("theme_id", theme.id)
+    .eq("is_published", true)
+    .order("version", { ascending: false })
+    .limit(1)
+    .maybeSingle();
 
-  const ThemeComponent = config.component;
-  const themeColors = normalizeThemeColors(theme.colors);
+  if (!themeVersion) notFound();
+
+  const runtimeTheme = resolveRuntimeTheme(theme, themeVersion);
+  if (!isValidThemeRenderer(runtimeTheme.componentKey)) notFound();
 
   const customData = Object.fromEntries(
-    config.fields.map((field) => [
+    runtimeTheme.fields.map((field) => [
       field.name,
       field.type === "image"
         ? "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=800&auto=format&fit=crop"
@@ -65,23 +73,29 @@ export default async function AdminThemePreviewPage({ params }: Props) {
     show_gallery: true,
     show_wishes: true,
     custom_data: customData,
-    theme_colors: themeColors,
+    theme_colors: runtimeTheme.colors,
+    theme_version: themeVersion,
   };
 
   return (
     <div className="min-h-screen">
       <div className="sticky top-0 z-[100] flex items-center justify-between bg-slate-900 px-4 py-2 text-white">
-        <div className="text-xs font-semibold">Admin Preview: {theme.name}</div>
+        <div className="text-xs font-semibold">Admin Preview: {theme.name} v{runtimeTheme.version}</div>
         <a href="/admin/themes" className="text-xs font-medium underline underline-offset-2">Kembali</a>
       </div>
-      <ThemeComponent
+      <ThemeRenderer
+        component={runtimeTheme.component}
         invitation={invitation}
+        themeColors={runtimeTheme.colors}
         guestName="Tamu Preview"
         initialWishes={[]}
         giftAccounts={[]}
         isFreePlan={false}
         expiresAt={null}
         customData={customData}
+        themeConfig={runtimeTheme.config}
+        themeAssets={runtimeTheme.assets}
+        themeVersion={themeVersion}
       />
     </div>
   );
