@@ -1,6 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import { getThemeConfig } from "@/lib/themes/registry";
+import { isValidThemeRenderer } from "@/lib/themes/config";
+import { ThemeRenderer } from "@/components/themes/ThemeRenderer";
+import { resolveRuntimeTheme } from "@/lib/themes/runtime";
 import type { Metadata } from "next";
 
 interface Props {
@@ -92,34 +95,43 @@ export default async function PublicInvitationPage({ params, searchParams }: Pro
 
   if (!invitation) notFound();
 
-  const [{ data: wishes }, { data: gifts }, { data: profile }] = await Promise.all([
+  const [{ data: wishes }, { data: gifts }, { data: profile }, { data: themeVersion }] = await Promise.all([
     supabase.from("wishes").select("*").eq("invitation_id", invitation.id).order("created_at", { ascending: false }),
     supabase.from("gift_accounts").select("*").eq("invitation_id", invitation.id),
     supabase.from("profiles").select("plan").eq("user_id", invitation.user_id).single(),
+    invitation.theme_version_id
+      ? supabase.from("theme_versions").select("*").eq("id", invitation.theme_version_id).maybeSingle()
+      : Promise.resolve({ data: null }),
   ]);
 
+  if (!invitation.themes) notFound();
+  if (invitation.theme_version_id && !themeVersion) notFound();
+
   const isFreePlan = profile?.plan !== "premium" && profile?.plan !== "pro";
-  const componentKey = invitation.themes?.component_key || invitation.themes?.slug || "minimalis";
-  const themeConfig = getThemeConfig(componentKey);
+  const runtimeTheme = resolveRuntimeTheme(invitation.themes, themeVersion);
 
-  if (themeConfig.slug === "fallback") notFound();
+  if (!isValidThemeRenderer(runtimeTheme.componentKey)) notFound();
 
-  const ThemeUI = themeConfig.component;
-  const themeColors = invitation.themes?.colors || null;
   const renderInvitation = {
     ...invitation,
-    theme_colors: themeColors || invitation.theme_colors || undefined,
+    theme_colors: runtimeTheme.colors,
+    theme_version: themeVersion,
   };
 
   return (
-    <ThemeUI
+    <ThemeRenderer
+      component={runtimeTheme.component}
       invitation={renderInvitation}
+      themeColors={runtimeTheme.colors}
       guestName={guestNameFromUrl || "Tamu Undangan"}
       initialWishes={wishes || []}
       giftAccounts={gifts || []}
       isFreePlan={isFreePlan}
       expiresAt={invitation.expires_at}
       customData={invitation.custom_data || {}}
+      themeConfig={runtimeTheme.config}
+      themeAssets={runtimeTheme.assets}
+      themeVersion={themeVersion}
     />
   );
 }
