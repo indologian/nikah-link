@@ -10,6 +10,14 @@ const wishSchema = z.object({
 
 export async function POST(request: Request) {
     try {
+        const forwardedFor = request.headers.get("x-forwarded-for");
+        const realIp = request.headers.get("x-real-ip");
+
+        const clientIp =
+            forwardedFor?.split(",")[0]?.trim() ||
+            realIp?.trim() ||
+            "unknown";
+
         const body = await request.json();
 
         const parsed = wishSchema.safeParse(body);
@@ -29,6 +37,39 @@ export async function POST(request: Request) {
             guestName,
             message,
         } = parsed.data;
+
+        const { data: rateAllowed, error: rateLimitError } =
+            await supabaseAdmin.rpc("consume_public_api_rate_limit", {
+                p_key: `wishes:${clientIp}:${invitationId}`,
+                p_limit: 30,
+                p_window_seconds: 60,
+            });
+
+        if (rateLimitError) {
+            console.error("Wish rate limit error:", rateLimitError);
+
+            return NextResponse.json(
+                {
+                    error: "Tidak dapat memproses permintaan saat ini",
+                },
+                { status: 503 }
+            );
+        }
+
+        if (!rateAllowed) {
+            return NextResponse.json(
+                {
+                    error:
+                        "Terlalu banyak permintaan. Silakan coba lagi dalam beberapa saat.",
+                },
+                {
+                    status: 429,
+                    headers: {
+                        "Retry-After": "60",
+                    },
+                }
+            );
+        }
 
         // ------------------------------------------------------------
         // 1. Validasi invitation
