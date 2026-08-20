@@ -17,13 +17,15 @@ function publicStorageUrl(bucket: string, path: string) {
 }
 
 class QueryChain<T = any> {
-  private operation: () => Promise<any>;
+  private operation: () => Promise<T>;
+  private filters = new Map<string, unknown>();
 
-  constructor(operation: () => Promise<any>) {
-    this.operation = operation;
+  constructor(operation: (filters: Map<string, unknown>) => Promise<T>) {
+    this.operation = () => operation(this.filters);
   }
 
-  eq(_column: string, _value: unknown) {
+  eq(column: string, value: unknown) {
+    this.filters.set(column, value);
     return this;
   }
 
@@ -102,8 +104,9 @@ export function createInvitationEditorBackend() {
             const isCountOnly = typeof options === "object" && options !== null && "count" in options;
 
             if (isEditorLoad) {
-              return new QueryChain(async () => {
-                const result = await loadInvitationEditor("");
+              return new QueryChain(async (filters) => {
+                const invitationId = String(filters.get("id") ?? "");
+                const result = await loadInvitationEditor(invitationId);
                 return { data: result?.invitation ?? null, error: null };
               });
             }
@@ -116,7 +119,11 @@ export function createInvitationEditorBackend() {
             }
 
             if (isIdOnly) {
-              return new QueryChain(async () => ({ data: null, error: null }));
+              return new QueryChain(async (filters) => {
+                const username = String(filters.get("username") ?? "");
+                const available = await checkInvitationUsername(username);
+                return { data: available ? null : { id: "occupied" }, error: null };
+              });
             }
 
             return new QueryChain(async () => {
@@ -127,14 +134,9 @@ export function createInvitationEditorBackend() {
           insert: (values: any) => {
             const operation = async () => {
               const created = await createInvitationAction(values);
-              return {
-                data: created,
-                error: null,
-              };
+              return { data: created, error: null };
             };
-            return {
-              select: () => ({ single: operation }),
-            };
+            return { select: () => ({ single: operation }) };
           },
           update: () => notSupported(table, "update"),
           delete: () => notSupported(table, "delete"),
@@ -144,7 +146,7 @@ export function createInvitationEditorBackend() {
       if (table === "gift_accounts") {
         return {
           select: () => new QueryChain(async () => ({ data: [], error: null })),
-          insert: () => notSupported(table, "insert; gift accounts are written atomically by createInvitation"),
+          insert: async () => ({ data: null, error: null }),
           update: () => notSupported(table, "update"),
           delete: () => notSupported(table, "delete"),
         } as any;
