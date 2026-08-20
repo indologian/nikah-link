@@ -1,7 +1,7 @@
 'use client';
 
 import { X } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 interface ConfirmModalProps {
   isOpen: boolean;
@@ -24,48 +24,41 @@ export default function ConfirmModal({
   cancelText = 'Batal',
   isDestructive = false,
 }: ConfirmModalProps) {
-  const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
-    setMounted(true);
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
+    document.body.style.overflow = isOpen ? 'hidden' : 'unset';
     return () => {
       document.body.style.overflow = 'unset';
     };
   }, [isOpen]);
 
-  if (!mounted || !isOpen) return null;
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      <div 
+      <div
         className="absolute inset-0 bg-slate-900/40 dark:bg-black/60 backdrop-blur-sm"
         onClick={onClose}
       />
-      <div 
+      <div
         className="relative bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 w-full max-w-md"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-center p-6 border-b border-slate-200 dark:border-slate-800">
           <h3 className="font-medium tracking-tight text-lg text-slate-900 dark:text-white">{title}</h3>
-          <button 
+          <button
             onClick={onClose}
             className="p-2 text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
-        
+
         <div className="p-6">
           <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
             {description}
           </p>
         </div>
-        
+
         <div className="p-6 border-t border-slate-200 dark:border-slate-800 flex justify-end gap-4 bg-slate-50 dark:bg-slate-900/50">
           <button
             onClick={onClose}
@@ -79,8 +72,8 @@ export default function ConfirmModal({
               onClose();
             }}
             className={`px-6 py-3 border text-sm font-bold uppercase tracking-wider transition-colors ${
-              isDestructive 
-                ? 'bg-red-600 border-red-600 text-white hover:bg-red-700 hover:border-red-700' 
+              isDestructive
+                ? 'bg-red-600 border-red-600 text-white hover:bg-red-700 hover:border-red-700'
                 : 'bg-slate-900 border-slate-900 text-white dark:bg-white dark:border-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-200 hover:border-slate-800 dark:hover:border-slate-200'
             }`}
           >
