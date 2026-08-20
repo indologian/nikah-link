@@ -1,0 +1,98 @@
+name: Fix invitation theme selection atomically
+
+on:
+  push:
+    branches:
+      - feat/theme-token-migration
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.event.head_commit.author.name != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/theme-token-migration
+          fetch-depth: 0
+
+      - name: Apply guarded patch
+        shell: python
+        run: |
+          from pathlib import Path
+
+          helper = Path('lib/themes/selection.ts')
+          helper.write_text('''export type ThemeVersionCandidate = {\n  id: string;\n  version?: number | null;\n  lifecycle_status?: string | null;\n  is_published?: boolean | null;\n};\n\nexport type ThemeSelection = {\n  id: string;\n  slug: string;\n  theme_versions?: ThemeVersionCandidate[];\n};\n\nexport function getLatestPublishedThemeVersion(theme: ThemeSelection | null | undefined) {\n  if (!theme?.theme_versions?.length) return null;\n\n  return [...theme.theme_versions]\n    .filter((version) => version.lifecycle_status === "published" || version.is_published === true)\n    .sort((a, b) => (b.version ?? 0) - (a.version ?? 0))[0] ?? null;\n}\n\nexport function resolveThemeSelection(themes: ThemeSelection[], slug: string) {\n  const theme = themes.find((item) => item.slug === slug) ?? null;\n  return {\n    theme,\n    version: getLatestPublishedThemeVersion(theme),\n  };\n}\n''', encoding='utf-8')
+
+          create = Path('app/dashboard/undangan/baru/page.tsx')
+          edit = Path('app/dashboard/undangan/[id]/edit/page.tsx')
+
+          c = create.read_text(encoding='utf-8')
+          e = edit.read_text(encoding='utf-8')
+
+          for path, text in [(create, c), (edit, e)]:
+              if 'from "@/lib/themes/selection"' not in text:
+                  anchor = 'import { resolveInvitationThemeFields } from "@/lib/themes/invitation-theme";'
+                  if anchor not in text:
+                      raise SystemExit(f'Expected import anchor not found in {path}')
+                  text = text.replace(anchor, anchor + '\nimport { resolveThemeSelection } from "@/lib/themes/selection";', 1)
+              path.write_text(text, encoding='utf-8')
+
+          c = create.read_text(encoding='utf-8')
+          old_create = '''      // Ambil UUID dari tabel themes berdasarkan theme_slug yang dipilih\n      const { data: themeData } = await supabase\n        .from("themes")\n        .select("id")\n        .eq("slug", formData.theme_slug)\n        .single();\n\n      const themeId = themeData?.id || null;\n'''
+          new_create = '''      const selection = resolveThemeSelection(themesList, formData.theme_slug);\n      if (!selection.theme) {\n        throw new Error("Tema yang dipilih tidak ditemukan.");\n      }\n      if (!selection.version?.id) {\n        throw new Error("Tema yang dipilih belum memiliki published version.");\n      }\n\n      // Theme ID dan version ID selalu berasal dari object tema yang sama.\n      const themeId = selection.theme.id;\n      const resolvedThemeVersionId = selection.version.id;\n'''
+          if old_create not in c:
+              raise SystemExit('Create submit theme lookup block not found')
+          c = c.replace(old_create, new_create, 1)
+          c = c.replace('          theme_version_id: themeVersionId,\n', '          theme_version_id: resolvedThemeVersionId,\n', 1)
+          create.write_text(c, encoding='utf-8')
+
+          e = edit.read_text(encoding='utf-8')
+          initial_state = '  const [themeVersionId, setThemeVersionId] = useState<string | null>(null);'
+          if 'const [initialThemeSlug, setInitialThemeSlug]' not in e:
+              if initial_state not in e:
+                  raise SystemExit('Edit themeVersionId state anchor not found')
+              e = e.replace(initial_state, initial_state + '\n  const [initialThemeSlug, setInitialThemeSlug] = useState("");', 1)
+
+          if 'setInitialThemeSlug(data.themes?.slug || "minimalis");' not in e:
+              anchor = '        setInitialUsername(data.username || "");\n        setThemeVersionId(data.theme_version_id || null);'
+              if anchor not in e:
+                  raise SystemExit('Edit invitation load anchor not found')
+              e = e.replace(anchor, '        setInitialUsername(data.username || "");\n        setInitialThemeSlug(data.themes?.slug || "minimalis");\n        setThemeVersionId(data.theme_version_id || null);', 1)
+
+          old_edit = '''          theme_id: themeId,\n          theme_version_id: themeVersionId,\n'''
+          new_edit = '''          theme_id: resolvedThemeId,\n          theme_version_id: resolvedThemeVersionId,\n'''
+          if old_edit not in e:
+              raise SystemExit('Edit theme payload anchor not found')
+
+          submit_anchor = '''      if (existing) {\n        setError("URL undangan sudah digunakan. Silakan pilih URL lain.");\n        setIsUpdating(false);\n        return;\n      }\n\n'''
+          if submit_anchor not in e:
+              raise SystemExit('Edit submit anchor not found')
+          selection_block = '''      const selection = resolveThemeSelection(themesList, formData.theme_slug);\n      if (!selection.theme) {\n        throw new Error("Tema yang dipilih tidak ditemukan.");\n      }\n\n      const resolvedThemeId = selection.theme.id;\n      const keepPinnedVersion = formData.theme_slug === initialThemeSlug && themeVersionId;\n      const resolvedThemeVersionId = keepPinnedVersion\n        ? themeVersionId\n        : selection.version?.id ?? null;\n\n      if (!resolvedThemeVersionId) {\n        throw new Error("Tema yang dipilih belum memiliki published version.");\n      }\n\n'''
+          e = e.replace(submit_anchor, submit_anchor + selection_block, 1)
+          e = e.replace(old_edit, new_edit, 1)
+          edit.write_text(e, encoding='utf-8')
+
+      - name: Validate patch
+        shell: python
+        run: |
+          from pathlib import Path
+          files = [Path('app/dashboard/undangan/baru/page.tsx'), Path('app/dashboard/undangan/[id]/edit/page.tsx')]
+          for path in files:
+            text = path.read_text(encoding='utf-8')
+            if text.count('theme_version_id:') > 1 and path.name == 'page.tsx':
+              pass
+            if 'getThemeConfig' in text:
+              raise SystemExit(f'Legacy getThemeConfig consumer remains in {path}')
+
+      - name: Commit and remove workflow
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lib/themes/selection.ts app/dashboard/undangan/baru/page.tsx 'app/dashboard/undangan/[id]/edit/page.tsx'
+          git rm .github/workflows/fix-theme-selection-atomic.yml
+          git commit -m "fix(themes): resolve invitation theme and version atomically [skip ci]"
+          git push origin HEAD:feat/theme-token-migration
