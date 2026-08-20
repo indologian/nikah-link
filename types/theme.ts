@@ -61,11 +61,29 @@ export interface ThemeInvitationData {
   [key: string]: unknown;
 }
 
+export interface ThemeGuestWish {
+  id?: string;
+  guest_name?: string | null;
+  message?: string | null;
+  attendance?: string | null;
+  created_at?: string | null;
+  [key: string]: unknown;
+}
+
+export interface ThemeGiftAccount {
+  id?: string;
+  bank_name?: string | null;
+  account_number?: string | null;
+  account_name?: string | null;
+  qr_code_url?: string | null;
+  [key: string]: unknown;
+}
+
 export interface ThemeComponentProps {
   invitation: ThemeInvitationData;
-  guestName?: string;
-  initialWishes?: unknown[];
-  giftAccounts?: unknown[];
+  guestName: string;
+  initialWishes: ThemeGuestWish[];
+  giftAccounts: ThemeGiftAccount[];
   isFreePlan?: boolean;
   expiresAt?: string | null;
   customData?: Record<string, unknown>;
@@ -80,6 +98,9 @@ export interface RuntimeTheme extends ThemeDefinition {
   colors: ThemeColors;
   versionId: string | null;
   version: number | null;
+  config: unknown;
+  fields_schema?: unknown;
+  colors?: ThemeColors;
   config: unknown;
   assets: unknown;
 }
