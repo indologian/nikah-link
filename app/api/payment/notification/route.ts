@@ -5,11 +5,23 @@ import { getMidtransTransactionStatus } from "@/lib/midtrans";
 
 // Webhook Midtrans adalah server-to-server.
 // Gunakan service role agar webhook dapat melakukan operasi privileged.
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
 const MIDTRANS_SERVER_KEY = process.env.MIDTRANS_SERVER_KEY || "";
 
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+function getSupabaseAdmin() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
+
+  if (!supabaseUrl || !supabaseServiceKey) {
+    throw new Error("Supabase server environment variables are not configured");
+  }
+
+  return createClient(supabaseUrl, supabaseServiceKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  });
+}
 
 /**
  * Verifikasi signature_key Midtrans.
@@ -60,15 +72,12 @@ function mapStatus(
   const normalizedStatus = String(transactionStatus || "").toLowerCase();
   const normalizedFraud = String(fraudStatus || "").toLowerCase();
 
-  const fraudOk =
-    !fraudStatus ||
-    normalizedFraud === "accept";
+  const fraudOk = !fraudStatus || normalizedFraud === "accept";
 
   const isConfirmedSuccess =
     String(statusCode ?? "") === "200" &&
     fraudOk &&
-    (normalizedStatus === "settlement" ||
-      normalizedStatus === "capture");
+    (normalizedStatus === "settlement" || normalizedStatus === "capture");
 
   if (isConfirmedSuccess) {
     return "success";
@@ -91,6 +100,7 @@ function mapStatus(
 
 export async function POST(request: Request) {
   try {
+    const supabase = getSupabaseAdmin();
     const body = await request.json();
 
     const {
@@ -108,16 +118,8 @@ export async function POST(request: Request) {
     // 1. Validasi payload dasar
     // ============================================================
 
-    if (
-      !order_id ||
-      !status_code ||
-      !gross_amount ||
-      !signature_key
-    ) {
-      return NextResponse.json(
-        { error: "Invalid payload" },
-        { status: 400 }
-      );
+    if (!order_id || !status_code || !gross_amount || !signature_key) {
+      return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
     }
 
     console.log(
@@ -153,9 +155,7 @@ export async function POST(request: Request) {
 
     const { data: sub, error: subError } = await supabase
       .from("subscriptions")
-      .select(
-        "id, user_id, amount, status, plan, midtrans_order_id"
-      )
+      .select("id, user_id, amount, status, plan, midtrans_order_id")
       .eq("midtrans_order_id", String(order_id))
       .single();
 
@@ -179,7 +179,7 @@ export async function POST(request: Request) {
     if (Number(sub.amount) !== Number(gross_amount)) {
       console.error(
         `[Midtrans Webhook] Amount mismatch for ${order_id}. ` +
-        `Local: ${sub.amount}, Midtrans: ${gross_amount}`
+          `Local: ${sub.amount}, Midtrans: ${gross_amount}`
       );
 
       return NextResponse.json(
@@ -203,17 +203,10 @@ export async function POST(request: Request) {
     let verifiedGrossAmount: number | undefined;
 
     try {
-      const statusRes =
-        await getMidtransTransactionStatus(String(order_id));
+      const statusRes = await getMidtransTransactionStatus(String(order_id));
 
-      verifiedStatus = String(
-        statusRes.transaction_status || ""
-      ).toLowerCase();
-
-      verifiedStatusCode = String(
-        statusRes.status_code || ""
-      );
-
+      verifiedStatus = String(statusRes.transaction_status || "").toLowerCase();
+      verifiedStatusCode = String(statusRes.status_code || "");
       verifiedFraud = statusRes.fraud_status;
       verifiedPaymentType = statusRes.payment_type;
       verifiedTransactionId = statusRes.transaction_id;
@@ -225,7 +218,7 @@ export async function POST(request: Request) {
       if (!verifiedStatus) {
         console.error(
           `[Midtrans Webhook] Status API tidak mengembalikan ` +
-          `transaction_status untuk ${order_id}`
+            `transaction_status untuk ${order_id}`
         );
 
         return NextResponse.json(
@@ -242,7 +235,7 @@ export async function POST(request: Request) {
       ) {
         console.error(
           `[Midtrans Webhook] Verified amount mismatch for ${order_id}. ` +
-          `Local: ${sub.amount}, Midtrans API: ${verifiedGrossAmount}`
+            `Local: ${sub.amount}, Midtrans API: ${verifiedGrossAmount}`
         );
 
         return NextResponse.json(
@@ -253,13 +246,12 @@ export async function POST(request: Request) {
     } catch (err) {
       console.error(
         `[Midtrans Webhook] Gagal memverifikasi status transaksi ` +
-        `${order_id}:`,
+          `${order_id}:`,
         err
       );
 
       // Jangan percaya transaction_status dari payload webhook
       // jika Status API gagal.
-      //
       // 503 membuat provider memiliki kesempatan melakukan retry.
       return NextResponse.json(
         { error: "Unable to verify transaction status" },
@@ -288,7 +280,7 @@ export async function POST(request: Request) {
     ) {
       console.log(
         `[Midtrans Webhook] Order ${order_id} memiliki ` +
-        `status terminal ${sub.status}. Abaikan webhook.`
+          `status terminal ${sub.status}. Abaikan webhook.`
       );
 
       return NextResponse.json({
@@ -304,7 +296,7 @@ export async function POST(request: Request) {
     if (sub.status === "success") {
       console.log(
         `[Midtrans Webhook] Order ${order_id} sudah success. ` +
-        `Abaikan duplicate webhook.`
+          `Abaikan duplicate webhook.`
       );
 
       return NextResponse.json({
@@ -320,7 +312,7 @@ export async function POST(request: Request) {
     if (sub.status !== "pending") {
       console.log(
         `[Midtrans Webhook] Order ${order_id} memiliki ` +
-        `status tidak dikenali: ${sub.status}.`
+          `status tidak dikenali: ${sub.status}.`
       );
 
       return NextResponse.json({
@@ -348,29 +340,20 @@ export async function POST(request: Request) {
 
       // ==========================================================
       // ATOMIC FINALIZATION
-      //
-      // subscriptions + profiles di-update dalam SATU transaksi
-      // PostgreSQL melalui RPC.
-      //
-      // Jika profile gagal:
-      // subscription success juga di-rollback.
       // ==========================================================
 
       const { data: finalized, error: finalizeError } =
-        await supabase.rpc(
-          "finalize_subscription_payment",
-          {
-            p_subscription_id: sub.id,
-            p_payment_method: verifiedPaymentType ?? null,
-            p_transaction_id: verifiedTransactionId ?? null,
-            p_expires_at: planExpiresAt,
-          }
-        );
+        await supabase.rpc("finalize_subscription_payment", {
+          p_subscription_id: sub.id,
+          p_payment_method: verifiedPaymentType ?? null,
+          p_transaction_id: verifiedTransactionId ?? null,
+          p_expires_at: planExpiresAt,
+        });
 
       if (finalizeError) {
         console.error(
           `[Midtrans Webhook] Atomic payment finalization ` +
-          `failed for ${order_id}:`,
+            `failed for ${order_id}:`,
           finalizeError
         );
 
@@ -387,7 +370,7 @@ export async function POST(request: Request) {
       if (!finalized) {
         console.log(
           `[Midtrans Webhook] Order ${order_id} sudah ` +
-          `diproses oleh request lain.`
+            `diproses oleh request lain.`
         );
 
         return NextResponse.json({
@@ -414,8 +397,7 @@ export async function POST(request: Request) {
       .from("subscriptions")
       .update({
         status: mappedStatus,
-        payment_method:
-          verifiedPaymentType ?? payment_type ?? null,
+        payment_method: verifiedPaymentType ?? payment_type ?? null,
         midtrans_transaction_id:
           verifiedTransactionId ?? transaction_id ?? null,
       })
@@ -438,10 +420,7 @@ export async function POST(request: Request) {
       status: "ok",
     });
   } catch (err: unknown) {
-    console.error(
-      "[Midtrans Webhook] Unexpected error:",
-      err
-    );
+    console.error("[Midtrans Webhook] Unexpected error:", err);
 
     return NextResponse.json(
       { error: "Internal Server Error" },
