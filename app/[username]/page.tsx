@@ -11,23 +11,18 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { username } = await params;
   const supabase = await createClient();
-
   const { data: inv } = await supabase
     .from("invitations")
     .select("bride_name, groom_name, cover_image_url")
     .eq("username", username)
     .single();
 
-  if (!inv) {
-    return { title: "Undangan Tidak Ditemukan — NikahLink" };
-  }
+  if (!inv) return { title: "Undangan Tidak Ditemukan — NikahLink" };
 
   return {
     title: `Pernikahan ${inv.bride_name} & ${inv.groom_name} | NikahLink`,
     description: `Tanpa mengurangi rasa hormat, kami mengundang Anda untuk hadir dan memberikan doa restu pada pernikahan ${inv.bride_name} & ${inv.groom_name}.`,
-    openGraph: {
-      images: inv.cover_image_url ? [inv.cover_image_url] : [],
-    },
+    openGraph: { images: inv.cover_image_url ? [inv.cover_image_url] : [] },
   };
 }
 
@@ -36,14 +31,12 @@ export default async function PublicInvitationPage({ params, searchParams }: Pro
   const { to: guestNameFromUrl } = await searchParams;
   const supabase = await createClient();
 
-  // Fetch invitation details
   const { data: invitation } = await supabase
     .from("invitations")
     .select("*, themes(*)")
     .eq("username", username)
     .single();
 
-  // Demo fallback if username is demo or not created yet
   if (!invitation && username === "demo") {
     const demoInvitation = {
       id: "demo-invitation-id",
@@ -71,11 +64,16 @@ export default async function PublicInvitationPage({ params, searchParams }: Pro
       show_gift: true,
       show_gallery: true,
       show_wishes: true,
-      custom_data: {}
+      theme_colors: {
+        primary: "#0F172A",
+        secondary: "#FFFFFF",
+        accent: "#000000",
+        background: "#FFFFFF",
+      },
+      custom_data: {},
     };
 
     const DemoTheme = getThemeConfig("minimalis").component;
-
     return (
       <DemoTheme
         invitation={demoInvitation as any}
@@ -92,37 +90,30 @@ export default async function PublicInvitationPage({ params, searchParams }: Pro
     );
   }
 
-  if (!invitation) {
-    notFound();
-  }
+  if (!invitation) notFound();
 
-  // Fetch initial wishes & gift accounts & profile plan
   const [{ data: wishes }, { data: gifts }, { data: profile }] = await Promise.all([
-    supabase
-      .from("wishes")
-      .select("*")
-      .eq("invitation_id", invitation.id)
-      .order("created_at", { ascending: false }),
-    supabase
-      .from("gift_accounts")
-      .select("*")
-      .eq("invitation_id", invitation.id),
-    supabase
-      .from("profiles")
-      .select("plan")
-      .eq("user_id", invitation.user_id)
-      .single()
+    supabase.from("wishes").select("*").eq("invitation_id", invitation.id).order("created_at", { ascending: false }),
+    supabase.from("gift_accounts").select("*").eq("invitation_id", invitation.id),
+    supabase.from("profiles").select("plan").eq("user_id", invitation.user_id).single(),
   ]);
 
   const isFreePlan = profile?.plan !== "premium" && profile?.plan !== "pro";
-  
-  // Resolve Theme Component
-  const themeSlug = invitation.themes?.slug || "minimalis";
-  const ThemeUI = getThemeConfig(themeSlug).component;
+  const componentKey = invitation.themes?.component_key || invitation.themes?.slug || "minimalis";
+  const themeConfig = getThemeConfig(componentKey);
+
+  if (themeConfig.slug === "fallback") notFound();
+
+  const ThemeUI = themeConfig.component;
+  const themeColors = invitation.themes?.colors || null;
+  const renderInvitation = {
+    ...invitation,
+    theme_colors: themeColors || invitation.theme_colors || undefined,
+  };
 
   return (
     <ThemeUI
-      invitation={invitation}
+      invitation={renderInvitation}
       guestName={guestNameFromUrl || "Tamu Undangan"}
       initialWishes={wishes || []}
       giftAccounts={gifts || []}
