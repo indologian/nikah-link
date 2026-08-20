@@ -11,6 +11,9 @@ type ThemeRendererProps = {
     version?: number | null;
     colors?: unknown;
     component_key?: string | null;
+    config?: Record<string, unknown> | null;
+    fields_schema?: unknown[] | null;
+    assets?: Record<string, unknown> | null;
   } | null;
   [key: string]: any;
 };
