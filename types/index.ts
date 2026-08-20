@@ -51,7 +51,24 @@ export interface Theme {
     secondary: string;
     accent: string;
     background: string;
+    text: string;
   };
+  editor_config?: Record<string, unknown>;
+  fields_schema?: unknown[];
+  assets?: Record<string, unknown>;
+  created_at: string;
+}
+
+export interface ThemeVersion {
+  id: string;
+  theme_id: string;
+  version: number;
+  component_key: string;
+  config: Record<string, unknown>;
+  fields_schema: unknown[];
+  colors: Record<string, string>;
+  assets: Record<string, unknown>;
+  is_published: boolean;
   created_at: string;
 }
 
@@ -84,7 +101,9 @@ export interface Invitation {
 
   // Customization
   theme_id?: string;
+  theme_version_id?: string;
   theme?: Theme;
+  theme_version?: ThemeVersion;
   music_url?: string;
   cover_image_url?: string;
   custom_message?: string;
