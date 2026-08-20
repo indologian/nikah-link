@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { getThemeConfig } from "@/lib/themes/registry";
+import { resolveThemeConfig } from "@/lib/themes/resolve";
 import { normalizeThemeColors } from "@/lib/themes/config";
 
 interface Props {
@@ -18,17 +18,14 @@ export default async function AdminThemePreviewPage({ params }: Props) {
     .eq("slug", normalizedSlug)
     .single();
 
-  if (!theme || !theme.is_active) notFound();
+  if (!theme) notFound();
 
-  const rendererKey = theme.component_key || theme.slug;
-  const config = getThemeConfig(rendererKey);
-  if (config.slug !== rendererKey) notFound();
-
-  const ThemeComponent = config.component;
+  const resolvedTheme = resolveThemeConfig(theme);
+  const ThemeComponent = resolvedTheme.config.component;
   const themeColors = normalizeThemeColors(theme.colors);
 
   const customData = Object.fromEntries(
-    config.fields.map((field) => [
+    resolvedTheme.config.fields.map((field) => [
       field.name,
       field.type === "image"
         ? "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=800&auto=format&fit=crop"
