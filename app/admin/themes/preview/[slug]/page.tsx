@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getThemeConfig } from "@/lib/themes/registry";
-import { normalizeThemeColors } from "@/app/admin/themes/theme-config";
+import { normalizeThemeColors } from "@/lib/themes/config";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -20,8 +20,9 @@ export default async function AdminThemePreviewPage({ params }: Props) {
 
   if (!theme || !theme.is_active) notFound();
 
-  const config = getThemeConfig(theme.component_key || theme.slug);
-  if (config.slug !== (theme.component_key || theme.slug)) notFound();
+  const rendererKey = theme.component_key || theme.slug;
+  const config = getThemeConfig(rendererKey);
+  if (config.slug !== rendererKey) notFound();
 
   const ThemeComponent = config.component;
   const themeColors = normalizeThemeColors(theme.colors);
