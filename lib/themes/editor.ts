@@ -106,7 +106,7 @@ export async function getThemeForEditor(
   // and accept the newest published version for this exact theme.
   const version =
     publishedVersions?.find(
-      (candidate) =>
+      (candidate: NonNullable<typeof publishedVersions>[number]) =>
         candidate.component_key === theme.component_key &&
         candidate.is_published === true
     ) ?? null;
