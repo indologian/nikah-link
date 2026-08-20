@@ -16,30 +16,31 @@ function LoginPageContent() {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState("");
-  const [selectedTheme, setSelectedTheme] = useState("");
   const router = useRouter();
   const searchParams = useSearchParams();
   const supabase = createClient();
 
+  const requestedTheme = searchParams.get("tema")?.trim().toLowerCase() || "";
+  const selectedTheme = THEME_SLUG_PATTERN.test(requestedTheme) ? requestedTheme : "";
+
   useEffect(() => {
-    const requestedTheme = searchParams.get("tema")?.trim().toLowerCase() || "";
-    if (!THEME_SLUG_PATTERN.test(requestedTheme)) return;
-    setSelectedTheme(requestedTheme);
-    localStorage.setItem("nikahlink_pending_theme", requestedTheme);
+    if (!selectedTheme) return;
+
+    localStorage.setItem("nikahlink_pending_theme", selectedTheme);
     try {
       const current = JSON.parse(localStorage.getItem("nikahlink_new_invitation") || "{}");
       localStorage.setItem(
         "nikahlink_new_invitation",
-        JSON.stringify({ ...current, theme_slug: requestedTheme })
+        JSON.stringify({ ...current, theme_slug: selectedTheme })
       );
       localStorage.removeItem("nikahlink_new_invitation_step");
     } catch {
       localStorage.setItem(
         "nikahlink_new_invitation",
-        JSON.stringify({ theme_slug: requestedTheme })
+        JSON.stringify({ theme_slug: selectedTheme })
       );
     }
-  }, [searchParams]);
+  }, [selectedTheme]);
 
   const dashboardTarget = selectedTheme
     ? `/dashboard/undangan/baru?tema=${encodeURIComponent(selectedTheme)}`
