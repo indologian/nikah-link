@@ -179,6 +179,33 @@ export interface Vendor {
     instagram?: string;
     website?: string;
   };
-  created_at?: string;
-  updated_at?: string;
+  rating_avg: number;
+  review_count: number;
+  is_verified: boolean;
+  created_at: string;
+}
+
+export interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  content: string;
+  excerpt?: string;
+  featured_image?: string;
+  author_id?: string;
+  published_at?: string;
+  category?: string;
+  tags?: string[];
+  created_at: string;
+}
+
+// Dashboard stats
+export interface DashboardStats {
+  totalGuests: number;
+  rsvpHadir: number;
+  rsvpTidakHadir: number;
+  rsvpPending: number;
+  totalWishes: number;
+  totalViews: number;
+  daysUntilWedding: number;
 }
