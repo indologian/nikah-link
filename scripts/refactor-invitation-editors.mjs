@@ -9,7 +9,7 @@ const targets = [
 ];
 
 function fail(message) {
-  console.error(`\nREFactor aborted: ${message}`);
+  console.error(`\nREFactoring aborted: ${message}`);
   process.exit(1);
 }
 
@@ -24,14 +24,6 @@ function backup(file) {
   return backupPath;
 }
 
-function replaceOnce(source, pattern, replacement, label) {
-  const matches = source.match(pattern);
-  if (!matches || matches.length !== 1) {
-    fail(`${label}: expected exactly 1 match, found ${matches?.length ?? 0}.`);
-  }
-  return source.replace(pattern, replacement);
-}
-
 for (const file of targets) {
   if (!fs.existsSync(file)) fail(`Missing target: ${path.relative(root, file)}`);
   backup(file);
@@ -44,6 +36,15 @@ for (const file of targets) {
 for (const file of targets) {
   let source = fs.readFileSync(file, "utf8");
 
+  // Client directives must be the first statement in an App Router client module.
+  // Normalize any directive inserted after imports by previous codemod passes.
+  const hadUseClient = /(^|\n)\s*["']use client["'];?\s*/.test(source);
+  source = source.replace(/^\s*["']use client["'];?\s*\n?/gm, "");
+  source = source.replace(/\r?\n[ \t]*["']use client["'];?\s*\r?\n/g, "\n");
+  if (hadUseClient) {
+    source = `"use client";\n\n${source.replace(/^\s+/, "")}`;
+  }
+
   source = source.replace(/import \{ createClient \} from "@\/lib\/supabase\/client";\n/, "");
 
   const actionImport = 'import { checkInvitationUsername, loadInvitationEditor, loadNewInvitationContext, uploadInvitationAssetAction } from "@/actions/invitations/invitation";\n';
@@ -52,7 +53,13 @@ for (const file of targets) {
     if (marker.test(source)) {
       source = source.replace(marker, `import Link from "next/link";\n${actionImport}`);
     } else {
-      source = `${actionImport}${source}`;
+      // Preserve a client directive at the very top when present.
+      if (source.startsWith('"use client";')) {
+        const firstLineEnd = source.indexOf("\n");
+        source = `${source.slice(0, firstLineEnd + 1)}\n${actionImport}${source.slice(firstLineEnd + 1)}`;
+      } else {
+        source = `${actionImport}${source}`;
+      }
     }
   }
 
@@ -67,8 +74,6 @@ for (const file of targets) {
     const anchor = /\n\s*const upload(?:Image|CustomImage|Audio)\s*= async/;
     if (anchor.test(source)) {
       source = source.replace(anchor, `${helper}\n  const uploadImage = async`);
-      // The old upload blocks are deliberately left for the second pass if their
-      // exact shape differs between create/edit. The report below will catch them.
     }
   }
 
@@ -102,6 +107,7 @@ for (const file of targets) {
 }
 
 console.log("\nNow run:");
+console.log("  node scripts/refactor-invitation-editors.mjs");
 console.log("  npx tsc --noEmit");
 console.log("  npm run lint");
 console.log("  npm run build");
