@@ -12,7 +12,6 @@ import FaqSection from "@/components/landing/FaqSection";
 import LeadMagnetSection from "@/components/landing/LeadMagnetSection";
 import Footer from "@/components/landing/Footer";
 import { createClient } from "@/lib/supabase/server";
-import { supabaseAdmin } from "@/lib/supabase/admin";
 
 export const dynamic = "force-dynamic";
 
@@ -41,29 +40,15 @@ export default async function HomePage() {
     showFaq: true,
   };
 
-  let { data: themes, error: themesError } = await supabase
+  const { data: themes, error: themesError } = await supabase
     .from("themes")
     .select(THEME_SELECT)
     .eq("is_active", true)
     .order("sort_order", { ascending: true })
     .order("created_at", { ascending: false });
 
-  if (themesError || !themes?.length) {
-    const fallback = await supabaseAdmin
-      .from("themes")
-      .select(THEME_SELECT)
-      .eq("is_active", true)
-      .order("sort_order", { ascending: true })
-      .order("created_at", { ascending: false });
-
-    if (fallback.error) {
-      console.error("Failed to load homepage themes", {
-        publicError: themesError?.message,
-        fallbackError: fallback.error.message,
-      });
-    } else {
-      themes = fallback.data;
-    }
+  if (themesError) {
+    console.error("Failed to load homepage themes", themesError.message);
   }
 
   const config = { ...defaultConfig, ...(settings?.config || {}) };
