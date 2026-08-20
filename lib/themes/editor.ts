@@ -56,9 +56,11 @@ export async function getThemeForEditor(
   let pinnedVersionId = options?.versionId ?? null;
   const invitationId = options?.invitationId ?? getLegacyInvitationIdFromPath();
 
-  // When editing an existing invitation, the invitation owns the theme version
-  // that must be shown in the editor. Never silently fall back to the latest
-  // published version when the invitation points at a different theme.
+  // Existing invitations normally pin the exact theme version they were created with.
+  // Legacy invitations may have no theme_version_id, and older data may reference a
+  // version that is no longer published. In those cases the editor should recover by
+  // using the current published version for the same theme instead of reporting that
+  // the theme has no published version.
   if (!pinnedVersionId && invitationId) {
     const { data: invitation, error: invitationError } = await supabase
       .from("invitations")
@@ -68,28 +70,44 @@ export async function getThemeForEditor(
 
     if (invitationError || !invitation) return null;
     if (invitation.theme_id !== theme.id) return null;
-    if (!invitation.theme_version_id) return null;
-    pinnedVersionId = invitation.theme_version_id;
+    pinnedVersionId = invitation.theme_version_id ?? null;
   }
 
-  let versionQuery = supabase
-    .from("theme_versions")
-    .select("id, theme_id, version, component_key, config, fields_schema, colors, assets, fields_schema_authoritative, is_published, lifecycle_status")
-    .eq("theme_id", theme.id);
+  const selectFields = "id, theme_id, version, component_key, config, fields_schema, colors, assets, fields_schema_authoritative, is_published, lifecycle_status";
 
+  // First try the invitation's pinned version. This preserves the version for
+  // existing invitations when that version is still compatible with the theme.
   if (pinnedVersionId) {
-    versionQuery = versionQuery.eq("id", pinnedVersionId);
-  } else {
-    versionQuery = versionQuery
-      .eq("is_published", true)
-      .eq("lifecycle_status", "published")
-      .order("version", { ascending: false })
-      .limit(1);
+    const { data: pinnedVersion, error: pinnedVersionError } = await supabase
+      .from("theme_versions")
+      .select(selectFields)
+      .eq("id", pinnedVersionId)
+      .eq("theme_id", theme.id)
+      .maybeSingle();
+
+    if (!pinnedVersionError && pinnedVersion && pinnedVersion.theme_id === theme.id && pinnedVersion.component_key === theme.component_key) {
+      return {
+        theme,
+        version: pinnedVersion,
+        runtime: resolveRuntimeTheme(theme, pinnedVersion),
+      };
+    }
   }
 
-  const { data: version, error: versionError } = await versionQuery.maybeSingle();
-  if (versionError || !version || version.theme_id !== theme.id) return null;
-  if (version.component_key !== theme.component_key) return null;
+  // Recovery path for legacy/stale invitations: resolve the newest published
+  // version belonging to this exact theme and matching its component key.
+  const { data: publishedVersions, error: publishedVersionError } = await supabase
+    .from("theme_versions")
+    .select(selectFields)
+    .eq("theme_id", theme.id)
+    .eq("is_published", true)
+    .eq("lifecycle_status", "published")
+    .eq("component_key", theme.component_key)
+    .order("version", { ascending: false })
+    .limit(1);
+
+  const version = publishedVersions?.[0] ?? null;
+  if (publishedVersionError || !version) return null;
 
   return {
     theme,
