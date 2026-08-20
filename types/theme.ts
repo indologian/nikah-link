@@ -81,9 +81,9 @@ export interface ThemeGiftAccount {
 
 export interface ThemeComponentProps {
   invitation: ThemeInvitationData;
-  guestName: string;
-  initialWishes: ThemeGuestWish[];
-  giftAccounts: ThemeGiftAccount[];
+  guestName?: string;
+  initialWishes?: ThemeGuestWish[];
+  giftAccounts?: ThemeGiftAccount[];
   isFreePlan?: boolean;
   expiresAt?: string | null;
   customData?: Record<string, unknown>;
