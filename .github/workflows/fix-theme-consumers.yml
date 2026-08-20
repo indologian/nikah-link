@@ -1,0 +1,66 @@
+name: Update theme consumers
+
+on:
+  push:
+    branches:
+      - fix/theme-rls-grants
+
+permissions:
+  contents: write
+
+jobs:
+  update-theme-consumers:
+    if: ${{ !contains(github.event.head_commit.message, 'theme consumers') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Update create/edit theme consumers
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          files = [
+              Path('app/dashboard/undangan/baru/page.tsx'),
+              Path('app/dashboard/undangan/[id]/edit/page.tsx'),
+          ]
+
+          old_import = 'import { getThemeConfig } from "@/lib/themes/registry";'
+          new_import = 'import { resolveThemeConfig } from "@/lib/themes/resolve";'
+
+          for path in files:
+              text = path.read_text(encoding='utf-8')
+              if old_import not in text:
+                  raise SystemExit(f'Expected theme registry import not found: {path}')
+
+              text = text.replace(old_import, new_import, 1)
+
+              pattern = re.compile(
+                  r'(const selectedThemeConfig = )getThemeConfig\(formData\.theme_slug\)(;)',
+              )
+              updated, count = pattern.subn(
+                  r'\1resolveThemeConfig(formData.theme_slug).config\2',
+                  text,
+              )
+              if count != 1:
+                  raise SystemExit(f'Expected exactly one theme validation call in {path}, found {count}')
+
+              path.write_text(updated, encoding='utf-8')
+
+      - name: Verify replacements
+        run: |
+          ! grep -R 'getThemeConfig(formData.theme_slug)' app/dashboard/undangan/baru/page.tsx 'app/dashboard/undangan/[id]/edit/page.tsx'
+          grep -R 'resolveThemeConfig(formData.theme_slug).config' app/dashboard/undangan/baru/page.tsx 'app/dashboard/undangan/[id]/edit/page.tsx'
+
+      - name: Commit changes and remove one-shot workflow
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add app/dashboard/undangan/baru/page.tsx 'app/dashboard/undangan/[id]/edit/page.tsx' .github/workflows/fix-theme-consumers.yml
+          git rm .github/workflows/fix-theme-consumers.yml
+          git commit -m 'fix: align create and edit theme consumers'
+          git push
