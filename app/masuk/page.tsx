@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Eye, EyeOff, Heart, Loader2 } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -16,12 +16,25 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState("");
+  const [selectedTheme, setSelectedTheme] = useState("");
   const router = useRouter();
   const searchParams = useSearchParams();
   const supabase = createClient();
 
-  const requestedTheme = searchParams.get("tema")?.trim().toLowerCase() || "";
-  const selectedTheme = THEME_SLUG_PATTERN.test(requestedTheme) ? requestedTheme : "";
+  useEffect(() => {
+    const requestedTheme = searchParams.get("tema")?.trim().toLowerCase() || "";
+    if (!THEME_SLUG_PATTERN.test(requestedTheme)) return;
+    setSelectedTheme(requestedTheme);
+    localStorage.setItem("nikahlink_pending_theme", requestedTheme);
+    try {
+      const current = JSON.parse(localStorage.getItem("nikahlink_new_invitation") || "{}");
+      localStorage.setItem("nikahlink_new_invitation", JSON.stringify({ ...current, theme_slug: requestedTheme }));
+      localStorage.removeItem("nikahlink_new_invitation_step");
+    } catch {
+      localStorage.setItem("nikahlink_new_invitation", JSON.stringify({ theme_slug: requestedTheme }));
+    }
+  }, [searchParams]);
+
   const dashboardTarget = selectedTheme
     ? `/dashboard/undangan/baru?tema=${encodeURIComponent(selectedTheme)}`
     : "/dashboard";
@@ -32,7 +45,6 @@ export default function LoginPage() {
     setError("");
 
     const { error } = await supabase.auth.signInWithPassword({ email, password });
-
     if (error) {
       setError("Email atau password salah. Silakan coba lagi.");
       setLoading(false);
@@ -46,7 +58,6 @@ export default function LoginPage() {
   const handleGoogleLogin = async () => {
     setGoogleLoading(true);
     setError("");
-
     const callbackUrl = new URL("/auth/callback", window.location.origin);
     callbackUrl.searchParams.set("next", dashboardTarget);
 
@@ -82,9 +93,7 @@ export default function LoginPage() {
           </form>
 
           <div className="flex items-center gap-4 my-8"><div className="flex-1 h-px bg-slate-200 dark:bg-slate-800" /><span className="text-slate-400 dark:text-slate-500 text-[10px] font-bold uppercase tracking-widest">atau</span><div className="flex-1 h-px bg-slate-200 dark:bg-slate-800" /></div>
-
           <button onClick={handleGoogleLogin} disabled={googleLoading || loading} className="w-full flex items-center justify-center gap-3 py-3.5 px-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 font-semibold text-sm disabled:opacity-70">{googleLoading ? <Loader2 className="w-5 h-5 animate-spin text-slate-400" /> : <span className="font-bold">G</span>}<span>Masuk dengan Google</span></button>
-
           <p className="text-center text-sm text-slate-500 mt-8">Belum punya akun? <Link href={selectedTheme ? `/daftar?tema=${encodeURIComponent(selectedTheme)}` : "/daftar"} className="font-semibold text-[var(--accent-rosegold)] hover:underline">Daftar Gratis</Link></p>
         </div>
       </div>
