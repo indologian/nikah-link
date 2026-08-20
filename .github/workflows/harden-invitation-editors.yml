@@ -1,0 +1,38 @@
+name: invitation-editor-hardening
+
+on:
+  push:
+    branches:
+      - refactor/architecture-v1
+    paths:
+      - "scripts/harden-invitation-editors.mjs"
+      - "app/dashboard/undangan/baru/page.tsx"
+      - "app/dashboard/undangan/[id]/edit/page.tsx"
+
+permissions:
+  contents: write
+
+jobs:
+  harden:
+    if: github.event.head_commit.message != 'refactor: remove client supabase from invitation editors'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: refactor/architecture-v1
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: node scripts/harden-invitation-editors.mjs
+
+      - name: Remove codemod and workflow
+        run: |
+          git rm scripts/harden-invitation-editors.mjs .github/workflows/harden-invitation-editors.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "refactor: remove client supabase from invitation editors"
+          git push origin HEAD:refactor/architecture-v1
