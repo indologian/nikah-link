@@ -3,16 +3,20 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { createThemeVersionDraft, publishThemeVersion, setThemeActive, updateThemeAndDraft } from "@/services/themes/theme.service";
-import { getThemeEditorData } from "@/services/themes/theme.query";
+import { getThemeEditorData, getThemeBySlug } from "@/services/themes/theme.query";
 
 const uuidSchema = z.string().uuid();
 const themeIdSchema = uuidSchema;
 const versionIdSchema = uuidSchema;
 
 export async function loadThemeEditor(themeId: string) {
-  const parsed = themeIdSchema.safeParse(themeId);
-  if (!parsed.success) throw new Error("Theme ID tidak valid");
-  return getThemeEditorData(parsed.data);
+  return getThemeEditorData(themeIdSchema.parse(themeId));
+}
+
+export async function loadThemeEditorBySlug(slug: string) {
+  const theme = await getThemeBySlug(slug);
+  if (!theme) return null;
+  return getThemeEditorData(theme.id);
 }
 
 export async function saveThemeDraft(input: {
@@ -57,22 +61,19 @@ export async function saveThemeDraft(input: {
   });
 
   revalidatePath("/admin/themes");
-  revalidatePath(`/admin/themes/preview/${input.componentKey}`);
   revalidatePath("/tema");
   return draft;
 }
 
 export async function publishThemeDraft(versionId: string) {
-  const id = versionIdSchema.parse(versionId);
-  const published = await publishThemeVersion(id);
+  const published = await publishThemeVersion(versionIdSchema.parse(versionId));
   revalidatePath("/admin/themes");
   revalidatePath("/tema");
   return published;
 }
 
 export async function setThemeEnabled(themeId: string, isActive: boolean) {
-  const id = themeIdSchema.parse(themeId);
-  const theme = await setThemeActive(id, isActive);
+  const theme = await setThemeActive(themeIdSchema.parse(themeId), isActive);
   revalidatePath("/admin/themes");
   revalidatePath("/tema");
   revalidatePath(`/demo/${theme.slug}`);
