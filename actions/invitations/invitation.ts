@@ -17,38 +17,45 @@ import {
 
 const uuidSchema = z.string().uuid();
 const usernameSchema = z.string().trim().min(1).max(80);
+const nullableText = (max: number) =>
+  z.union([z.string().max(max), z.literal(""), z.null()])
+    .optional()
+    .transform((value) => value === "" ? null : value);
+const nullableUrl = z.union([z.string().url(), z.literal(""), z.null()])
+  .optional()
+  .transform((value) => value === "" ? null : value);
 
 const mutationSchema = z.object({
   username: usernameSchema,
   bride_name: z.string().trim().min(1).max(160),
   groom_name: z.string().trim().min(1).max(160),
-  bride_photo_url: z.string().url().nullable().optional(),
-  groom_photo_url: z.string().url().nullable().optional(),
-  love_story: z.string().max(5000).nullable().optional(),
-  akad_date: z.string().nullable().optional(),
-  akad_time: z.string().nullable().optional(),
-  akad_venue: z.string().max(255).nullable().optional(),
-  akad_address: z.string().max(500).nullable().optional(),
-  akad_maps_url: z.string().url().nullable().optional(),
-  reception_date: z.string().nullable().optional(),
-  reception_time: z.string().nullable().optional(),
-  reception_venue: z.string().max(255).nullable().optional(),
-  reception_address: z.string().max(500).nullable().optional(),
-  reception_maps_url: z.string().url().nullable().optional(),
+  bride_photo_url: nullableUrl,
+  groom_photo_url: nullableUrl,
+  love_story: nullableText(5000),
+  akad_date: nullableText(32),
+  akad_time: nullableText(64),
+  akad_venue: nullableText(255),
+  akad_address: nullableText(500),
+  akad_maps_url: nullableUrl,
+  reception_date: nullableText(32),
+  reception_time: nullableText(64),
+  reception_venue: nullableText(255),
+  reception_address: nullableText(500),
+  reception_maps_url: nullableUrl,
   theme_id: uuidSchema,
   theme_version_id: uuidSchema,
-  music_url: z.string().url().nullable().optional(),
-  cover_image_url: z.string().url().nullable().optional(),
-  custom_message: z.string().max(5000).nullable().optional(),
+  music_url: nullableUrl,
+  cover_image_url: nullableUrl,
+  custom_message: nullableText(5000),
   is_published: z.boolean(),
   show_rsvp: z.boolean(),
   show_gift: z.boolean(),
   show_gallery: z.boolean(),
   show_wishes: z.boolean(),
   custom_data: z.record(z.string(), z.unknown()).default({}),
-  bank_name: z.string().max(100).nullable().optional(),
-  account_number: z.string().max(100).nullable().optional(),
-  account_name: z.string().max(160).nullable().optional(),
+  bank_name: nullableText(100),
+  account_number: nullableText(100),
+  account_name: nullableText(160),
 });
 
 export async function loadActiveInvitationThemes() {
@@ -87,7 +94,7 @@ export async function updateInvitationAction(input: {
   await updateInvitation(parsedId, parsed, giftAccountId);
   revalidatePath("/dashboard/undangan");
   revalidatePath(`/dashboard/undangan/${parsedId}/edit`);
-  revalidatePath(`/dashboard/undangan/${parsed.username}`);
+  revalidatePath(`/dashboard/undangan/${parsedId}`);
   return { ok: true };
 }
 
