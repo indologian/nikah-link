@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Download, Mail, Phone, CheckCircle2, ArrowRight } from "lucide-react";
-import { submitLead } from "@/app/actions/leads";
+import { submitLead } from "@/actions/leads/submit-lead";
 
 export default function LeadMagnetSection() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
