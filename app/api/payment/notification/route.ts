@@ -5,11 +5,20 @@ import { getMidtransTransactionStatus } from "@/lib/midtrans";
 
 // Webhook Midtrans adalah server-to-server.
 // Gunakan service role agar webhook dapat melakukan operasi privileged.
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
-const MIDTRANS_SERVER_KEY = process.env.MIDTRANS_SERVER_KEY || "";
+function getSupabaseAdmin() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  if (!supabaseUrl || !supabaseServiceKey) {
+    throw new Error("Missing Supabase server environment variables for Midtrans webhook");
+  }
+
+  return createClient(supabaseUrl, supabaseServiceKey);
+}
+
+function getMidtransServerKey() {
+  return process.env.MIDTRANS_SERVER_KEY || "";
+}
 
 /**
  * Verifikasi signature_key Midtrans.
@@ -23,12 +32,14 @@ function verifyMidtransSignature(
   grossAmount: string,
   signatureKey: string
 ): boolean {
-  if (!MIDTRANS_SERVER_KEY || !signatureKey) {
+  const serverKey = getMidtransServerKey();
+
+  if (!serverKey || !signatureKey) {
     return false;
   }
 
   const computed = createHash("sha512")
-    .update(`${orderId}${statusCode}${grossAmount}${MIDTRANS_SERVER_KEY}`)
+    .update(`${orderId}${statusCode}${grossAmount}${serverKey}`)
     .digest("hex");
 
   try {
@@ -91,6 +102,7 @@ function mapStatus(
 
 export async function POST(request: Request) {
   try {
+    const supabase = getSupabaseAdmin();
     const body = await request.json();
 
     const {
@@ -190,9 +202,6 @@ export async function POST(request: Request) {
 
     // ============================================================
     // 5. Ambil STATUS OTORITATIF dari Midtrans
-    //
-    // Jangan fallback ke payload webhook jika Status API gagal.
-    // Jika gagal, return 503 agar Midtrans retry.
     // ============================================================
 
     let verifiedStatus: string;
@@ -234,8 +243,6 @@ export async function POST(request: Request) {
         );
       }
 
-      // Defense-in-depth:
-      // nominal dari Status API juga harus cocok dengan subscription.
       if (
         verifiedGrossAmount !== undefined &&
         verifiedGrossAmount !== Number(sub.amount)
@@ -257,10 +264,6 @@ export async function POST(request: Request) {
         err
       );
 
-      // Jangan percaya transaction_status dari payload webhook
-      // jika Status API gagal.
-      //
-      // 503 membuat provider memiliki kesempatan melakukan retry.
       return NextResponse.json(
         { error: "Unable to verify transaction status" },
         { status: 503 }
@@ -334,8 +337,6 @@ export async function POST(request: Request) {
     // ============================================================
 
     if (mappedStatus === "success") {
-      // Premium = 90 hari
-      // Pro = lifetime
       let planExpiresAt: string | null = null;
 
       if (sub.plan === "premium") {
@@ -345,16 +346,6 @@ export async function POST(request: Request) {
       } else if (sub.plan === "pro") {
         planExpiresAt = null;
       }
-
-      // ==========================================================
-      // ATOMIC FINALIZATION
-      //
-      // subscriptions + profiles di-update dalam SATU transaksi
-      // PostgreSQL melalui RPC.
-      //
-      // Jika profile gagal:
-      // subscription success juga di-rollback.
-      // ==========================================================
 
       const { data: finalized, error: finalizeError } =
         await supabase.rpc(
@@ -374,16 +365,12 @@ export async function POST(request: Request) {
           finalizeError
         );
 
-        // Jangan mengembalikan 200.
-        // Provider harus retry.
         return NextResponse.json(
           { error: "Payment finalization failed" },
           { status: 503 }
         );
       }
 
-      // FALSE berarti request lain sudah melakukan
-      // pending -> success terlebih dahulu.
       if (!finalized) {
         console.log(
           `[Midtrans Webhook] Order ${order_id} sudah ` +
