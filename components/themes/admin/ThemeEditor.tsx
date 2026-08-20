@@ -1,12 +1,17 @@
 "use client";
 
-import { useEffect, useMemo, useState, type ChangeEvent } from "react";
-import { createClient } from "@/lib/supabase/client";
-import { loadThemeEditor, publishThemeDraft, saveThemeDraft, setThemeEnabled } from "@/actions/themes/theme";
+import { useEffect, useState, type ChangeEvent } from "react";
+import {
+  loadThemeEditor,
+  publishThemeDraft,
+  saveThemeDraft,
+  setThemeEnabled,
+  uploadThemeThumbnailAction,
+} from "@/actions/themes/theme";
 import { normalizeThemeColors, type ThemeColors } from "@/lib/themes/config";
 import { resolveRuntimeTheme } from "@/lib/themes/runtime";
 import type { Theme } from "@/types";
-import { Eye, Save, Upload, Archive, RotateCcw } from "lucide-react";
+import { Eye, Save, Archive, RotateCcw } from "lucide-react";
 
 type ThemeVersion = {
   id: string;
@@ -33,7 +38,6 @@ const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const MAX_THUMBNAIL_SIZE = 2 * 1024 * 1024;
 
 export default function ThemeEditor({ theme, onClose, onThemeChanged }: Props) {
-  const supabase = useMemo(() => createClient(), []);
   const [editor, setEditor] = useState<Awaited<ReturnType<typeof loadThemeEditor>>>(null);
   const [form, setForm] = useState({ name: "", category: "minimalis", isPremium: false, colors: normalizeThemeColors(undefined) });
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
@@ -67,11 +71,10 @@ export default function ThemeEditor({ theme, onClose, onThemeChanged }: Props) {
   const uploadThumbnail = async (file: File) => {
     if (!IMAGE_TYPES.includes(file.type)) throw new Error("Thumbnail harus JPG, PNG, atau WEBP.");
     if (file.size > MAX_THUMBNAIL_SIZE) throw new Error("Ukuran thumbnail maksimal 2 MB.");
-    const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
-    const path = `thumbnails/${theme.slug}-${crypto.randomUUID()}.${ext}`;
-    const { error } = await supabase.storage.from("themes").upload(path, file, { cacheControl: "31536000", contentType: file.type, upsert: false });
-    if (error) throw error;
-    return supabase.storage.from("themes").getPublicUrl(path).data.publicUrl;
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("themeSlug", theme.slug);
+    return uploadThemeThumbnailAction(formData);
   };
 
   const handleSave = async () => {
