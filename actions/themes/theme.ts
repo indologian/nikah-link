@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { createThemeVersionDraft, publishThemeVersion, setThemeActive, updateThemeAndDraft } from "@/services/themes/theme.service";
+import { createThemeVersionDraft, publishThemeVersion, setThemeActive, updateThemeAndDraft, uploadThemeThumbnail } from "@/services/themes/theme.service";
 import { getThemeEditorData, getThemeBySlug, getThemeForEditor } from "@/services/themes/theme.query";
 
 const uuidSchema = z.string().uuid();
@@ -89,4 +89,11 @@ export async function setThemeEnabled(themeId: string, isActive: boolean) {
   revalidatePath("/tema");
   revalidatePath(`/demo/${theme.slug}`);
   return theme;
+}
+
+export async function uploadThemeThumbnailAction(formData: FormData) {
+  const file = formData.get("file");
+  const themeSlug = z.string().min(1).max(100).parse(formData.get("themeSlug"));
+  if (!(file instanceof File)) throw new Error("Thumbnail tidak ditemukan.");
+  return uploadThemeThumbnail(file, themeSlug);
 }
