@@ -54,9 +54,10 @@ export async function getThemeForEditor(
 
   let pinnedVersionId = versionId || null;
 
-  // The existing invitation editor already calls this helper with only a slug.
-  // When running on an invitation edit route, resolve the exact version pinned
-  // to that invitation instead of silently switching to the latest published one.
+  // Existing invitations must keep their pinned version while editing the
+  // same theme. When the user selects a different theme, resolve its latest
+  // published version instead of incorrectly rejecting the selection because
+  // the invitation is pinned to another theme.
   if (!pinnedVersionId) {
     const invitationId = getInvitationIdFromEditPath();
 
@@ -68,10 +69,11 @@ export async function getThemeForEditor(
         .maybeSingle();
 
       if (invitationError || !invitation) return null;
-      if (invitation.theme_id !== theme.id) return null;
-      if (!invitation.theme_version_id) return null;
 
-      pinnedVersionId = invitation.theme_version_id;
+      if (invitation.theme_id === theme.id) {
+        if (!invitation.theme_version_id) return null;
+        pinnedVersionId = invitation.theme_version_id;
+      }
     }
   }
 
@@ -81,8 +83,8 @@ export async function getThemeForEditor(
     .eq("theme_id", theme.id);
 
   if (pinnedVersionId) {
-    // Existing invitations must edit the exact version they are pinned to,
-    // even when that version has since been archived.
+    // Existing invitations edit the exact pinned version, even when it is
+    // archived. This prevents silent visual changes to an existing invitation.
     versionQuery = versionQuery.eq("id", pinnedVersionId);
   } else {
     // New theme selection uses the latest published version.
