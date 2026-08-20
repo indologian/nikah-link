@@ -56,11 +56,6 @@ export async function getThemeForEditor(
   let pinnedVersionId = options?.versionId ?? null;
   const invitationId = options?.invitationId ?? getLegacyInvitationIdFromPath();
 
-  // Existing invitations normally pin the exact theme version they were created with.
-  // Legacy invitations may have no theme_version_id, and older data may reference a
-  // version that is no longer published. In those cases the editor should recover by
-  // using the current published version for the same theme instead of reporting that
-  // the theme has no published version.
   if (!pinnedVersionId && invitationId) {
     const { data: invitation, error: invitationError } = await supabase
       .from("invitations")
@@ -68,15 +63,13 @@ export async function getThemeForEditor(
       .eq("id", invitationId)
       .maybeSingle();
 
-    if (invitationError || !invitation) return null;
-    if (invitation.theme_id !== theme.id) return null;
-    pinnedVersionId = invitation.theme_version_id ?? null;
+    if (!invitationError && invitation && invitation.theme_id === theme.id) {
+      pinnedVersionId = invitation.theme_version_id ?? null;
+    }
   }
 
   const selectFields = "id, theme_id, version, component_key, config, fields_schema, colors, assets, fields_schema_authoritative, is_published, lifecycle_status";
 
-  // First try the invitation's pinned version. This preserves the version for
-  // existing invitations when that version is still compatible with the theme.
   if (pinnedVersionId) {
     const { data: pinnedVersion, error: pinnedVersionError } = await supabase
       .from("theme_versions")
@@ -85,7 +78,12 @@ export async function getThemeForEditor(
       .eq("theme_id", theme.id)
       .maybeSingle();
 
-    if (!pinnedVersionError && pinnedVersion && pinnedVersion.theme_id === theme.id && pinnedVersion.component_key === theme.component_key) {
+    if (
+      !pinnedVersionError &&
+      pinnedVersion &&
+      pinnedVersion.theme_id === theme.id &&
+      pinnedVersion.component_key === theme.component_key
+    ) {
       return {
         theme,
         version: pinnedVersion,
@@ -94,20 +92,26 @@ export async function getThemeForEditor(
     }
   }
 
-  // Recovery path for legacy/stale invitations: resolve the newest published
-  // version belonging to this exact theme and matching its component key.
-  const { data: publishedVersions, error: publishedVersionError } = await supabase
+  // Primary path: current published version for this exact theme.
+  const { data: publishedVersions } = await supabase
     .from("theme_versions")
     .select(selectFields)
     .eq("theme_id", theme.id)
     .eq("is_published", true)
-    .eq("lifecycle_status", "published")
-    .eq("component_key", theme.component_key)
     .order("version", { ascending: false })
-    .limit(1);
+    .limit(10);
 
-  const version = publishedVersions?.[0] ?? null;
-  if (publishedVersionError || !version) return null;
+  // Some older databases may have a published flag without the newer lifecycle
+  // field being synchronized. We intentionally validate the component key in JS
+  // and accept the newest published version for this exact theme.
+  const version =
+    publishedVersions?.find(
+      (candidate) =>
+        candidate.component_key === theme.component_key &&
+        candidate.is_published === true
+    ) ?? null;
+
+  if (!version) return null;
 
   return {
     theme,
