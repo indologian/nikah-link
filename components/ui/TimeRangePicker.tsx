@@ -3,6 +3,20 @@
 import { useState, useEffect, useRef } from "react";
 import { Clock } from "lucide-react";
 
+function parseTimeValue(value: string) {
+  const lower = value.toLowerCase();
+  const timezone = lower.includes("wita") ? "WITA" : lower.includes("wit") ? "WIT" : "WIB";
+  const isSelesai = lower.includes("selesai");
+  const times = value.match(/\d{2}:\d{2}/g) ?? [];
+
+  return {
+    startTime: times[0] ?? "08:00",
+    endTime: times[1] ?? "10:00",
+    isSelesai: times.length < 2 ? isSelesai || Boolean(value) : false,
+    timezone,
+  };
+}
+
 export default function TimeRangePicker({
   value,
   onChange,
@@ -10,60 +24,26 @@ export default function TimeRangePicker({
   value: string;
   onChange: (val: string) => void;
 }) {
-  const [startTime, setStartTime] = useState("08:00");
-  const [endTime, setEndTime] = useState("10:00");
-  const [isSelesai, setIsSelesai] = useState(true);
-  const [timezone, setTimezone] = useState("WIB");
+  const initial = useRef(parseTimeValue(value)).current;
+  const [startTime, setStartTime] = useState(initial.startTime);
+  const [endTime, setEndTime] = useState(initial.endTime);
+  const [isSelesai, setIsSelesai] = useState(initial.isSelesai);
+  const [timezone, setTimezone] = useState(initial.timezone);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  
-  const hasInitialized = useRef(false);
+  const hasInitialized = useRef(Boolean(value));
 
   useEffect(() => {
-    // Basic parser for initial value
-    if (value && !hasInitialized.current) {
+    if (!hasInitialized.current && isOpen) {
       hasInitialized.current = true;
-      const lower = value.toLowerCase();
-      if (lower.includes("wita")) setTimezone("WITA");
-      else if (lower.includes("wit")) setTimezone("WIT");
-      else setTimezone("WIB");
-
-      if (lower.includes("selesai")) {
-        setIsSelesai(true);
-      } else {
-        setIsSelesai(false);
-      }
-
-      // Extract times using regex
-      const times = value.match(/\d{2}:\d{2}/g);
-      if (times && times.length > 0) {
-        setStartTime(times[0]);
-        if (times.length > 1) {
-          setEndTime(times[1]);
-          setIsSelesai(false);
-        }
-      }
     }
-  }, [value]);
 
-  // Update parent whenever our internal state changes
-  useEffect(() => {
-    if (!hasInitialized.current) {
-        // If not initialized by a prop value yet, let's initialize it so it sets a default when opened for the first time
-        if (isOpen) {
-            hasInitialized.current = true;
-        } else {
-            return;
-        }
-    }
-    
-    let result = "";
-    if (isSelesai) {
-      result = `${startTime} ${timezone} - Selesai`;
-    } else {
-      result = `${startTime} - ${endTime} ${timezone}`;
-    }
-    
+    if (!hasInitialized.current) return;
+
+    const result = isSelesai
+      ? `${startTime} ${timezone} - Selesai`
+      : `${startTime} - ${endTime} ${timezone}`;
+
     if (value !== result) {
       onChange(result);
     }
@@ -116,7 +96,7 @@ export default function TimeRangePicker({
               />
             </div>
           </div>
-          
+
           <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-800">
             <label className="flex items-center gap-2 cursor-pointer">
               <input
@@ -127,7 +107,7 @@ export default function TimeRangePicker({
               />
               <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Sampai Selesai</span>
             </label>
-            
+
             <select
               value={timezone}
               onChange={(e) => setTimezone(e.target.value)}
@@ -138,7 +118,7 @@ export default function TimeRangePicker({
               <option value="WIT">WIT</option>
             </select>
           </div>
-          
+
           <button
             type="button"
             onClick={() => setIsOpen(false)}
