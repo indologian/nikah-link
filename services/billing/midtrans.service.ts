@@ -1,5 +1,3 @@
-import "server-only";
-
 const MIDTRANS_SERVER_KEY = process.env.MIDTRANS_SERVER_KEY || "";
 const IS_PRODUCTION = process.env.NEXT_PUBLIC_MIDTRANS_IS_PRODUCTION === "true";
 
