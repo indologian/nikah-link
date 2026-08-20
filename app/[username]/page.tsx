@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
 import { ThemeRenderer } from "@/components/themes/ThemeRenderer";
+import { getThemeConfig } from "@/lib/themes/registry";
 import { resolveRuntimeTheme } from "@/lib/themes/runtime";
 import { isValidThemeRenderer } from "@/lib/themes/config";
-import { getThemeConfig } from "@/lib/themes/registry";
+import { getPublishedInvitationByUsername } from "@/services/themes/theme.query";
 import type { Metadata } from "next";
 
 interface Props {
@@ -13,34 +13,22 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { username } = await params;
-  const supabase = await createClient();
-  const { data: inv } = await supabase
-    .from("invitations")
-    .select("bride_name, groom_name, cover_image_url")
-    .eq("username", username)
-    .single();
-
-  if (!inv) return { title: "Undangan Tidak Ditemukan — NikahLink" };
+  const invitation = await getPublishedInvitationByUsername(username);
+  if (!invitation) return { title: "Undangan Tidak Ditemukan — NikahLink" };
 
   return {
-    title: `Pernikahan ${inv.bride_name} & ${inv.groom_name} | NikahLink`,
-    description: `Tanpa mengurangi rasa hormat, kami mengundang Anda untuk hadir dan memberikan doa restu pada pernikahan ${inv.bride_name} & ${inv.groom_name}.`,
-    openGraph: { images: inv.cover_image_url ? [inv.cover_image_url] : [] },
+    title: `Pernikahan ${invitation.invitation.bride_name} & ${invitation.invitation.groom_name} | NikahLink`,
+    description: `Tanpa mengurangi rasa hormat, kami mengundang Anda untuk hadir dan memberikan doa restu pada pernikahan ${invitation.invitation.bride_name} & ${invitation.invitation.groom_name}.`,
+    openGraph: { images: invitation.invitation.cover_image_url ? [invitation.invitation.cover_image_url] : [] },
   };
 }
 
 export default async function PublicInvitationPage({ params, searchParams }: Props) {
   const { username } = await params;
   const { to: guestNameFromUrl } = await searchParams;
-  const supabase = await createClient();
 
-  const { data: invitation } = await supabase
-    .from("invitations")
-    .select("*, themes(*)")
-    .eq("username", username)
-    .single();
-
-  if (!invitation && username === "demo") {
+  if (username === "demo") {
+    const registeredTheme = getThemeConfig("minimalis");
     const demoInvitation = {
       id: "demo-invitation-id",
       username: "demo",
@@ -67,19 +55,15 @@ export default async function PublicInvitationPage({ params, searchParams }: Pro
       show_gift: true,
       show_gallery: true,
       show_wishes: true,
-      theme_colors: {
-        primary: "#0F172A",
-        secondary: "#FFFFFF",
-        accent: "#000000",
-        background: "#FFFFFF",
-      },
+      theme_colors: { primary: "#0F172A", secondary: "#FFFFFF", accent: "#000000", background: "#FFFFFF", text: "#111827" },
       custom_data: {},
     };
 
-    const DemoTheme = getThemeConfig("minimalis").component;
     return (
-      <DemoTheme
-        invitation={demoInvitation as any}
+      <ThemeRenderer
+        component={registeredTheme.component}
+        invitation={demoInvitation}
+        themeColors={demoInvitation.theme_colors}
         guestName={guestNameFromUrl || "Tamu Undangan"}
         initialWishes={[]}
         giftAccounts={[
@@ -93,53 +77,34 @@ export default async function PublicInvitationPage({ params, searchParams }: Pro
     );
   }
 
-  if (!invitation) notFound();
+  const result = await getPublishedInvitationByUsername(username);
+  if (!result) notFound();
 
-  const [{ data: wishes }, { data: gifts }, { data: profile }, { data: themeVersion }] = await Promise.all([
-    supabase.from("wishes").select("*").eq("invitation_id", invitation.id).order("created_at", { ascending: false }),
-    supabase.from("gift_accounts").select("*").eq("invitation_id", invitation.id),
-    supabase.from("profiles").select("plan").eq("user_id", invitation.user_id).single(),
-    invitation.theme_version_id
-      ? supabase.from("theme_versions").select("*").eq("id", invitation.theme_version_id).maybeSingle()
-      : Promise.resolve({ data: null }),
-  ]);
-
-  if (!invitation.themes) notFound();
-  if (invitation.theme_version_id && !themeVersion) notFound();
-
-  if (
-    themeVersion &&
-    (themeVersion.theme_id !== invitation.theme_id ||
-      themeVersion.component_key !== invitation.themes.component_key)
-  ) {
-    notFound();
-  }
-
-  const isFreePlan = profile?.plan !== "premium" && profile?.plan !== "pro";
-  const runtimeTheme = resolveRuntimeTheme(invitation.themes, themeVersion);
-
+  const runtimeTheme = resolveRuntimeTheme(result.theme, result.themeVersion);
   if (!isValidThemeRenderer(runtimeTheme.componentKey)) notFound();
 
+  const registeredTheme = getThemeConfig(runtimeTheme.componentKey);
+  const isFreePlan = result.profile?.plan !== "premium" && result.profile?.plan !== "pro";
   const renderInvitation = {
-    ...invitation,
+    ...result.invitation,
     theme_colors: runtimeTheme.colors,
-    theme_version: themeVersion,
+    theme_version: result.themeVersion,
   };
 
   return (
     <ThemeRenderer
-      component={runtimeTheme.component}
+      component={registeredTheme.component}
       invitation={renderInvitation}
       themeColors={runtimeTheme.colors}
       guestName={guestNameFromUrl || "Tamu Undangan"}
-      initialWishes={wishes || []}
-      giftAccounts={gifts || []}
+      initialWishes={result.wishes}
+      giftAccounts={result.gifts}
       isFreePlan={isFreePlan}
-      expiresAt={invitation.expires_at}
-      customData={invitation.custom_data || {}}
+      expiresAt={result.invitation.expires_at}
+      customData={result.invitation.custom_data || {}}
       themeConfig={runtimeTheme.config}
       themeAssets={runtimeTheme.assets}
-      themeVersion={themeVersion}
+      themeVersion={result.themeVersion}
     />
   );
 }
