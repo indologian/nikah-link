@@ -21,6 +21,7 @@ export default async function AdminThemesPage() {
   const { data: themes } = await supabase
     .from("themes")
     .select("*")
+    .order("sort_order", { ascending: true })
     .order("created_at", { ascending: false });
 
   return (
