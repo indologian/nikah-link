@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -14,7 +14,9 @@ import Link from "next/link";
 import UpsellModal from "@/components/dashboard/UpsellModal";
 import LocationAutocomplete from "@/components/ui/LocationAutocomplete";
 import TimeRangePicker from "@/components/ui/TimeRangePicker";
-import { getThemeConfig } from "@/lib/themes/registry";
+import { getPublishedThemeForEditor } from "@/lib/themes/editor";
+
+
 
 const STEPS = [
   { id: "theme", label: "Tema", icon: Sparkles },
@@ -81,6 +83,7 @@ export default function NewInvitationPage() {
     }
     return 0;
   });
+
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -91,11 +94,35 @@ export default function NewInvitationPage() {
   const [slugStatus, setSlugStatus] = useState<"idle" | "checking" | "available" | "taken">("idle");
   const [themesList, setThemesList] = useState<any[]>([]);
 
+  const [selectedThemeEditor, setSelectedThemeEditor] =
+    useState<Awaited<ReturnType<typeof getPublishedThemeForEditor>>>(null);
+
+  const [isResolvingTheme, setIsResolvingTheme] = useState(false);
+  const themeResolveRequestRef = useRef(0);
+
   useEffect(() => {
     const fetchThemes = async () => {
-      const { data } = await supabase.from("themes").select("*").eq("is_active", true).order("created_at", { ascending: false });
-      if (data) setThemesList(data);
+      const { data } = await supabase
+        .from("themes")
+        .select(`
+        id,
+        name,
+        slug,
+        component_key,
+        category,
+        thumbnail_url,
+        colors,
+        is_premium,
+        is_active
+      `)
+        .eq("is_active", true)
+        .order("created_at", { ascending: false });
+
+      if (data) {
+        setThemesList(data);
+      }
     };
+
     fetchThemes();
   }, [supabase]);
 
@@ -114,6 +141,39 @@ export default function NewInvitationPage() {
     }
     return DEFAULT_FORM_DATA;
   });
+
+  useEffect(() => {
+    const requestId = ++themeResolveRequestRef.current;
+
+    const resolveSelectedTheme = async () => {
+      if (!formData.theme_slug) {
+        setSelectedThemeEditor(null);
+        setIsResolvingTheme(false);
+        return;
+      }
+
+      setIsResolvingTheme(true);
+
+      try {
+        const resolved = await getPublishedThemeForEditor(
+          formData.theme_slug
+        );
+
+        // Abaikan response yang sudah tidak relevan
+        if (requestId !== themeResolveRequestRef.current) {
+          return;
+        }
+
+        setSelectedThemeEditor(resolved);
+      } finally {
+        if (requestId === themeResolveRequestRef.current) {
+          setIsResolvingTheme(false);
+        }
+      }
+    };
+
+    resolveSelectedTheme();
+  }, [formData.theme_slug]);
 
   useEffect(() => {
     localStorage.setItem("nikahlink_new_invitation", JSON.stringify(formData));
@@ -373,16 +433,72 @@ export default function NewInvitationPage() {
     }
   };
 
+  const handleThemeSelect = async (theme: any) => {
+    if (theme.is_premium && userPlan === "free") {
+      setUpsellConfig({
+        isOpen: true,
+        title: "Tema Premium Terkunci",
+        description:
+          "Tema mewah ini eksklusif untuk paket Premium dan Pro. Upgrade sekarang untuk membuka semua tema.",
+        planNeeded: "premium",
+      });
+      return;
+    }
+
+    setError("");
+
+    const requestId = ++themeResolveRequestRef.current;
+    setIsResolvingTheme(true);
+
+    try {
+      const resolved = await getPublishedThemeForEditor(theme.slug);
+
+      if (requestId !== themeResolveRequestRef.current) {
+        return;
+      }
+
+      if (!resolved) {
+        setSelectedThemeEditor(null);
+        setError(
+          `Tema "${theme.name}" belum memiliki published version yang valid.`
+        );
+        return;
+      }
+
+      setSelectedThemeEditor(resolved);
+
+      setFormData((prev) => ({
+        ...prev,
+        theme_slug: resolved.theme.slug,
+        custom_data: {},
+      }));
+    } finally {
+      if (requestId === themeResolveRequestRef.current) {
+        setIsResolvingTheme(false);
+      }
+    }
+  };
 
   const handleNext = () => {
+    if (isResolvingTheme) {
+      return;
+    }
     if (STEPS[currentStep].id === "theme") {
-      const selectedThemeConfig = getThemeConfig(formData.theme_slug);
-      if (selectedThemeConfig.fields && selectedThemeConfig.fields.length > 0) {
-        for (const field of selectedThemeConfig.fields) {
-          if (!formData.custom_data || !formData.custom_data[field.name]) {
-            setError(`Mohon isi field "${field.label}" pada pengaturan khusus tema.`);
-            return;
-          }
+      if (!selectedThemeEditor) {
+        setError("Tema belum memiliki published version yang valid.");
+        return;
+      }
+
+      const selectedFields = selectedThemeEditor.runtime.fields;
+
+      for (const field of selectedFields) {
+        const value = formData.custom_data?.[field.name];
+
+        if (value === undefined || value === null || value === "") {
+          setError(
+            `Mohon isi field "${field.label}" pada pengaturan khusus tema.`
+          );
+          return;
         }
       }
     }
@@ -392,12 +508,15 @@ export default function NewInvitationPage() {
         setError("Nama pengantin dan URL undangan wajib diisi!");
         return;
       }
+
       if (slugStatus === "taken") {
         setError("URL undangan sudah digunakan. Silakan pilih URL lain.");
         return;
       }
     }
+
     setError("");
+
     if (currentStep < STEPS.length - 1) {
       setCurrentStep((prev) => prev + 1);
     }
@@ -438,14 +557,19 @@ export default function NewInvitationPage() {
         return;
       }
 
-      // Ambil UUID dari tabel themes berdasarkan theme_slug yang dipilih
-      const { data: themeData } = await supabase
-        .from("themes")
-        .select("id")
-        .eq("slug", formData.theme_slug)
-        .single();
+      // Resolve tema dan published version terbaru sebelum membuat invitation
+      const selectedTheme = await getPublishedThemeForEditor(
+        formData.theme_slug
+      );
 
-      const themeId = themeData?.id || null;
+      if (!selectedTheme) {
+        throw new Error(
+          "Tema yang dipilih tidak memiliki published version yang valid."
+        );
+      }
+
+      const themeId = selectedTheme.theme.id;
+      const themeVersionId = selectedTheme.version.id;
 
       // Save invitation
       const { data: newInv, error: insertError } = await supabase
@@ -453,6 +577,7 @@ export default function NewInvitationPage() {
         .insert({
           user_id: user.id,
           username: cleanUsername,
+
           bride_name: formData.bride_name,
           groom_name: formData.groom_name,
           bride_photo_url: formData.bride_photo_url || null,
@@ -472,6 +597,8 @@ export default function NewInvitationPage() {
           reception_maps_url: formData.reception_maps_url || null,
 
           theme_id: themeId,
+          theme_version_id: themeVersionId,
+
           music_url: formData.music_url || null,
           cover_image_url: formData.cover_image_url || null,
           custom_message: formData.custom_message,
@@ -915,23 +1042,23 @@ export default function NewInvitationPage() {
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {themesList.map((theme) => {
                   const isSelected = formData.theme_slug === theme.slug;
+
                   return (
                     <div
                       key={theme.id}
                       onClick={() => {
-                        if (theme.is_premium && userPlan === "free") {
-                          setUpsellConfig({
-                            isOpen: true,
-                            title: "Tema Premium Terkunci",
-                            description: "Tema mewah ini eksklusif untuk paket Premium dan Pro. Upgrade sekarang untuk membuka semua 30+ tema menakjubkan kami!",
-                            planNeeded: "premium"
-                          });
-                          return;
+                        if (!isResolvingTheme) {
+                          handleThemeSelect(theme);
                         }
-                        handleChange("theme_slug", theme.slug);
-                        setFormData(prev => ({ ...prev, custom_data: {} }));
                       }}
-                      className={`relative overflow-hidden rounded-none cursor-pointer border-2 transition-all group ${isSelected ? "border-slate-900 dark:border-white  scale-[1.02]" : "border-slate-100 dark:border-slate-800 hover:border-rose-200 dark:hover:border-rose-900/50"
+                      aria-disabled={isResolvingTheme}
+                      aria-busy={isResolvingTheme}
+                      className={`relative overflow-hidden rounded-none cursor-pointer border-2 transition-all group ${isResolvingTheme
+                        ? "cursor-wait opacity-70"
+                        : ""
+                        } ${isSelected
+                          ? "border-slate-900 dark:border-white scale-[1.02]"
+                          : "border-slate-100 dark:border-slate-800 hover:border-rose-200 dark:hover:border-rose-900/50"
                         }`}
                     >
                       <div className="aspect-[3/4] relative">
@@ -967,84 +1094,127 @@ export default function NewInvitationPage() {
               </div>
 
               {/* DYNAMIC FIELDS FROM THEME CONFIG */}
-              {(() => {
-                const selectedThemeConfig = getThemeConfig(formData.theme_slug);
-                if (!selectedThemeConfig.fields || selectedThemeConfig.fields.length === 0) return null;
+              {selectedThemeEditor?.runtime.fields.length ? (
+                <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 space-y-4">
+                  <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                    <Settings className="w-4 h-4" /> Pengaturan Khusus Tema Ini
+                  </h3>
 
-                return (
-                  <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 space-y-4">
-                    <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
-                      <Settings className="w-4 h-4" /> Pengaturan Khusus Tema Ini
-                    </h3>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      {selectedThemeConfig.fields.map((field) => (
-                        <div key={field.name} className={field.type === 'textarea' ? 'md:col-span-2' : ''}>
-                          <label className="block text-xs font-bold text-slate-700 dark:text-slate-400 mb-1">
-                            {field.label}
-                          </label>
-                          {field.type === 'textarea' ? (
-                            <textarea
-                              rows={3}
-                              value={(formData.custom_data || {})[field.name] || ""}
-                              onChange={(e) => setFormData(prev => ({
+                  <div className="grid md:grid-cols-2 gap-4">
+                    {selectedThemeEditor.runtime.fields.map((field) => (
+                      <div
+                        key={field.name}
+                        className={field.type === "textarea" ? "md:col-span-2" : ""}
+                      >
+                        <label className="block text-xs font-bold text-slate-700 dark:text-slate-400 mb-1">
+                          {field.label}
+                        </label>
+
+                        {field.type === "textarea" ? (
+                          <textarea
+                            rows={3}
+                            value={(formData.custom_data || {})[field.name] || ""}
+                            onChange={(e) =>
+                              setFormData((prev) => ({
                                 ...prev,
-                                custom_data: { ...(prev.custom_data || {}), [field.name]: e.target.value }
-                              }))}
-                              placeholder={field.placeholder || ""}
-                              className="w-full px-4 py-2.5 rounded-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:border-white"
-                            />
-                          ) : field.type === 'boolean' ? (
-                            <label className="flex items-center gap-3 cursor-pointer mt-2 group">
-                              <div className={`w-4 h-4 border flex items-center justify-center transition-colors ${(formData.custom_data || {})[field.name] ? 'border-slate-900 bg-slate-900 dark:border-white dark:bg-white' : 'border-slate-300 dark:border-slate-600'}`}>
-                                {(formData.custom_data || {})[field.name] && <Check className="w-3 h-3 text-white dark:text-slate-900" />}
-                              </div>
-                              <input
-                                type="checkbox"
-                                checked={(formData.custom_data || {})[field.name] || false}
-                                onChange={(e) => setFormData(prev => ({
-                                  ...prev,
-                                  custom_data: { ...(prev.custom_data || {}), [field.name]: e.target.checked }
-                                }))}
-                                className="hidden"
-                              />
-                              <span className="text-sm text-slate-700 dark:text-slate-300">{field.label}</span>
-                            </label>
-                          ) : field.type === 'image' ? (
-                            <div className="flex items-center gap-3">
+                                custom_data: {
+                                  ...(prev.custom_data || {}),
+                                  [field.name]: e.target.value,
+                                },
+                              }))
+                            }
+                            placeholder={field.placeholder || ""}
+                            className="w-full px-4 py-2.5 rounded-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:border-white"
+                          />
+                        ) : field.type === "boolean" ? (
+                          <label className="flex items-center gap-3 cursor-pointer mt-2 group">
+                            <div
+                              className={`w-4 h-4 border flex items-center justify-center transition-colors ${(formData.custom_data || {})[field.name]
+                                ? "border-slate-900 bg-slate-900 dark:border-white dark:bg-white"
+                                : "border-slate-300 dark:border-slate-600"
+                                }`}
+                            >
                               {(formData.custom_data || {})[field.name] && (
-                                <div className="w-12 h-12 rounded-none border border-slate-200 dark:border-slate-700 overflow-hidden shrink-0 bg-slate-100">
-                                  <img src={(formData.custom_data || {})[field.name]} alt="Preview" className="w-full h-full object-cover" />
-                                </div>
+                                <Check className="w-3 h-3 text-white dark:text-slate-900" />
                               )}
-                              <div className="flex-1">
-                                <input
-                                  type="file"
-                                  accept="image/jpeg,image/png,image/gif,image/webp,image/svg+xml,image/bmp,image/tiff,image/x-icon,image/avif"
-                                  onChange={(e) => uploadCustomImage(e, field.name)}
-                                  disabled={uploading[field.name]}
-                                  className="w-full px-4 py-2 text-xs sm:text-sm text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-none file:border-0 file:text-xs file:font-bold file:bg-slate-900 file:text-white hover:file:bg-slate-800 dark:file:bg-white dark:file:text-slate-900 cursor-pointer disabled:opacity-50"
-                                />
-                                {uploading[field.name] && <p className="text-[10px] text-slate-500 mt-1 flex items-center gap-1"><Loader2 className="w-3 h-3 animate-spin" /> Mengunggah gambar...</p>}
-                              </div>
                             </div>
-                          ) : (
+
                             <input
-                              type={field.type === 'url' ? 'url' : field.type === 'date' ? 'date' : 'text'}
-                              value={(formData.custom_data || {})[field.name] || ""}
-                              onChange={(e) => setFormData(prev => ({
-                                ...prev,
-                                custom_data: { ...(prev.custom_data || {}), [field.name]: e.target.value }
-                              }))}
-                              placeholder={field.placeholder || ""}
-                              className="w-full px-4 py-2.5 rounded-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:border-white"
+                              type="checkbox"
+                              checked={(formData.custom_data || {})[field.name] || false}
+                              onChange={(e) =>
+                                setFormData((prev) => ({
+                                  ...prev,
+                                  custom_data: {
+                                    ...(prev.custom_data || {}),
+                                    [field.name]: e.target.checked,
+                                  },
+                                }))
+                              }
+                              className="hidden"
                             />
-                          )}
-                        </div>
-                      ))}
-                    </div>
+
+                            <span className="text-sm text-slate-700 dark:text-slate-300">
+                              {field.label}
+                            </span>
+                          </label>
+                        ) : field.type === "image" ? (
+                          <div className="flex items-center gap-3">
+                            {(formData.custom_data || {})[field.name] && (
+                              <div className="w-12 h-12 rounded-none border border-slate-200 dark:border-slate-700 overflow-hidden shrink-0 bg-slate-100">
+                                <img
+                                  src={(formData.custom_data || {})[field.name]}
+                                  alt="Preview"
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                            )}
+
+                            <div className="flex-1">
+                              <input
+                                type="file"
+                                accept="image/jpeg,image/png,image/gif,image/webp,image/svg+xml,image/bmp,image/tiff,image/x-icon,image/avif"
+                                onChange={(e) => uploadCustomImage(e, field.name)}
+                                disabled={uploading[field.name]}
+                                className="w-full px-4 py-2 text-xs sm:text-sm text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-none file:border-0 file:text-xs file:font-bold file:bg-slate-900 file:text-white hover:file:bg-slate-800 dark:file:bg-white dark:file:text-slate-900 cursor-pointer disabled:opacity-50"
+                              />
+
+                              {uploading[field.name] && (
+                                <p className="text-[10px] text-slate-500 mt-1 flex items-center gap-1">
+                                  <Loader2 className="w-3 h-3 animate-spin" />
+                                  Mengunggah gambar...
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        ) : (
+                          <input
+                            type={
+                              field.type === "url"
+                                ? "url"
+                                : field.type === "date"
+                                  ? "date"
+                                  : "text"
+                            }
+                            value={(formData.custom_data || {})[field.name] || ""}
+                            onChange={(e) =>
+                              setFormData((prev) => ({
+                                ...prev,
+                                custom_data: {
+                                  ...(prev.custom_data || {}),
+                                  [field.name]: e.target.value,
+                                },
+                              }))
+                            }
+                            placeholder={field.placeholder || ""}
+                            className="w-full px-4 py-2.5 rounded-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:border-white"
+                          />
+                        )}
+                      </div>
+                    ))}
                   </div>
-                );
-              })()}
+                </div>
+              ) : null}
             </motion.div>
           )}
 
@@ -1254,9 +1424,19 @@ export default function NewInvitationPage() {
             <button
               type="button"
               onClick={handleNext}
-              className="flex items-center gap-2 px-6 py-2.5 rounded-none font-bold text-white bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 transition-colors text-xs sm:text-sm"
+              disabled={isResolvingTheme}
+              className="flex items-center gap-2 px-6 py-2.5 rounded-none font-bold text-white bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 transition-colors text-xs sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Lanjut <ArrowRight className="w-4 h-4" />
+              {isResolvingTheme ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Memuat tema...
+                </>
+              ) : (
+                <>
+                  Lanjut <ArrowRight className="w-4 h-4" />
+                </>
+              )}
             </button>
           ) : (
             <button

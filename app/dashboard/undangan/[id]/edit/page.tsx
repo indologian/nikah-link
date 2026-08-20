@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter, useParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import UpsellModal from "@/components/dashboard/UpsellModal";
-import { getThemeConfig } from "@/lib/themes/registry";
+import { getPublishedThemeForEditor } from "@/lib/themes/editor";
 
 const STEPS = [
   { id: "theme", label: "Tema", icon: Sparkles },
@@ -100,6 +100,13 @@ export default function EditInvitationPage() {
 
   const [themesList, setThemesList] = useState<any[]>([]);
 
+  const [selectedThemeEditor, setSelectedThemeEditor] =
+    useState<Awaited<ReturnType<typeof getPublishedThemeForEditor>>>(null);
+
+  const [isResolvingTheme, setIsResolvingTheme] = useState(false);
+
+  const themeResolveRequestRef = useRef(0);
+
   useEffect(() => {
     const fetchThemes = async () => {
       const { data } = await supabase.from("themes").select("*").eq("is_active", true).order("created_at", { ascending: false });
@@ -111,22 +118,32 @@ export default function EditInvitationPage() {
   useEffect(() => {
     if (!invitationId) return;
 
+    let cancelled = false;
+
     const fetchInvitation = async () => {
       setLoading(true);
+
       try {
         const { data, error } = await supabase
           .from("invitations")
-          .select("*, themes(slug)")
+          .select(`
+          *,
+          themes(slug)
+        `)
           .eq("id", invitationId)
           .single();
 
         if (error) throw error;
+
+        if (cancelled) return;
 
         // Fetch gift accounts
         const { data: gifts } = await supabase
           .from("gift_accounts")
           .select("*")
           .eq("invitation_id", invitationId);
+
+        if (cancelled) return;
 
         let bName = "", accNum = "", accName = "";
         if (gifts && gifts.length > 0) {
@@ -136,7 +153,10 @@ export default function EditInvitationPage() {
           setGiftAccountId(gifts[0].id);
         }
 
+        if (cancelled) return;
+
         setInitialUsername(data.username || "");
+
         setFormData({
           username: data.username || "",
           bride_name: data.bride_name || "",
@@ -169,23 +189,59 @@ export default function EditInvitationPage() {
           custom_data: data.custom_data || {},
         });
 
-        // Ambil plan user
-        const { data: { user } } = await supabase.auth.getUser();
-        if (user) {
-          const { data: profile } = await supabase.from("profiles").select("plan").eq("user_id", user.id).single();
-          if (profile && profile.plan) {
-            setUserPlan(profile.plan);
+        const themeSlug = data.themes?.slug || "minimalis";
+
+        if (cancelled) return;
+        setIsResolvingTheme(true);
+
+        try {
+          const resolved = await getPublishedThemeForEditor(themeSlug);
+
+          if (cancelled) return;
+
+          setSelectedThemeEditor(resolved);
+        } finally {
+          if (!cancelled) {
+            setIsResolvingTheme(false);
           }
         }
 
+        // Ambil plan user
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+
+        if (cancelled) return;
+
+        if (user) {
+          const { data: profile } = await supabase
+            .from("profiles")
+            .select("plan")
+            .eq("user_id", user.id)
+            .single();
+
+          if (cancelled) return;
+
+          if (profile?.plan) {
+            setUserPlan(profile.plan);
+          }
+        }
       } catch (err: any) {
-        setError("Gagal memuat data undangan.");
+        if (!cancelled) {
+          setError("Gagal memuat data undangan.");
+        }
       } finally {
-        setLoading(false);
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
     };
 
     fetchInvitation();
+
+    return () => {
+      cancelled = true;
+    };
   }, [invitationId, supabase]);
 
   // Real-time Slug Checking
@@ -348,15 +404,78 @@ export default function EditInvitationPage() {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+  const handleThemeSelect = async (theme: any) => {
+    if (isResolvingTheme) return;
+
+    if (theme.is_premium && userPlan === "free") {
+      setUpsellConfig({
+        isOpen: true,
+        title: "Tema Premium Terkunci",
+        description:
+          "Tema mewah ini eksklusif untuk paket Premium dan Pro. Upgrade sekarang untuk membuka semua tema.",
+        planNeeded: "premium",
+      });
+      return;
+    }
+
+    setError("");
+
+    const requestId = ++themeResolveRequestRef.current;
+    setIsResolvingTheme(true);
+
+    try {
+      const resolved = await getPublishedThemeForEditor(theme.slug);
+
+      if (requestId !== themeResolveRequestRef.current) {
+        return;
+      }
+
+      if (!resolved) {
+        setSelectedThemeEditor(null);
+        setError(
+          `Tema "${theme.name}" belum memiliki published version yang valid.`
+        );
+        return;
+      }
+
+      setSelectedThemeEditor(resolved);
+
+      setFormData((prev) => ({
+        ...prev,
+        theme_slug: resolved.theme.slug,
+        custom_data:
+          prev.theme_slug === resolved.theme.slug
+            ? prev.custom_data
+            : {},
+      }));
+    } finally {
+      if (requestId === themeResolveRequestRef.current) {
+        setIsResolvingTheme(false);
+      }
+    }
+  };
+
   const handleNext = () => {
+    if (isResolvingTheme) {
+      return;
+    }
+
     if (STEPS[currentStep].id === "theme") {
-      const selectedThemeConfig = getThemeConfig(formData.theme_slug);
-      if (selectedThemeConfig.fields && selectedThemeConfig.fields.length > 0) {
-        for (const field of selectedThemeConfig.fields) {
-          if (!formData.custom_data || !formData.custom_data[field.name]) {
-            setError(`Mohon isi field "${field.label}" pada pengaturan khusus tema.`);
-            return;
-          }
+      if (!selectedThemeEditor) {
+        setError("Tema belum memiliki published version yang valid.");
+        return;
+      }
+
+      const selectedFields = selectedThemeEditor.runtime.fields ?? [];
+
+      for (const field of selectedFields) {
+        const value = formData.custom_data?.[field.name];
+
+        if (value === undefined || value === null || value === "") {
+          setError(
+            `Mohon isi field "${field.label}" pada pengaturan khusus tema.`
+          );
+          return;
         }
       }
     }
@@ -366,13 +485,18 @@ export default function EditInvitationPage() {
         setError("Nama pengantin dan URL undangan wajib diisi!");
         return;
       }
+
       if (slugStatus === "taken") {
         setError("URL undangan sudah digunakan. Silakan pilih URL lain.");
         return;
       }
     }
+
     setError("");
-    if (currentStep < STEPS.length - 1) setCurrentStep((prev) => prev + 1);
+
+    if (currentStep < STEPS.length - 1) {
+      setCurrentStep((prev) => prev + 1);
+    }
   };
 
   const handlePrev = () => {
@@ -386,97 +510,102 @@ export default function EditInvitationPage() {
     setError("");
 
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
       if (!user) {
         setError("Kamu harus login terlebih dahulu.");
-        setIsUpdating(false);
         return;
       }
 
-      const cleanUsername = formData.username.toLowerCase().replace(/[^a-z0-9-]/g, "");
+      const cleanUsername = formData.username
+        .toLowerCase()
+        .replace(/[^a-z0-9-]/g, "");
 
-      // Cek username bentrok (hanya jika diganti ke username milik orang lain)
-      const { data: existing } = await supabase
-        .from("invitations")
-        .select("id")
-        .eq("username", cleanUsername)
-        .neq("id", invitationId)
-        .single();
-
-      if (existing) {
-        setError(`URL undangan "nikahlink.com/${cleanUsername}" sudah digunakan. Silakan pilih URL lain.`);
-        setIsUpdating(false);
+      if (!cleanUsername) {
+        setError("URL undangan wajib diisi.");
         return;
       }
 
-      // Ambil UUID dari tabel themes berdasarkan theme_slug yang dipilih
-      const { data: themeData } = await supabase
-        .from("themes")
-        .select("id")
-        .eq("slug", formData.theme_slug)
-        .single();
-
-      const themeId = themeData?.id || null;
-
-      const { error: updateError } = await supabase
-        .from("invitations")
-        .update({
-          username: cleanUsername,
-          bride_name: formData.bride_name,
-          groom_name: formData.groom_name,
-          bride_photo_url: formData.bride_photo_url || null,
-          groom_photo_url: formData.groom_photo_url || null,
-          love_story: formData.love_story || null,
-
-          akad_date: formData.akad_date || null,
-          akad_time: formData.akad_time || null,
-          akad_venue: formData.akad_venue || null,
-          akad_address: formData.akad_address || null,
-          akad_maps_url: formData.akad_maps_url || null,
-
-          reception_date: formData.reception_date || null,
-          reception_time: formData.reception_time || null,
-          reception_venue: formData.reception_venue || null,
-          reception_address: formData.reception_address || null,
-          reception_maps_url: formData.reception_maps_url || null,
-
-          theme_id: themeId,
-          music_url: formData.music_url || null,
-          cover_image_url: formData.cover_image_url || null,
-          custom_message: formData.custom_message,
-
-          is_published: formData.is_published,
-          show_rsvp: formData.show_rsvp,
-          show_gift: formData.show_gift,
-          show_gallery: formData.show_gallery,
-          show_wishes: formData.show_wishes,
-          custom_data: formData.custom_data,
-        })
-        .eq("id", invitationId);
-
-      if (updateError) throw updateError;
-
-      if (formData.bank_name && formData.account_number) {
-        if (giftAccountId) {
-          await supabase.from("gift_accounts").update({
-            bank_name: formData.bank_name,
-            account_number: formData.account_number,
-            account_name: formData.account_name,
-          }).eq("id", giftAccountId);
-        } else {
-          await supabase.from("gift_accounts").insert({
-            invitation_id: invitationId,
-            type: "bank",
-            bank_name: formData.bank_name,
-            account_number: formData.account_number,
-            account_name: formData.account_name,
-          });
-        }
+      if (slugStatus === "taken") {
+        setError(
+          `URL undangan "nikahlink.com/${cleanUsername}" sudah digunakan.`
+        );
+        return;
       }
 
-      router.push(`/dashboard/undangan?success=updated`);
+      // Resolve tema + published version terbaru
+      const selectedTheme = await getPublishedThemeForEditor(
+        formData.theme_slug
+      );
+
+      if (!selectedTheme) {
+        throw new Error(
+          "Tema yang dipilih tidak memiliki published version yang valid."
+        );
+      }
+
+      const themeId = selectedTheme.theme.id;
+      const themeVersionId = selectedTheme.version.id;
+
+      // Update invitation + gift account dalam SATU transaksi database
+      const { error: rpcError } = await supabase.rpc("update_invitation", {
+        p_invitation_id: invitationId,
+
+        p_username: cleanUsername,
+        p_bride_name: formData.bride_name,
+        p_groom_name: formData.groom_name,
+        p_bride_photo_url: formData.bride_photo_url || null,
+        p_groom_photo_url: formData.groom_photo_url || null,
+        p_love_story: formData.love_story || null,
+
+        p_akad_date: formData.akad_date || null,
+        p_akad_time: formData.akad_time || null,
+        p_akad_venue: formData.akad_venue || null,
+        p_akad_address: formData.akad_address || null,
+        p_akad_maps_url: formData.akad_maps_url || null,
+
+        p_reception_date: formData.reception_date || null,
+        p_reception_time: formData.reception_time || null,
+        p_reception_venue: formData.reception_venue || null,
+        p_reception_address: formData.reception_address || null,
+        p_reception_maps_url: formData.reception_maps_url || null,
+
+        p_theme_id: themeId,
+        p_theme_version_id: themeVersionId,
+
+        p_music_url: formData.music_url || null,
+        p_cover_image_url: formData.cover_image_url || null,
+        p_custom_message: formData.custom_message || null,
+
+        p_is_published: formData.is_published,
+        p_show_rsvp: formData.show_rsvp,
+        p_show_gift: formData.show_gift,
+        p_show_gallery: formData.show_gallery,
+        p_show_wishes: formData.show_wishes,
+
+        p_custom_data: formData.custom_data || {},
+
+        p_gift_account_id: giftAccountId,
+
+        p_bank_name: formData.bank_name || null,
+        p_account_number: formData.account_number || null,
+        p_account_name: formData.account_name || null,
+      });
+
+      if (rpcError) {
+        throw rpcError;
+      }
+
+      router.push("/dashboard/undangan?success=updated");
     } catch (err: any) {
-      setError(err.message || "Gagal memperbarui undangan. Coba lagi.");
+      console.error("Update invitation error:", err);
+
+      setError(
+        err?.message ||
+        "Gagal memperbarui undangan. Silakan coba lagi."
+      );
     } finally {
       setIsUpdating(false);
     }
@@ -745,19 +874,18 @@ export default function EditInvitationPage() {
                     <div
                       key={theme.id}
                       onClick={() => {
-                        if (theme.is_premium && userPlan === "free" && !isSelected) {
-                          setUpsellConfig({
-                            isOpen: true,
-                            title: "Tema Premium Terkunci",
-                            description: "Tema mewah ini eksklusif untuk paket Premium dan Pro. Upgrade sekarang untuk membuka semua 30+ tema menakjubkan kami!",
-                            planNeeded: "premium"
-                          });
-                          return;
+                        if (!isResolvingTheme) {
+                          handleThemeSelect(theme);
                         }
-                        handleChange("theme_slug", theme.slug);
-                        setFormData(prev => ({ ...prev, custom_data: {} }));
                       }}
-                      className={`relative overflow-hidden rounded-none cursor-pointer border-2 transition-all group ${isSelected ? "border-slate-900 dark:border-white scale-[1.02]" : "border-slate-100 dark:border-slate-800 hover:border-rose-200 dark:hover:border-rose-900/50"
+                      aria-disabled={isResolvingTheme}
+                      aria-busy={isResolvingTheme}
+                      className={`relative overflow-hidden rounded-none border-2 transition-all group ${isResolvingTheme
+                        ? "cursor-wait opacity-70"
+                        : "cursor-pointer"
+                        } ${isSelected
+                          ? "border-slate-900 dark:border-white scale-[1.02]"
+                          : "border-slate-100 dark:border-slate-800 hover:border-rose-200 dark:hover:border-rose-900/50"
                         }`}
                     >
                       <div className="aspect-[3/4] relative">
@@ -792,84 +920,132 @@ export default function EditInvitationPage() {
                   );
                 })}
               </div>
-              {(() => {
-                const selectedThemeConfig = getThemeConfig(formData.theme_slug);
-                if (!selectedThemeConfig.fields || selectedThemeConfig.fields.length === 0) return null;
+              {/* DYNAMIC FIELDS FROM THEME CONFIG */}
+              {selectedThemeEditor?.runtime.fields?.length ? (
+                <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 space-y-4">
+                  <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                    <Settings className="w-4 h-4" />
+                    Pengaturan Khusus Tema Ini
+                  </h3>
 
-                return (
-                  <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 space-y-4">
-                    <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
-                      <Settings className="w-4 h-4" /> Pengaturan Khusus Tema Ini
-                    </h3>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      {selectedThemeConfig.fields.map((field) => (
-                        <div key={field.name} className={field.type === 'textarea' ? 'md:col-span-2' : ''}>
-                          <label className="block text-xs font-bold text-slate-700 dark:text-slate-400 mb-1">
-                            {field.label}
-                          </label>
-                          {field.type === 'textarea' ? (
-                            <textarea
-                              rows={3}
-                              value={(formData.custom_data || {})[field.name] || ""}
-                              onChange={(e) => setFormData(prev => ({
+                  <div className="grid md:grid-cols-2 gap-4">
+                    {selectedThemeEditor.runtime.fields.map((field) => (
+                      <div
+                        key={field.name}
+                        className={field.type === "textarea" ? "md:col-span-2" : ""}
+                      >
+                        <label className="block text-xs font-bold text-slate-700 dark:text-slate-400 mb-1">
+                          {field.label}
+                        </label>
+
+                        {field.type === "textarea" ? (
+                          <textarea
+                            rows={3}
+                            value={formData.custom_data?.[field.name] || ""}
+                            onChange={(e) =>
+                              setFormData((prev) => ({
                                 ...prev,
-                                custom_data: { ...(prev.custom_data || {}), [field.name]: e.target.value }
-                              }))}
-                              placeholder={field.placeholder || ""}
-                              className="w-full px-4 py-2.5 rounded-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:border-white"
-                            />
-                          ) : field.type === 'boolean' ? (
-                            <label className="flex items-center gap-3 cursor-pointer mt-2 group">
-                              <div className={`w-4 h-4 border flex items-center justify-center transition-colors ${(formData.custom_data || {})[field.name] ? 'border-slate-900 bg-slate-900 dark:border-white dark:bg-white' : 'border-slate-300 dark:border-slate-600'}`}>
-                                {(formData.custom_data || {})[field.name] && <Check className="w-3 h-3 text-white dark:text-slate-900" />}
-                              </div>
-                              <input
-                                type="checkbox"
-                                checked={(formData.custom_data || {})[field.name] || false}
-                                onChange={(e) => setFormData(prev => ({
-                                  ...prev,
-                                  custom_data: { ...(prev.custom_data || {}), [field.name]: e.target.checked }
-                                }))}
-                                className="hidden"
-                              />
-                              <span className="text-sm text-slate-700 dark:text-slate-300">{field.label}</span>
-                            </label>
-                          ) : field.type === 'image' ? (
-                            <div className="flex items-center gap-3">
-                              {(formData.custom_data || {})[field.name] && (
-                                <div className="w-12 h-12 rounded-none border border-slate-200 dark:border-slate-700 overflow-hidden shrink-0 bg-slate-100">
-                                  <img src={(formData.custom_data || {})[field.name]} alt="Preview" className="w-full h-full object-cover" />
-                                </div>
+                                custom_data: {
+                                  ...(prev.custom_data || {}),
+                                  [field.name]: e.target.value,
+                                },
+                              }))
+                            }
+                            placeholder={field.placeholder || ""}
+                            className="w-full px-4 py-2.5 rounded-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:focus:border-white"
+                          />
+                        ) : field.type === "boolean" ? (
+                          <label className="flex items-center gap-3 cursor-pointer mt-2">
+                            <div
+                              className={`w-4 h-4 border flex items-center justify-center ${formData.custom_data?.[field.name]
+                                ? "border-slate-900 bg-slate-900 dark:border-white dark:bg-white"
+                                : "border-slate-300 dark:border-slate-600"
+                                }`}
+                            >
+                              {formData.custom_data?.[field.name] && (
+                                <Check className="w-3 h-3 text-white dark:text-slate-900" />
                               )}
-                              <div className="flex-1">
-                                <input
-                                  type="file"
-                                  accept="image/jpeg,image/png,image/gif,image/webp,image/svg+xml,image/bmp,image/tiff,image/x-icon,image/avif"
-                                  onChange={(e) => uploadCustomImage(e, field.name)}
-                                  disabled={uploading[field.name]}
-                                  className="w-full px-4 py-2 text-xs sm:text-sm text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-none file:border-0 file:text-xs file:font-bold file:bg-slate-900 file:text-white hover:file:bg-slate-800 dark:file:bg-white dark:file:text-slate-900 cursor-pointer disabled:opacity-50"
-                                />
-                                {uploading[field.name] && <p className="text-[10px] text-slate-500 mt-1 flex items-center gap-1"><Loader2 className="w-3 h-3 animate-spin" /> Mengunggah gambar...</p>}
-                              </div>
                             </div>
-                          ) : (
+
                             <input
-                              type={field.type === 'url' ? 'url' : field.type === 'date' ? 'date' : 'text'}
-                              value={(formData.custom_data || {})[field.name] || ""}
-                              onChange={(e) => setFormData(prev => ({
-                                ...prev,
-                                custom_data: { ...(prev.custom_data || {}), [field.name]: e.target.value }
-                              }))}
-                              placeholder={field.placeholder || ""}
-                              className="w-full px-4 py-2.5 rounded-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:border-white"
+                              type="checkbox"
+                              checked={formData.custom_data?.[field.name] || false}
+                              onChange={(e) =>
+                                setFormData((prev) => ({
+                                  ...prev,
+                                  custom_data: {
+                                    ...(prev.custom_data || {}),
+                                    [field.name]: e.target.checked,
+                                  },
+                                }))
+                              }
+                              className="hidden"
                             />
-                          )}
-                        </div>
-                      ))}
-                    </div>
+
+                            <span className="text-sm text-slate-700 dark:text-slate-300">
+                              {field.label}
+                            </span>
+                          </label>
+                        ) : field.type === "image" ? (
+                          <div className="flex items-center gap-3">
+                            {formData.custom_data?.[field.name] && (
+                              <div className="w-12 h-12 rounded-none border border-slate-200 dark:border-slate-700 overflow-hidden shrink-0 bg-slate-100">
+                                <img
+                                  src={formData.custom_data[field.name]}
+                                  alt={field.label}
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                            )}
+
+                            <div className="flex-1">
+                              <input
+                                type="file"
+                                accept="image/jpeg,image/png,image/gif,image/webp,image/svg+xml,image/bmp,image/tiff,image/x-icon,image/avif"
+                                onChange={(e) =>
+                                  uploadCustomImage(e, field.name)
+                                }
+                                disabled={uploading[field.name]}
+                                className="w-full px-4 py-2 text-xs sm:text-sm text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-none file:border-0 file:text-xs file:font-bold file:bg-slate-900 file:text-white dark:file:bg-white dark:file:text-slate-900 cursor-pointer disabled:opacity-50"
+                              />
+
+                              {uploading[field.name] && (
+                                <p className="text-[10px] text-slate-500 mt-1 flex items-center gap-1">
+                                  <Loader2 className="w-3 h-3 animate-spin" />
+                                  Mengunggah gambar...
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        ) : (
+                          <input
+                            type={
+                              field.type === "url"
+                                ? "url"
+                                : field.type === "date"
+                                  ? "date"
+                                  : "text"
+                            }
+                            value={formData.custom_data?.[field.name] || ""}
+                            onChange={(e) =>
+                              setFormData((prev) => ({
+                                ...prev,
+                                custom_data: {
+                                  ...(prev.custom_data || {}),
+                                  [field.name]: e.target.value,
+                                },
+                              }))
+                            }
+                            placeholder={field.placeholder || ""}
+                            className="w-full px-4 py-2.5 rounded-none bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 text-xs sm:text-sm focus:outline-none focus:border-slate-900 dark:focus:border-white"
+                          />
+                        )}
+                      </div>
+                    ))}
                   </div>
-                );
-              })()}
+                </div>
+              ) : null}
+
             </motion.div>
           )}
 
@@ -985,8 +1161,23 @@ export default function EditInvitationPage() {
           </button>
 
           {currentStep < STEPS.length - 1 ? (
-            <button type="button" onClick={handleNext} className="flex items-center gap-2 bg-slate-900 dark:bg-white px-6 py-2.5 rounded-none font-bold text-white dark:text-slate-900 text-xs sm:text-sm hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors">
-              Lanjut <ArrowRight className="w-4 h-4" />
+            <button
+              type="button"
+              onClick={handleNext}
+              disabled={isResolvingTheme}
+              className="flex items-center gap-2 bg-slate-900 dark:bg-white px-6 py-2.5 rounded-none font-bold text-white dark:text-slate-900 text-xs sm:text-sm hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isResolvingTheme ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Memuat tema...
+                </>
+              ) : (
+                <>
+                  Lanjut
+                  <ArrowRight className="w-4 h-4" />
+                </>
+              )}
             </button>
           ) : (
             <button type="button" onClick={() => setShowConfirmModal(true)} disabled={isUpdating} className="flex items-center gap-2 px-8 py-3 rounded-none font-bold text-white bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 transition-colors text-xs sm:text-sm disabled:opacity-50">
