@@ -12,6 +12,12 @@ import FaqSection from "@/components/landing/FaqSection";
 import LeadMagnetSection from "@/components/landing/LeadMagnetSection";
 import Footer from "@/components/landing/Footer";
 import { createClient } from "@/lib/supabase/server";
+import { supabaseAdmin } from "@/lib/supabase/admin";
+
+export const dynamic = "force-dynamic";
+
+const THEME_SELECT =
+  "id, name, slug, component_key, category, thumbnail_url, colors, is_premium, is_active, sort_order, created_at";
 
 export default async function HomePage() {
   const supabase = await createClient();
@@ -35,11 +41,30 @@ export default async function HomePage() {
     showFaq: true,
   };
 
-  const { data: themes } = await supabase
+  let { data: themes, error: themesError } = await supabase
     .from("themes")
-    .select("*")
+    .select(THEME_SELECT)
     .eq("is_active", true)
+    .order("sort_order", { ascending: true })
     .order("created_at", { ascending: false });
+
+  if (themesError || !themes?.length) {
+    const fallback = await supabaseAdmin
+      .from("themes")
+      .select(THEME_SELECT)
+      .eq("is_active", true)
+      .order("sort_order", { ascending: true })
+      .order("created_at", { ascending: false });
+
+    if (fallback.error) {
+      console.error("Failed to load homepage themes", {
+        publicError: themesError?.message,
+        fallbackError: fallback.error.message,
+      });
+    } else {
+      themes = fallback.data;
+    }
+  }
 
   const config = { ...defaultConfig, ...(settings?.config || {}) };
 
