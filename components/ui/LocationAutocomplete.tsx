@@ -3,31 +3,31 @@
 import { useState, useEffect, useRef } from "react";
 import { Search, MapPin, Loader2 } from "lucide-react";
 
-export default function LocationAutocomplete({ 
-  value, 
-  onChange, 
-  onSelect,
-  placeholder 
-}: { 
-  value: string; 
+interface NominatimPlace {
+  place_id: number;
+  name?: string;
+  display_name: string;
+  [key: string]: unknown;
+}
+
+interface LocationAutocompleteProps {
+  value: string;
   onChange: (val: string) => void;
-  onSelect: (location: any) => void;
+  onSelect: (location: NominatimPlace) => void;
   placeholder?: string;
-}) {
-  const [query, setQuery] = useState(value);
-  const [results, setResults] = useState<any[]>([]);
+}
+
+export default function LocationAutocomplete({
+  value,
+  onChange,
+  onSelect,
+  placeholder,
+}: LocationAutocompleteProps) {
+  const [results, setResults] = useState<NominatimPlace[]>([]);
   const [loading, setLoading] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const skipSearch = useRef(true);
-
-  // Sync value from parent if changed externally
-  useEffect(() => {
-    if (value !== query) {
-      skipSearch.current = true;
-      setQuery(value);
-    }
-  }, [value]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -41,7 +41,7 @@ export default function LocationAutocomplete({
 
   useEffect(() => {
     const searchPlaces = async () => {
-      if (!query || query.length < 3) {
+      if (!value || value.length < 3) {
         setResults([]);
         return;
       }
@@ -51,8 +51,10 @@ export default function LocationAutocomplete({
       }
       setLoading(true);
       try {
-        const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=id&addressdetails=1&limit=5`);
-        const data = await res.json();
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(value)}&countrycodes=id&addressdetails=1&limit=5`,
+        );
+        const data = (await res.json()) as NominatimPlace[];
         setResults(data);
         setShowDropdown(true);
       } catch (error) {
@@ -62,25 +64,23 @@ export default function LocationAutocomplete({
       }
     };
 
-    const timeoutId = setTimeout(() => {
-      searchPlaces();
-    }, 500); // 500ms debounce
-
+    const timeoutId = setTimeout(searchPlaces, 500);
     return () => clearTimeout(timeoutId);
-  }, [query]);
+  }, [value]);
 
   return (
     <div className="relative" ref={dropdownRef}>
       <div className="relative flex items-center">
         <input
           type="text"
-          value={query}
+          value={value}
           onChange={(e) => {
             skipSearch.current = false;
-            setQuery(e.target.value);
             onChange(e.target.value);
           }}
-          onFocus={() => { if (results.length > 0) setShowDropdown(true); }}
+          onFocus={() => {
+            if (results.length > 0) setShowDropdown(true);
+          }}
           placeholder={placeholder || "Cari nama tempat / gedung..."}
           className="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 text-sm focus:outline-none focus:border-slate-900 dark:focus:border-white transition-colors"
         />
@@ -99,7 +99,7 @@ export default function LocationAutocomplete({
                 type="button"
                 onClick={() => {
                   skipSearch.current = true;
-                  setQuery(placeName);
+                  onChange(placeName);
                   setShowDropdown(false);
                   onSelect(place);
                 }}
