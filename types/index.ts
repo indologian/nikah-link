@@ -40,6 +40,7 @@ export interface Theme {
   id: string;
   name: string;
   slug: string;
+  component_key: string;
   category: string;
   thumbnail_url: string;
   preview_url?: string;

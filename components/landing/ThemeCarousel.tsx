@@ -135,8 +135,9 @@ export default function ThemeCarousel({ themes = [] }: { themes?: ThemeProps[] }
                       >
                         <Eye size={14} /> Lihat
                       </a>
+
                       <Link
-                        href={`/daftar?tema=${theme.id}`}
+                        href={`/daftar?tema=${encodeURIComponent(theme.slug)}`}
                         className="flex-1 bg-white hover:bg-slate-200 text-slate-900 px-4 py-3 text-xs font-bold uppercase tracking-wider text-center transition-colors"
                       >
                         Gunakan
