@@ -1,37 +1,13 @@
-import type { ThemeConfig, ThemeField } from "@/lib/themes/registry";
-import { getThemeConfig } from "@/lib/themes/registry";
+import { getThemeDefinition } from "@/lib/themes/definitions";
 import { normalizeThemeColors, type ThemeColors } from "@/lib/themes/config";
-
-export type ThemeVersionSnapshot = {
-  id?: string | null;
-  theme_id?: string | null;
-  version?: number | null;
-  component_key?: string | null;
-  config?: unknown;
-  fields_schema?: unknown;
-  colors?: unknown;
-  assets?: unknown;
-  fields_schema_authoritative?: boolean | null;
-};
-
-export type RuntimeTheme = ThemeConfig & {
-  componentKey: string;
-  colors: ThemeColors;
-  versionId: string | null;
-  version: number | null;
-  config: unknown;
-  assets: unknown;
-};
+import type { RuntimeTheme, ThemeField, ThemeVersionSnapshot } from "@/types/theme";
 
 function normalizeFields(input: unknown, fallback: ThemeField[], authoritative = false): ThemeField[] {
   if (!Array.isArray(input)) return fallback;
   if (input.length === 0 && !authoritative) return fallback;
 
-  const fields = input.filter(
-    (field): field is Record<string, unknown> => Boolean(field) && typeof field === "object"
-  );
-
-  return fields
+  return input
+    .filter((field): field is Record<string, unknown> => Boolean(field) && typeof field === "object")
     .map((field) => ({
       name: typeof field.name === "string" ? field.name : "",
       label: typeof field.label === "string" ? field.label : typeof field.name === "string" ? field.name : "Field",
@@ -46,16 +22,16 @@ function normalizeFields(input: unknown, fallback: ThemeField[], authoritative =
 
 export function resolveRuntimeTheme(
   theme: { slug: string; component_key?: string | null; colors?: unknown },
-  version?: ThemeVersionSnapshot | null
+  version?: ThemeVersionSnapshot | null,
 ): RuntimeTheme {
   const componentKey = version?.component_key || theme.component_key || theme.slug;
-  const config = getThemeConfig(componentKey);
+  const definition = getThemeDefinition(componentKey);
   const authoritative = version?.fields_schema_authoritative === true;
 
   return {
-    ...config,
+    ...definition,
     componentKey,
-    fields: normalizeFields(version?.fields_schema, config.fields, authoritative),
+    fields: normalizeFields(version?.fields_schema, definition.fields, authoritative),
     colors: normalizeThemeColors(version?.colors ?? theme.colors),
     versionId: version?.id ?? null,
     version: version?.version ?? null,
@@ -63,3 +39,5 @@ export function resolveRuntimeTheme(
     assets: version?.assets ?? {},
   };
 }
+
+export type { ThemeColors, RuntimeTheme, ThemeVersionSnapshot };
