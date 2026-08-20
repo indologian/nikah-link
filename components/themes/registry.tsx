@@ -14,7 +14,12 @@ export interface ThemeConfig {
 const MinimalistTheme = dynamic(() =>
   import("@/components/themes/MinimalistTheme").then(({ default: Component }) => ({
     default: (props: ThemeComponentProps) => (
-      <Component {...props} guestName={props.guestName ?? "Tamu Undangan"} />
+      <Component
+        {...props}
+        guestName={props.guestName ?? "Tamu Undangan"}
+        initialWishes={props.initialWishes ?? []}
+        giftAccounts={props.giftAccounts ?? []}
+      />
     ),
   })),
 );
