@@ -1,4 +1,3 @@
-import type { ThemeVersion } from "@/types";
 import { getThemeConfig } from "@/lib/themes/registry";
 
 export type InvitationThemeField = {
@@ -48,11 +47,10 @@ export function resolveInvitationThemeFields(theme: InvitationThemeSnapshot | nu
     type: field.type,
     ...(field.placeholder ? { placeholder: field.placeholder } : {}),
     ...(Object.prototype.hasOwnProperty.call(field, "defaultValue") ? { defaultValue: field.defaultValue } : {}),
-    ...(typeof field.required === "boolean" ? { required: field.required } : {}),
     enabled: true,
   }));
 }
 
-export function requiredInvitationThemeFields(theme: InvitationThemeSnapshot | null | undefined) {
+export function requiredInvitationThemeFields(theme: InvitationThemeSnapshot | null | undefined): InvitationThemeField[] {
   return resolveInvitationThemeFields(theme).filter((field) => field.required === true);
 }
