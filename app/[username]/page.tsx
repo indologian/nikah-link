@@ -1,9 +1,9 @@
-import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
-import { getThemeConfig } from "@/lib/themes/registry";
-import { isValidThemeRenderer } from "@/lib/themes/config";
+import { createClient } from "@/lib/supabase/server";
 import { ThemeRenderer } from "@/components/themes/ThemeRenderer";
 import { resolveRuntimeTheme } from "@/lib/themes/runtime";
+import { isValidThemeRenderer } from "@/lib/themes/config";
+import { getThemeConfig } from "@/lib/themes/registry";
 import type { Metadata } from "next";
 
 interface Props {
@@ -106,6 +106,14 @@ export default async function PublicInvitationPage({ params, searchParams }: Pro
 
   if (!invitation.themes) notFound();
   if (invitation.theme_version_id && !themeVersion) notFound();
+
+  if (
+    themeVersion &&
+    (themeVersion.theme_id !== invitation.theme_id ||
+      themeVersion.component_key !== invitation.themes.component_key)
+  ) {
+    notFound();
+  }
 
   const isFreePlan = profile?.plan !== "premium" && profile?.plan !== "pro";
   const runtimeTheme = resolveRuntimeTheme(invitation.themes, themeVersion);
