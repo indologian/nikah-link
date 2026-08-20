@@ -6,7 +6,8 @@ import { createClient } from "@/lib/supabase/client";
 import type { Theme } from "@/types";
 import { themesConfig } from "@/lib/themes/registry";
 import { normalizeThemeColors, type ThemeColors } from "@/lib/themes/config";
-import { Eye, ExternalLink, Loader2, Plus, Save, CheckCircle2, Trash2, Edit2, Image as ImageIcon } from "lucide-react";
+import { resolveRuntimeTheme } from "@/lib/themes/runtime";
+import { CheckCircle2, Edit2, Eye, ExternalLink, Image as ImageIcon, Plus, Save, Trash2 } from "lucide-react";
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -26,7 +27,7 @@ type ThemeVersionRecord = {
   assets: unknown;
   fields_schema_authoritative: boolean;
   is_published: boolean;
-  lifecycle_status: "draft" | "published" | "archived" | string;
+  lifecycle_status: string;
 };
 
 type FormState = {
@@ -85,6 +86,13 @@ function previewInvitation(colors: ThemeColors, fields: any[]) {
   };
 }
 
+function getStoragePath(url: string | null | undefined) {
+  if (!url) return null;
+  const marker = "/storage/v1/object/public/themes/";
+  const index = url.indexOf(marker);
+  return index >= 0 ? decodeURIComponent(url.slice(index + marker.length)) : null;
+}
+
 export default function ThemesClient({ initialThemes }: { initialThemes: Theme[] }) {
   const supabase = createClient();
   const [themes, setThemes] = useState<Theme[]>(initialThemes);
@@ -97,9 +105,13 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
   const [savedVersion, setSavedVersion] = useState<ThemeVersionRecord | null>(null);
   const [error, setError] = useState("");
 
-  const selectedConfig = useMemo(() => themesConfig[form.component_key] || themesConfig.minimalis, [form.component_key]);
-  const PreviewComponent = selectedConfig.component;
-  const preview = useMemo(() => previewInvitation(form.colors, selectedConfig.fields), [form.colors, selectedConfig.fields]);
+  const previewVersion = draftVersion ?? savedVersion;
+  const previewRuntime = useMemo(() => resolveRuntimeTheme(
+    { slug: form.slug || "minimalis", component_key: form.component_key, colors: form.colors },
+    previewVersion
+  ), [form.slug, form.component_key, form.colors, previewVersion]);
+  const PreviewComponent = previewRuntime.component;
+  const preview = useMemo(() => previewInvitation(form.colors, previewRuntime.fields), [form.colors, previewRuntime.fields]);
 
   const reset = () => {
     setForm(DEFAULT_FORM);
@@ -111,8 +123,7 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
   };
 
   const loadVersions = async (themeId: string) => {
-    const { data, error: versionError } = await supabase
-      .from("theme_versions")
+    const { data, error: versionError } = await supabase.from("theme_versions")
       .select("id, theme_id, version, component_key, config, fields_schema, colors, assets, fields_schema_authoritative, is_published, lifecycle_status")
       .eq("theme_id", themeId)
       .order("version", { ascending: false });
@@ -160,9 +171,13 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
     if (file.size > MAX_THUMBNAIL_SIZE) throw new Error("Ukuran thumbnail maksimal 2 MB.");
     const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
     const path = `thumbnails/${slug}-${crypto.randomUUID()}.${ext}`;
-    const { error: uploadError } = await supabase.storage.from("themes").upload(path, file, { cacheControl: "31536000", contentType: file.type, upsert: false });
+    const { error: uploadError } = await supabase.storage.from("themes").upload(path, file, {
+      cacheControl: "31536000",
+      contentType: file.type,
+      upsert: false,
+    });
     if (uploadError) throw uploadError;
-    return supabase.storage.from("themes").getPublicUrl(path).data.publicUrl;
+    return { path, url: supabase.storage.from("themes").getPublicUrl(path).data.publicUrl };
   };
 
   const saveTheme = async (event: FormEvent) => {
@@ -170,6 +185,7 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
     if (isSubmitting) return;
     setIsSubmitting(true);
     setError("");
+    let uploadedPath: string | null = null;
     try {
       const slug = form.slug.trim().toLowerCase();
       const name = form.name.trim();
@@ -177,19 +193,21 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
       if (!SLUG_PATTERN.test(slug)) throw new Error("Slug hanya boleh berisi huruf kecil, angka, dan tanda hubung.");
       if (!themesConfig[form.component_key]) throw new Error("Renderer tema tidak valid.");
 
-      const thumbnailUrl = thumbnailFile ? await uploadThumbnail(thumbnailFile, slug) : null;
+      const uploaded = thumbnailFile ? await uploadThumbnail(thumbnailFile, slug) : null;
+      uploadedPath = uploaded?.path ?? null;
+
       if (!form.id) {
-        if (!thumbnailUrl) throw new Error("Pilih thumbnail tema terlebih dahulu.");
+        if (!uploaded?.url) throw new Error("Pilih thumbnail tema terlebih dahulu.");
         const { data, error: rpcError } = await supabase.rpc("create_theme_draft", {
           p_name: name,
           p_slug: slug,
           p_category: form.category,
           p_component_key: form.component_key,
           p_is_premium: form.is_premium,
-          p_thumbnail_url: thumbnailUrl,
+          p_thumbnail_url: uploaded.url,
           p_colors: normalizeThemeColors(form.colors),
           p_config: {},
-          p_fields_schema: selectedConfig.fields,
+          p_fields_schema: previewRuntime.fields,
           p_assets: {},
         });
         if (rpcError) throw rpcError;
@@ -197,55 +215,55 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
         setThemes((current) => [created, ...current]);
         setForm((current) => ({ ...current, id: created.id, is_active: false }));
         await loadVersions(created.id);
+        uploadedPath = null;
         setError("Tema dibuat sebagai draft. Review preview lalu tekan Publish.");
         return;
       }
 
       const existing = themes.find((theme) => theme.id === form.id);
-      const metadata = {
-        name,
-        category: form.category,
-        thumbnail_url: thumbnailUrl ?? existing?.thumbnail_url ?? null,
-        is_premium: form.is_premium,
-      };
-      const { data: updated, error: updateError } = await supabase.from("themes").update(metadata).eq("id", form.id).select("*").single();
-      if (updateError) throw updateError;
-      setThemes((current) => current.map((theme) => (theme.id === form.id ? (updated as Theme) : theme)));
+      const versionState = draftVersion && draftVersion.theme_id === form.id
+        ? { draft: draftVersion, published: savedVersion }
+        : await loadVersions(form.id);
+      const source = versionState.draft ?? versionState.published;
+      let versionId = versionState.draft?.id ?? null;
 
-      const versionState = await loadVersions(form.id);
-      const published = versionState.published;
-      const source = versionState.draft || published;
-      const componentKey = existing?.component_key || form.component_key;
-      const fieldsSchema = versionState.draft?.fields_schema ?? published?.fields_schema ?? selectedConfig.fields;
-      const config = versionState.draft?.config ?? published?.config ?? {};
-      const assets = versionState.draft?.assets ?? published?.assets ?? {};
-      const colors = normalizeThemeColors(form.colors);
-
-      if (versionState.draft) {
-        const { data: updatedDraft, error: draftError } = await supabase.rpc("update_theme_draft", {
-          p_version_id: versionState.draft.id,
-          p_component_key: versionState.draft.component_key,
-          p_config: config,
-          p_fields_schema: fieldsSchema,
-          p_colors: colors,
-          p_assets: assets,
-        });
-        if (draftError) throw draftError;
-        setDraftVersion(updatedDraft as ThemeVersionRecord);
-      } else {
+      if (!versionId) {
         const { data: createdDraft, error: draftError } = await supabase.rpc("create_theme_version_draft", {
           p_theme_id: form.id,
-          p_component_key: componentKey,
-          p_config: config,
-          p_fields_schema: fieldsSchema,
-          p_colors: colors,
-          p_assets: assets,
+          p_component_key: form.component_key,
+          p_config: source?.config ?? {},
+          p_fields_schema: source?.fields_schema ?? previewRuntime.fields,
+          p_colors: normalizeThemeColors(form.colors),
+          p_assets: source?.assets ?? {},
         });
         if (draftError) throw draftError;
-        setDraftVersion(createdDraft as ThemeVersionRecord);
+        versionId = (createdDraft as ThemeVersionRecord).id;
       }
+
+      const { data: updatedDraft, error: atomicError } = await supabase.rpc("update_theme_and_draft", {
+        p_version_id: versionId,
+        p_name: name,
+        p_category: form.category,
+        p_is_premium: form.is_premium,
+        p_thumbnail_url: uploaded?.url ?? existing?.thumbnail_url ?? null,
+        p_config: source?.config ?? {},
+        p_fields_schema: source?.fields_schema ?? previewRuntime.fields,
+        p_colors: normalizeThemeColors(form.colors),
+        p_assets: source?.assets ?? {},
+      });
+      if (atomicError) throw atomicError;
+
+      const { data: refreshedTheme } = await supabase.from("themes").select("*").eq("id", form.id).single();
+      if (refreshedTheme) setThemes((current) => current.map((theme) => theme.id === form.id ? refreshedTheme as Theme : theme));
+      if (uploadedPath && existing?.thumbnail_url) {
+        const oldPath = getStoragePath(existing.thumbnail_url);
+        if (oldPath && oldPath !== uploadedPath) await supabase.storage.from("themes").remove([oldPath]);
+      }
+      uploadedPath = null;
+      setDraftVersion(updatedDraft as ThemeVersionRecord);
       setError("Perubahan disimpan sebagai draft dan belum dipublish.");
     } catch (err: unknown) {
+      if (uploadedPath) await supabase.storage.from("themes").remove([uploadedPath]);
       setError(err instanceof Error ? err.message : "Gagal menyimpan tema.");
     } finally {
       setIsSubmitting(false);
@@ -260,9 +278,9 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
       const { data, error: rpcError } = await supabase.rpc("publish_theme_version", { p_version_id: draftVersion.id });
       if (rpcError) throw rpcError;
       const published = data as ThemeVersionRecord;
-      const { data: activated, error: activationError } = await supabase.from("themes").update({ is_active: true }).eq("id", form.id).select("*").single();
-      if (activationError) throw activationError;
-      setThemes((current) => current.map((theme) => (theme.id === form.id ? (activated as Theme) : theme)));
+      const { data: refreshedTheme, error: themeError } = await supabase.from("themes").select("*").eq("id", form.id).single();
+      if (themeError) throw themeError;
+      setThemes((current) => current.map((theme) => theme.id === form.id ? refreshedTheme as Theme : theme));
       setSavedVersion(published);
       setDraftVersion(null);
       setForm((current) => ({ ...current, colors: normalizeThemeColors(published.colors), is_active: true }));
@@ -275,23 +293,28 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
   };
 
   const archiveTheme = async (id: string) => {
-    if (!confirm("Nonaktifkan tema ini? Tema akan hilang dari katalog publik tetapi aman untuk undangan yang sudah menggunakannya.")) return;
+    if (!confirm("Nonaktifkan tema ini? Tema aman untuk undangan lama.")) return;
     const { data, error: updateError } = await supabase.from("themes").update({ is_active: false }).eq("id", id).select("*").single();
     if (updateError) return alert(updateError.message);
-    setThemes((current) => current.map((theme) => (theme.id === id ? (data as Theme) : theme)));
+    setThemes((current) => current.map((theme) => theme.id === id ? data as Theme : theme));
   };
 
   const restoreTheme = async (id: string) => {
     const { data, error: updateError } = await supabase.from("themes").update({ is_active: true }).eq("id", id).select("*").single();
     if (updateError) return alert(updateError.message);
-    setThemes((current) => current.map((theme) => (theme.id === id ? (data as Theme) : theme)));
+    setThemes((current) => current.map((theme) => theme.id === id ? data as Theme : theme));
   };
 
   return (
     <div className="w-full">
       <div className="mb-8 flex items-end justify-between border-b border-slate-200 pb-6 dark:border-slate-800">
-        <div><h2 className="text-lg font-medium text-slate-900 dark:text-white">Katalog Tema</h2><p className="mt-1 text-xs text-slate-500">Theme lifecycle: Draft → Preview → Publish.</p></div>
-        <button onClick={isOpen ? reset : addTheme} className="inline-flex items-center gap-2 bg-slate-900 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white dark:bg-white dark:text-slate-900"><Plus className="h-4 w-4" />{isOpen ? "Batal" : "Tambah Tema"}</button>
+        <div>
+          <h2 className="text-lg font-medium text-slate-900 dark:text-white">Katalog Tema</h2>
+          <p className="mt-1 text-xs text-slate-500">Theme lifecycle: Draft → Preview → Publish.</p>
+        </div>
+        <button onClick={isOpen ? reset : addTheme} className="inline-flex items-center gap-2 bg-slate-900 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white dark:bg-white dark:text-slate-900">
+          <Plus className="h-4 w-4" />{isOpen ? "Batal" : "Tambah Tema"}
+        </button>
       </div>
 
       {isOpen && (
@@ -299,15 +322,18 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
           <form onSubmit={saveTheme} className="space-y-6 border-t border-slate-200 pt-6 dark:border-slate-800">
             {error && <div className="rounded-md border border-rose-200 bg-rose-50 px-4 py-3 text-xs font-medium text-rose-700">{error}</div>}
             <div className="grid gap-6 md:grid-cols-2">
-              <label><span className="label">Slug</span><input disabled={Boolean(form.id)} value={form.slug} onChange={(e)=>setForm((c)=>({...c,slug:e.target.value.toLowerCase().replace(/[^a-z0-9-]/g,"")}))} required className="field" /></label>
-              <label><span className="label">Nama</span><input value={form.name} onChange={(e)=>setForm((c)=>({...c,name:e.target.value}))} required className="field" /></label>
-              <label><span className="label">Renderer</span><select disabled={Boolean(form.id)} value={form.component_key} onChange={(e)=>setForm((c)=>({...c,component_key:e.target.value}))} className="field">{RENDERERS.map((key)=><option key={key} value={key}>{key}</option>)}</select></label>
-              <label><span className="label">Kategori</span><select value={form.category} onChange={(e)=>setForm((c)=>({...c,category:e.target.value}))} className="field">{CATEGORIES.map((key)=><option key={key} value={key}>{key}</option>)}</select></label>
-              <label className="md:col-span-2 flex items-center gap-3"><input type="checkbox" checked={form.is_premium} onChange={(e)=>setForm((c)=>({...c,is_premium:e.target.checked}))} /><span className="text-sm">Tema Premium</span></label>
-              <label className="md:col-span-2"><span className="label">Thumbnail</span><input type="file" accept="image/jpeg,image/png,image/webp" onChange={(e)=>setThumbnailFile(e.target.files?.[0] || null)} className="text-xs" /><span className="mt-1 block text-[10px] text-slate-400">JPG, PNG, WEBP · maksimal 2 MB</span></label>
+              <label><span className="label">Slug</span><input disabled={Boolean(form.id)} value={form.slug} onChange={(e) => setForm((c) => ({ ...c, slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "") }))} required className="field" /></label>
+              <label><span className="label">Nama</span><input value={form.name} onChange={(e) => setForm((c) => ({ ...c, name: e.target.value }))} required className="field" /></label>
+              <label><span className="label">Renderer</span><select disabled={Boolean(form.id)} value={form.component_key} onChange={(e) => setForm((c) => ({ ...c, component_key: e.target.value }))} className="field">{RENDERERS.map((key) => <option key={key} value={key}>{key}</option>)}</select></label>
+              <label><span className="label">Kategori</span><select value={form.category} onChange={(e) => setForm((c) => ({ ...c, category: e.target.value }))} className="field">{CATEGORIES.map((key) => <option key={key} value={key}>{key}</option>)}</select></label>
+              <label className="md:col-span-2 flex items-center gap-3"><input type="checkbox" checked={form.is_premium} onChange={(e) => setForm((c) => ({ ...c, is_premium: e.target.checked }))} /><span className="text-sm">Tema Premium</span></label>
+              <label className="md:col-span-2"><span className="label">Thumbnail</span><input type="file" accept="image/jpeg,image/png,image/webp" onChange={(e) => setThumbnailFile(e.target.files?.[0] || null)} className="text-xs" /><span className="mt-1 block text-[10px] text-slate-400">JPG, PNG, WEBP · maksimal 2 MB</span></label>
             </div>
 
-            <div><div className="mb-3 flex items-center justify-between"><span className="label">Theme Colors</span><button type="button" onClick={()=>setForm((c)=>({...c,colors:DEFAULT_COLORS}))} className="text-[10px] font-mono uppercase text-slate-500">Reset</button></div><div className="grid gap-3 sm:grid-cols-2">{Object.entries(form.colors).map(([key,value])=><label key={key} className="flex items-center gap-3 rounded border border-slate-200 p-3 dark:border-slate-800"><input type="color" value={value} onChange={(e)=>setForm((c)=>({...c,colors:{...c.colors,[key]:e.target.value}}))} /><span className="text-xs font-mono">{key}</span><input value={value} onChange={(e)=>setForm((c)=>({...c,colors:{...c.colors,[key]:e.target.value}}))} className="min-w-0 flex-1 bg-transparent font-mono text-xs" /></label>)}</div></div>
+            <div>
+              <div className="mb-3 flex items-center justify-between"><span className="label">Theme Colors</span><button type="button" onClick={() => setForm((c) => ({ ...c, colors: DEFAULT_COLORS }))} className="text-[10px] font-mono uppercase text-slate-500">Reset</button></div>
+              <div className="grid gap-3 sm:grid-cols-2">{Object.entries(form.colors).map(([key, value]) => <label key={key} className="flex items-center gap-3 rounded border border-slate-200 p-3 dark:border-slate-800"><input type="color" value={value} onChange={(e) => setForm((c) => ({ ...c, colors: { ...c.colors, [key]: e.target.value } }))} /><span className="text-xs font-mono">{key}</span><input value={value} onChange={(e) => setForm((c) => ({ ...c, colors: { ...c.colors, [key]: e.target.value } }))} className="min-w-0 flex-1 bg-transparent font-mono text-xs" /></label>)}</div>
+            </div>
 
             <div className="flex flex-wrap justify-end gap-3">
               {form.id && savedVersion && <a href={`/admin/themes/preview/${encodeURIComponent(form.slug)}?version=${savedVersion.id}`} target="_blank" rel="noreferrer" className="btn-secondary"><ExternalLink className="h-4 w-4" /> Preview Published v{savedVersion.version}</a>}
@@ -317,11 +343,21 @@ export default function ThemesClient({ initialThemes }: { initialThemes: Theme[]
             </div>
           </form>
 
-          <section className="sticky top-6 overflow-hidden rounded-md border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950"><div className="border-b border-slate-200 px-4 py-3 text-xs font-semibold dark:border-slate-800">Live Preview · {form.id ? (draftVersion ? `Draft v${draftVersion.version}` : savedVersion ? `Published v${savedVersion.version}` : "Unsaved") : "New Draft"}</div><div className="h-[720px] overflow-auto"><PreviewComponent invitation={preview} guestName="Tamu Preview" initialWishes={[]} giftAccounts={[]} isFreePlan={false} expiresAt={null} customData={preview.custom_data} /></div></section>
+          <section className="sticky top-6 overflow-hidden rounded-md border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950">
+            <div className="border-b border-slate-200 px-4 py-3 text-xs font-semibold dark:border-slate-800">Live Preview · {previewVersion ? `${previewVersion.lifecycle_status} v${previewVersion.version}` : "New Draft"}</div>
+            <div className="h-[720px] overflow-auto"><PreviewComponent invitation={preview} guestName="Tamu Preview" initialWishes={[]} giftAccounts={[]} isFreePlan={false} expiresAt={null} customData={preview.custom_data} themeConfig={previewRuntime.config} themeAssets={previewRuntime.assets} themeVersion={previewVersion} /></div>
+          </section>
         </div>
       )}
 
-      <div className="grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-4">{themes.map((theme)=><div key={theme.id} className={`group ${!theme.is_active ? "opacity-60" : ""}`}><div className="relative mb-3 aspect-[3/4] overflow-hidden border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900">{theme.thumbnail_url?<img src={theme.thumbnail_url} alt={theme.name} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"/>:<div className="flex h-full items-center justify-center"><ImageIcon className="h-6 w-6 text-slate-400"/></div>}{theme.is_premium&&<div className="absolute left-3 top-3 bg-white px-2 py-1 text-[9px] font-mono uppercase tracking-widest text-slate-900">Premium</div>}{!theme.is_active&&<div className="absolute bottom-3 left-3 bg-slate-900 px-2 py-1 text-[9px] font-mono uppercase tracking-widest text-white">Nonaktif</div>}</div><div className="flex items-start justify-between gap-3"><div className="min-w-0"><h3 className="truncate text-sm font-medium text-slate-900 dark:text-white">{theme.name}</h3><p className="truncate font-mono text-xs text-slate-500">{theme.slug}</p><p className="truncate font-mono text-[11px] text-slate-500">Renderer: {theme.component_key}</p></div><div className="flex gap-2 opacity-0 transition-opacity group-hover:opacity-100"><button onClick={()=>editTheme(theme)} title="Edit"><Edit2 className="h-4 w-4"/></button>{theme.is_active?<button onClick={()=>archiveTheme(theme.id)} title="Nonaktifkan"><Trash2 className="h-4 w-4 text-rose-600"/></button>:<button onClick={()=>restoreTheme(theme.id)} title="Aktifkan"><CheckCircle2 className="h-4 w-4 text-emerald-600"/></button>}</div></div></div>)}</div>
+      <div className="grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-4">{themes.map((theme) => <div key={theme.id} className={`group ${!theme.is_active ? "opacity-60" : ""}`}>
+        <div className="relative mb-3 aspect-[3/4] overflow-hidden border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900">
+          {theme.thumbnail_url ? <img src={theme.thumbnail_url} alt={theme.name} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" /> : <div className="flex h-full items-center justify-center"><ImageIcon className="h-6 w-6 text-slate-400" /></div>}
+          {theme.is_premium && <div className="absolute left-3 top-3 bg-white px-2 py-1 text-[9px] font-mono uppercase tracking-widest text-slate-900">Premium</div>}
+          {!theme.is_active && <div className="absolute bottom-3 left-3 bg-slate-900 px-2 py-1 text-[9px] font-mono uppercase tracking-widest text-white">Nonaktif</div>}
+        </div>
+        <div className="flex items-start justify-between gap-3"><div className="min-w-0"><h3 className="truncate text-sm font-medium text-slate-900 dark:text-white">{theme.name}</h3><p className="truncate font-mono text-xs text-slate-500">{theme.slug}</p><p className="truncate font-mono text-[11px] text-slate-500">Renderer: {theme.component_key}</p></div><div className="flex gap-2 opacity-0 transition-opacity group-hover:opacity-100"><button onClick={() => editTheme(theme)} title="Edit"><Edit2 className="h-4 w-4" /></button>{theme.is_active ? <button onClick={() => archiveTheme(theme.id)} title="Nonaktifkan"><Trash2 className="h-4 w-4 text-rose-600" /></button> : <button onClick={() => restoreTheme(theme.id)} title="Aktifkan"><CheckCircle2 className="h-4 w-4 text-emerald-600" /></button>}</div></div>
+      </div>)}</div>
 
       <style jsx>{`.label{display:block;margin-bottom:.35rem;font-size:.65rem;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.08em;color:#64748b}.field{width:100%;background:transparent;border-bottom:1px solid #e2e8f0;padding:.5rem 0;font-size:.875rem;outline:none}.btn-primary{display:inline-flex;align-items:center;gap:.5rem;background:#0f172a;color:#fff;padding:.625rem 1rem;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em}.btn-secondary{display:inline-flex;align-items:center;gap:.5rem;border:1px solid #e2e8f0;padding:.625rem 1rem;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em}`}</style>
     </div>
