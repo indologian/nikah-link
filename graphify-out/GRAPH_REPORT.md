@@ -1,8 +1,7 @@
 # Graph Report - undangan-pernikahan  (2026-08-20)
 
 ## Corpus Check
-- 161 files · ~167,450 words
-- Verdict: corpus is large enough that graph structure adds value.
+- cluster-only mode — file stats not available
 
 ## Summary
 - 869 nodes · 1181 edges · 116 communities (70 shown, 46 thin omitted)
@@ -128,7 +127,7 @@
 - MinimalistTheme.tsx
 - themes/RoyalBotanicalTheme.tsx
 - EcoImpact.tsx
-- clsx
+- class-variance-authority
 
 ## God Nodes (most connected - your core abstractions)
 1. `createClient()` - 75 edges
@@ -147,12 +146,12 @@
   public/next.svg → implementation.md
 - `Vercel Logo SVG` --references--> `Tech Stack`  [INFERRED]
   public/vercel.svg → implementation.md
-- `BotanicalEleganceTheme()` --calls--> `createClient()`  [EXTRACTED]
-  .migration-backups/2026-08-19T17-05-50-517Z/BotanicalEleganceTheme.tsx → lib/supabase/client.ts
-- `CosmicStarlightTheme()` --calls--> `createClient()`  [EXTRACTED]
-  .migration-backups/2026-08-19T17-05-50-517Z/CosmicStarlightTheme.tsx → lib/supabase/client.ts
-- `EditorialGalleryTheme()` --calls--> `createClient()`  [EXTRACTED]
-  .migration-backups/2026-08-19T17-05-50-517Z/EditorialGalleryTheme.tsx → lib/supabase/client.ts
+- `SettingsPage()` --calls--> `createClient()`  [EXTRACTED]
+  app/admin/settings/page.tsx → lib/supabase/server.ts
+- `HomePage()` --calls--> `createClient()`  [EXTRACTED]
+  app/page.tsx → lib/supabase/server.ts
+- `TemaPage()` --calls--> `createClient()`  [EXTRACTED]
+  app/tema/page.tsx → lib/supabase/server.ts
 
 ## Import Cycles
 - None detected.
@@ -241,7 +240,7 @@ Nodes (6): AST Extraction, Transcribe Reference, File Detection, Extraction Merg
 
 ### Community 19 - "dependencies"
 Cohesion: 0.22
-Nodes (9): class-variance-authority, dependencies, class-variance-authority, @radix-ui/react-dialog, @radix-ui/react-dropdown-menu, xlsx, @radix-ui/react-dialog, @radix-ui/react-dropdown-menu (+1 more)
+Nodes (9): clsx, dependencies, clsx, @radix-ui/react-dialog, @radix-ui/react-dropdown-menu, xlsx, @radix-ui/react-dialog, @radix-ui/react-dropdown-menu (+1 more)
 
 ### Community 20 - "GeometricAbstractTheme.tsx"
 Cohesion: 0.29
@@ -440,7 +439,7 @@ Cohesion: 0.40
 Nodes (4): lora, playfair, Props, TerracottaRustTheme()
 
 ## Knowledge Gaps
-- **387 isolated node(s):** `montserrat`, `greatVibes`, `Props`, `cinzel`, `outfit` (+382 more)
+- **387 isolated node(s):** `GiftAccount`, `GiftClientProps`, `Invitation`, `Plan`, `Props` (+382 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **46 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -453,7 +452,7 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.050) - this node is a cross-community bridge._
 - **Why does `Navbar()` connect `cn` to `vendor/page.tsx`, `createClient`, `harga/page.tsx`, `app/page.tsx`?**
   _High betweenness centrality (0.012) - this node is a cross-community bridge._
-- **What connects `montserrat`, `greatVibes`, `Props` to the rest of the system?**
+- **What connects `GiftAccount`, `GiftClientProps`, `Invitation` to the rest of the system?**
   _387 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `createClient` be split into smaller, more focused modules?**
   _Cohesion score 0.060496067755595885 - nodes in this community are weakly interconnected._
