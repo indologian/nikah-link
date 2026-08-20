@@ -11,7 +11,13 @@ export interface ThemeConfig {
   fields: ThemeDefinition["fields"];
 }
 
-const MinimalistTheme = dynamic(() => import("@/components/themes/MinimalistTheme"));
+const MinimalistTheme = dynamic(() =>
+  import("@/components/themes/MinimalistTheme").then(({ default: Component }) => ({
+    default: (props: ThemeComponentProps) => (
+      <Component {...props} guestName={props.guestName ?? "Tamu Undangan"} />
+    ),
+  })),
+);
 const VintageEleganceTheme = dynamic(() => import("@/components/themes/VintageEleganceTheme"));
 const RoyalBotanicalTheme = dynamic(() => import("@/components/themes/RoyalBotanicalTheme"));
 const WayangClassicTheme = dynamic(() => import("@/components/themes/WayangClassicTheme"));
@@ -90,7 +96,7 @@ export function getThemeConfig(slug: string): ThemeConfig {
         <div>
           <h1 className="text-2xl font-bold text-slate-800">Tema Tidak Ditemukan</h1>
           <p className="mt-2 text-sm text-slate-500">
-            Undangan {invitation?.bride_name ?? "ini"} menggunakan tema yang belum terdaftar.
+            Undangan {invitation.bride_name ?? "ini"} menggunakan tema yang belum terdaftar.
           </p>
         </div>
       </div>
