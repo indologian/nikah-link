@@ -1,18 +1,8 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
-/**
- * Server-only Supabase admin client factory.
- *
- * Environment variables are validated lazily so Next.js build-time module
- * evaluation does not fail when runtime-only secrets are not exposed to the
- * build worker. Runtime callers still receive a clear error when the secret
- * is actually required.
- *
- * IMPORTANT:
- * Jangan pernah import file ini dari Client Component.
- * Service role key memiliki hak bypass RLS.
- */
-export function getSupabaseAdmin(): SupabaseClient {
+let cachedClient: SupabaseClient | null = null;
+
+function createSupabaseAdminClient(): SupabaseClient {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
@@ -30,4 +20,32 @@ export function getSupabaseAdmin(): SupabaseClient {
       persistSession: false,
     },
   });
+}
+
+/**
+ * Server-only Supabase admin client.
+ *
+ * The underlying client is initialized lazily on first property access so
+ * Next.js build-time module evaluation does not require runtime secrets.
+ *
+ * IMPORTANT:
+ * Jangan pernah import file ini dari Client Component.
+ * Service role key memiliki hak bypass RLS.
+ */
+export const supabaseAdmin = new Proxy({} as SupabaseClient, {
+  get(_target, property, receiver) {
+    if (!cachedClient) {
+      cachedClient = createSupabaseAdminClient();
+    }
+
+    return Reflect.get(cachedClient as object, property, receiver);
+  },
+});
+
+export function getSupabaseAdmin(): SupabaseClient {
+  if (!cachedClient) {
+    cachedClient = createSupabaseAdminClient();
+  }
+
+  return cachedClient;
 }
