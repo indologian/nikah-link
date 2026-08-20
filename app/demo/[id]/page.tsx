@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
 import { ThemeRenderer } from "@/components/themes/ThemeRenderer";
+import { getThemeConfig } from "@/components/themes/registry";
 import { resolveRuntimeTheme } from "@/lib/themes/runtime";
 import { buildThemePreviewCustomData, buildThemePreviewInvitation } from "@/lib/themes/preview";
+import { getPublicDemoTheme } from "@/services/themes/theme.query";
 
 export const metadata = {
   title: "Demo Tema | NikahLink",
@@ -15,27 +16,12 @@ export default async function DemoThemePage(props: { params: Promise<{ id: strin
   const slug = params.id.trim().toLowerCase();
   if (!slug) notFound();
 
-  const supabase = await createClient();
-  const { data: theme } = await supabase
-    .from("themes")
-    .select("id, name, slug, component_key, colors, is_active")
-    .eq("slug", slug)
-    .eq("is_active", true)
-    .single();
-  if (!theme) notFound();
+  const result = await getPublicDemoTheme(slug);
+  if (!result) notFound();
 
-  const { data: themeVersion } = await supabase
-    .from("theme_versions")
-    .select("*")
-    .eq("theme_id", theme.id)
-    .eq("is_published", true)
-    .eq("lifecycle_status", "published")
-    .order("version", { ascending: false })
-    .limit(1)
-    .maybeSingle();
-  if (!themeVersion) notFound();
-
+  const { theme, version: themeVersion } = result;
   const runtimeTheme = resolveRuntimeTheme(theme, themeVersion);
+  const registeredTheme = getThemeConfig(runtimeTheme.componentKey);
   const customData = buildThemePreviewCustomData(runtimeTheme.fields);
   const dummyInvitation = {
     ...buildThemePreviewInvitation(runtimeTheme.colors, customData, "demo-invitation-123"),
@@ -52,7 +38,7 @@ export default async function DemoThemePage(props: { params: Promise<{ id: strin
         </div>
       </div>
       <ThemeRenderer
-        component={runtimeTheme.component}
+        component={registeredTheme.component}
         invitation={dummyInvitation}
         themeColors={runtimeTheme.colors}
         guestName="Tamu Demo"
