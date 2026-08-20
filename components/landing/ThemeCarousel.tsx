@@ -128,13 +128,13 @@ export default function ThemeCarousel({ themes = [] }: { themes?: ThemeProps[] }
                     <h3 className="text-white font-medium tracking-tight mb-4">{theme.name}</h3>
                     <div className="flex gap-2">
                       <Link
-                         href={`/demo/${theme.id}`}
+                        href={`/demo/${theme.slug}`}
                         className="flex-1 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white px-4 py-3 text-xs font-bold uppercase tracking-wider text-center transition-colors flex items-center justify-center gap-2"
                       >
                         <Eye size={14} /> Lihat
                       </Link>
                       <Link
-                        href={`/daftar?tema=${theme.id}`}
+                        href={`/daftar?tema=${encodeURIComponent(theme.slug)}`}
                         className="flex-1 bg-white hover:bg-slate-200 text-slate-900 px-4 py-3 text-xs font-bold uppercase tracking-wider text-center transition-colors"
                       >
                         Gunakan
