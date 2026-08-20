@@ -34,7 +34,7 @@ export default function ThemeCarousel({ themes = [] }: { themes?: ThemeProps[] }
   return (
     <section className="w-full pt-16 pb-20 bg-white dark:bg-slate-950 transition-colors border-b border-slate-200 dark:border-slate-800">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         {/* Editorial Heading */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
           <div className="max-w-2xl">
@@ -85,7 +85,7 @@ export default function ThemeCarousel({ themes = [] }: { themes?: ThemeProps[] }
                 className="group relative overflow-hidden aspect-[3/4] bg-white dark:bg-slate-950"
               >
                 {/* Real Visual Content using colors */}
-                <div 
+                <div
                   className="absolute inset-0 transition-transform duration-700 group-hover:scale-105 flex flex-col justify-center items-center text-center p-8"
                   style={{
                     backgroundColor: theme.colors?.background || '#f8fafc',
@@ -95,18 +95,18 @@ export default function ThemeCarousel({ themes = [] }: { themes?: ThemeProps[] }
                   {theme.thumbnail_url ? (
                     <img src={theme.thumbnail_url} alt={theme.name} className="absolute inset-0 w-full h-full object-cover opacity-50" />
                   ) : null}
-                  <span 
+                  <span
                     className="text-[10px] uppercase tracking-[0.2em] font-medium block mb-2 relative z-10"
                     style={{ color: theme.colors?.accent || 'inherit' }}
                   >
                     The Wedding of
                   </span>
                   <h4 className="font-playfair text-2xl sm:text-3xl font-bold leading-tight relative z-10">
-                    Romeo <br/>& Juliet
+                    Romeo <br />& Juliet
                   </h4>
-                  <div 
-                    className="w-8 h-px mx-auto my-4 relative z-10" 
-                    style={{ backgroundColor: theme.colors?.primary || '#0f172a', opacity: 0.3 }} 
+                  <div
+                    className="w-8 h-px mx-auto my-4 relative z-10"
+                    style={{ backgroundColor: theme.colors?.primary || '#0f172a', opacity: 0.3 }}
                   />
                   <p className="text-xs relative z-10 opacity-70">
                     24 Oktober 2026
@@ -127,12 +127,14 @@ export default function ThemeCarousel({ themes = [] }: { themes?: ThemeProps[] }
                   <div className="translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-300">
                     <h3 className="text-white font-medium tracking-tight mb-4">{theme.name}</h3>
                     <div className="flex gap-2">
-                      <Link
-                         href={`/demo/${theme.id}`}
+                      <a
+                        href={`/demo/${theme.slug}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="flex-1 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white px-4 py-3 text-xs font-bold uppercase tracking-wider text-center transition-colors flex items-center justify-center gap-2"
                       >
                         <Eye size={14} /> Lihat
-                      </Link>
+                      </a>
                       <Link
                         href={`/daftar?tema=${theme.id}`}
                         className="flex-1 bg-white hover:bg-slate-200 text-slate-900 px-4 py-3 text-xs font-bold uppercase tracking-wider text-center transition-colors"
