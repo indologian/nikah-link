@@ -1,12 +1,7 @@
-import { themesConfig } from "@/lib/themes/registry";
+import { THEME_KEYS, hasThemeDefinition } from "@/lib/themes/definitions";
 
-export type ThemeColors = {
-  primary: string;
-  secondary: string;
-  accent: string;
-  background: string;
-  text: string;
-};
+export type { ThemeColors } from "@/types/theme";
+import type { ThemeColors } from "@/types/theme";
 
 export const DEFAULT_THEME_COLORS: ThemeColors = {
   primary: "#0F172A",
@@ -16,14 +11,12 @@ export const DEFAULT_THEME_COLORS: ThemeColors = {
   text: "#111827",
 };
 
-export const THEME_RENDERERS = Object.keys(themesConfig);
+export const THEME_RENDERERS = THEME_KEYS;
 
 export function normalizeThemeColors(input: unknown): ThemeColors {
   const source = (input && typeof input === "object" ? input : {}) as Record<string, unknown>;
   const hex = (value: unknown, fallback: string) =>
-    typeof value === "string" && /^#[0-9a-fA-F]{6}$/.test(value)
-      ? value.toUpperCase()
-      : fallback;
+    typeof value === "string" && /^#[0-9a-fA-F]{6}$/.test(value) ? value.toUpperCase() : fallback;
 
   return {
     primary: hex(source.primary, DEFAULT_THEME_COLORS.primary),
@@ -35,5 +28,5 @@ export function normalizeThemeColors(input: unknown): ThemeColors {
 }
 
 export function isValidThemeRenderer(value: string): boolean {
-  return Boolean(value && themesConfig[value]);
+  return Boolean(value && hasThemeDefinition(value));
 }
