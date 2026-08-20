@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getThemeConfig } from "@/lib/themes/registry";
@@ -9,13 +10,20 @@ export const metadata = {
 
 export default async function DemoThemePage(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
+  const slug = params.id.trim().toLowerCase();
+
+  if (!slug) {
+    notFound();
+  }
+
   const supabase = await createClient();
 
-  // Cari tema berdasarkan SLUG, bukan ID
+  // Public demo hanya boleh menampilkan tema yang aktif.
   const { data: theme } = await supabase
     .from("themes")
-    .select("*")
-    .eq("slug", params.id)
+    .select("id, name, slug, is_active")
+    .eq("slug", slug)
+    .eq("is_active", true)
     .single();
 
   if (!theme) {
@@ -23,9 +31,14 @@ export default async function DemoThemePage(props: { params: Promise<{ id: strin
   }
 
   const themeConfig = getThemeConfig(theme.slug);
+
+  // Theme yang tercatat di DB harus punya implementasi runtime di registry.
+  if (!themeConfig.component || themeConfig.slug !== theme.slug) {
+    notFound();
+  }
+
   const ThemeComponent = themeConfig.component;
 
-  // Perbaiki struktur data dummy agar cocok dengan schema & tema
   const dummyInvitation = {
     id: "demo-invitation-123",
     username: "romeo-juliet",
@@ -35,7 +48,6 @@ export default async function DemoThemePage(props: { params: Promise<{ id: strin
     groom_photo_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop",
     love_story: "Takdir mempertemukan kami di sebuah acara pada tahun 2021. Berawal dari sapaan singkat, percakapan mengalir hingga kami menyadari ada ketulusan yang saling melengkapi.",
 
-    // Gunakan field name yang benar (akad_venue, reception_date, dll)
     akad_date: "2026-10-24",
     akad_time: "08:00 WIB",
     akad_venue: "Masjid Agung Kota",
@@ -58,12 +70,11 @@ export default async function DemoThemePage(props: { params: Promise<{ id: strin
     show_wishes: true,
     created_at: new Date().toISOString(),
 
-    // Isi custom_data dengan nilai default yang valid atau URL gambar agar slider tidak kosong
     custom_data: themeConfig.fields.reduce((acc, field) => {
-      if (field.type === 'image') {
+      if (field.type === "image") {
         acc[field.name] = "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=800&auto=format&fit=crop";
       } else {
-        acc[field.name] = field.defaultValue || "";
+        acc[field.name] = field.defaultValue ?? "";
       }
       return acc;
     }, {} as Record<string, any>),
@@ -71,9 +82,26 @@ export default async function DemoThemePage(props: { params: Promise<{ id: strin
 
   return (
     <main className="min-h-screen bg-white dark:bg-slate-950">
-      <div className="bg-blue-50 dark:bg-blue-950 text-blue-800 dark:text-blue-200 text-center py-2 text-xs font-medium sticky top-0 z-50">
-        Mode Pratinjau Tema: {theme.name}
+      <div className="sticky top-0 z-[100] flex items-center justify-between gap-3 bg-blue-50 px-4 py-2 text-blue-800 dark:bg-blue-950 dark:text-blue-200">
+        <Link
+          href="/tema"
+          className="text-xs font-semibold hover:underline"
+        >
+          ← Kembali ke Tema
+        </Link>
+        <div className="flex items-center gap-3">
+          <span className="hidden text-xs font-medium sm:inline">
+            Demo: {theme.name}
+          </span>
+          <Link
+            href={`/daftar?tema=${encodeURIComponent(theme.slug)}`}
+            className="rounded-md bg-blue-700 px-3 py-1.5 text-xs font-bold text-white transition-colors hover:bg-blue-800 dark:bg-blue-200 dark:text-blue-950 dark:hover:bg-white"
+          >
+            Gunakan Tema
+          </Link>
+        </div>
       </div>
+
       <ThemeComponent
         invitation={dummyInvitation}
         guestName="Tamu Demo"
