@@ -54,6 +54,27 @@ export async function getThemeById(themeId: string) {
   return data;
 }
 
+export async function getThemeForEditor(slug: string, options?: { versionId?: string | null; invitationId?: string | null }) {
+  const supabase = await createClient();
+  const theme = await getThemeBySlug(slug);
+  if (!theme) return null;
+
+  let pinnedVersionId = options?.versionId ?? null;
+  if (!pinnedVersionId && options?.invitationId) {
+    const { data: invitation, error } = await supabase
+      .from("invitations")
+      .select("theme_id, theme_version_id")
+      .eq("id", options.invitationId)
+      .maybeSingle();
+    if (error || !invitation || invitation.theme_id !== theme.id || !invitation.theme_version_id) return null;
+    pinnedVersionId = invitation.theme_version_id;
+  }
+
+  const version = await getPublishedThemeVersion(theme.id, pinnedVersionId);
+  if (!version || version.theme_id !== theme.id || version.component_key !== theme.component_key) return null;
+  return { theme, version };
+}
+
 export async function getPublicDemoTheme(slug: string, versionId?: string | null) {
   const theme = await getThemeBySlug(slug);
   if (!theme || !theme.is_active) return null;
@@ -75,12 +96,7 @@ export async function getAdminPreviewTheme(slug: string, versionId?: string | nu
 
 export async function getPublishedInvitationByUsername(username: string) {
   const supabase = await createClient();
-  const { data: invitation, error: invitationError } = await supabase
-    .from("invitations")
-    .select("*")
-    .eq("username", username)
-    .eq("is_published", true)
-    .single();
+  const { data: invitation, error: invitationError } = await supabase.from("invitations").select("*").eq("username", username).eq("is_published", true).single();
   if (invitationError || !invitation) return null;
 
   const [{ data: wishes }, { data: gifts }, { data: profile }, { data: theme }, { data: themeVersion }] = await Promise.all([
@@ -88,14 +104,11 @@ export async function getPublishedInvitationByUsername(username: string) {
     supabase.from("gift_accounts").select("*").eq("invitation_id", invitation.id),
     supabase.from("profiles").select("plan").eq("user_id", invitation.user_id).single(),
     supabase.from("themes").select(THEME_COLUMNS).eq("id", invitation.theme_id).maybeSingle(),
-    invitation.theme_version_id
-      ? supabase.from("theme_versions").select(THEME_VERSION_COLUMNS).eq("id", invitation.theme_version_id).maybeSingle()
-      : Promise.resolve({ data: null }),
+    invitation.theme_version_id ? supabase.from("theme_versions").select(THEME_VERSION_COLUMNS).eq("id", invitation.theme_version_id).maybeSingle() : Promise.resolve({ data: null }),
   ]);
 
   if (!theme) return null;
   if (invitation.theme_version_id && !themeVersion) return null;
   if (themeVersion && (themeVersion.theme_id !== invitation.theme_id || themeVersion.component_key !== theme.component_key)) return null;
-
   return { invitation, wishes: wishes ?? [], gifts: gifts ?? [], profile, theme, themeVersion };
 }
