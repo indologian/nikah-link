@@ -5,7 +5,10 @@ let browserClient: ReturnType<typeof createBrowserClient> | undefined;
 
 const INVITATION_EDITOR_PATH = /^\/dashboard\/undangan\/(?:baru|[^/]+\/edit)(?:\/|$)/;
 
-export function createClient(): any {
+type BrowserSupabaseClient = ReturnType<typeof createBrowserClient>;
+type InvitationEditorBackend = ReturnType<typeof createInvitationEditorBackend>;
+
+export function createClient(): BrowserSupabaseClient | InvitationEditorBackend {
   if (typeof window !== "undefined" && INVITATION_EDITOR_PATH.test(window.location.pathname)) {
     return createInvitationEditorBackend();
   }
@@ -13,7 +16,7 @@ export function createClient(): any {
   if (!browserClient) {
     browserClient = createBrowserClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     );
   }
 
