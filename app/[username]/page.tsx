@@ -1,10 +1,14 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { ThemeRenderer } from "@/components/themes/ThemeRenderer";
+import ThemeCustomDataSync from "@/components/themes/ThemeCustomDataSync";
 import { resolveRuntimeTheme } from "@/lib/themes/runtime";
 import { isValidThemeRenderer } from "@/lib/themes/config";
 import { getThemeConfig } from "@/lib/themes/registry";
 import type { Metadata } from "next";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 interface Props {
   params: Promise<{ username: string }>;
@@ -125,21 +129,28 @@ export default async function PublicInvitationPage({ params, searchParams }: Pro
     theme_colors: runtimeTheme.colors,
     theme_version: themeVersion,
   };
+  const customData = invitation.custom_data || {};
 
   return (
-    <ThemeRenderer
-      component={runtimeTheme.component}
-      invitation={renderInvitation}
-      themeColors={runtimeTheme.colors}
-      guestName={guestNameFromUrl || "Tamu Undangan"}
-      initialWishes={wishes || []}
-      giftAccounts={gifts || []}
-      isFreePlan={isFreePlan}
-      expiresAt={invitation.expires_at}
-      customData={invitation.custom_data || {}}
-      themeConfig={runtimeTheme.config}
-      themeAssets={runtimeTheme.assets}
-      themeVersion={themeVersion}
-    />
+    <>
+      <ThemeRenderer
+        component={runtimeTheme.component}
+        invitation={renderInvitation}
+        themeColors={runtimeTheme.colors}
+        guestName={guestNameFromUrl || "Tamu Undangan"}
+        initialWishes={wishes || []}
+        giftAccounts={gifts || []}
+        isFreePlan={isFreePlan}
+        expiresAt={invitation.expires_at}
+        customData={customData}
+        themeConfig={runtimeTheme.config}
+        themeAssets={runtimeTheme.assets}
+        themeVersion={themeVersion}
+      />
+      <ThemeCustomDataSync
+        themeKey={runtimeTheme.componentKey}
+        customData={customData}
+      />
+    </>
   );
 }
